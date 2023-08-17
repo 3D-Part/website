@@ -1,0 +1,62 @@
+"use client";
+import { ProductInterface } from "@/shared/interfaces/productsInterface";
+import React from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+
+import "swiper/css";
+import "swiper/css/scrollbar";
+
+import Product from "../../product/Product";
+import { Autoplay, Scrollbar } from "swiper";
+
+import { motion } from "framer-motion";
+import { useIsTablet } from "@/shared/hooks/useMediaQuerry";
+
+const ProductsSlide: React.FC<{
+  products: ProductInterface[];
+  animationVariants?: { initial: Object; animate: Object };
+}> = ({ products, animationVariants = { initial: {}, animate: {} } }) => {
+  const isTablet = useIsTablet();
+
+  return (
+    <div className="max-w-full mt-6 lg:mt-8 ">
+      <Swiper
+        spaceBetween={isTablet ? 0 : 24}
+        slidesPerView="auto"
+        modules={[Scrollbar, Autoplay]}
+        className="swiper_products"
+        grabCursor={true}
+        scrollbar={{
+          hide: true,
+        }}
+        autoplay={{
+          delay: 3000,
+          disableOnInteraction: true,
+          pauseOnMouseEnter: true,
+        }}
+        speed={500}
+      >
+        {products.map((product, i) => {
+          return (
+            <SwiperSlide key={i}>
+              {isTablet ? (
+                <div>
+                  <Product {...product} className={"ml-4 lg:ml-0"} />
+                </div>
+              ) : (
+                <motion.div
+                  variants={animationVariants}
+                  transition={{ delay: i * 0.2 }}
+                >
+                  <Product {...product} className={"ml-4 lg:ml-0"} />
+                </motion.div>
+              )}
+            </SwiperSlide>
+          );
+        })}
+      </Swiper>
+    </div>
+  );
+};
+
+export default ProductsSlide;
