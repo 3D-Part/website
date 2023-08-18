@@ -13,6 +13,7 @@ let stock = 10;
 
 interface ProductInterfaceComponent extends ProductInterface {
   className?: string;
+  imageWidth?: string;
 }
 
 const Product: React.FC<ProductInterfaceComponent> = ({
@@ -21,6 +22,7 @@ const Product: React.FC<ProductInterfaceComponent> = ({
   price,
   images,
   className = "",
+  imageWidth = "200px",
 }) => {
   const router = useRouter();
 
@@ -39,8 +41,10 @@ const Product: React.FC<ProductInterfaceComponent> = ({
           transition: { duration: 0.35, type: "spring" },
         }}
       >
-        <div className="w-[200px] h-[200px] overflow-hidden rounded-xl">
-          <div className="w-[200px] h-[200px] bg-neutral-700 rounded-xl relative">
+        <div
+          className={`overflow-hidden aspect-square rounded-xl w-[${imageWidth}]`}
+        >
+          <div className="relative aspect-square bg-neutral-700 rounded-xl">
             <Image
               alt={name}
               src={getMainImage(images)}
@@ -49,7 +53,7 @@ const Product: React.FC<ProductInterfaceComponent> = ({
             />
           </div>
         </div>
-        <div className="max-w-full mt-4">
+        <div className="max-w-full mt-4 overflow-hidden overflow-ellipsis">
           <Paragraph
             size="L"
             weight="Semibold"
