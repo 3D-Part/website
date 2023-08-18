@@ -52,7 +52,11 @@ const NavLink: React.FC<NavLinkProps> = ({
         }}
         className="flex items-center"
       >
-        <motion.div whileHover={{ scale: 1.2 }} className="flex items-center">
+        <motion.div
+          whileHover={{ scale: 1.15 }}
+          transition={{ ease: "easeInOut", type: "tween" }}
+          className="flex items-center"
+        >
           <Paragraph size="M" weight="Regular" className="p-[10px] pr-1 ">
             {text}
           </Paragraph>
