@@ -53,7 +53,7 @@ const CategoryProducts = () => {
 
     return () => clearTimeout(delayDebounceFn);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [priceMin, priceMax, params.slug]);
+  }, [priceMin, priceMax, params.slug, manufacturerId]);
 
   useEffect(() => {
     if (initialFetch) return;
