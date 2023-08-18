@@ -43,6 +43,7 @@ const Product: React.FC<ProductInterfaceComponent> = ({
       >
         <div
           className={`overflow-hidden aspect-square rounded-xl w-[${imageWidth}]`}
+          style={{ width: imageWidth }}
         >
           <div className="relative aspect-square bg-neutral-700 rounded-xl">
             <Image
