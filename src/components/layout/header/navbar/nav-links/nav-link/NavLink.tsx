@@ -48,11 +48,9 @@ const NavLink: React.FC<NavLinkProps> = ({
         <div
           onClick={() => {
             if (activeLink === i) {
-              console.log("reset");
               setActiveLink(null);
               setActiveSubLink(null);
             } else {
-              console.log("i");
               setActiveLink(i);
               setActiveSubLink(null);
             }
