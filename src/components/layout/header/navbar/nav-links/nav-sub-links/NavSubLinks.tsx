@@ -14,6 +14,7 @@ interface NavSubLinksProps {
   activeLink?: number | null;
   i: number;
   showLine?: boolean;
+  onClick: () => void;
 }
 
 const NavSubLinks: React.FC<NavSubLinksProps> = ({
@@ -22,6 +23,7 @@ const NavSubLinks: React.FC<NavSubLinksProps> = ({
   i,
   activeLink,
   showLine,
+  onClick,
 }) => {
   const router = useRouter();
   return (
@@ -83,6 +85,7 @@ const NavSubLinks: React.FC<NavSubLinksProps> = ({
                       setActive(i);
                     }
                   } else {
+                    onClick();
                     router.push(x.link);
                   }
                 }}

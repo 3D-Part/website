@@ -16,10 +16,10 @@ const FooterLinks = () => {
           <Link href={"/shop/category/resini"}>Resini</Link>
         </Paragraph>
         <Paragraph size="M" weight="Regular" className="py-1 text-neutral-200">
-          <Link href={"/shop/category/3d-printer"}>3D Printer</Link>
+          <Link href={"/shop/category/3d-printeri"}>3D Printeri</Link>
         </Paragraph>
         <Paragraph size="M" weight="Regular" className="py-1 text-neutral-200">
-          <Link href={"/shop/category/laser"}>Laser</Link>
+          <Link href={"/shop/category/laseri"}>Laseri</Link>
         </Paragraph>
         <Paragraph size="M" weight="Regular" className="py-1 text-neutral-200">
           <Link href={"/shop/category/dijelovi"}>Dijelovi</Link>

@@ -8,6 +8,7 @@ import Paragraph from "@/components/common/text/paragraph/Paragraph";
 import NavSubLinks from "../nav-sub-links/NavSubLinks";
 import { IoIosArrowDown } from "react-icons/io";
 import OutsideAlerter from "@/shared/hooks/useOutsideAlerter";
+import { useRouter } from "next/navigation";
 
 export interface NavLinkProps {
   i?: number;
@@ -30,6 +31,7 @@ const NavLink: React.FC<NavLinkProps> = ({
   setActiveLink,
   setActiveSubLink,
 }) => {
+  const router = useRouter();
   return (
     <OutsideAlerter
       outsideClickHandler={() => {
@@ -47,12 +49,16 @@ const NavLink: React.FC<NavLinkProps> = ({
       >
         <div
           onClick={() => {
-            if (activeLink === i) {
-              setActiveLink(null);
-              setActiveSubLink(null);
+            if (links.length > 0) {
+              if (activeLink === i) {
+                setActiveLink(null);
+                setActiveSubLink(null);
+              } else {
+                setActiveLink(i);
+                setActiveSubLink(null);
+              }
             } else {
-              setActiveLink(i);
-              setActiveSubLink(null);
+              router.push(link);
             }
           }}
           className="flex items-center"
@@ -65,7 +71,7 @@ const NavLink: React.FC<NavLinkProps> = ({
             <Paragraph size="M" weight="Regular" className="p-[10px] pr-1 ">
               {text}
             </Paragraph>
-            <IoIosArrowDown></IoIosArrowDown>
+            {links.length ? <IoIosArrowDown></IoIosArrowDown> : <></>}
           </motion.div>
         </div>
 
@@ -83,6 +89,10 @@ const NavLink: React.FC<NavLinkProps> = ({
                 }}
                 i={activeLink}
                 activeLink={activeSubLink}
+                onClick={() => {
+                  setActiveLink(null);
+                  setActiveSubLink(null);
+                }}
               />
             )}
             {activeSubLink !== null && (
@@ -91,6 +101,10 @@ const NavLink: React.FC<NavLinkProps> = ({
                 i={activeSubLink}
                 activeLink={0}
                 showLine={true}
+                onClick={() => {
+                  setActiveLink(null);
+                  setActiveSubLink(null);
+                }}
               />
             )}
           </div>
