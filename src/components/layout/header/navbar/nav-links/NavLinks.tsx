@@ -6,7 +6,6 @@ const NavLinks: React.FC<{ links: any }> = ({ links }) => {
   const [activeLink, setActiveLink] = useState<number | null>(null);
   const [activeSubLink, setActiveSubLink] = useState<number | null>(null);
 
-  console.log("state:", activeLink);
 
   return (
     <div className="items-center hidden md:w-full lg:flex flex-grow-1 justify-evenly">

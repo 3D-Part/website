@@ -7,52 +7,138 @@ import NavLinks from "./nav-links/NavLinks";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
+const creality = "062c42d0-3dab-11ee-bb4e-994af83111f0";
+const azurefilm = "03cbbd90-3dab-11ee-bb4e-994af83111f0";
+const flashforge = "0c796b90-3dab-11ee-bb4e-994af83111f0";
+const snapmaker = "0ef0fb40-3dab-11ee-bb4e-994af83111f0";
+const prusa = "11d97530-3dab-11ee-bb4e-994af83111f0";
+
 const links: any = [
   {
     text: "Filamenti",
     link: "/shop/category/filament",
     links: [
-      { text: "Sve", link: "/", links: [] },
+      { text: "Sve", link: "/shop/category/filamenti", links: [] },
       {
         text: "Azurefilm",
         link: "/",
         links: [
-          { text: "Sve", link: "/", links: [] },
-          { text: "PLA", link: "/", links: [] },
-          { text: "PTG", link: "/", links: [] },
-          { text: "Silk", link: "/", links: [] },
-          { text: "ABS", link: "/", links: [] },
-          { text: "ASA", link: "/", links: [] },
-          { text: "Fleksibilni", link: "/", links: [] },
-          { text: "PCTG", link: "/", links: [] },
+          {
+            text: "Sve",
+            link: "/shop/category/filamenti?manufacturerId=" + azurefilm,
+            links: [],
+          },
+          {
+            text: "PLA",
+            link: "/shop/category/pla?manufacturerId=" + azurefilm,
+            links: [],
+          },
+          {
+            text: "PTG",
+            link: "/shop/category/ptg?manufacturerId=" + azurefilm,
+            links: [],
+          },
+          {
+            text: "Silk",
+            link: "/shop/category/silk?manufacturerId=" + azurefilm,
+            links: [],
+          },
+          {
+            text: "ABS",
+            link: "/shop/category/abs?manufacturerId=" + azurefilm,
+            links: [],
+          },
+          {
+            text: "ASA",
+            link: "/shop/category/asa?manufacturerId=" + azurefilm,
+            links: [],
+          },
+          {
+            text: "Fleksibilni",
+            link: "/shop/category/fleksibilni?manufacturerId=" + azurefilm,
+            links: [],
+          },
+          {
+            text: "PCTG",
+            link: "/shop/category/pctg?manufacturerId=" + azurefilm,
+            links: [],
+          },
           {
             text: "Pet Carbon",
-            link: "/",
+            link: "/shop/category/pet-carbon?manufacturerId=" + azurefilm,
             links: [],
           },
           {
             text: "Paht Carbon",
-            link: "/",
+            link: "/shop/category/paht-carbon?manufacturerId=" + azurefilm,
             links: [],
           },
-          { text: "Nylon", link: "/", links: [] },
-          { text: "Wood", link: "/", links: [] },
+          {
+            text: "Nylon",
+            link: "/shop/category/nylon?manufacturerId=" + azurefilm,
+            links: [],
+          },
+          {
+            text: "Wood",
+            link: "/shop/category/wood?manufacturerId=" + azurefilm,
+            links: [],
+          },
         ],
       },
       {
         text: "Creality",
         link: "/",
         links: [
-          { text: "Sve", link: "/", links: [] },
-          { text: "PLA", link: "/", links: [] },
-          { text: "PLA Matte", link: "/", links: [] },
-          { text: "PLA Rainbow", link: "/", links: [] },
-          { text: "PLA Wood", link: "/", links: [] },
-          { text: "PETG", link: "/", links: [] },
-          { text: "Silk", link: "/", links: [] },
-          { text: "ABS", link: "/", links: [] },
-          { text: "TPU", link: "/", links: [] },
-          { text: "Floroscent", link: "/", links: [] },
+          {
+            text: "Sve",
+            link: "/shop/category/filamenti?manufacturerId=" + creality,
+            links: [],
+          },
+          {
+            text: "PLA",
+            link: "/shop/category/pla?manufacturerId=" + creality,
+            links: [],
+          },
+          {
+            text: "PLA Matte",
+            link: "/shop/category/pla-matte?manufacturerId=" + creality,
+            links: [],
+          },
+          {
+            text: "PLA Rainbow",
+            link: "/shop/category/pla-rainbow?manufacturerId=" + creality,
+            links: [],
+          },
+          {
+            text: "PLA Wood",
+            link: "/shop/category/pla-wood?manufacturerId=" + creality,
+            links: [],
+          },
+          {
+            text: "PETG",
+            link: "/shop/category/petg?manufacturerId=" + creality,
+            links: [],
+          },
+          {
+            text: "Silk",
+            link: "/shop/category/silk?manufacturerId=" + creality,
+            links: [],
+          },
+          {
+            text: "ABS",
+            link: "/shop/category/abs?manufacturerId=" + creality,
+            links: [],
+          },
+          {
+            text: "TPU",
+            link: "/shop/category/tpu?manufacturerId=" + creality,
+            links: [],
+          },
+          {
+            text: "Floroscent",
+            link: "/shop/category/floroscent?manufacturerId=" + creality,
+            links: [],
+          },
         ],
       },
     ],
@@ -61,9 +147,10 @@ const links: any = [
     text: "Resini",
     link: "/shop/category/resini",
     links: [
+      { text: "Sve", link: "/shop/category/resini", links: [] },
       {
         text: "Creality",
-        link: "/",
+        link: "/shop/category/resini?manufacturerId=" + creality,
       },
     ],
   },
@@ -73,7 +160,7 @@ const links: any = [
     links: [
       {
         text: "Sve",
-        link: "/",
+        link: "/shop/category/3d-printeri",
       },
       {
         text: "Creality",
@@ -81,79 +168,119 @@ const links: any = [
         links: [
           {
             text: "Sve",
-            link: "/",
+            link: "/shop/category/3d-printeri?manufacturerId=" + creality,
           },
-          { text: "FDM", link: "/", links: [] },
-          { text: "Resin", link: "/", links: [] },
+          {
+            text: "FDM",
+            link: "/shop/category/fdm?manufacturerId=" + creality,
+            links: [],
+          },
+          {
+            text: "Resin",
+            link: "/shop/category/resin?manufacturerId=" + creality,
+            links: [],
+          },
         ],
       },
-      { text: "Flash Forge", link: "/", links: [] },
-      { text: "Snapmaker", link: "/", links: [] },
-      { text: "Prusa", link: "/", links: [] },
+      {
+        text: "Flash Forge",
+        link: "/shop/category/3d-printeri?manufacturerId=" + creality,
+        links: [],
+      },
+      {
+        text: "Snapmaker",
+        link: "/shop/category/3d-printeri?manufacturerId=" + creality,
+        links: [],
+      },
+      {
+        text: "Prusa",
+        link: "/shop/category/3d-printeri?manufacturerId=" + creality,
+        links: [],
+      },
     ],
   },
   {
     text: "3D Skeneri",
     link: "/shop/category/3d-skeneri",
-    links: [{ text: "Sve", link: "/", links: [] }],
+    links: [],
   },
   {
     text: "Laseri",
     link: "/shop/category/laseri",
     links: [
-      { text: "Sve", link: "/", links: [] },
-      { text: "Creality", link: "/", links: [] },
+      { text: "Sve", link: "/shop/category/laseri", links: [] },
+      {
+        text: "Creality",
+        link: "/shop/category/laseri?manufacturerId=" + creality,
+        links: [],
+      },
     ],
   },
   {
     text: "Dijelovi",
     link: "/shop/category/dijelovi",
     links: [
-      { text: "Sve", link: "/", links: [] },
-      { text: "Dizne", link: "/", links: [] },
+      { text: "Sve", link: "/shop/category/dijelovi", links: [] },
+      { text: "Dizne", link: "/shop/category/dizne", links: [] },
       {
         text: "Podloge",
-        link: "/",
+        link: "/shop/category/podloge",
         links: [
-          { text: "Sve", link: "/", links: [] },
-          { text: "Soft", link: "/", links: [] },
-          { text: "Pei", link: "/", links: [] },
-          { text: "Carbon Glass", link: "/", links: [] },
+          { text: "Sve", link: "/shop/category/podloge", links: [] },
+          { text: "Soft", link: "/shop/category/soft", links: [] },
+          { text: "Pei", link: "/shop/category/pei", links: [] },
+          {
+            text: "Carbon Glass",
+            link: "/shop/category/carbon-glass",
+            links: [],
+          },
         ],
       },
-      { text: "Full Hotend Kit", link: "/", links: [] },
-      { text: "Hotend Kit", link: "/", links: [] },
-      { text: "Ekstruderi", link: "/", links: [] },
-      { text: "Heat Block", link: "/", links: [] },
+      {
+        text: "Full Hotend Kit",
+        link: "/shop/category/full-hotend-kit",
+        links: [],
+      },
+      { text: "Hotend Kit", link: "/shop/category/hotend-kit", links: [] },
+      { text: "Ekstruderi", link: "/shop/category/ekstruderi", links: [] },
+      { text: "Heat Block", link: "/shop/category/heat-block", links: [] },
       {
         text: "Ventilatori",
-        link: "/",
+        link: "/shop/category/ventilatori",
         links: [
-          { text: "Sve", link: "/", links: [] },
-          { text: "Blower Fan", link: "/", links: [] },
-          { text: "Axial Fan", link: "/", links: [] },
+          { text: "Sve", link: "/shop/category/ventilatori", links: [] },
+          { text: "Blower Fan", link: "/shop/category/blower-fan", links: [] },
+          { text: "Axial Fan", link: "/shop/category/axial-fan", links: [] },
         ],
       },
-      { text: "Stepper Motori", link: "/", links: [] },
-      { text: "Zupčanici", link: "/", links: [] },
-      { text: "Ležajevi", link: "/", links: [] },
-      { text: "Remeni", link: "/", links: [] },
-      { text: "Silicon Cover", link: "/", links: [] },
-      { text: "Opruge", link: "/", links: [] },
-      { text: "-- OSTALO --", link: "/", links: [] },
+      {
+        text: "Stepper Motori",
+        link: "/shop/category/stepper-motori",
+        links: [],
+      },
+      { text: "Zupčanici", link: "/shop/category/zupčanici", links: [] },
+      { text: "Ležajevi", link: "/shop/category/ležajevi", links: [] },
+      { text: "Remeni", link: "/shop/category/remeni", links: [] },
+      {
+        text: "Silicon Cover",
+        link: "/shop/category/silicon-cover",
+        links: [],
+      },
+      { text: "Opruge", link: "/shop/category/opruge", links: [] },
+      { text: "-- OSTALO --", link: "/shop/category/ostalo", links: [] },
     ],
   },
   {
     text: "Aksesoari",
     link: "/shop/category/aksesoari",
     links: [
-      { text: "Sve", link: "/", links: [] },
-      { text: "Šarafcigeri", link: "/", links: [] },
-      { text: "Imbusi", link: "/", links: [] },
-      { text: "Kliješta", link: "/", links: [] },
-      { text: "Lakovi", link: "/", links: [] },
-      { text: "Baterije", link: "/", links: [] },
-      { text: "Ključevi", link: "/", links: [] },
+      { text: "Sve", link: "/shop/category/aksesoari", links: [] },
+      { text: "Šarafcigeri", link: "/shop/category/šarafcigeri", links: [] },
+      { text: "Imbusi", link: "/shop/category/imbusi", links: [] },
+      { text: "Kliješta", link: "/shop/category/kliješta", links: [] },
+      { text: "Lakovi", link: "/shop/category/lakovi", links: [] },
+      { text: "Baterije", link: "/shop/category/baterije", links: [] },
+      { text: "Ključevi", link: "/shop/category/ključevi", links: [] },
     ],
   },
   {

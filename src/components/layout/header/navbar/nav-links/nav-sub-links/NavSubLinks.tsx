@@ -14,6 +14,7 @@ interface NavSubLinksProps {
   activeLink?: number | null;
   i: number;
   showLine?: boolean;
+  onClick: () => void;
 }
 
 const NavSubLinks: React.FC<NavSubLinksProps> = ({
@@ -22,6 +23,7 @@ const NavSubLinks: React.FC<NavSubLinksProps> = ({
   i,
   activeLink,
   showLine,
+  onClick,
 }) => {
   const router = useRouter();
   return (
@@ -34,6 +36,13 @@ const NavSubLinks: React.FC<NavSubLinksProps> = ({
         height: !showLine ? 0 : "auto",
       }}
       animate={{ opacity: 1, y: 0, x: 0, width: "auto", height: "auto" }}
+      exit={{
+        opacity: 0,
+        x: showLine ? -20 : 0,
+        y: showLine ? -20 : 0,
+        width: showLine ? 0 : "auto",
+        height: !showLine ? 0 : "auto",
+      }}
       transition={{ width: { duration: 0.2 } }}
       key={i}
       className="flex "
@@ -76,6 +85,7 @@ const NavSubLinks: React.FC<NavSubLinksProps> = ({
                       setActive(i);
                     }
                   } else {
+                    onClick();
                     router.push(x.link);
                   }
                 }}
