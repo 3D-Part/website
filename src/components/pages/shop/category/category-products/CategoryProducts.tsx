@@ -59,7 +59,7 @@ const CategoryProducts: React.FC<{ categoryId: string }> = ({ categoryId }) => {
     if (initialFetch) return;
     const fetch = async () => {
       const x = await productsServices.getAllProducts({
-        slug: params.slug + "",
+        categoryId,
         price: { gt: priceMin, lt: priceMax },
         field,
         order,
