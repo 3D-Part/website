@@ -40,11 +40,11 @@ const getAllProducts = async ({
   }
 
   if (price && price.gt !== null) {
-    payload["filters[price][gt]"] = price.gt;
+    payload["filters[price][gt]"] = price.gt - 0.00000000001;
   }
 
   if (price && price.lt !== null) {
-    payload["filters[price][lt]"] = price.lt;
+    payload["filters[price][lt]"] = price.lt + 0.00000000001;
   }
 
   if (nameLike) {

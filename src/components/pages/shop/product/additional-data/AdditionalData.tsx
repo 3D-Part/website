@@ -11,7 +11,7 @@ const AdditionalData: React.FC<{
   const [activeSection, setActiveSection] = useState(0);
   return (
     <div className="w-full ">
-      <div className="flex w-fit gap-3 p-2 overflow-x-auto rounded-lg  bg-neutral-800 mt-[60px] lg:mt-8 ">
+      <div className="flex w-full max-w-fit overflow-x-auto gap-3 p-2  rounded-lg  bg-neutral-800 mt-[60px] lg:mt-8 ">
         <button
           className={`px-4 py-2 rounded-lg cursor-pointer ${
             activeSection === 0 ? "bg-neutral-700" : "bg-neutral-800"

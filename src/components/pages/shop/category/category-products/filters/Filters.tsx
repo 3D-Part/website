@@ -44,11 +44,6 @@ const Filters: React.FC<{
         setField={setField}
         setOrder={setOrder}
       />
-      {isLoading && (
-        <div className="flex items-center justify-center ">
-          <span className="loader"></span>
-        </div>
-      )}
     </div>
   );
 };
