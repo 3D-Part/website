@@ -22,7 +22,6 @@ const RelatedProducts: React.FC<{
     }
   }
 
-  console.log(data.rows);
   const relatedData = data.rows.filter((x) => {
     if (x.id !== productId) {
       return x;

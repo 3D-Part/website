@@ -97,7 +97,14 @@ const CategoryProducts: React.FC<{ categoryId: string }> = ({ categoryId }) => {
       <Heading2 className="my-8">
         Proizvodi <span className="text-primary-500">({data.count})</span>
       </Heading2>
-      <ProductGrid productList={data.rows} />
+
+      {isLoading ? (
+        <div className="flex items-center justify-center ">
+          <span className="loader"></span>
+        </div>
+      ) : (
+        <ProductGrid productList={data.rows} />
+      )}
     </>
   );
 };
