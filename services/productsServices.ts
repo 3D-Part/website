@@ -36,7 +36,7 @@ const getAllProducts = async ({
     payload["filters[category.slug][is]"] = slug;
   }
   if (categoryId !== undefined) {
-    payload["filters[category.id][is]"] = categoryId;
+    payload["filters[categoryId][is]"] = categoryId;
   }
 
   if (price && price.gt !== null) {
