@@ -6,9 +6,10 @@ import { productsServices } from "../../../../../../services/productsServices";
 import { isErrorObject } from "@/shared/interfaces/errorInterface";
 import { notFound } from "next/navigation";
 
-const RelatedProducts: React.FC<{ categoryId: string }> = async ({
-  categoryId,
-}) => {
+const RelatedProducts: React.FC<{
+  categoryId: string;
+  productId: string;
+}> = async ({ categoryId, productId }) => {
   const data = await productsServices.getAllProducts({
     categoryId: categoryId,
   });
@@ -21,21 +22,34 @@ const RelatedProducts: React.FC<{ categoryId: string }> = async ({
     }
   }
 
+  console.log(data.rows);
+  const relatedData = data.rows.filter((x) => {
+    if (x.id !== productId) {
+      return x;
+    }
+  });
+
   return (
-    <Container className="w-full mb-[60px]">
-      <Products
-        products={data.rows}
-        className="mt-3 "
-        animationVariants={{
-          initial: { opacity: 0, scale: 0.7, x: -30 },
-          animate: { opacity: 1, scale: 1, x: 0 },
-        }}
-      >
-        <div className="flex flex-col w-full px-4 lg:px-0">
-          <Heading2>Povezani proizvodi </Heading2>
-        </div>
-      </Products>
-    </Container>
+    <>
+      {relatedData.length ? (
+        <Container className="w-full mb-[60px]">
+          <Products
+            products={relatedData}
+            className="mt-3 "
+            animationVariants={{
+              initial: { opacity: 0, scale: 0.7, x: -30 },
+              animate: { opacity: 1, scale: 1, x: 0 },
+            }}
+          >
+            <div className="flex flex-col w-full px-4 lg:px-0">
+              <Heading2>Povezani proizvodi </Heading2>
+            </div>
+          </Products>
+        </Container>
+      ) : (
+        <></>
+      )}
+    </>
   );
 };
 

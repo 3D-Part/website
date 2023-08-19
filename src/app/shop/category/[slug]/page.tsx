@@ -40,6 +40,8 @@ export default async function Category({ params }: CategoryParams) {
     params.slug
   );
 
+  console.log("categoryData:", categoryData);
+
   if (isErrorObject(categoryData)) {
     if (categoryData.key === "NOT_FOUND_ERROR") {
       notFound();
@@ -52,7 +54,7 @@ export default async function Category({ params }: CategoryParams) {
     <div className="w-full">
       <Container className="min-h-screen px-4 lg:px-8">
         <Description description={categoryData.description} />
-        <CategoryProducts />
+        <CategoryProducts categoryId={categoryData.id} />
       </Container>
     </div>
   );
