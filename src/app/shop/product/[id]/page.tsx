@@ -73,7 +73,7 @@ export default async function Product({ params }: ProductParams) {
           detailedDescription={data.details}
           productsAttributes={data.productAttributes}
         />
-        <RelatedProducts categoryId={data.categoryId} />
+        <RelatedProducts categoryId={data.categoryId} productId={data.id} />
       </Container>
     </div>
   );
