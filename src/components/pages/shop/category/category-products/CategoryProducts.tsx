@@ -9,7 +9,7 @@ import {
 } from "../../../../../../services/productsServices";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 
-const CategoryProducts = () => {
+const CategoryProducts: React.FC<{ categoryId: string }> = ({ categoryId }) => {
   //TODO: Redux this
   const [initialFetch, setInitialFetch] = useState(true);
   const [priceMin, setPriceMin] = useState<number | null>(null);
@@ -31,7 +31,7 @@ const CategoryProducts = () => {
   useEffect(() => {
     const fetch = async () => {
       const x = await productsServices.getAllProducts({
-        slug: params.slug + "",
+        categoryId,
         price: { gt: priceMin, lt: priceMax },
         field,
         order,
