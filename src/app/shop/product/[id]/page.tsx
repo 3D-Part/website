@@ -5,9 +5,9 @@ import RelatedProducts from "@/components/pages/shop/product/related-products/Re
 import Slider from "@/components/pages/shop/product/slider/Slider";
 import { productsServices } from "../../../../../services/productsServices";
 import { notFound } from "next/navigation";
-import { isErrorObject } from "@/shared/interfaces/errorInterface";
 import { Metadata } from "next";
 import { getMainImage } from "@/shared/helper/getMainImage";
+import { Product, WithContext } from "schema-dts";
 
 interface ProductParams {
   params: {
@@ -41,17 +41,18 @@ export const generateMetadata = async ({
   }
 };
 
-export default async function Product({ params }: ProductParams) {
+export default async function ProductPage({ params }: ProductParams) {
   try {
     const data = await productsServices.getSingleProduct(params.id);
 
-    if (isErrorObject(data)) {
-      if (data.key === "NOT_FOUND_ERROR") {
-        notFound();
-      } else {
-        // Handle other error cases if needed
-      }
-    }
+    const jsonLd: WithContext<Product> = {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      name: data.name,
+      image: getMainImage(data.images),
+      description: data.description,
+    };
+
     const similarProductsData = await productsServices.getAllProducts({
       sku: data.sku,
     });
@@ -66,6 +67,11 @@ export default async function Product({ params }: ProductParams) {
 
     return (
       <div className="w-full">
+        {/* Add JSON-LD to your page */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <Container className="min-h-screen px-4 lg:px-9">
           <div className="w-full  border-solid border-b border-[rgba(242,242,242,0.3)] pt-6 pb-4 lg:flex lg:gap-14  lg:pt-8 lg:pb-14">
             <div className="h-[380px] lg:h-[586px] lg:w-[586px] w-auto">
