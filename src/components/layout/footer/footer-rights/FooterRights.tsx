@@ -5,7 +5,7 @@ const FooterRights = () => {
   return (
     <div className="flex items-center justify-center w-full h-10 bg-neutral-700">
       <Paragraph size="M" weight="Regular">
-        © 2023 3D Print - Sva prava zadržana
+        © 2023 3D Part - Sva prava zadržana
       </Paragraph>
     </div>
   );
