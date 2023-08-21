@@ -40,22 +40,13 @@ const Sorter: React.FC<{
           }
         }}
         className="bg-neutral-700 h-8 w-[174px] rounded-lg px-3 focus:ring-primary-600 focus:border-primary-400 block dark:bg-black dark:border-black dark:placeholder-bg-success-400 dark:text-white dark:focus:ring-error-400 dark:focus:border-success-100 select"
+        value={selected}
       >
-        <option value={"0"} selected={selected === "0"}>
-          Najpopularnije
-        </option>
-        <option value={"1"} selected={selected === "1"}>
-          Cijena opadajuće
-        </option>
-        <option value={"2"} selected={selected === "2"}>
-          Cijena rastuće
-        </option>
-        <option value={"3"} selected={selected === "3"}>
-          Naziv opadajuće
-        </option>
-        <option value={"4"} selected={selected === "4"}>
-          Naziv rastuće
-        </option>
+        <option value={"0"}>Najpopularnije</option>
+        <option value={"1"}>Cijena opadajuće</option>
+        <option value={"2"}>Cijena rastuće</option>
+        <option value={"3"}>Naziv opadajuće</option>
+        <option value={"4"}>Naziv rastuće</option>
       </select>
     </div>
   );

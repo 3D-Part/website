@@ -52,7 +52,7 @@ const getSingleCategoryWithSlug = async (
     if ("key" in data && "message" in data) {
       // Error response
 
-      return data;
+      throw new Error(data.message);
     } else {
       // Success response
       return data as CategoryInterface;

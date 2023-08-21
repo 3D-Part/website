@@ -85,6 +85,7 @@ const getAllProducts = async ({
 };
 
 const getSingleProduct = async (id: string): Promise<ProductInterface> => {
+
   try {
     const res = await fetch(`${defaultRoute}/${id}`, {
       method: "GET",
