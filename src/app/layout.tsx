@@ -17,6 +17,9 @@ export const metadata: Metadata = {
   },
   description: "Description for 3d part",
   keywords: ["3d, 3d oprema, 3d masine, filamenti, 3d printer"],
+  verification: {
+    google: "google-site-verification: google12063707349698d2.html",
+  },
   openGraph: {
     type: "website",
     url: "https://3dpartshop.com",
