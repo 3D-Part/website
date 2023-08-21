@@ -40,7 +40,7 @@ const AdditionalData: React.FC<{
       {activeSection === 0 && (
         <p
           dangerouslySetInnerHTML={{ __html: detailedDescription }}
-          className="mt-6 mb-12 text-lg font-normal text-neutral-300"
+          className="mt-6 mb-12 text-lg font-normal text-center lg:text-start text-neutral-300"
         />
       )}
       {activeSection === 1 && (

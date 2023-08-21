@@ -5,7 +5,6 @@ import RelatedProducts from "@/components/pages/shop/product/related-products/Re
 import Slider from "@/components/pages/shop/product/slider/Slider";
 import { productsServices } from "../../../../../services/productsServices";
 import { notFound } from "next/navigation";
-import { isErrorObject } from "@/shared/interfaces/errorInterface";
 import { Metadata } from "next";
 import { getMainImage } from "@/shared/helper/getMainImage";
 import { Product, WithContext } from "schema-dts";
@@ -42,7 +41,7 @@ export const generateMetadata = async ({
   }
 };
 
-export default async function Product({ params }: ProductParams) {
+export default async function ProductPage({ params }: ProductParams) {
   try {
     const data = await productsServices.getSingleProduct(params.id);
 
