@@ -16,6 +16,7 @@ export interface ProductInterface {
   images: ProductImageInterface[];
   productAttributes: ProductsAttributesInterface[];
   updatedAt: Date;
+  weight: string;
   // stock: number;
   // imgUrls: string[];
   // salePrice?: number;
