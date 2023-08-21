@@ -1,10 +1,12 @@
+import { revalidateTime } from "./setup";
+
 const defaultRoute = process.env.NEXT_PUBLIC_BACKEND_URL + "shop/attributes";
 
 const getSingleAttribute = async (id: string): Promise<any> => {
   try {
     const res = await fetch(`${defaultRoute}/${id}`, {
       method: "GET",
-      cache: "no-store",
+      next: { revalidate: revalidateTime },
     });
 
     const data = await res.json();
