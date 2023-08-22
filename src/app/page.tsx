@@ -8,7 +8,7 @@ import SliderServer from "@/components/pages/landing/slider/SliderServer";
 export default function Home() {
   return (
     <main className="relative flex flex-col items-center min-h-screen">
-      <Heading1 className="opacity-0">3D Part</Heading1>
+      <Heading1 className="w-0 h-0 opacity-0">3D Part</Heading1>
       <SliderServer />
       <ProductsSale />
       <ProductsBestSelling />
