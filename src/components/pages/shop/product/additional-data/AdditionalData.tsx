@@ -33,7 +33,7 @@ const AdditionalData: React.FC<{
           }}
         >
           <Heading5 className="inline-block whitespace-nowrap">
-            Tehnicke specifikacije
+            Tehničke specifikacije
           </Heading5>
         </button>
       </div>

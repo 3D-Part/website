@@ -18,7 +18,7 @@ const ContactUsText = () => {
     >
       <Heading2 className="mb-6">Povežite se sa 3D Part timom</Heading2>
       <Paragraph size="M" weight="Regular">
-        3D Part je vaš izvor za sve vrste 3D printanih dijelova i pribora! Naš
+        3D Part je vaš izbor za sve vrste 3D printanih dijelova i pribora! Naš
         je cilj pružiti vam{" "}
         <span className="font-bold">iznimnu kvalitetu proizvoda i usluga</span>,
         kako bismo zadovoljili sve vaše potrebe u 3D printanju. Ako imate

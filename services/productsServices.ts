@@ -107,8 +107,39 @@ const getSingleProduct = async (id: string): Promise<ProductInterface> => {
 };
 
 const getRecommended = async (): Promise<ProductPaginatedInterface> => {
+  const payload: any = {};
+
+  payload["filters[isRecommended][is]"] = true;
+
+  const params = new URLSearchParams({ ...payload }).toString();
+
   try {
-    const res = await fetch(`${defaultRoute}`, {
+    const res = await fetch(`${defaultRoute}?${params}`, {
+      method: "GET",
+      next: { revalidate: revalidateTime },
+    });
+    const data = await res.json();
+    if ("key" in data && "message" in data) {
+      // Error response
+      throw new Error(data.message);
+    } else {
+      // Success response
+      return data as ProductPaginatedInterface;
+    }
+  } catch (err) {
+    throw err;
+  }
+};
+
+const getMostSold = async (): Promise<ProductPaginatedInterface> => {
+  const payload: any = {};
+
+  payload["filters[isMostSold][is]"] = true;
+
+  const params = new URLSearchParams({ ...payload }).toString();
+
+  try {
+    const res = await fetch(`${defaultRoute}?${params}`, {
       method: "GET",
       next: { revalidate: revalidateTime },
     });
@@ -129,4 +160,5 @@ export const productsServices = {
   getAllProducts,
   getSingleProduct,
   getRecommended,
+  getMostSold,
 };
