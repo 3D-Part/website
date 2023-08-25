@@ -87,7 +87,11 @@ export default async function ProductPage({ params }: ProductParams) {
             detailedDescription={data.details}
             productsAttributes={data.productAttributes}
           />
-          <RelatedProducts categoryId={data.categoryId} productId={data.id} />
+          <RelatedProducts
+            categoryId={data.categoryId}
+            productId={data.id}
+            productSku={data.sku}
+          />
         </Container>
       </div>
     );

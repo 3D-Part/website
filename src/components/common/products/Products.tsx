@@ -11,21 +11,24 @@ interface InterfaceProducts {
   linkToAll?: string;
   className?: string;
   animationVariants?: { initial: Object; animate: Object };
+  reverseDirection: boolean;
 }
 
 const Products: React.FC<InterfaceProducts> = ({
   children,
   products,
-  linkToAll,
+  linkToAll = "",
   className = "",
   animationVariants,
+  reverseDirection,
 }) => {
   return (
     <motion.div
       className={`relative max-w-full ${className}`}
       initial="initial"
       whileInView="animate"
-      viewport={{ once: true }}
+      exit="initial"
+      viewport={{ once: false }}
     >
       <div
         className={`flex flex-col w-full lg:flex-row  lg:items-center ${
@@ -33,7 +36,7 @@ const Products: React.FC<InterfaceProducts> = ({
         }`}
       >
         <div>{children}</div>
-        {linkToAll && (
+        {linkToAll !== "" && (
           <div className="hidden lg:block">
             <Button
               text="Pogledaj sve"
@@ -48,8 +51,9 @@ const Products: React.FC<InterfaceProducts> = ({
       <ProductsSlide
         products={products}
         animationVariants={animationVariants}
+        reverseDirection={reverseDirection}
       />
-      {linkToAll && (
+      {linkToAll !== "" && (
         <Button
           text="Pogledaj sve"
           onClick={() => {}}

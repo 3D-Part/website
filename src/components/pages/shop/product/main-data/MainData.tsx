@@ -53,8 +53,11 @@ const MainData: React.FC<{
       <motion.div variants={dropUpVariants}>
         <Heading2>{name}</Heading2>
 
-        <Paragraph weight="Regular" size="L" className="mt-4 text-neutral-200">
-          {description}
+        <Paragraph weight="Regular" size="L">
+          <p
+            dangerouslySetInnerHTML={{ __html: description + "" }}
+            className="mt-4 text-lg font-normal leading-7 text-center lg:text-start text-neutral-200"
+          />
         </Paragraph>
       </motion.div>
 
