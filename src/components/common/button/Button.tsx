@@ -10,7 +10,7 @@ interface ButtonProps {
   onClick: () => void;
   disabled?: boolean;
   size: "M" | "L";
-  text: string;
+  text?: string;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -35,8 +35,10 @@ const Button: React.FC<ButtonProps> = ({
       whileHover={!disabled ? "animate" : ""}
       whileTap={{ scale: !disabled ? 0.95 : 1 }}
       disabled={disabled}
-      onClick={() => {
+      onClick={(e) => {
         onClick();
+        e.stopPropagation();
+        e.preventDefault();
       }}
       className={`px-4 transition-all ${className} ${colors} ${
         size === "M" ? "py-3" : "py-4"
@@ -56,19 +58,7 @@ const Button: React.FC<ButtonProps> = ({
           {text}
         </Paragraph>
       </motion.div>
-      <motion.span
-        initial={{ x: "0%" }}
-        variants={{
-          animate: {
-            x: ["0%", "40%", "0%"],
-            transition: {
-              repeat: Infinity,
-            },
-          },
-        }}
-      >
-        {children}
-      </motion.span>
+      <span>{children}</span>
     </motion.button>
   );
 };
