@@ -1,7 +1,17 @@
+import { ProductInterface } from "@/shared/interfaces/productsInterface";
 import { createSlice } from "@reduxjs/toolkit";
 
 type CartState = {
-  cartProducts: { idProduct: string; amount: number }[];
+  cartProducts: {
+    idProduct: string;
+    amount: number;
+    productData: {
+      image: string;
+      weight: string;
+      price: string;
+      quantity: number;
+    };
+  }[];
   cartModalVisible: boolean;
 };
 
@@ -16,7 +26,7 @@ export const cart = createSlice({
   reducers: {
     reset: () => initialState,
     addProduct: (state, action) => {
-      const { productId } = action.payload;
+      const { productId, productData } = action.payload;
       const productIndex = state.cartProducts.findIndex(
         (product) => product.idProduct === productId
       );
@@ -24,11 +34,15 @@ export const cart = createSlice({
       if (productIndex !== -1) {
         state.cartProducts[productIndex].amount += 1;
       } else {
-        state.cartProducts.push({ idProduct: productId, amount: 1 });
+        state.cartProducts.push({
+          idProduct: productId,
+          amount: 1,
+          productData,
+        });
       }
     },
     addProductWithAmount: (state, action) => {
-      const { productId, amount } = action.payload;
+      const { productId, amount, productData } = action.payload;
       const productIndex = state.cartProducts.findIndex(
         (product) => product.idProduct === productId
       );
@@ -36,7 +50,11 @@ export const cart = createSlice({
       if (productIndex !== -1) {
         state.cartProducts[productIndex].amount = amount;
       } else {
-        state.cartProducts.push({ idProduct: productId, amount: amount });
+        state.cartProducts.push({
+          idProduct: productId,
+          amount: amount,
+          productData,
+        });
       }
     },
     removeProduct: (state, action) => {

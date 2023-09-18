@@ -23,6 +23,7 @@ const Product: React.FC<ProductInterfaceComponent> = ({
   price,
   images,
   quantity,
+  weight,
   className = "",
   imageWidth = "200px",
 }) => {
@@ -100,7 +101,17 @@ const Product: React.FC<ProductInterfaceComponent> = ({
             text=""
             disabled={quantity < 1}
             onClick={() => {
-              dispatch(addProduct({ productId: id }));
+              dispatch(
+                addProduct({
+                  productId: id,
+                  productData: {
+                    image: getMainImage(images),
+                    weight,
+                    price,
+                    quantity,
+                  },
+                })
+              );
             }}
             className="h-8 w-[200px] mt-2"
           >

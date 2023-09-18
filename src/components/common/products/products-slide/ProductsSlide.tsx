@@ -34,7 +34,7 @@ const ProductsSlide: React.FC<{
           hide: true,
         }}
         autoplay={{
-          delay: 2000,
+          delay: 3000,
           disableOnInteraction: true,
           pauseOnMouseEnter: true,
           reverseDirection,

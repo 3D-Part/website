@@ -12,12 +12,13 @@ import Button from "@/components/common/button/Button";
 import { CartIcon } from "@/components/common/product/Product";
 import { useAppDispatch } from "@/redux/hooks";
 import { addProduct, addProductWithAmount } from "@/redux/slices/cartSlice";
+import { getMainImage } from "@/shared/helper/getMainImage";
 
 const MainData: React.FC<{
   productData: ProductInterface;
   similarProducts: ProductInterface[];
 }> = ({ productData, similarProducts }) => {
-  let { name, price, sku, description } = productData;
+  let { name, price, sku, description, weight, images, quantity } = productData;
   const containerVariants = {
     hidden: {
       opacity: 0,
@@ -152,7 +153,16 @@ const MainData: React.FC<{
         <Button
           onClick={() => {
             dispatch(
-              addProductWithAmount({ productId: productData.id, amount })
+              addProductWithAmount({
+                productId: productData.id,
+                amount,
+                productData: {
+                  image: getMainImage(images),
+                  weight,
+                  price,
+                  quantity,
+                },
+              })
             );
           }}
           size="L"
