@@ -115,7 +115,7 @@ const Product: React.FC<ProductInterfaceComponent> = ({
   );
 };
 
-const CartIcon: React.FC<{ color: string }> = ({ color }) => {
+export const CartIcon: React.FC<{ color: string }> = ({ color }) => {
   return (
     <svg
       width="14"

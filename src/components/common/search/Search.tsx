@@ -30,7 +30,7 @@ const Search: React.FC<SearchProps> = ({
 }) => {
   return (
     <div
-      className={`relative text-neutral-200 flex items-center w-full md:w-min h-12 gap-3 px-6 py-3 bg-neutral-700 rounded-[58px] appearance-none border-primary-500 border flex-grow ${className}`}
+      className={`relative text-neutral-200 flex items-center w-full lg:w-min h-12 gap-3 px-6 py-3 bg-neutral-700 rounded-[58px] appearance-none border-primary-500 border flex-grow ${className}`}
     >
       {searchIcon && (
         <BiSearch className="text-neutral-200 min-w-[20px] min-h-[20px]" />
