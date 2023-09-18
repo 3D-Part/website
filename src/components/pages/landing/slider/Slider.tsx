@@ -33,9 +33,9 @@ const Slider = () => {
       >
         <SwiperSlide>
           <SliderPage
-            bgUrl="/assets/img/slider/bg.webp"
-            productUrl="/assets/img/slider/product.png"
-            title="Ender 3 Max Neo"
+            bgUrl="/assets/img/slider/bg3.jpg"
+            productUrl="/assets/img/slider/product3.png"
+            title="Ender 5 s1"
             subtitle="Build an Ambitious Printing World"
             description="Ender 3 Max Neo je visokokvalitetni 3D printer koji nudi brzu i preciznu štampanje sa impresivnim mogućnostima, kao što su velika površina za štampanje, automatsko nivelisanje i stabilna konstrukcija."
             buttonText="Detaljnije"
@@ -47,9 +47,9 @@ const Slider = () => {
 
         <SwiperSlide>
           <SliderPage
-            bgUrl="/assets/img/slider/bg.webp"
+            bgUrl="/assets/img/slider/bg2.jpg"
             productUrl="/assets/img/slider/product2.png"
-            title="CR M4"
+            title="Ender 3 S1 Pro"
             subtitle="Fulfill Big Ambitions Efficiently"
             description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec suscipit elit sit amet faucibus vehicula. Nunc vel diam id nulla tincidunt mollis a at massa. In non molestie lacus, sed viverra erat. Praesent aliquet dui non vulputate fringilla. Fusce vulputate mauris non nisl aliquet."
             buttonText="Detaljnije"
@@ -60,9 +60,9 @@ const Slider = () => {
 
         <SwiperSlide>
           <SliderPage
-            bgUrl="/assets/img/slider/bg.webp"
-            productUrl="/assets/img/slider/product3.png"
-            title="Creality Falcon 2"
+            bgUrl="/assets/img/slider/bg1.jpg"
+            productUrl="/assets/img/slider/product1.png"
+            title="Ender 3 v2 Neo"
             subtitle="Safer, Smarter, Stronger"
             description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec suscipit elit sit amet faucibus vehicula. Nunc vel diam id nulla tincidunt mollis a at massa. In non molestie lacus, sed viverra erat."
             buttonText="Detaljnije"
