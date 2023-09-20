@@ -6,10 +6,12 @@ import { AnimatePresence, motion } from "framer-motion";
 import Cart from "./cart/Cart";
 import { Path } from "../../header/hamburger/Hamburger";
 import Button from "@/components/common/button/Button";
+import { useRouter } from "next/navigation";
 
 const CartModal = () => {
   const isOpen = useAppSelector(cartModalVisibleSelector);
   const dispatch = useAppDispatch();
+  const router = useRouter();
 
   return (
     <>
@@ -95,7 +97,9 @@ const CartModal = () => {
                     Nastavi kupovinu
                   </Button>
                   <Button
-                    onClick={() => {}}
+                    onClick={() => {
+                      router.push("/cart");
+                    }}
                     type="primary"
                     size="L"
                     className="w-1/2"

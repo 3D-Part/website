@@ -13,6 +13,7 @@ import { CartIcon } from "@/components/common/product/Product";
 import { useAppDispatch } from "@/redux/hooks";
 import { addProductWithAmount } from "@/redux/slices/cartSlice";
 import { getMainImage } from "@/shared/helper/getMainImage";
+import { useIsTablet } from "@/shared/hooks/useMediaQuerry";
 
 const MainData: React.FC<{
   productData: ProductInterface;
@@ -49,6 +50,8 @@ const MainData: React.FC<{
 
   const [amount, setAmount] = useState(1);
   const dispatch = useAppDispatch();
+
+  const isTablet = useIsTablet();
 
   const amountHandler = (newAmount: number) => {
     if (newAmount >= 1) {
@@ -96,14 +99,14 @@ const MainData: React.FC<{
         className="flex mt-[60px] gap-9 flex-wrap"
       >
         <Display2>{parseFloat(price).toFixed(2)} KM</Display2>
-        <Stock stock={productData.quantity} />
+        {!isTablet && <Stock stock={productData.quantity} />}
       </motion.div>
 
       <motion.div
         variants={dropUpVariants}
-        className="flex mt-[60px] gap-9 flex-wrap"
+        className="flex mt-[60px] gap-9 flex-wrap items-center"
       >
-        <div className="bg-neutral-700 p-[3px] flex gap-4 items-center rounded-lg w-min">
+        <div className="bg-neutral-700 p-[3px] flex gap-4 items-center rounded-lg w-min h-[46px]">
           <motion.button
             className="w-10 h-10 rounded-[4px] flex items-center justify-center bg-neutral-900 cursor-pointer"
             whileTap="tap"
@@ -150,6 +153,7 @@ const MainData: React.FC<{
             </motion.svg>
           </motion.button>
         </div>
+        {isTablet && <Stock stock={productData.quantity} />}
         <Button
           onClick={() => {
             dispatch(
@@ -168,7 +172,7 @@ const MainData: React.FC<{
           }}
           size="L"
           type="primary"
-          className="flex w-[186px] h-12"
+          className="flex  w-full lg:w-[186px] h-12"
           disabled={productData.quantity < 1}
         >
           <div className="flex gap-2">
