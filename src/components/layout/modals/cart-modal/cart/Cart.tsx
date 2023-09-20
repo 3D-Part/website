@@ -28,9 +28,9 @@ const Cart = () => {
   const { price, post } = calculatePriceAndPost(cart);
 
   return (
-    <motion.div className="flex flex-col w-full h-full px-8 py-4 cursor-default bg-neutral-800">
+    <motion.div className="flex flex-col w-full h-full px-4 py-2 cursor-default lg:px-8 lg:py-4 bg-neutral-800">
       <Heading2>Korpa</Heading2>
-      <div className="mt-[10px] bg-neutral-600 w-min px-2 py-1 rounded-[77px]">
+      <div className="lg:mt-[10px] mt-1 bg-neutral-600 w-min px-2 py-1 rounded-[77px]">
         <Paragraph
           size="XS"
           weight="Regular"
@@ -39,7 +39,7 @@ const Cart = () => {
           cartLength === 1 ? "Proizvod" : "Proizvoda"
         } u korpi`}</Paragraph>
       </div>
-      <div className="flex-1 my-4 overflow-x-hidden overflow-y-auto">
+      <div className="flex-1 my-2 overflow-x-hidden overflow-y-auto lg:my-4">
         <AnimatePresence>
           {cart.map((product) => {
             return <CartProducts product={product} key={product.idProduct} />;

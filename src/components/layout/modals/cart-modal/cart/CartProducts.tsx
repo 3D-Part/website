@@ -25,7 +25,7 @@ const CartProducts: React.FC<{ product: CartProductsType }> = ({ product }) => {
           dispatch(removeProduct({ productId: product.idProduct }));
         }}
       />
-      <div className="border-solid rounded-lg border-primary-500 border-[2px] lg:w-[90px] lg:h-[90px] w-16 h-16 relative mr-[6px]">
+      <div className="border-solid rounded-lg border-primary-500 border-[2px] lg:w-[90px] lg:h-[90px] w-[80px] h-[80px] relative mr-[6px]">
         <Image
           src={product.productData.image}
           alt={product.productData.name}
@@ -34,15 +34,15 @@ const CartProducts: React.FC<{ product: CartProductsType }> = ({ product }) => {
         />
       </div>
       <div className="flex flex-col justify-between flex-1">
-        <Heading6 className="text-xl text-white md:text-base">
+        <Heading6 className="text-base text-white lg:text-xl md:text-lg">
           {product.productData.name}
         </Heading6>
-        <p className="text-base font-normal text-neutral-200">
+        <p className="text-sm font-normal lg:text-base text-neutral-200">
           Težina:{" "}
           <span className="text-white ">{product.productData.weight}</span>
         </p>
         <div className="flex items-center justify-between w-full">
-          <div className="bg-neutral-700 p-[3px] flex gap-3 lg:gap-4 items-center rounded-lg mt-[6px]">
+          <div className="bg-neutral-700 lg:p-[3px] p-[2px] flex gap-3 lg:gap-4 items-center rounded-lg mt-[3px] lg:mt-[6px]">
             <motion.button
               className="lg:w-8 lg:h-8 w-6 h-6 rounded-[4px] flex items-center justify-center bg-neutral-900 cursor-pointer"
               whileTap="tap"
