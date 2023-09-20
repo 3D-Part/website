@@ -7,9 +7,10 @@ import {
   cartProductsSelector,
 } from "@/redux/slices/cartSelectors";
 import { CartProductsType } from "@/redux/slices/cartSlice";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
+import CartProducts from "./CartProducts";
 
-const calculatePriceAndPost = (cart: CartProductsType) => {
+const calculatePriceAndPost = (cart: CartProductsType[]) => {
   let price = 0,
     post = 0;
 
@@ -27,7 +28,7 @@ const Cart = () => {
   const { price, post } = calculatePriceAndPost(cart);
 
   return (
-    <motion.div className="flex flex-col w-full h-full px-8 py-4 bg-neutral-800">
+    <motion.div className="flex flex-col w-full h-full px-8 py-4 cursor-default bg-neutral-800">
       <Heading2>Korpa</Heading2>
       <div className="mt-[10px] bg-neutral-600 w-min px-2 py-1 rounded-[77px]">
         <Paragraph
@@ -38,7 +39,13 @@ const Cart = () => {
           cartLength === 1 ? "Proizvod" : "Proizvoda"
         } u korpi`}</Paragraph>
       </div>
-      <div className="flex-1 my-4 overflow-y-auto border border-solid"></div>
+      <div className="flex-1 my-4 overflow-x-hidden overflow-y-auto">
+        <AnimatePresence>
+          {cart.map((product) => {
+            return <CartProducts product={product} key={product.idProduct} />;
+          })}
+        </AnimatePresence>
+      </div>
 
       {/* --------------- */}
       <div className="h-[1px] bg-neutral-500"></div>

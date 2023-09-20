@@ -109,6 +109,7 @@ const Product: React.FC<ProductInterfaceComponent> = ({
                     weight,
                     price,
                     quantity,
+                    name,
                   },
                 })
               );

@@ -161,6 +161,7 @@ const MainData: React.FC<{
                   weight,
                   price,
                   quantity,
+                  name,
                 },
               })
             );

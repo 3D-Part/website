@@ -9,11 +9,12 @@ export type CartProductsType = {
     weight: string;
     price: string;
     quantity: number;
+    name: string;
   };
-}[];
+};
 
 type CartState = {
-  cartProducts: CartProductsType;
+  cartProducts: CartProductsType[];
   cartModalVisible: boolean;
 };
 
@@ -59,7 +60,7 @@ export const cart = createSlice({
         });
       }
     },
-    removeProduct: (state, action) => {
+    decreaseProduct: (state, action) => {
       const { productId } = action.payload;
 
       const productIndex = state.cartProducts.findIndex(
@@ -75,6 +76,18 @@ export const cart = createSlice({
       }
     },
 
+    removeProduct: (state, action) => {
+      const { productId } = action.payload;
+
+      const productIndex = state.cartProducts.findIndex(
+        (product) => product.idProduct === productId
+      );
+
+      if (productIndex !== -1) {
+        state.cartProducts.splice(productIndex, 1);
+      }
+    },
+
     changeCartModalVisible: (state, action) => {
       state.cartModalVisible = action.payload;
     },
@@ -87,5 +100,6 @@ export const {
   removeProduct,
   addProductWithAmount,
   changeCartModalVisible,
+  decreaseProduct,
 } = cart.actions;
 export default cart.reducer;
