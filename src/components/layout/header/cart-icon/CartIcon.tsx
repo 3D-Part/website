@@ -1,13 +1,19 @@
 import Paragraph from "@/components/common/text/paragraph/Paragraph";
-import { useAppSelector } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { cartLengthSelector } from "@/redux/slices/cartSelectors";
-import { cart } from "@/redux/slices/cartSlice";
+import { cart, changeCartModalVisible } from "@/redux/slices/cartSlice";
 import React from "react";
 
 const CartIcon: React.FC<{ className: string }> = ({ className }) => {
   const cartLength = useAppSelector(cartLengthSelector);
+  const dispatch = useAppDispatch();
   return (
-    <div className={`${className} relative cursor-pointer p-1`}>
+    <div
+      className={`${className} relative cursor-pointer p-1`}
+      onClick={() => {
+        dispatch(changeCartModalVisible(true));
+      }}
+    >
       <CartSvg />
       <div
         className={`text-white ${

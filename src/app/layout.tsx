@@ -5,6 +5,7 @@ import Footer from "@/components/layout/footer/Footer";
 import Lights from "@/components/layout/header/lights/Lights";
 import { Metadata } from "next";
 import { Providers } from "@/redux/provider";
+import Modals from "@/components/layout/modals/Modals";
 
 const exo2 = Exo_2({
   variable: "--font-exo2",
@@ -48,6 +49,7 @@ export default function RootLayout({
         <Providers>
           <Header />
           <Lights />
+          <Modals />
 
           <div className="static">{children}</div>
           <Footer />
