@@ -5,11 +5,11 @@ const Display1: React.FC<TextComponentInterface> = ({
   className = "",
 }) => {
   return (
-    <p
-      className={`text-[56px] font-extrabold leading-[72px] lg:text-[64px] lg:leading-[84px] ${className}`}
+    <h3
+      className={`text-[40px] font-extrabold leading-[48px] lg:text-[64px] lg:leading-[84px] ${className}`}
     >
       {children}
-    </p>
+    </h3>
   );
 };
 

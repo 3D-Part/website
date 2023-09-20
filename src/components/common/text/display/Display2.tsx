@@ -6,11 +6,11 @@ const Display2: React.FC<TextComponentInterface> = ({
   className = "",
 }) => {
   return (
-    <p
+    <h4
       className={`text-[48px] font-semibold leading-[48px] lg:text-[56px] lg:leading-[72px] ${className}`}
     >
       {children}
-    </p>
+    </h4>
   );
 };
 
