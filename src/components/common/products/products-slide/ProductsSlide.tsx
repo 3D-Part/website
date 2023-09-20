@@ -54,7 +54,7 @@ const ProductsSlide: React.FC<{
                   exit="initial"
                   animate="animate"
                   variants={animationVariants}
-                  transition={{ delay: i * 0.2 }}
+                  transition={{ delay: i * 0.1 }}
                 >
                   <Product {...product} className={"ml-4 lg:ml-0"} />
                 </motion.div>
