@@ -1,4 +1,3 @@
-import { ProductInterface } from "@/shared/interfaces/productsInterface";
 import { createSlice } from "@reduxjs/toolkit";
 
 export type CartProductsType = {

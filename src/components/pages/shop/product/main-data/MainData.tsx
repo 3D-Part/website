@@ -11,7 +11,7 @@ import SimilarProducts from "./similar-products/SimilarProducts";
 import Button from "@/components/common/button/Button";
 import { CartIcon } from "@/components/common/product/Product";
 import { useAppDispatch } from "@/redux/hooks";
-import { addProduct, addProductWithAmount } from "@/redux/slices/cartSlice";
+import { addProductWithAmount } from "@/redux/slices/cartSlice";
 import { getMainImage } from "@/shared/helper/getMainImage";
 
 const MainData: React.FC<{
