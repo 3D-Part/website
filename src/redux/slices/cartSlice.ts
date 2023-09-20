@@ -1,3 +1,4 @@
+import { notify } from "@/components/common/toast/Toastify";
 import { createSlice } from "@reduxjs/toolkit";
 
 export type CartProductsType = {
@@ -28,7 +29,7 @@ export const cart = createSlice({
   reducers: {
     reset: () => initialState,
     addProduct: (state, action) => {
-      const { productId, productData } = action.payload;
+      const { productId, productData, shouldNotify } = action.payload;
       const productIndex = state.cartProducts.findIndex(
         (product) => product.idProduct === productId
       );
@@ -42,15 +43,17 @@ export const cart = createSlice({
           productData,
         });
       }
+
+      shouldNotify && notify("Proizvod dodan u korpu", { type: "success" });
     },
     addProductWithAmount: (state, action) => {
-      const { productId, amount, productData } = action.payload;
+      const { productId, amount, productData, shouldNotify } = action.payload;
       const productIndex = state.cartProducts.findIndex(
         (product) => product.idProduct === productId
       );
 
       if (productIndex !== -1) {
-        state.cartProducts[productIndex].amount = amount;
+        state.cartProducts[productIndex].amount += amount;
       } else {
         state.cartProducts.push({
           idProduct: productId,
@@ -58,6 +61,7 @@ export const cart = createSlice({
           productData,
         });
       }
+      shouldNotify && notify("Proizvod dodan u korpu", { type: "success" });
     },
     decreaseProduct: (state, action) => {
       const { productId } = action.payload;

@@ -111,6 +111,7 @@ const Product: React.FC<ProductInterfaceComponent> = ({
                     quantity,
                     name,
                   },
+                  shouldNotify:true
                 })
               );
             }}

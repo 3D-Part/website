@@ -85,7 +85,7 @@ const CartModal = () => {
                 }}
               >
                 <Cart />
-                <div className=" px-4 lg:px-8 flex items-center gap-3 pb-[58px] bg-neutral-800">
+                <div className=" px-4 lg:px-8 flex items-center gap-3 pb-8 lg:pb-[58px] bg-neutral-800">
                   <Button
                     onClick={() => {
                       dispatch(changeCartModalVisible(false));

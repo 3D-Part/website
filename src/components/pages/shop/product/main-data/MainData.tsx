@@ -167,6 +167,7 @@ const MainData: React.FC<{
                   quantity,
                   name,
                 },
+                shouldNotify: true,
               })
             );
           }}

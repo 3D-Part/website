@@ -6,6 +6,8 @@ import Lights from "@/components/layout/header/lights/Lights";
 import { Metadata } from "next";
 import { Providers } from "@/redux/provider";
 import Modals from "@/components/layout/modals/Modals";
+import "react-toastify/dist/ReactToastify.css";
+import Toastify from "@/components/common/toast/Toastify";
 
 const exo2 = Exo_2({
   variable: "--font-exo2",
@@ -54,6 +56,7 @@ export default function RootLayout({
           <div className="static">{children}</div>
           <Footer />
         </Providers>
+        <Toastify />
       </body>
     </html>
   );

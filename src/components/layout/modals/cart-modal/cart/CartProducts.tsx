@@ -79,6 +79,7 @@ const CartProducts: React.FC<{ product: CartProductsType }> = ({ product }) => {
                   addProduct({
                     productId: product.idProduct,
                     productData: product.productData,
+                    shouldNotify: false,
                   })
                 );
               }}
