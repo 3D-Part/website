@@ -32,8 +32,12 @@ const CartModal = () => {
                 initial={"initial"}
                 animate={"open"}
                 variants={{
-                  initial: { opacity: 0, y: -80 },
-                  open: { opacity: 1, y: 0, transition: { duration: 0.2 } },
+                  initial: { opacity: 0, scale: 0 },
+                  open: {
+                    opacity: 1,
+                    scale: 1,
+                    transition: { duration: 0.1 },
+                  },
                 }}
                 aria-label="Menu"
               >
@@ -72,6 +76,10 @@ const CartModal = () => {
                 exit={{ x: 500 }}
                 transition={{ type: "tween", ease: "easeInOut" }}
                 className="w-full h-full"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  e.preventDefault();
+                }}
               >
                 <Cart />
               </motion.div>

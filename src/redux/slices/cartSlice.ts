@@ -1,17 +1,19 @@
 import { ProductInterface } from "@/shared/interfaces/productsInterface";
 import { createSlice } from "@reduxjs/toolkit";
 
+export type CartProductsType = {
+  idProduct: string;
+  amount: number;
+  productData: {
+    image: string;
+    weight: string;
+    price: string;
+    quantity: number;
+  };
+}[];
+
 type CartState = {
-  cartProducts: {
-    idProduct: string;
-    amount: number;
-    productData: {
-      image: string;
-      weight: string;
-      price: string;
-      quantity: number;
-    };
-  }[];
+  cartProducts: CartProductsType;
   cartModalVisible: boolean;
 };
 
