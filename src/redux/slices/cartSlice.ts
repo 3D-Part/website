@@ -27,7 +27,7 @@ export const cart = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    reset: () => initialState,
+    resetCart: () => initialState,
     addProduct: (state, action) => {
       const { productId, productData, shouldNotify } = action.payload;
       const productIndex = state.cartProducts.findIndex(
@@ -99,7 +99,7 @@ export const cart = createSlice({
 
 export const {
   addProduct,
-  reset,
+  resetCart,
   removeProduct,
   addProductWithAmount,
   changeCartModalVisible,

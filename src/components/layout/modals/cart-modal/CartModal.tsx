@@ -7,6 +7,7 @@ import Cart from "./cart/Cart";
 import { Path } from "../../header/hamburger/Hamburger";
 import Button from "@/components/common/button/Button";
 import { useRouter } from "next/navigation";
+import Paragraph from "@/components/common/text/paragraph/Paragraph";
 
 const CartModal = () => {
   const isOpen = useAppSelector(cartModalVisibleSelector);
@@ -94,17 +95,22 @@ const CartModal = () => {
                     size="L"
                     className="w-1/2"
                   >
-                    Nastavi kupovinu
+                    <Paragraph size="M" weight="Bold">
+                      Nastavi kupovinu
+                    </Paragraph>
                   </Button>
                   <Button
                     onClick={() => {
-                      router.push("/cart");
+                      router.push("/shop/checkout");
+                      dispatch(changeCartModalVisible(false));
                     }}
                     type="primary"
                     size="L"
                     className="w-1/2"
                   >
-                    Kupi
+                    <Paragraph size="M" weight="Bold">
+                      Kupi
+                    </Paragraph>
                   </Button>
                 </div>
               </motion.div>
