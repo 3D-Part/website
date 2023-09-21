@@ -3,8 +3,6 @@ import { OrderBodyInterface } from "@/shared/interfaces/orderInterface";
 const defaultRoute = process.env.NEXT_PUBLIC_BACKEND_URL + "order";
 
 const createOrder = async (body: OrderBodyInterface): Promise<any> => {
-  console.log(body);
-
   try {
     const res = await fetch(`${defaultRoute}`, {
       method: "POST",
@@ -15,12 +13,13 @@ const createOrder = async (body: OrderBodyInterface): Promise<any> => {
 
     if ("key" in data && "message" in data) {
       // Error response
-      throw new Error(data.message);
+      throw new Error(data.errors[0].message);
     } else {
       // Success response
       return data as any;
     }
   } catch (err) {
+    console.log(err);
     throw err;
   }
 };

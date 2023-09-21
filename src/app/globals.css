@@ -298,8 +298,6 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .Toastify__toast--error {
   border-radius: 20px !important;
-  background: rgba(239, 68, 68, 0.1) !important;
-  backdrop-filter: blur(40px);
 }
 .Toastify__toast--error::after {
   position: absolute;

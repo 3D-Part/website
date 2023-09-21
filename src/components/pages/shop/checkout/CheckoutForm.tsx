@@ -8,22 +8,32 @@ import Textarea from "@/components/common/textarea/Textarea";
 import { orderServices } from "../../../../../services/orderServices";
 import { useAppSelector } from "@/redux/hooks";
 import { cartProductsForOrderSelector } from "@/redux/slices/cartSelectors";
+import { notify } from "@/components/common/toast/Toastify";
+import { useState } from "react";
 
 const CheckoutForm = () => {
   const products = useAppSelector(cartProductsForOrderSelector);
+  const [buttonDisabled, setBUttonDisabled] = useState(false);
 
-  const handleSubmit = (event: any) => {
+  const handleSubmit = async (event: any) => {
     event.preventDefault();
+    setBUttonDisabled(true);
 
-    orderServices.createOrder({
-      city: event.target.city.value,
-      email: event.target.email.value,
-      fullName: event.target.name.value + " " + event.target.surname.value,
-      phone: event.target.phone.value,
-      postCode: event.target.postCode.value,
-      products,
-      street: event.target.street.value,
-    });
+    try {
+      const data = await orderServices.createOrder({
+        city: event.target.city.value,
+        email: event.target.email.value,
+        fullName: event.target.name.value + " " + event.target.surname.value,
+        phone: event.target.phone.value,
+        postCode: event.target.postCode.value,
+        products,
+        street: event.target.street.value,
+      });
+      notify("Narudžba kreirana", { type: "success" });
+    } catch (error: any) {
+      notify(error.message, { type: "error" });
+    }
+    setBUttonDisabled(false);
   };
 
   return (
@@ -70,6 +80,7 @@ const CheckoutForm = () => {
           value="Završi kupovinu"
           onSubmit={handleSubmit}
           className="w-full h-12 mt-10 text-base font-bold rounded-lg cursor-pointer bg-primary-500"
+          disabled={buttonDisabled}
         />
       </form>
     </div>
