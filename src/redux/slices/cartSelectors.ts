@@ -9,3 +9,10 @@ export const cartProductsSelector = (state: RootState) => {
 export const cartModalVisibleSelector = (state: RootState) => {
   return state.cartSlice.cartModalVisible;
 };
+export const cartProductsForOrderSelector = (
+  state: RootState
+): { productId: string; quantity: number }[] => {
+  return state.cartSlice.cartProducts.map((x) => {
+    return { productId: x.idProduct, quantity: x.amount };
+  });
+};
