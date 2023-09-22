@@ -7,6 +7,7 @@ const createOrder = async (body: OrderBodyInterface): Promise<any> => {
     const res = await fetch(`${defaultRoute}`, {
       method: "POST",
       body: JSON.stringify(body),
+      headers: { "Content-Type": "application/json" },
     });
 
     const data = await res.json();
