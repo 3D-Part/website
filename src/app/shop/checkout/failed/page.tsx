@@ -6,12 +6,17 @@ import Paragraph from "@/components/common/text/paragraph/Paragraph";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";
+import { motion } from "framer-motion";
 
 const Failed = () => {
   const router = useRouter();
   return (
     <main className="min-h-screen px-4">
-      <div className="pt-[68px] mx-auto w-full max-w-[588px] flex flex-col justify-center items-center h-full">
+      <motion.div
+        className="pt-[68px] mx-auto w-full max-w-[588px] flex flex-col justify-center items-center h-full"
+        initial={{ y: 50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+      >
         <div className="w-[164px] h-[164px] animate-pulse">
           <Image
             alt="failed"
@@ -39,7 +44,7 @@ const Failed = () => {
             Vrati se na sajt
           </Paragraph>
         </Button>
-      </div>
+      </motion.div>
     </main>
   );
 };

@@ -6,18 +6,28 @@ import Heading2 from "@/components/common/text/heading/Heading2";
 import Paragraph from "@/components/common/text/paragraph/Paragraph";
 import Textarea from "@/components/common/textarea/Textarea";
 import { orderServices } from "../../../../../services/orderServices";
-import { useAppSelector } from "@/redux/hooks";
-import { cartProductsForOrderSelector } from "@/redux/slices/cartSelectors";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { notify } from "@/components/common/toast/Toastify";
 import { useState } from "react";
+import { changeIsGlobalLoading } from "@/redux/slices/ui/uiSlice";
+import { useRouter } from "next/navigation";
+import { cartProductsSelector } from "@/redux/slices/cart/cartSelectors";
+import {
+  changeSuccessfulOrder,
+  resetCart,
+} from "@/redux/slices/cart/cartSlice";
 
 const CheckoutForm = () => {
-  const products = useAppSelector(cartProductsForOrderSelector);
+  const products = useAppSelector(cartProductsSelector);
+
   const [buttonDisabled, setBUttonDisabled] = useState(false);
+  const dispatch = useAppDispatch();
+  const router = useRouter();
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     setBUttonDisabled(true);
+    dispatch(changeIsGlobalLoading(true));
 
     try {
       const data = await orderServices.createOrder({
@@ -26,14 +36,29 @@ const CheckoutForm = () => {
         fullName: event.target.name.value + " " + event.target.surname.value,
         phone: event.target.phone.value,
         postCode: event.target.postCode.value,
-        products,
+        products: products.map((x) => {
+          return { productId: x.idProduct, quantity: x.amount };
+        }),
         street: event.target.street.value,
       });
       notify("Narudžba kreirana", { type: "success" });
+      dispatch(resetCart());
+      dispatch(changeSuccessfulOrder(data));
+      router.push("/shop/checkout/successful");
     } catch (error: any) {
-      notify(error.message, { type: "error" });
+      const parsedError = JSON.parse(error.message);
+      if (parsedError.key === "VALIDATION_ERROR") {
+        parsedError.errors.forEach((err: any, i: number) => {
+          setTimeout(() => {
+            notify(err.message, { type: "error" });
+          }, 100 * i);
+        });
+      } else {
+        router.push("/shop/checkout/failed");
+      }
     }
     setBUttonDisabled(false);
+    dispatch(changeIsGlobalLoading(false));
   };
 
   return (
@@ -46,6 +71,7 @@ const CheckoutForm = () => {
             title="Plaćanje pouzećem"
             value="0"
             checked={true}
+            onChange={() => {}}
           />
         </div>
         {/* ----- */}
@@ -77,7 +103,7 @@ const CheckoutForm = () => {
         {/* ------ */}
         <input
           type="submit"
-          value="Završi kupovinu"
+          value={`Završi kupovinu `}
           onSubmit={handleSubmit}
           className="w-full h-12 mt-10 text-base font-bold rounded-lg cursor-pointer bg-primary-500"
           disabled={buttonDisabled}

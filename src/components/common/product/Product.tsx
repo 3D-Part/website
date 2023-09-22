@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import { getMainImage } from "@/shared/helper/getMainImage";
 import Button from "../button/Button";
 import { useAppDispatch } from "@/redux/hooks";
-import { addProductWithAmount } from "@/redux/slices/cartSlice";
+import { addProductWithAmount } from "@/redux/slices/cart/cartSlice";
 
 interface ProductInterfaceComponent extends ProductInterface {
   className?: string;

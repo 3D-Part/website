@@ -1,5 +1,6 @@
 import { notify } from "@/components/common/toast/Toastify";
 import { createSlice } from "@reduxjs/toolkit";
+import { SuccessfulOrderType } from "../../../../services/orderServices";
 
 type ProductDataType = {
   image: string;
@@ -18,11 +19,13 @@ export type CartProductsType = {
 type CartState = {
   cartProducts: CartProductsType[];
   cartModalVisible: boolean;
+  successfulOrder: SuccessfulOrderType | null;
 };
 
 const initialState = {
   cartProducts: [],
   cartModalVisible: false,
+  successfulOrder: null,
 } as CartState;
 
 export const cart = createSlice({
@@ -67,7 +70,6 @@ export const cart = createSlice({
       }
       shouldNotify && notify("Proizvod dodan u korpu", { type: "success" });
     },
-
     decreaseProductWithAmount: (
       state,
       action: { payload: { productId: string; amount: number }; type: any }
@@ -86,7 +88,6 @@ export const cart = createSlice({
         }
       }
     },
-
     removeProduct: (state, action) => {
       const { productId } = action.payload;
 
@@ -98,9 +99,14 @@ export const cart = createSlice({
         state.cartProducts.splice(productIndex, 1);
       }
     },
-
     changeCartModalVisible: (state, action) => {
       state.cartModalVisible = action.payload;
+    },
+    changeSuccessfulOrder: (
+      state,
+      action: { type: any; payload: SuccessfulOrderType }
+    ) => {
+      state.successfulOrder = action.payload;
     },
   },
 });
@@ -111,5 +117,6 @@ export const {
   addProductWithAmount,
   changeCartModalVisible,
   decreaseProductWithAmount,
+  changeSuccessfulOrder,
 } = cart.actions;
 export default cart.reducer;

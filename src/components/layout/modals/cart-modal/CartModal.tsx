@@ -1,13 +1,14 @@
 "use client";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { cartModalVisibleSelector } from "@/redux/slices/cartSelectors";
-import { changeCartModalVisible } from "@/redux/slices/cartSlice";
+
 import { AnimatePresence, motion } from "framer-motion";
 import Cart from "./cart/Cart";
 import { Path } from "../../header/hamburger/Hamburger";
 import Button from "@/components/common/button/Button";
 import { useRouter } from "next/navigation";
 import Paragraph from "@/components/common/text/paragraph/Paragraph";
+import { cartModalVisibleSelector } from "@/redux/slices/cart/cartSelectors";
+import { changeCartModalVisible } from "@/redux/slices/cart/cartSlice";
 
 const CartModal = () => {
   const isOpen = useAppSelector(cartModalVisibleSelector);

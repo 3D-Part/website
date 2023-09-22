@@ -5,7 +5,7 @@ import {
   addProductWithAmount,
   decreaseProductWithAmount,
   removeProduct,
-} from "@/redux/slices/cartSlice";
+} from "@/redux/slices/cart/cartSlice";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import Heading6 from "@/components/common/text/heading/Heading6";

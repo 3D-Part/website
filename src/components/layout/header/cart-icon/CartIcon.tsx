@@ -1,7 +1,7 @@
 import Paragraph from "@/components/common/text/paragraph/Paragraph";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { cartLengthSelector } from "@/redux/slices/cartSelectors";
-import { cart, changeCartModalVisible } from "@/redux/slices/cartSlice";
+import { cartLengthSelector } from "@/redux/slices/cart/cartSelectors";
+import { changeCartModalVisible } from "@/redux/slices/cart/cartSlice";
 import React from "react";
 
 const CartIcon: React.FC<{ className: string }> = ({ className }) => {

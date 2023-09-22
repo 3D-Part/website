@@ -7,7 +7,8 @@ const Radio: React.FC<{
   name: string;
   value: string;
   checked: boolean;
-}> = ({ title, name, value, checked }) => {
+  onChange: React.ChangeEventHandler<HTMLInputElement> | undefined;
+}> = ({ title, name, value, checked, onChange }) => {
   return (
     <div className="flex items-center gap-2">
       <input
@@ -16,6 +17,7 @@ const Radio: React.FC<{
         value={value}
         className="w-6 h-6"
         checked={checked}
+        onChange={onChange}
       />
       <Paragraph size="S" weight="Medium">
         {" "}

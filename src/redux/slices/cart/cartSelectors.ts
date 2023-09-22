@@ -1,4 +1,4 @@
-import { RootState } from "../store";
+import { RootState } from "@/redux/store";
 
 export const cartLengthSelector = (state: RootState) => {
   return state.cartSlice.cartProducts.length;
@@ -9,10 +9,6 @@ export const cartProductsSelector = (state: RootState) => {
 export const cartModalVisibleSelector = (state: RootState) => {
   return state.cartSlice.cartModalVisible;
 };
-export const cartProductsForOrderSelector = (
-  state: RootState
-): { productId: string; quantity: number }[] => {
-  return state.cartSlice.cartProducts.map((x) => {
-    return { productId: x.idProduct, quantity: x.amount };
-  });
+export const successfulOrderSelector = (state: RootState) => {
+  return state.cartSlice.successfulOrder;
 };

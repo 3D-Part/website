@@ -2,13 +2,14 @@
 import Heading2 from "@/components/common/text/heading/Heading2";
 import Paragraph from "@/components/common/text/paragraph/Paragraph";
 import { useAppSelector } from "@/redux/hooks";
+
+import { AnimatePresence, motion } from "framer-motion";
+import CartProducts from "./CartProducts";
+import { CartProductsType } from "@/redux/slices/cart/cartSlice";
 import {
   cartLengthSelector,
   cartProductsSelector,
-} from "@/redux/slices/cartSelectors";
-import { CartProductsType } from "@/redux/slices/cartSlice";
-import { AnimatePresence, motion } from "framer-motion";
-import CartProducts from "./CartProducts";
+} from "@/redux/slices/cart/cartSelectors";
 
 const calculatePriceAndPost = (cart: CartProductsType[]) => {
   let price = 0,

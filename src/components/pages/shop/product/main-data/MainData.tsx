@@ -11,7 +11,7 @@ import SimilarProducts from "./similar-products/SimilarProducts";
 import Button from "@/components/common/button/Button";
 import { CartIcon } from "@/components/common/product/Product";
 import { useAppDispatch } from "@/redux/hooks";
-import { addProductWithAmount } from "@/redux/slices/cartSlice";
+import { addProductWithAmount } from "@/redux/slices/cart/cartSlice";
 import { getMainImage } from "@/shared/helper/getMainImage";
 import { useIsTablet } from "@/shared/hooks/useMediaQuerry";
 
