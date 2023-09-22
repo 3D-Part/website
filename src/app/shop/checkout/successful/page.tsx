@@ -18,7 +18,7 @@ const Successful = () => {
     if (!data) {
       router.push("/");
     }
-  }, [data, router]);
+  }, []);
 
   return (
     <main className="min-h-screen px-4">
