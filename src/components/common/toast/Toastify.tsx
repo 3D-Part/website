@@ -30,6 +30,7 @@ type ToastOptions = {
   ariaLive?: string | undefined;
   toastStyle?: object | undefined;
   draggablePercent?: number | undefined;
+  toastId?: string | number;
 };
 
 export const notify = (message: string, options: ToastOptions) =>

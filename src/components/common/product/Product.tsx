@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import { getMainImage } from "@/shared/helper/getMainImage";
 import Button from "../button/Button";
 import { useAppDispatch } from "@/redux/hooks";
-import { addProduct } from "@/redux/slices/cartSlice";
+import { addProductWithAmount } from "@/redux/slices/cartSlice";
 
 interface ProductInterfaceComponent extends ProductInterface {
   className?: string;
@@ -102,7 +102,8 @@ const Product: React.FC<ProductInterfaceComponent> = ({
             disabled={quantity < 1}
             onClick={() => {
               dispatch(
-                addProduct({
+                addProductWithAmount({
+                  amount: 1,
                   productId: id,
                   productData: {
                     image: getMainImage(images),
@@ -111,7 +112,7 @@ const Product: React.FC<ProductInterfaceComponent> = ({
                     quantity,
                     name,
                   },
-                  shouldNotify:true
+                  shouldNotify: true,
                 })
               );
             }}

@@ -319,7 +319,6 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .Toastify__toast--warning {
   border-radius: 20px !important;
-  background: rgba(255, 193, 7, 0.1) !important;
   backdrop-filter: blur(40px);
 }
 .Toastify__toast--warning::before {

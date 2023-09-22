@@ -2,8 +2,8 @@
 import { useAppDispatch } from "@/redux/hooks";
 import {
   CartProductsType,
-  addProduct,
-  decreaseProduct,
+  addProductWithAmount,
+  decreaseProductWithAmount,
   removeProduct,
 } from "@/redux/slices/cartSlice";
 import Image from "next/image";
@@ -48,8 +48,9 @@ const CartProducts: React.FC<{ product: CartProductsType }> = ({ product }) => {
               whileTap="tap"
               onClick={() => {
                 dispatch(
-                  decreaseProduct({
+                  decreaseProductWithAmount({
                     productId: product.idProduct,
+                    amount: 1,
                   })
                 );
               }}
@@ -76,10 +77,11 @@ const CartProducts: React.FC<{ product: CartProductsType }> = ({ product }) => {
               whileTap="tap"
               onClick={() => {
                 dispatch(
-                  addProduct({
+                  addProductWithAmount({
                     productId: product.idProduct,
                     productData: product.productData,
                     shouldNotify: false,
+                    amount: 1,
                   })
                 );
               }}

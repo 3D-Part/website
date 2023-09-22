@@ -1,16 +1,18 @@
 import { notify } from "@/components/common/toast/Toastify";
 import { createSlice } from "@reduxjs/toolkit";
 
+type ProductDataType = {
+  image: string;
+  weight: string;
+  price: string;
+  quantity: number;
+  name: string;
+};
+
 export type CartProductsType = {
   idProduct: string;
   amount: number;
-  productData: {
-    image: string;
-    weight: string;
-    price: string;
-    quantity: number;
-    name: string;
-  };
+  productData: ProductDataType;
 };
 
 type CartState = {
@@ -28,32 +30,34 @@ export const cart = createSlice({
   initialState,
   reducers: {
     resetCart: () => initialState,
-    addProduct: (state, action) => {
-      const { productId, productData, shouldNotify } = action.payload;
-      const productIndex = state.cartProducts.findIndex(
-        (product) => product.idProduct === productId
-      );
-
-      if (productIndex !== -1) {
-        state.cartProducts[productIndex].amount += 1;
-      } else {
-        state.cartProducts.push({
-          idProduct: productId,
-          amount: 1,
-          productData,
-        });
+    addProductWithAmount: (
+      state,
+      action: {
+        payload: {
+          productId: string;
+          amount: number;
+          productData: ProductDataType;
+          shouldNotify: boolean;
+        };
+        type: any;
       }
-
-      shouldNotify && notify("Proizvod dodan u korpu", { type: "success" });
-    },
-    addProductWithAmount: (state, action) => {
+    ) => {
       const { productId, amount, productData, shouldNotify } = action.payload;
       const productIndex = state.cartProducts.findIndex(
         (product) => product.idProduct === productId
       );
 
       if (productIndex !== -1) {
-        state.cartProducts[productIndex].amount += amount;
+        const newValue = state.cartProducts[productIndex].amount + amount;
+        if (newValue > productData.quantity) {
+          state.cartProducts[productIndex].amount = productData.quantity;
+          notify(`"Nema dovoljno proizvoda na zalihi za željenu količinu."`, {
+            type: "warning",
+            toastId: "1",
+          });
+        } else {
+          state.cartProducts[productIndex].amount = newValue;
+        }
       } else {
         state.cartProducts.push({
           idProduct: productId,
@@ -63,16 +67,20 @@ export const cart = createSlice({
       }
       shouldNotify && notify("Proizvod dodan u korpu", { type: "success" });
     },
-    decreaseProduct: (state, action) => {
-      const { productId } = action.payload;
+
+    decreaseProductWithAmount: (
+      state,
+      action: { payload: { productId: string; amount: number }; type: any }
+    ) => {
+      const { productId, amount } = action.payload;
 
       const productIndex = state.cartProducts.findIndex(
         (product) => product.idProduct === productId
       );
 
       if (productIndex !== -1) {
-        if (state.cartProducts[productIndex].amount > 1) {
-          state.cartProducts[productIndex].amount -= 1;
+        if (state.cartProducts[productIndex].amount > amount) {
+          state.cartProducts[productIndex].amount -= amount;
         } else {
           state.cartProducts.splice(productIndex, 1);
         }
@@ -98,11 +106,10 @@ export const cart = createSlice({
 });
 
 export const {
-  addProduct,
   resetCart,
   removeProduct,
   addProductWithAmount,
   changeCartModalVisible,
-  decreaseProduct,
+  decreaseProductWithAmount,
 } = cart.actions;
 export default cart.reducer;
