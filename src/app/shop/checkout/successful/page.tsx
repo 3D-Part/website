@@ -8,14 +8,17 @@ import { successfulOrderSelector } from "@/redux/slices/cart/cartSelectors";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import { useEffect } from "react";
 
 const Successful = () => {
   const router = useRouter();
   const data = useAppSelector(successfulOrderSelector);
 
-  if (!data) {
-    router.push("/");
-  }
+  useEffect(() => {
+    if (!data) {
+      router.push("/");
+    }
+  }, [data, router]);
 
   return (
     <main className="min-h-screen px-4">
