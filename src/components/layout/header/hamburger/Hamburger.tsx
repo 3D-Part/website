@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import MobileMenu from "./mobile-menu/MobileMenu";
 
-const Path = (props: any) => (
+export const Path = (props: any) => (
   <motion.path
     fill="#fff"
     strokeWidth="3"

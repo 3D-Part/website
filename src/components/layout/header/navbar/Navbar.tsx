@@ -6,6 +6,7 @@ import SearchProducts from "./search-products/SearchProducts";
 import NavLinks from "./nav-links/NavLinks";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import CartIcon from "../cart-icon/CartIcon";
 
 const creality = "062c42d0-3dab-11ee-bb4e-994af83111f0";
 const azurefilm = "03cbbd90-3dab-11ee-bb4e-994af83111f0";
@@ -296,7 +297,7 @@ const Navbar = () => {
 
   return (
     <div className="md:bg-[rgba(17,17,17,0.55)] md:backdrop-blur-[30px] md:border-t border-b border-[rgba(242,242,242,0.3)] border-solid lg:sticky lg:top-0 lg:left-0 z-50">
-      <div className="px-4 py-2 md:px-9 md:flex md:justify-between lg:max-w-[1920px] lg:mx-auto">
+      <div className="px-4 py-2 lg:px-9 lg:flex md:justify-between lg:max-w-[1920px] lg:mx-auto">
         <div
           className={`flex items-center justify-between w-full py-2 md:w-auto md:px-0 transition-all`}
         >
@@ -314,10 +315,18 @@ const Navbar = () => {
               height={44}
             />
           </Link>
+
+          <div className="lg:hidden">
+            <CartIcon className="" />
+          </div>
         </div>
         <div className="flex items-center h-[69px] gap-4 py-[10.5px] md:px-2 w-full md:w-auto lg:w-full md:flex-grow-1 ">
           <NavLinks links={links} />
           <SearchProducts />
+
+          <div className="hidden lg:block">
+            <CartIcon className="" />
+          </div>
 
           <Hamburger links={links} isOpen={isOpen} setIsOpen={setIsOpen} />
         </div>

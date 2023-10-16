@@ -41,7 +41,7 @@ const SearchProducts = () => {
         }}
         value={text}
         placeholder="Pronađi artikal"
-        className="md:min-w-[250px] md:max-w-[350px] max-w-[calc(100%-52px)]"
+        className="lg:min-w-[250px] lg:max-w-[350px] max-w-[calc(100%-52px)]"
         products={products}
         text={text}
         loading={loading}

@@ -84,8 +84,8 @@ const SliderPage: React.FC<SliderPageProps> = ({
         className="lg:pt-24"
       >
         <Display1 className={`${titleClassName} `}>{title}</Display1>
-        <Heading4>{subtitle}</Heading4>
-        <Paragraph size="M" weight="Regular" className="lg:mt-8">
+        <Heading4 className="mt-3 lg:mt-0">{subtitle}</Heading4>
+        <Paragraph size="M" weight="Regular" className="mt-6 lg:mt-8">
           {description}
         </Paragraph>
         <motion.div

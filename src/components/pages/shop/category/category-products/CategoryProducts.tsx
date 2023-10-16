@@ -8,6 +8,7 @@ import {
   productsServices,
 } from "../../../../../../services/productsServices";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
+import Spinner from "@/components/common/spinner/Spinner";
 
 const CategoryProducts: React.FC<{ categoryId: string }> = ({ categoryId }) => {
   //TODO: Redux this
@@ -98,13 +99,7 @@ const CategoryProducts: React.FC<{ categoryId: string }> = ({ categoryId }) => {
         Proizvodi <span className="text-primary-500">({data.count})</span>
       </Heading2>
 
-      {isLoading ? (
-        <div className="flex items-center justify-center ">
-          <span className="loader"></span>
-        </div>
-      ) : (
-        <ProductGrid productList={data.rows} />
-      )}
+      {isLoading ? <Spinner /> : <ProductGrid productList={data.rows} />}
     </>
   );
 };

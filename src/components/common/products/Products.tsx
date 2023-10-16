@@ -11,7 +11,6 @@ interface InterfaceProducts {
   linkToAll?: string;
   className?: string;
   animationVariants?: { initial: Object; animate: Object };
-  reverseDirection: boolean;
 }
 
 const Products: React.FC<InterfaceProducts> = ({
@@ -20,7 +19,6 @@ const Products: React.FC<InterfaceProducts> = ({
   linkToAll = "",
   className = "",
   animationVariants,
-  reverseDirection,
 }) => {
   return (
     <motion.div
@@ -51,7 +49,6 @@ const Products: React.FC<InterfaceProducts> = ({
       <ProductsSlide
         products={products}
         animationVariants={animationVariants}
-        reverseDirection={reverseDirection}
       />
       {linkToAll !== "" && (
         <Button

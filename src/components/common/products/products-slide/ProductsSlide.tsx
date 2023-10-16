@@ -15,11 +15,7 @@ import { useIsTablet } from "@/shared/hooks/useMediaQuerry";
 const ProductsSlide: React.FC<{
   products: ProductInterface[];
   animationVariants?: { initial: Object; animate: Object };
-  reverseDirection: boolean;
-}> = (
-  { products, animationVariants = { initial: {}, animate: {} } },
-  reverseDirection
-) => {
+}> = ({ products, animationVariants = { initial: {}, animate: {} } }) => {
   const isTablet = useIsTablet();
 
   return (
@@ -34,12 +30,11 @@ const ProductsSlide: React.FC<{
           hide: true,
         }}
         autoplay={{
-          delay: 2000,
+          delay: 3000,
           disableOnInteraction: true,
           pauseOnMouseEnter: true,
-          reverseDirection,
         }}
-        speed={500}
+        speed={750}
       >
         {products.map((product, i) => {
           return (
@@ -54,7 +49,7 @@ const ProductsSlide: React.FC<{
                   exit="initial"
                   animate="animate"
                   variants={animationVariants}
-                  transition={{ delay: i * 0.2 }}
+                  transition={{ delay: i * 0.1 }}
                 >
                   <Product {...product} className={"ml-4 lg:ml-0"} />
                 </motion.div>

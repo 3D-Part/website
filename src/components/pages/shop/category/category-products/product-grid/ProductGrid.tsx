@@ -21,7 +21,10 @@ const ProductGrid: React.FC<ProductGridInterface> = ({ productList }) => {
             initial="initial"
             whileInView="animate"
             viewport={{ once: true }}
-            transition={{ delay: isTablet === false ? i * 0.05 : 0.25 }}
+            transition={{
+              delay:
+                isTablet === false ? ((i + 4) % 4) * 0.1 : ((i + 2) % 2) * 0.25,
+            }}
             variants={{
               initial: { scale: 0.75, opacity: 0, x: -20 },
               animate: { scale: 1, opacity: 1, x: 0 },

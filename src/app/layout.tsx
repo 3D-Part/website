@@ -4,6 +4,10 @@ import { Exo_2 } from "next/font/google";
 import Footer from "@/components/layout/footer/Footer";
 import Lights from "@/components/layout/header/lights/Lights";
 import { Metadata } from "next";
+import { Providers } from "@/redux/provider";
+import Modals from "@/components/layout/modals/Modals";
+import "react-toastify/dist/ReactToastify.css";
+import Toastify from "@/components/common/toast/Toastify";
 
 const exo2 = Exo_2({
   variable: "--font-exo2",
@@ -44,11 +48,15 @@ export default function RootLayout({
       <body
         className={`${exo2.variable} font-exo2 overflow-x-hidden relative min-w-[368px]`}
       >
-        <Header />
-        <Lights />
+        <Providers>
+          <Header />
+          <Lights />
+          <Modals />
 
-        <div className="static">{children}</div>
-        <Footer />
+          <div className="static">{children}</div>
+          <Footer />
+        </Providers>
+        <Toastify />
       </body>
     </html>
   );
