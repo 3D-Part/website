@@ -9,14 +9,14 @@ const InfoCards = () => {
         borderColor="rgba(34, 197, 94, 1)"
         circleColor="rgba(34, 197, 94, 0.2)"
         title="Besplatna dostava"
-        subtitle="Za narudžbe iznad 300KM"
+        subtitle="Za narudžbe iznad 100KM"
         icon={0}
       />
       <InfoCard
         borderColor="rgba(53, 205, 253, 1)"
         circleColor="rgba(53, 205, 253, 0.2)"
         title="Brza dostava"
-        subtitle="Dostava u roku od 24h"
+        subtitle="Dostava u roku od 24-48h"
         icon={1}
       />
       <InfoCard

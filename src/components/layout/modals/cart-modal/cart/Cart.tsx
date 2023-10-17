@@ -11,13 +11,39 @@ import {
   cartProductsSelector,
 } from "@/redux/slices/cart/cartSelectors";
 
+const calculateShippingPrice = (weight: number): number => {
+  weight = weight / 1000;
+
+  switch (true) {
+    case weight <= 10:
+      return 8;
+    case weight <= 20:
+      return 12;
+    case weight <= 30:
+      return 15;
+    case weight <= 40:
+      return 23;
+    case weight <= 50:
+      return 33;
+    default:
+      const weightLeft = weight - 50;
+      const price: number = 33 + (weightLeft / 5) * 2;
+      return Math.round(price * 1e2) / 1e2;
+  }
+};
+
 const calculatePriceAndPost = (cart: CartProductsType[]) => {
+  console.log(cart);
   let price = 0,
-    post = 0;
+    post = 0,
+    weight = 0;
 
   cart.forEach((x) => {
     price = price + x.amount * Number(x.productData.price);
+    weight += parseFloat(x.productData.weight);
   });
+
+  post = calculateShippingPrice(weight);
 
   return { price, post };
 };

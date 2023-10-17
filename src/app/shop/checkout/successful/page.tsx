@@ -23,7 +23,7 @@ const Successful = () => {
   return (
     <main className="min-h-screen px-4">
       <motion.div
-        className="pt-[68px] mx-auto w-full max-w-[588px] flex flex-col justify-center items-center h-full"
+        className="pt-[68px] pb-8  mx-auto w-full max-w-[588px] flex flex-col justify-center items-center h-full"
         initial={{ y: 50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
       >

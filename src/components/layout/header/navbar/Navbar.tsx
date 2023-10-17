@@ -35,7 +35,7 @@ const links: any = [
             links: [],
           },
           {
-            text: "PTG",
+            text: "PETG",
             link: "/shop/category/ptg?manufacturerId=" + azurefilm,
             links: [],
           },
@@ -144,17 +144,17 @@ const links: any = [
       },
     ],
   },
-  {
-    text: "Resini",
-    link: "/shop/category/resini",
-    links: [
-      { text: "Sve", link: "/shop/category/resini", links: [] },
-      {
-        text: "Creality",
-        link: "/shop/category/resini?manufacturerId=" + creality,
-      },
-    ],
-  },
+  // {
+  //   text: "Resini",
+  //   link: "/shop/category/resini",
+  //   links: [
+  //     { text: "Sve", link: "/shop/category/resini", links: [] },
+  //     {
+  //       text: "Creality",
+  //       link: "/shop/category/resini?manufacturerId=" + creality,
+  //     },
+  //   ],
+  // },
   {
     text: "3D Printeri",
     link: "/shop/category/3d-printeri",
@@ -185,17 +185,17 @@ const links: any = [
       },
       {
         text: "Flash Forge",
-        link: "/shop/category/3d-printeri?manufacturerId=" + creality,
+        link: "/shop/category/3d-printeri?manufacturerId=" + flashforge,
         links: [],
       },
       {
         text: "Snapmaker",
-        link: "/shop/category/3d-printeri?manufacturerId=" + creality,
+        link: "/shop/category/3d-printeri?manufacturerId=" + snapmaker,
         links: [],
       },
       {
         text: "Prusa",
-        link: "/shop/category/3d-printeri?manufacturerId=" + creality,
+        link: "/shop/category/3d-printeri?manufacturerId=" + prusa,
         links: [],
       },
     ],
@@ -270,24 +270,6 @@ const links: any = [
       { text: "Opruge", link: "/shop/category/opruge", links: [] },
       { text: "-- OSTALO --", link: "/shop/category/ostalo", links: [] },
     ],
-  },
-  {
-    text: "Aksesoari",
-    link: "/shop/category/aksesoari",
-    links: [
-      { text: "Sve", link: "/shop/category/aksesoari", links: [] },
-      { text: "Šarafcigeri", link: "/shop/category/šarafcigeri", links: [] },
-      { text: "Imbusi", link: "/shop/category/imbusi", links: [] },
-      { text: "Kliješta", link: "/shop/category/kliješta", links: [] },
-      { text: "Lakovi", link: "/shop/category/lakovi", links: [] },
-      { text: "Baterije", link: "/shop/category/baterije", links: [] },
-      { text: "Ključevi", link: "/shop/category/ključevi", links: [] },
-    ],
-  },
-  {
-    text: "Akcija",
-    link: "/shop/category/akcije",
-    links: [],
   },
 ];
 

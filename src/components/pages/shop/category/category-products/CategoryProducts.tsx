@@ -40,6 +40,7 @@ const CategoryProducts: React.FC<{ categoryId: string }> = ({ categoryId }) => {
       });
       setIsLoading(false);
       setData(x);
+
       return x;
     };
     setIsLoading(true);
