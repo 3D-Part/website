@@ -116,10 +116,12 @@ const Product: React.FC<ProductInterfaceComponent> = ({
                 })
               );
             }}
-            className="h-8 w-[200px] mt-2"
+            className="h-8 w-[200px] mt-2 max-w-full "
           >
-            <div className="flex gap-2">
-              <CartIcon color={quantity < 1 ? "#7a7a7a" : "#ffffff"} />
+            <div className="flex gap-2 ">
+              <div className="hidden xsm:flex">
+                <CartIcon color={quantity < 1 ? "#7a7a7a" : "#ffffff"} />
+              </div>
               Dodaj u korpu
             </div>
           </Button>

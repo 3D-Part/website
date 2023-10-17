@@ -39,7 +39,7 @@ const CartProducts: React.FC<{ product: CartProductsType }> = ({ product }) => {
         </Heading6>
         <p className="text-sm font-normal lg:text-base text-neutral-200">
           Težina:{" "}
-          <span className="text-white ">{product.productData.weight}</span>
+          <span className="text-white ">{product.productData.weight} g</span>
         </p>
         <div className="flex items-center justify-between w-full">
           <div className="bg-neutral-700 lg:p-[3px] p-[2px] flex gap-3 lg:gap-4 items-center rounded-lg mt-[3px] lg:mt-[6px]">
