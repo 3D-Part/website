@@ -56,7 +56,7 @@ export const cart = createSlice({
           state.cartProducts[productIndex].amount = productData.quantity;
           notify(`"Nema dovoljno proizvoda na zalihi za željenu količinu."`, {
             type: "warning",
-            toastId: "1",
+            toastId: 2,
           });
         } else {
           state.cartProducts[productIndex].amount = newValue;
@@ -68,7 +68,8 @@ export const cart = createSlice({
           productData,
         });
       }
-      shouldNotify && notify("Proizvod dodan u korpu", { type: "success" });
+      shouldNotify &&
+        notify("Proizvod dodan u korpu", { type: "success", toastId: 3 });
     },
     decreaseProductWithAmount: (
       state,
