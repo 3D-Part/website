@@ -45,8 +45,8 @@ const Sorter: React.FC<{
         <option value={"0"}>Najpopularnije</option>
         <option value={"1"}>Cijena opadajuće</option>
         <option value={"2"}>Cijena rastuće</option>
-        <option value={"3"}>Naziv opadajuće</option>
-        <option value={"4"}>Naziv rastuće</option>
+        <option value={"3"}>Naziv rastuće</option>
+        <option value={"4"}>Naziv opadajuće</option>
       </select>
     </div>
   );
