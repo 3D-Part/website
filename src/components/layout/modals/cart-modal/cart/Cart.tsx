@@ -33,7 +33,6 @@ const calculateShippingPrice = (weight: number): number => {
 };
 
 const calculatePriceAndPost = (cart: CartProductsType[]) => {
-  console.log(cart);
   let price = 0,
     post = 0,
     weight = 0;
