@@ -31,7 +31,7 @@ const Slider = () => {
         spaceBetween={50}
         navigation={true}
       >
-        <SwiperSlide>
+        {/* <SwiperSlide>
           <SliderPage
             bgUrl="/assets/img/slider/bg3.jpg"
             productUrl="/assets/img/slider/product3.png"
@@ -43,7 +43,7 @@ const Slider = () => {
             titleClassName="text-transparent from-primary-500 to-[rgba(7,235,208,1)] bg-gradient-to-r bg-clip-text"
             priority={true}
           />
-        </SwiperSlide>
+        </SwiperSlide> */}
 
         <SwiperSlide>
           <SliderPage
@@ -58,7 +58,7 @@ const Slider = () => {
           />
         </SwiperSlide>
 
-        <SwiperSlide>
+        {/* <SwiperSlide>
           <SliderPage
             bgUrl="/assets/img/slider/bg1.jpg"
             productUrl="/assets/img/slider/product1.png"
@@ -69,7 +69,7 @@ const Slider = () => {
             buttonOnClick={() => {}}
             titleClassName="text-transparent from-[rgba(0,209,255,1)] to-[rgba(0,147,255,1)] bg-gradient-to-r bg-clip-text"
           />
-        </SwiperSlide>
+        </SwiperSlide> */}
       </Swiper>
     </Container>
   );
