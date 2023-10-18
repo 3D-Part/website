@@ -53,7 +53,7 @@ const Slider = () => {
             bgUrl="/assets/img/slider/bg3.jpg"
             productUrl="/assets/img/slider/product1.webp"
             title="Ender 3 S1 Pro"
-            subtitle="Fulfill Big Ambitions Efficiently"
+            subtitle="Efikasno Ispunite Velike Ambicije"
             description="Creality Ender 3 S1 Pro 3D printer 300℃ Visokotemperaturna mlaznica Sprite Full Metal Direct Drive Extruder CR Touch Auto Leveling Bed Silent Mainboard Filament Sensor Veličina ispisa 235x235x270"
             buttonText="Detaljnije"
             buttonOnClick={() => {

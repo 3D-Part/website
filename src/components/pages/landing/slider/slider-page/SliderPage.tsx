@@ -42,6 +42,7 @@ const SliderPage: React.FC<SliderPageProps> = ({
       className="w-full bg-none bg-center bg-no-repeat bg-cover lg:h-[540px] flex flex-col gap-3 lg:grid lg:grid-cols-2 xl:gap-11 lg:gap-x-6 lg:px-[88px] lg:pt-0 lg:pb-0 lg:relative "
       style={{ backgroundImage: isTablet === false ? `url(${bgUrl})` : "none" }}
     >
+      <link rel="preload" href={bgUrl} as="image" />
       <div
         className={`bg-center bg-no-repeat bg-cover w-full lg:order-2 border-2 border-primary-500`}
         style={{ backgroundImage: isTablet ? `url(${bgUrl})` : "none" }}
