@@ -12,6 +12,9 @@ import {
 } from "@/redux/slices/cart/cartSelectors";
 
 const calculateShippingPrice = (weight: number): number => {
+  if (weight === 0) {
+    return 0;
+  }
   weight = weight / 1000;
 
   switch (true) {

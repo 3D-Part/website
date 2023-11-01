@@ -7,7 +7,7 @@ import "swiper/css";
 import "swiper/css/scrollbar";
 
 import Product from "../../product/Product";
-import { Autoplay, Scrollbar } from "swiper";
+import { Autoplay, Navigation, Scrollbar } from "swiper";
 
 import { motion } from "framer-motion";
 import { useIsTablet } from "@/shared/hooks/useMediaQuerry";
@@ -23,7 +23,7 @@ const ProductsSlide: React.FC<{
       <Swiper
         spaceBetween={isTablet ? 0 : 24}
         slidesPerView="auto"
-        modules={[Scrollbar, Autoplay]}
+        modules={[Scrollbar, Autoplay, Navigation]}
         className="swiper_products"
         grabCursor={true}
         scrollbar={{
@@ -35,6 +35,7 @@ const ProductsSlide: React.FC<{
           pauseOnMouseEnter: true,
         }}
         speed={750}
+        navigation={true}
       >
         {products.map((product, i) => {
           return (
