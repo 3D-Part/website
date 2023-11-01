@@ -17,7 +17,7 @@ const ProductsRecommended = async () => {
         }}
       >
         <div className="flex flex-col w-full px-4 lg:px-0">
-          <Heading2> Preporučeno </Heading2>
+          <Heading2> Izdvojili smo za Vas </Heading2>
         </div>
       </Products>
     </Container>

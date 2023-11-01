@@ -39,14 +39,7 @@ const FooterLinks = () => {
       </div>
       <div className="flex flex-col col-span-2 gap-4 lg:flex lg:mx-auto lg:col-span-1">
         <Heading5 className="mb-2">Kontakt</Heading5>
-        <div>
-          <Paragraph size="M" weight="Semibold">
-            Email:
-          </Paragraph>
-          <Paragraph size="M" weight="Regular" className="text-neutral-200">
-            info@3dpartshop.com
-          </Paragraph>
-        </div>
+
         <div>
           <Paragraph size="M" weight="Semibold">
             Email:

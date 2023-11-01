@@ -2,7 +2,7 @@
 
 import { ProductInterface } from "@/shared/interfaces/productsInterface";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import Paragraph from "../text/paragraph/Paragraph";
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -10,7 +10,10 @@ import { useRouter } from "next/navigation";
 import { getMainImage } from "@/shared/helper/getMainImage";
 import Button from "../button/Button";
 import { useAppDispatch } from "@/redux/hooks";
-import { addProductWithAmount } from "@/redux/slices/cart/cartSlice";
+import {
+  addProductWithAmount,
+  changeCartModalVisible,
+} from "@/redux/slices/cart/cartSlice";
 
 interface ProductInterfaceComponent extends ProductInterface {
   className?: string;
@@ -29,6 +32,7 @@ const Product: React.FC<ProductInterfaceComponent> = ({
 }) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const [checkCartVisible, setCheckCartVisible] = useState(false);
 
   return (
     <Link
@@ -40,10 +44,10 @@ const Product: React.FC<ProductInterfaceComponent> = ({
     >
       <motion.div
         className={`cursor-pointer bg-neutral-800 p-[10px] rounded-xl max-w-[220px] max-h-[363px] ${className}`}
-        whileTap={{
-          scale: 0.95,
-          transition: { duration: 0.35, type: "spring" },
-        }}
+        // whileTap={{
+        //   scale: 0.95,
+        //   transition: { duration: 0.35, type: "spring" },
+        // }}
       >
         <div
           className={`overflow-hidden aspect-square rounded-xl w-[${imageWidth}]`}
@@ -56,6 +60,28 @@ const Product: React.FC<ProductInterfaceComponent> = ({
               fill={true}
               style={{ objectFit: "contain" }}
             />
+            {checkCartVisible && (
+              <div className="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+                <motion.div
+                  initial={{ scale: 0, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                >
+                  <Button
+                    onClick={() => {
+                      dispatch(changeCartModalVisible(true));
+                    }}
+                    size="M"
+                    type="primary"
+                    className="px-6 py-3 rounded-lg "
+                  >
+                    <span className="flex gap-1 truncate">
+                      {" "}
+                      <CartIcon color={"#ffffff"} /> Pogledaj korpu
+                    </span>
+                  </Button>
+                </motion.div>
+              </div>
+            )}
           </div>
         </div>
         <div className="max-w-full mt-4 overflow-hidden overflow-ellipsis">
@@ -115,6 +141,7 @@ const Product: React.FC<ProductInterfaceComponent> = ({
                   shouldNotify: true,
                 })
               );
+              setCheckCartVisible(true);
             }}
             className="h-8 w-[200px] mt-2 max-w-full "
           >

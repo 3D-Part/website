@@ -58,6 +58,8 @@ export const cart = createSlice({
             type: "warning",
             toastId: 2,
           });
+
+          return;
         } else {
           state.cartProducts[productIndex].amount = newValue;
         }
@@ -69,7 +71,7 @@ export const cart = createSlice({
         });
       }
       shouldNotify &&
-        notify("Proizvod dodan u korpu", { type: "success", toastId: 3 });
+        notify("Proizvod je u korpi", { type: "success", toastId: 3 });
     },
     decreaseProductWithAmount: (
       state,
@@ -102,6 +104,11 @@ export const cart = createSlice({
     },
     changeCartModalVisible: (state, action) => {
       state.cartModalVisible = action.payload;
+      if (action.payload) {
+        document.querySelector("body")?.classList.add("overflow-hidden");
+      } else {
+        document.querySelector("body")?.classList.remove("overflow-hidden");
+      }
     },
     changeSuccessfulOrder: (
       state,

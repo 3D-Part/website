@@ -105,16 +105,16 @@ const links: any = [
             link: "/shop/category/pla-matte?manufacturerId=" + creality,
             links: [],
           },
-          {
-            text: "PLA Rainbow",
-            link: "/shop/category/pla-rainbow?manufacturerId=" + creality,
-            links: [],
-          },
-          {
-            text: "PLA Wood",
-            link: "/shop/category/pla-wood?manufacturerId=" + creality,
-            links: [],
-          },
+          // {
+          //   text: "PLA Rainbow",
+          //   link: "/shop/category/pla-rainbow?manufacturerId=" + creality,
+          //   links: [],
+          // },
+          // {
+          //   text: "PLA Wood",
+          //   link: "/shop/category/pla-wood?manufacturerId=" + creality,
+          //   links: [],
+          // },
           {
             text: "PETG",
             link: "/shop/category/petg?manufacturerId=" + creality,
@@ -259,7 +259,7 @@ const links: any = [
         link: "/shop/category/stepper-motori",
         links: [],
       },
-      { text: "Zupčanici", link: "/shop/category/zupčanici", links: [] },
+      // { text: "Zupčanici", link: "/shop/category/zupčanici", links: [] },
       { text: "Ležajevi", link: "/shop/category/ležajevi", links: [] },
       { text: "Remeni", link: "/shop/category/remeni", links: [] },
       {
@@ -267,7 +267,7 @@ const links: any = [
         link: "/shop/category/silicon-cover",
         links: [],
       },
-      { text: "Opruge", link: "/shop/category/opruge", links: [] },
+      // { text: "Opruge", link: "/shop/category/opruge", links: [] },
       { text: "-- OSTALO --", link: "/shop/category/ostalo", links: [] },
     ],
   },
