@@ -59,6 +59,9 @@ const Product: React.FC<ProductInterfaceComponent> = ({
               src={getMainImage(images)}
               fill={true}
               style={{ objectFit: "contain" }}
+              placeholder="blur"
+              blurDataURL="/assets/img/no-image.svg"
+              sizes="100%"
             />
             {checkCartVisible && (
               <div className="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
