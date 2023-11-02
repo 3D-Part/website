@@ -57,7 +57,7 @@ const Cart = () => {
   const { price, post } = calculatePriceAndPost(cart);
 
   return (
-    <motion.div className="flex flex-col w-full h-full px-4 py-2 cursor-default lg:px-8 lg:py-4 bg-neutral-800">
+    <motion.div className="flex flex-col w-full h-full px-4 py-2 overflow-y-auto cursor-default lg:px-8 lg:py-4 bg-neutral-800">
       <Heading2>Korpa</Heading2>
       <div className="lg:mt-[10px] mt-1 bg-neutral-600 w-min px-2 py-1 rounded-[77px]">
         <Paragraph
