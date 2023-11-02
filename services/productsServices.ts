@@ -89,7 +89,7 @@ const getSingleProduct = async (id: string): Promise<ProductInterface> => {
   try {
     const res = await fetch(`${defaultRoute}/${id}`, {
       method: "GET",
-      next: { revalidate: revalidateTime },
+      next: { revalidate: revalidateTime / 2 },
     });
 
     const data = await res.json();
