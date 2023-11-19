@@ -229,3 +229,26 @@ input[type="number"]::-webkit-outer-spin-button {
 .Toastify__toast-body > div:last-child {
   text-align: left;
 }
+
+/*  Scrollbar */
+
+/* width */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #101010;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #3b82f6;
+  border-radius: 20px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #629bf8;
+}

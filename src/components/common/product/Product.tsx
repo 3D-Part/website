@@ -77,7 +77,7 @@ const Product: React.FC<ProductInterfaceComponent> = ({
                     type="primary"
                     className="px-6 py-3 rounded-lg "
                   >
-                    <span className="flex gap-1 truncate">
+                    <span className="flex items-center gap-1 truncate">
                       {" "}
                       <CartIcon color={"#ffffff"} /> Pogledaj korpu
                     </span>
@@ -149,7 +149,7 @@ const Product: React.FC<ProductInterfaceComponent> = ({
             className="h-8 w-[200px] mt-2 max-w-full "
           >
             <div className="flex gap-2 ">
-              <div className="hidden xsm:flex">
+              <div className="items-center hidden xsm:flex">
                 <CartIcon color={quantity < 1 ? "#7a7a7a" : "#ffffff"} />
               </div>
               Dodaj u korpu
