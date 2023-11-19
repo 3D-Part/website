@@ -44,11 +44,11 @@ const SliderPage: React.FC<SliderPageProps> = ({
     >
       <link rel="preload" href={bgUrl} as="image" />
       <div
-        className={`bg-center bg-no-repeat bg-cover w-full lg:order-2 border-2 border-primary-500`}
+        className={`bg-center bg-no-repeat bg-cover w-full lg:order-2 `}
         style={{ backgroundImage: isTablet ? `url(${bgUrl})` : "none" }}
       >
         <motion.div
-          className="h-[250px] border border-white relative lg:order-1 w-full lg:h-full "
+          className="h-[250px]  relative lg:order-1 w-full lg:h-full "
           transition={{ duration: 1.3, type: "spring" }}
           variants={{
             hidden: { opacity: 0, scale: 0, rotate: 0 },

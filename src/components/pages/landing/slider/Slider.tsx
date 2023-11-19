@@ -17,13 +17,13 @@ const Slider = () => {
   const router = useRouter();
 
   return (
-    <Container className="w-full px-4 py-6 border border-white lg:px-9 lg:py-8 landing_slider">
+    <Container className="w-full px-4 py-6 lg:px-9 lg:py-8 landing_slider">
       <Swiper
         pagination={{
           dynamicBullets: true,
         }}
         modules={modules}
-        className="relative border-2 border-white rounded-md cursor-pointer lg:rounded-3xl"
+        className="relative rounded-md cursor-pointer lg:rounded-3xl"
         autoplay={{
           delay: 3000,
           disableOnInteraction: true,
