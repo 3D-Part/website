@@ -70,8 +70,7 @@ export const cart = createSlice({
           productData,
         });
       }
-      shouldNotify &&
-        notify("Proizvod je u korpi", { type: "success", toastId: 3 });
+      shouldNotify && notify("Proizvod je u korpi", { type: "success" });
     },
     decreaseProductWithAmount: (
       state,
