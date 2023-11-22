@@ -104,6 +104,7 @@ const CartModal = () => {
                   <Link
                     href={"/shop/checkout"}
                     onClick={() => {
+                      router.push("/shop/checkout");
                       dispatch(changeCartModalVisible(false));
                     }}
                     className="w-1/2"
