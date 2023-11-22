@@ -35,12 +35,7 @@ const Product: React.FC<ProductInterfaceComponent> = ({
   const [checkCartVisible, setCheckCartVisible] = useState(false);
 
   return (
-    <Link
-      href={"/shop/product/" + id}
-      onClick={() => {
-        router.push("/shop/product/" + id);
-      }}
-    >
+    <Link href={"/shop/product/" + id}>
       <motion.div
         className={`cursor-pointer bg-neutral-800 p-[10px] rounded-xl max-w-[220px] max-h-[363px] ${className}`}
         // whileTap={{

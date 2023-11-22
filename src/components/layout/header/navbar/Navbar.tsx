@@ -286,9 +286,6 @@ const Navbar = () => {
           <Link
             href={"/"}
             
-            onClick={() => {
-              router.push("/");
-            }}
           >
             <Image
               alt="3d part logo"

@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import Paragraph from "@/components/common/text/paragraph/Paragraph";
 import { cartModalVisibleSelector } from "@/redux/slices/cart/cartSelectors";
 import { changeCartModalVisible } from "@/redux/slices/cart/cartSlice";
+import Link from "next/link";
 
 const CartModal = () => {
   const isOpen = useAppSelector(cartModalVisibleSelector);
@@ -100,19 +101,24 @@ const CartModal = () => {
                       Nastavi kupovinu
                     </Paragraph>
                   </Button>
-                  <Button
+                  <Link
+                    href={"/shop/checkout"}
                     onClick={() => {
-                      router.push("/shop/checkout");
                       dispatch(changeCartModalVisible(false));
                     }}
-                    type="primary"
-                    size="L"
                     className="w-1/2"
                   >
-                    <Paragraph size="M" weight="Bold">
-                      Kupi
-                    </Paragraph>
-                  </Button>
+                    <Button
+                      onClick={() => {}}
+                      type="primary"
+                      size="L"
+                      className="w-full"
+                    >
+                      <Paragraph size="M" weight="Bold">
+                        Kupi
+                      </Paragraph>
+                    </Button>
+                  </Link>
                 </div>
               </motion.div>
             </div>
