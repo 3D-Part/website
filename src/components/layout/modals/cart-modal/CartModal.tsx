@@ -110,7 +110,10 @@ const CartModal = () => {
                     className="w-1/2"
                   >
                     <Button
-                      onClick={() => {}}
+                      onClick={() => {
+                        router.push("/shop/checkout");
+                        dispatch(changeCartModalVisible(false));
+                      }}
                       type="primary"
                       size="L"
                       className="w-full"
