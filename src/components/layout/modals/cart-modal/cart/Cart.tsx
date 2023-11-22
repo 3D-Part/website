@@ -11,6 +11,8 @@ import {
   cartProductsSelector,
 } from "@/redux/slices/cart/cartSelectors";
 
+const freeShippingBoundary = 100;
+
 const calculateShippingPrice = (weight: number): number => {
   if (weight === 0) {
     return 0;
@@ -46,6 +48,10 @@ const calculatePriceAndPost = (cart: CartProductsType[]) => {
   });
 
   post = calculateShippingPrice(weight);
+
+  if (price >= freeShippingBoundary) {
+    post = 0;
+  }
 
   return { price, post };
 };

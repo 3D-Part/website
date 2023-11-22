@@ -176,7 +176,7 @@ const MainData: React.FC<{
           className="flex  w-full lg:w-[186px] h-12"
           disabled={productData.quantity < 1}
         >
-          <div className="flex gap-2">
+          <div className="flex items-center gap-2">
             Dodaj u korpu
             <CartIcon
               color={productData.quantity < 1 ? "#7a7a7a" : "#ffffff"}

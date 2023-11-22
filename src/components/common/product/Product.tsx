@@ -40,7 +40,6 @@ const Product: React.FC<ProductInterfaceComponent> = ({
       onClick={() => {
         router.push("/shop/product/" + id);
       }}
-      shallow
     >
       <motion.div
         className={`cursor-pointer bg-neutral-800 p-[10px] rounded-xl max-w-[220px] max-h-[363px] ${className}`}

@@ -41,7 +41,6 @@ const MobileMenu: React.FC<{ links: any; onClick: () => void }> = ({
       <div className="flex items-center justify-center pb-6 border-b border-solid border-neutral-600">
         <Link
           href={"/"}
-          shallow
           onClick={() => {
             router.push("/");
           }}

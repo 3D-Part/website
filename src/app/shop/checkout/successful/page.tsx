@@ -46,7 +46,7 @@ const Successful = () => {
             Broj narudžbe #
           </div>
           <div className="flex text-lg font-bold text-white bg-neutral-700 px-4 py-[21px]">
-            {data?.id}
+            {data?.orderNumber}
           </div>
 
           <div className="flex text-lg font-normal text-white bg-neutral-700 px-4 py-[21px]">

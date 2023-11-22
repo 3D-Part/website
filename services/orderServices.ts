@@ -22,6 +22,7 @@ export type SuccessfulOrderType = {
   discount: number;
   total: number;
   status: string;
+  orderNumber: string;
 };
 
 const createOrder = async (

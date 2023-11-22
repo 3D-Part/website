@@ -285,7 +285,7 @@ const Navbar = () => {
         >
           <Link
             href={"/"}
-            shallow
+            
             onClick={() => {
               router.push("/");
             }}

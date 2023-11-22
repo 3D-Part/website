@@ -19,7 +19,7 @@ const FooterSocial = () => {
         olxWidth={53}
       />
       <div className="flex items-center justify-center w-full lg:order-2 ">
-        <Link href={"/"} shallow>
+        <Link href={"/"}>
           <Image
             src="/assets/img/logo.svg"
             width={172}

@@ -43,7 +43,6 @@ const SimilarProducts: React.FC<{
               <div className="w-[90px] h-[90px]">
                 <Link
                   href={`/shop/product/${product.id}`}
-                  shallow
                   className="w-[90px] h-[90px] "
                 >
                   <Image
