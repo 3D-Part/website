@@ -28,6 +28,8 @@ const ProductsSlide: React.FC<{
         grabCursor={true}
         scrollbar={{
           hide: true,
+          draggable: true,
+          // snapOnRelease: true,
         }}
         autoplay={{
           delay: 3000,
@@ -39,7 +41,7 @@ const ProductsSlide: React.FC<{
       >
         {products.map((product, i) => {
           return (
-            <SwiperSlide key={i}>
+            <SwiperSlide key={product.id}>
               {isTablet ? (
                 <div>
                   <Product {...product} className={"ml-4 lg:ml-0"} />

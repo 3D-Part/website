@@ -16,11 +16,15 @@ import {
   changeSuccessfulOrder,
   resetCart,
 } from "@/redux/slices/cart/cartSlice";
+import PickupOptionForm from "./PickupOptionForm";
+import ElectronicOptionForm from "./ElectronicOptionForm";
 
 const CheckoutForm = () => {
   const products = useAppSelector(cartProductsSelector);
 
   const [buttonDisabled, setBUttonDisabled] = useState(false);
+  const [payingOption, setPayingOption] = useState("0");
+
   const dispatch = useAppDispatch();
   const router = useRouter();
 
@@ -62,43 +66,33 @@ const CheckoutForm = () => {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full ">
       <Heading2>Kompletirajte svoju narudžbu</Heading2>
       <form onSubmit={handleSubmit} className="w-full">
-        <div className="flex mt-8">
+        <div className="flex gap-2 mt-8">
           <Radio
             name="pay"
             title="Plaćanje pouzećem"
-            value="0"
-            checked={true}
-            onChange={() => {}}
+            value={"0"}
+            checked={payingOption === "0"}
+            onChange={() => {
+              setPayingOption("0");
+            }}
+          />
+          <Radio
+            name="pay"
+            title="Plaćanje Žiralno"
+            value={"1"}
+            checked={payingOption === "1"}
+            onChange={() => {
+              setPayingOption("1");
+            }}
           />
         </div>
         {/* ----- */}
         <div className="flex flex-col gap-3">
-          <Paragraph size="L" weight="Medium" className="mt-4">
-            1. Informacije o kupcu
-          </Paragraph>
-          <div className="flex gap-4">
-            <Input placeholder="Ime" id={"name"} />
-            <Input placeholder="Prezime" id={"surname"} />
-          </div>
-          <Input placeholder="Email" id={"email"} type="email" />
-          <Input placeholder="Telefon" id={"phone"} type="tel" />
-          <Input placeholder="Država" id={"country"} />
-          <Input placeholder="Ulica" id={"street"} />
-          <div className="flex gap-4">
-            <Input placeholder="Grad" id={"city"} />
-            <Input placeholder="ZIP" id={"postCode"} type="number" />
-          </div>
-          <Input placeholder="JIB" id={"jib"} />
-          <Textarea
-            cols={50}
-            id="description"
-            maxLength={500}
-            placeholder="Dodatni opis"
-            rows={4}
-          />
+          {payingOption === "0" && <PickupOptionForm />}
+          {payingOption === "1" && <ElectronicOptionForm />}
         </div>
         {/* ------ */}
         <input

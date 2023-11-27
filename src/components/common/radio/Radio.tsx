@@ -10,12 +10,12 @@ const Radio: React.FC<{
   onChange: React.ChangeEventHandler<HTMLInputElement> | undefined;
 }> = ({ title, name, value, checked, onChange }) => {
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-2 cursor-pointer">
       <input
         type="radio"
         name={name}
         value={value}
-        className="w-6 h-6"
+        className="w-6 h-6 cursor-pointer"
         checked={checked}
         onChange={onChange}
       />
