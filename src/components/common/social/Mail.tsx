@@ -15,7 +15,7 @@ const Mail: React.FC<{ className?: string }> = ({ className }) => {
           fill="white"
         />
       </svg>
-      <Paragraph size="S" weight="Semibold">
+      <Paragraph size="S" weight="Semibold" className="select-all">
         info@3dpartshop.com
       </Paragraph>
     </div>

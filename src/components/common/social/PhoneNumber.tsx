@@ -16,7 +16,7 @@ const PhoneNumber: React.FC<{ className?: string }> = ({ className }) => {
           fill="white"
         />
       </svg>
-      <Paragraph size="S" weight="Regular">
+      <Paragraph size="S" weight="Regular" className="select-all">
         +387 65 047 579
       </Paragraph>
     </div>
