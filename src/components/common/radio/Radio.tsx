@@ -7,17 +7,22 @@ const Radio: React.FC<{
   name: string;
   value: string;
   checked: boolean;
-  onChange: React.ChangeEventHandler<HTMLInputElement> | undefined;
+  onChange: () => void | undefined;
 }> = ({ title, name, value, checked, onChange }) => {
   return (
-    <div className="flex items-center gap-2 cursor-pointer">
+    <div
+      className="flex items-center gap-2 cursor-pointer"
+      onClick={() => {
+        onChange();
+      }}
+    >
       <input
         type="radio"
         name={name}
         value={value}
         className="w-6 h-6 cursor-pointer"
         checked={checked}
-        onChange={onChange}
+        // onChange={onChange}
       />
       <Paragraph size="S" weight="Medium">
         {" "}

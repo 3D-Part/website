@@ -10,13 +10,13 @@ const ElectronicOptionForm = () => {
         1. Informacije o kupcu
       </Paragraph>
       <div className="flex gap-4">
-        <Input placeholder="Ime" required id={"name"} />
-        <Input placeholder="Prezime" required id={"surname"} />
+        <Input placeholder="Ime firme" required id={"companyName"} />
+        <Input placeholder="Pdv broj firme" required id={"companyPdv"} />
       </div>
       <Input placeholder="Email" id={"email"} type="email" />
       <Input placeholder="Telefon" required id={"phone"} type="tel" />
-      {/* <Input placeholder="Država" id={"country"} /> */}
-      {/* <Input placeholder="Ulica" id={"street"} /> */}
+      <Input placeholder="Država" id={"country"} />
+      <Input placeholder="Ulica" id={"street"} />
       <div className="flex gap-4">
         <Input placeholder="Grad" id={"city"} />
         <Input placeholder="ZIP" id={"postCode"} type="number" />

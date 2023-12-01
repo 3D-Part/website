@@ -11,7 +11,7 @@ const ProductAttributes: React.FC<{
         return (
           <div
             key={attr.id}
-            className={`bg-[rgba(248,250,252,0.1)] h-[70px] flex items-center justify-center `}
+            className={`bg-[rgba(248,250,252,0.1)] min-h-[70px] p-1 flex items-center justify-center `}
           >
             <Paragraph size="L" weight="Regular">
               {attr.attribute.name}: {attr.value}

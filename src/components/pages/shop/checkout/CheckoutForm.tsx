@@ -1,10 +1,7 @@
 "use client";
 
-import Input from "@/components/common/input/Input";
 import Radio from "@/components/common/radio/Radio";
 import Heading2 from "@/components/common/text/heading/Heading2";
-import Paragraph from "@/components/common/text/paragraph/Paragraph";
-import Textarea from "@/components/common/textarea/Textarea";
 import { orderServices } from "../../../../../services/orderServices";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { notify } from "@/components/common/toast/Toastify";
@@ -28,23 +25,46 @@ const CheckoutForm = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
 
+  const isButtonDisabled = buttonDisabled || products.length === 0;
+
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     setBUttonDisabled(true);
     dispatch(changeIsGlobalLoading(true));
 
+    const payload =
+      payingOption === "0"
+        ? {
+            city: event.target.city.value,
+            email: event.target.email.value,
+            fullName:
+              event.target.name.value + " " + event.target.surname.value,
+            phone: event.target.phone.value,
+            postCode: event.target.postCode.value,
+            products: products.map((x) => {
+              return { productId: x.idProduct, quantity: x.amount };
+            }),
+            street: event.target.street.value,
+          }
+        : {
+            companyName: event.target.companyName.value,
+            companyPdv: event.target.companyPdv.value,
+            email: event.target.email.value,
+            phone: event.target.phone.value,
+            country: event.target.country.value,
+            street: event.target.street.value,
+            city: event.target.city.value,
+            postCode: event.target.postCode.value,
+            jib: event.target.jib.value,
+            description: event.target.description.value,
+
+            products: products.map((x) => {
+              return { productId: x.idProduct, quantity: x.amount };
+            }),
+          };
+
     try {
-      const data = await orderServices.createOrder({
-        city: event.target.city.value,
-        email: event.target.email.value,
-        fullName: event.target.name.value + " " + event.target.surname.value,
-        phone: event.target.phone.value,
-        postCode: event.target.postCode.value,
-        products: products.map((x) => {
-          return { productId: x.idProduct, quantity: x.amount };
-        }),
-        street: event.target.street.value,
-      });
+      const data = await orderServices.createOrder(payload);
       notify("Narudžba kreirana", { type: "success" });
       dispatch(resetCart());
       dispatch(changeSuccessfulOrder(data));
@@ -99,8 +119,12 @@ const CheckoutForm = () => {
           type="submit"
           value={`Završi kupovinu `}
           onSubmit={handleSubmit}
-          className="w-full h-12 mt-10 text-base font-bold rounded-lg cursor-pointer bg-primary-500"
-          disabled={buttonDisabled}
+          className={`w-full h-12 mt-10 text-base font-bold rounded-lg ${
+            isButtonDisabled
+              ? "cursor-not-allowed bg-neutral-500"
+              : "cursor-pointer bg-primary-500"
+          }`}
+          disabled={isButtonDisabled}
         />
       </form>
     </div>
