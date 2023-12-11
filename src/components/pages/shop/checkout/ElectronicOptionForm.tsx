@@ -15,7 +15,7 @@ const ElectronicOptionForm = () => {
       </div>
       <Input placeholder="Email" id={"email"} type="email" />
       <Input placeholder="Telefon" required id={"phone"} type="tel" />
-      <Input placeholder="Država" id={"country"} />
+      {/* <Input placeholder="Država" id={"country"} /> */}
       <Input placeholder="Ulica" id={"street"} />
       <div className="flex gap-4">
         <Input placeholder="Grad" id={"city"} />

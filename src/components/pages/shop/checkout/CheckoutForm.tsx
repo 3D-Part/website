@@ -51,7 +51,7 @@ const CheckoutForm = () => {
             companyPdv: event.target.companyPdv.value,
             email: event.target.email.value,
             phone: event.target.phone.value,
-            country: event.target.country.value,
+            // country: event.target.country.value,
             street: event.target.street.value,
             city: event.target.city.value,
             postCode: event.target.postCode.value,

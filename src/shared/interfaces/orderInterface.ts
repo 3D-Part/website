@@ -27,7 +27,7 @@ export interface OrderBodyInterfaceCompany {
     quantity: number;
   }[];
   email: string;
-  country: string;
+  // country: string;
   jib: string;
   description: string;
 }
