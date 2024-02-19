@@ -51,10 +51,10 @@ export default function RootLayout({
         <Providers>
           <Header />
           <Lights />
-          <Modals />
 
           <div className="static">{children}</div>
           <Footer />
+          <Modals />
         </Providers>
         <Toastify />
       </body>

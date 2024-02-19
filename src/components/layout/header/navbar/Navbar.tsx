@@ -7,6 +7,7 @@ import NavLinks from "./nav-links/NavLinks";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import CartIcon from "../cart-icon/CartIcon";
+import ProfileIcon from "@/components/layout/header/profile-icon/ProfileIcon";
 
 const creality = "062c42d0-3dab-11ee-bb4e-994af83111f0";
 const azurefilm = "03cbbd90-3dab-11ee-bb4e-994af83111f0";
@@ -283,10 +284,7 @@ const Navbar = () => {
         <div
           className={`flex items-center justify-between w-full py-2 md:w-auto md:px-0 transition-all`}
         >
-          <Link
-            href={"/"}
-            
-          >
+          <Link href={"/"}>
             <Image
               alt="3d part logo"
               src={"/assets/img/logo.svg"}
@@ -295,16 +293,18 @@ const Navbar = () => {
             />
           </Link>
 
-          <div className="lg:hidden">
+          <div className="flex items-center gap-3 lg:hidden">
             <CartIcon className="" />
+            <ProfileIcon />
           </div>
         </div>
         <div className="flex items-center h-[69px] gap-4 py-[10.5px] md:px-2 w-full md:w-auto lg:w-full md:flex-grow-1 ">
           <NavLinks links={links} />
           <SearchProducts />
 
-          <div className="hidden lg:block">
+          <div className="items-center hidden gap-3 lg:flex">
             <CartIcon className="" />
+            <ProfileIcon />
           </div>
 
           <Hamburger links={links} isOpen={isOpen} setIsOpen={setIsOpen} />
