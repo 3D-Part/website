@@ -1,12 +1,11 @@
 "use client";
-import Button from "@/components/common/button/Button";
 import { Path } from "@/components/layout/header/hamburger/Hamburger";
 import Login from "@/components/layout/modals/auth-modal/Login";
 import SignUp from "@/components/layout/modals/auth-modal/SignUp";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { isModalAuthVisibleSelector } from "@/redux/slices/ui/uiSelectors";
 import { changeIsModalAuthVisible } from "@/redux/slices/ui/uiSlice";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import React, { useState } from "react";
 
@@ -16,25 +15,27 @@ const AuthModal = () => {
   const dispatch = useAppDispatch();
 
   return (
-    <>
+    <AnimatePresence mode="wait">
       {isOpen && (
         <div className="fixed top-0 left-0 z-50 flex items-center justify-center w-full h-full ">
-          <div
-            className="fixed top-0 left-0 z-50 w-full h-full bg-[rgba(17,17,17,0.78)] cursor-pointer min-w-[360px]"
+          <motion.div
+            exit={{ opacity: 0 }}
+            className="fixed top-0 left-0 z-50 w-full h-full bg-[rgba(17,17,17,0.78)] cursor-pointer min-w-[360px]  "
             onClick={() => {
               dispatch(changeIsModalAuthVisible(false));
             }}
-          ></div>
+          ></motion.div>
           <motion.div
             initial={{ top: -100 }}
             animate={{ top: 0 }}
+            exit={{ top: 500, opacity: 0, transition: { duration: 0.2 } }}
             transition={{
               type: "spring",
               stiffness: 120,
               duration: 0.3,
               damping: 16,
             }}
-            className="relative bg-neutral-800 rounded-2xl max-w-[425px] min-w-[360px] flex flex-col items-center gap-8 z-50 w-[425px] p-6"
+            className="relative bg-[#1D1D1D] rounded-2xl max-w-[425px] min-w-[min(360px,90vw)] flex flex-col items-center gap-8 z-50 w-[425px] p-6 max-h-[calc(100vh-96px)] overflow-y-auto"
           >
             {/* ----------- */}
             <Image
@@ -122,13 +123,25 @@ const AuthModal = () => {
             </div>
 
             <>
-              {activeModal === 0 && <Login />}
-              {activeModal === 1 && <SignUp />}
+              {activeModal === 0 && (
+                <Login
+                  setActiveModal={(x: number) => {
+                    setActiveModal(x);
+                  }}
+                />
+              )}
+              {activeModal === 1 && (
+                <SignUp
+                  setActiveModal={(x: number) => {
+                    setActiveModal(x);
+                  }}
+                />
+              )}
             </>
           </motion.div>
         </div>
       )}
-    </>
+    </AnimatePresence>
   );
 };
 
