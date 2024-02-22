@@ -19,6 +19,8 @@ const AuthModal = () => {
       {isOpen && (
         <div className="fixed top-0 left-0 z-50 flex items-center justify-center w-full h-full ">
           <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 100 }}
             exit={{ opacity: 0 }}
             className="fixed top-0 left-0 z-50 w-full h-full bg-[rgba(17,17,17,0.78)] cursor-pointer min-w-[360px]  "
             onClick={() => {
@@ -26,16 +28,16 @@ const AuthModal = () => {
             }}
           ></motion.div>
           <motion.div
-            initial={{ top: -100 }}
-            animate={{ top: 0 }}
+            initial={{ top: -500, opacity: 0 }}
+            animate={{ top: 0, opacity: 100 }}
             exit={{ top: 500, opacity: 0, transition: { duration: 0.2 } }}
             transition={{
               type: "spring",
-              stiffness: 120,
-              duration: 0.3,
+              stiffness: 140,
+              duration: 0.4,
               damping: 16,
             }}
-            className="relative bg-[#1D1D1D] rounded-2xl max-w-[425px] min-w-[min(360px,90vw)] flex flex-col items-center gap-8 z-50 w-[425px] p-6 max-h-[calc(100vh-96px)] overflow-y-auto"
+            className="relative bg-[#1D1D1D] rounded-2xl max-w-[calc(425px-64px)] min-w-[min(360px,90vw)] flex flex-col items-center gap-8 z-50 w-[425px] p-6 max-h-[calc(100vh-96px)] overflow-y-auto"
           >
             {/* ----------- */}
             <Image

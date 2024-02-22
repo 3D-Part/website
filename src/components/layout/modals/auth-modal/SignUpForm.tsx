@@ -98,12 +98,12 @@ const LockIcon = () => {
     </svg>
   );
 };
-const UserIcon = () => {
+export const UserIcon: FC<{ scale?: number }> = ({ scale = 1 }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="17"
+      width={16 * scale}
+      height={17 * scale}
       viewBox="0 0 16 17"
       fill="none"
     >
