@@ -37,7 +37,7 @@ const AuthModal = () => {
               duration: 0.4,
               damping: 16,
             }}
-            className="relative bg-[#1D1D1D] rounded-2xl max-w-[calc(425px-64px)] min-w-[min(360px,90vw)] flex flex-col items-center gap-8 z-50 w-[425px] p-6 max-h-[calc(100vh-96px)] overflow-y-auto"
+            className="relative bg-[#1D1D1D] rounded-2xl max-w-[425px] min-w-[300px] mx-8 flex flex-col items-center gap-8 z-50 w-[425px] p-6 max-h-[calc(100vh-96px)] overflow-y-auto"
           >
             {/* ----------- */}
             <Image
