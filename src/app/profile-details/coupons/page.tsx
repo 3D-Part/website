@@ -1,3 +1,4 @@
+"use client";
 import Container from "@/components/common/container/Container";
 import { FC } from "react";
 
