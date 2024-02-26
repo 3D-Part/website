@@ -4,7 +4,6 @@ import Container from "@/components/common/container/Container";
 import Input from "@/components/common/input/Input";
 import Heading2 from "@/components/common/text/heading/Heading2";
 import Heading4 from "@/components/common/text/heading/Heading4";
-import Paragraph from "@/components/common/text/paragraph/Paragraph";
 import Image from "next/image";
 import { FC } from "react";
 
