@@ -82,7 +82,7 @@ const EmailIcon = () => {
     </svg>
   );
 };
-const LockIcon = () => {
+export const LockIcon = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -133,7 +133,7 @@ export const UserIcon: FC<{ scale?: number; fill?: string }> = ({
     </svg>
   );
 };
-const EyeIcon: FC<{ fill: string }> = ({ fill }) => {
+export const EyeIcon: FC<{ fill: string }> = ({ fill }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
