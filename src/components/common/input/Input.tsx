@@ -24,7 +24,7 @@ const Input: React.FC<{
         className="w-full h-10 px-4 py-2 rounded-lg bg-neutral-700"
         id={id}
         required
-        value={value}
+        defaultValue={value}
       />
       {required && (
         <span className="absolute h-5 text-xl -translate-x-1/2 -translate-y-1/2 right-2 top-1/2 text-error-500 animate-pulse">

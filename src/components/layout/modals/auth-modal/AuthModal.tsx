@@ -6,13 +6,27 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { isModalAuthVisibleSelector } from "@/redux/slices/ui/uiSelectors";
 import { changeIsModalAuthVisible } from "@/redux/slices/ui/uiSlice";
 import { AnimatePresence, motion } from "framer-motion";
+import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 const AuthModal = () => {
   const [activeModal, setActiveModal] = useState(0);
   const isOpen = useAppSelector(isModalAuthVisibleSelector);
   const dispatch = useAppDispatch();
+
+  const router = useRouter();
+
+  const { data: session } = useSession();
+  console.log(session);
+
+  if (session && session.user && isOpen) {
+    router.push("/profile-details");
+    dispatch(changeIsModalAuthVisible(false));
+    // signOut();
+    return <></>;
+  }
 
   return (
     <AnimatePresence mode="wait">

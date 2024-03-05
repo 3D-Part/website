@@ -8,6 +8,7 @@ import { Providers } from "@/redux/provider";
 import Modals from "@/components/layout/modals/Modals";
 import "react-toastify/dist/ReactToastify.css";
 import Toastify from "@/components/common/toast/Toastify";
+import { NextAuthProvider } from "@/app/providers";
 
 const exo2 = Exo_2({
   variable: "--font-exo2",
@@ -48,15 +49,17 @@ export default function RootLayout({
       <body
         className={`${exo2.variable} font-exo2 overflow-x-hidden relative min-w-[368px]`}
       >
-        <Providers>
-          <Header />
-          <Lights />
+        <NextAuthProvider>
+          <Providers>
+            <Header />
+            <Lights />
 
-          <div className="static">{children}</div>
-          <Footer />
-          <Modals />
-        </Providers>
-        <Toastify />
+            <div className="static">{children}</div>
+            <Footer />
+            <Modals />
+          </Providers>
+          <Toastify />
+        </NextAuthProvider>
       </body>
     </html>
   );

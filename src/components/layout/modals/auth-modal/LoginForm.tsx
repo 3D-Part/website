@@ -1,16 +1,33 @@
+import { signIn } from "next-auth/react";
 import Link from "next/link";
 import React, { FC, useState } from "react";
 
 const LoginForm = () => {
   const [passType, setPassType] = useState("password");
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+
+    const signInResponse = await signIn("credentials", {
+      email: e.target.email.value,
+      password: e.target.password.value,
+      redirect: false,
+      fullName: "",
+      type: "signIn",
+    });
+
+    if (signInResponse && !signInResponse.error) {
+      //Redirect to homepage (/timeline)
+      console.log("sign in sucessfull ", signInResponse);
+    } else {
+      console.log("Error: ", signInResponse);
+      setError("Your Email or Password is wrong!");
+    }
+  };
 
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        console.log(e);
-      }}
-    >
+    <form onSubmit={handleSubmit}>
       <div className="flex items-center p-1 bg-[#313131] rounded-xl px-3 py-2 gap-3">
         <EmailIcon />
         <input
