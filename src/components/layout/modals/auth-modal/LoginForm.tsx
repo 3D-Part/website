@@ -1,3 +1,5 @@
+import JWT from "@/shared/helper/jwtToken";
+import AuthAPI from "@/shared/services/auth";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import React, { FC, useState } from "react";
@@ -9,20 +11,20 @@ const LoginForm = () => {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    const signInResponse = await signIn("credentials", {
-      email: e.target.email.value,
-      password: e.target.password.value,
-      redirect: false,
-      fullName: "",
-      type: "signIn",
-    });
+    try {
+      const data = await AuthAPI.login({
+        email: e.target.email.value,
+        password: e.target.password.value,
+      });
 
-    if (signInResponse && !signInResponse.error) {
-      //Redirect to homepage (/timeline)
-      console.log("sign in sucessfull ", signInResponse);
-    } else {
-      console.log("Error: ", signInResponse);
-      setError("Your Email or Password is wrong!");
+      JWT.addJwtTokens(data);
+      signIn("credentials", {
+        email: e.target.email.value,
+        password: e.target.password.value,
+        redirect: false,
+      });
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -82,12 +84,12 @@ const LoginForm = () => {
               viewBox="0 0 20 20"
               fill="currentColor"
               stroke="currentColor"
-              stroke-width="1"
+              strokeWidth="1"
             >
               <path
-                fill-rule="evenodd"
+                fillRule="evenodd"
                 d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                clip-rule="evenodd"
+                clipRule="evenodd"
               ></path>
             </svg>
           </span>
@@ -104,6 +106,8 @@ const LoginForm = () => {
       <button
         type="submit"
         className="w-full h-12 text-base font-bold bg-[#2463EB] font-exo2 rounded-lg my-8"
+        // TODO: add logic for disabling
+        disabled={false}
       >
         Login
       </button>

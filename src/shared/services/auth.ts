@@ -1,9 +1,12 @@
+import { LocalStorageHelper } from "@/shared/helper/LocalStorageHelper";
 import {
   GetNewAccessTokenResponseData,
   LoginData,
   LoginResponseData,
   SignUpData,
 } from "@/shared/types";
+
+import API from "@/shared/helper/api";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
@@ -21,16 +24,17 @@ const login = async (body: LoginData) => {
       body: JSON.stringify(body),
     });
 
+    const data = await response.json();
     if (!response.ok) {
-      throw new Error("Neuspješna prijava");
+      throw new Error(data);
     }
 
-    const data = await response.json();
-    // JWT.addJwtTokens(data); // Ova linija dodaje JWT tokene, možete je koristiti ako imate potrebu
+    console.log("DATA:", data);
+
     return data;
-  } catch (error) {
+  } catch (error: any) {
     console.error("Došlo je do greške:", error);
-    return null;
+    throw new Error(error);
   }
 };
 
@@ -50,10 +54,11 @@ const signUp = async (body: SignUpData) => {
 
     const data = await response.json();
     if (!response.ok) {
-      throw new Error(data.errors[0].message);
+      throw new Error(data);
     }
 
     console.log("DATA:", data);
+
     return data;
   } catch (error: any) {
     console.error("Došlo je do greške:", error);
@@ -79,32 +84,12 @@ const logout = async () => {
   }
 };
 
-const getNewAccessToken = async (body: GetNewAccessTokenResponseData) => {
-  const API_BASE_URL = "https://example.com"; // Zamijeni ovu URL adresu sa stvarnom adresom servera
-  const GET_NEW_ACCESS_TOKEN_ENDPOINT = "auth/get-new-access-token/";
-
-  const url = `${API_BASE_URL}${GET_NEW_ACCESS_TOKEN_ENDPOINT}`;
-
+const getNewAccessToken = async (body: {
+  refreshToken: string;
+}): Promise<GetNewAccessTokenResponseData | null> => {
   try {
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
-    });
-
-    if (!response.ok) {
-      throw new Error("Neuspješno dobavljanje novog pristupnog tokena");
-    }
-
-    const data = await response.json();
-    return data;
+    return await API.post(`${API_BASE_URL}/auth/get-new-access-token/`, body);
   } catch (error) {
-    console.error(
-      "Došlo je do greške prilikom dobavljanja novog pristupnog tokena:",
-      error
-    );
     return null;
   }
 };

@@ -1,4 +1,6 @@
 "use client";
+import JWT from "@/shared/helper/jwtToken";
+import AuthAPI from "@/shared/services/auth";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import React, { FC, useState } from "react";
@@ -10,20 +12,23 @@ const SignUpForm = () => {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    const signUpResponse = await signIn("credentials", {
-      email: e.target.email.value,
-      password: e.target.password.value,
-      redirect: false,
-      fullName: e.target.username.value,
-      type: "signUp",
-    });
+    try {
+      const data = await AuthAPI.signUp({
+        email: e.target.email.value,
+        password: e.target.password.value,
+        fullName: e.target.username.value,
+      });
 
-    if (signUpResponse && !signUpResponse.error) {
-      //Redirect to homepage (/timeline)
-      console.log("sign up sucessfull ", signUpResponse);
-    } else {
-      console.log("Error: ", signUpResponse);
-      setError("Your Email or Password is wrong!");
+      console.log("data 124141241", data);
+
+      JWT.addJwtTokens(data);
+      signIn("credentials", {
+        email: e.target.email.value,
+        password: e.target.password.value,
+        redirect: false,
+      });
+    } catch (error) {
+      console.log(error);
     }
   };
 

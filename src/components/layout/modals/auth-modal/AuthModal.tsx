@@ -19,13 +19,12 @@ const AuthModal = () => {
   const router = useRouter();
 
   const { data: session } = useSession();
-  console.log(session);
+  console.log("session:", session);
 
   if (session && session.user && isOpen) {
     router.push("/profile-details");
     dispatch(changeIsModalAuthVisible(false));
-    // signOut();
-    return <></>;
+    signOut();
   }
 
   return (

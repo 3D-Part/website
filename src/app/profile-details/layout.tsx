@@ -1,5 +1,8 @@
 "use client";
 import { UserIcon } from "@/components/layout/modals/auth-modal/SignUpForm";
+import { useAppDispatch } from "@/redux/hooks";
+import { changeIsModalAuthVisible } from "@/redux/slices/ui/uiSlice";
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import React, { FC } from "react";
@@ -7,6 +10,15 @@ import React, { FC } from "react";
 const Layout: FC<{ children: React.ReactNode }> = ({ children }) => {
   const router = useRouter();
   const pathName = usePathname();
+
+  const dispatch = useAppDispatch();
+
+  const { data: session } = useSession();
+
+  if (!(session && session.user)) {
+    router.push("/");
+    dispatch(changeIsModalAuthVisible(true));
+  }
 
   return (
     <div className="flex flex-col lg:flex-row lg:w-full">
