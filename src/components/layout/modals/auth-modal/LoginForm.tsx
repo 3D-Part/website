@@ -1,3 +1,4 @@
+import { notify } from "@/components/common/toast/Toastify";
 import JWT from "@/shared/helper/jwtToken";
 import AuthAPI from "@/shared/services/auth";
 import { signIn } from "next-auth/react";
@@ -6,7 +7,6 @@ import React, { FC, useState } from "react";
 
 const LoginForm = () => {
   const [passType, setPassType] = useState("password");
-  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -24,7 +24,9 @@ const LoginForm = () => {
         redirect: false,
       });
     } catch (error) {
-      console.log(error);
+      if (error instanceof Error && error.message) {
+        notify(error.message, { type: "error" });
+      }
     }
   };
 

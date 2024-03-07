@@ -3,8 +3,9 @@ import { toast } from "react-toastify";
 import JWT from "./jwtToken";
 import { ErrorCodeEnum, URLPartsEnum } from "@/shared/enums";
 import AuthAPI from "@/shared/services/auth";
+import { signOut } from "next-auth/react";
 
-const API_BASE_URL = process.env.API_KEY;
+const API_BASE_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 type ErrorType = {
   message: string;
@@ -73,8 +74,10 @@ axiosInstance.interceptors.response.use(
         });
 
         setTimeout(() => {
-          window.location.href = URLPartsEnum.Login;
-        }, 3000);
+          signOut().then(() => {
+            window.location.href = "/profile-details";
+          });
+        }, 2000);
 
         return;
       }

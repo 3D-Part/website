@@ -268,3 +268,24 @@ export interface OrdersData {
 export interface OrderFormBody {
   message: string;
 }
+
+// Coupons
+
+interface Coupon {
+  id: string;
+  code: string;
+  discountPercentage: number;
+  startsAt: Date;
+  endsAt: Date;
+}
+
+interface CouponQueryParams {
+  id?: { is: string };
+  code?: { like: string };
+  startsAt?: { lt: string };
+  endsAt?: { gt: string };
+  userPromotionCode?: {
+    isRedeemed?: { is: boolean };
+    userId?: { is: string };
+  };
+}

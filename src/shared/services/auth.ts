@@ -25,8 +25,9 @@ const login = async (body: LoginData) => {
     });
 
     const data = await response.json();
+
     if (!response.ok) {
-      throw new Error(data);
+      throw new Error(data.errors[0].message);
     }
 
     console.log("DATA:", data);
@@ -54,7 +55,7 @@ const signUp = async (body: SignUpData) => {
 
     const data = await response.json();
     if (!response.ok) {
-      throw new Error(data);
+      throw new Error(data.errors[0].message);
     }
 
     console.log("DATA:", data);
@@ -88,7 +89,7 @@ const getNewAccessToken = async (body: {
   refreshToken: string;
 }): Promise<GetNewAccessTokenResponseData | null> => {
   try {
-    return await API.post(`${API_BASE_URL}/auth/get-new-access-token/`, body);
+    return await API.post(`${API_BASE_URL}auth/get-new-access-token/`, body);
   } catch (error) {
     return null;
   }

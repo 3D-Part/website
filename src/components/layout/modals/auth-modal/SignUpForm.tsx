@@ -1,4 +1,5 @@
 "use client";
+import { notify } from "@/components/common/toast/Toastify";
 import JWT from "@/shared/helper/jwtToken";
 import AuthAPI from "@/shared/services/auth";
 import { signIn } from "next-auth/react";
@@ -28,7 +29,9 @@ const SignUpForm = () => {
         redirect: false,
       });
     } catch (error) {
-      console.log(error);
+      if (error instanceof Error && error.message) {
+        notify(error.message, { type: "error" });
+      }
     }
   };
 

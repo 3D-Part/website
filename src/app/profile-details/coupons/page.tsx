@@ -3,10 +3,17 @@ import UnusedCoupons from "@/app/profile-details/coupons/UnusedCoupons";
 import UsedCoupons from "@/app/profile-details/coupons/UsedCoupons";
 import Container from "@/components/common/container/Container";
 import Heading2 from "@/components/common/text/heading/Heading2";
-import { FC, useState } from "react";
+import { couponsService } from "@/shared/services/couponsService";
+import { FC, useEffect, useState } from "react";
 
 const Coupons: FC = () => {
   const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    couponsService.fetchCoupons().then((res) => {
+      console.log(res);
+    });
+  }, []);
 
   return (
     <div className="w-full">
