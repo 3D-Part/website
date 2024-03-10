@@ -1,5 +1,7 @@
 "use client";
 import { notify } from "@/components/common/toast/Toastify";
+import { useAppDispatch } from "@/redux/hooks";
+import { changeIsModalAuthVisible } from "@/redux/slices/ui/uiSlice";
 import JWT from "@/shared/helper/jwtToken";
 import AuthAPI from "@/shared/services/auth";
 import { signIn } from "next-auth/react";
@@ -8,7 +10,8 @@ import React, { FC, useState } from "react";
 
 const SignUpForm = () => {
   const [passType, setPassType] = useState("password");
-  const [error, setError] = useState<string | null>(null);
+
+  const dispatch = useAppDispatch();
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -20,9 +23,9 @@ const SignUpForm = () => {
         fullName: e.target.username.value,
       });
 
-      console.log("data 124141241", data);
-
       JWT.addJwtTokens(data);
+      dispatch(changeIsModalAuthVisible(false));
+      notify("Uspješna registracija", { type: "success" });
       signIn("credentials", {
         email: e.target.email.value,
         password: e.target.password.value,

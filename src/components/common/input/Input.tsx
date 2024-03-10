@@ -7,6 +7,7 @@ const Input: React.FC<{
   type?: React.HTMLInputTypeAttribute;
   value?: string;
   className?: string;
+  disabled?: boolean;
 }> = ({
   placeholder,
   id,
@@ -14,6 +15,7 @@ const Input: React.FC<{
   required = false,
   value = "",
   className = "",
+  disabled = false,
 }) => {
   return (
     <div className={`relative w-full ${className}`}>
@@ -21,13 +23,14 @@ const Input: React.FC<{
       <input
         type={type}
         placeholder={placeholder}
-        className="w-full h-10 px-4 py-2 rounded-lg bg-neutral-700"
+        className="w-full h-10 px-4 py-2 rounded-lg disabled:cursor-not-allowed bg-neutral-700 disabled:text-neutral-400"
         id={id}
         required
         defaultValue={value}
+        disabled={disabled}
       />
       {required && (
-        <span className="absolute h-5 text-xl -translate-x-1/2 -translate-y-1/2 right-2 top-1/2 text-error-500 animate-pulse">
+        <span className="absolute h-5 text-xl -translate-x-1/2 -translate-y-1/2 right-2 top-1/2 text-error-500 animate-pulse ">
           *
         </span>
       )}

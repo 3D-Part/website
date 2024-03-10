@@ -30,8 +30,6 @@ const login = async (body: LoginData) => {
       throw new Error(data.errors[0].message);
     }
 
-    console.log("DATA:", data);
-
     return data;
   } catch (error: any) {
     console.error("Došlo je do greške:", error);
@@ -57,8 +55,6 @@ const signUp = async (body: SignUpData) => {
     if (!response.ok) {
       throw new Error(data.errors[0].message);
     }
-
-    console.log("DATA:", data);
 
     return data;
   } catch (error: any) {
@@ -90,8 +86,18 @@ const getNewAccessToken = async (body: {
 }): Promise<GetNewAccessTokenResponseData | null> => {
   try {
     return await API.post(`${API_BASE_URL}auth/get-new-access-token/`, body);
-  } catch (error) {
-    return null;
+  } catch (error: any) {
+    console.error("Došlo je do greške:", error);
+    throw new Error(error);
+  }
+};
+
+const verifyAccount = async (body: { code: string }): Promise<any> => {
+  try {
+    return await API.post(`${API_BASE_URL}auth/verify/`, body);
+  } catch (error: any) {
+    console.error("Došlo je do greške:", error);
+    throw new Error(error);
   }
 };
 
@@ -100,6 +106,7 @@ const AuthAPI = {
   logout,
   getNewAccessToken,
   signUp,
+  verifyAccount,
 };
 
 export default AuthAPI;

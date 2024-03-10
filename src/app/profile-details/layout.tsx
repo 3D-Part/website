@@ -1,4 +1,5 @@
 "use client";
+import Spinner from "@/components/common/spinner/Spinner";
 import { UserIcon } from "@/components/layout/modals/auth-modal/SignUpForm";
 import { useAppDispatch } from "@/redux/hooks";
 import { changeIsModalAuthVisible } from "@/redux/slices/ui/uiSlice";
@@ -13,7 +14,15 @@ const Layout: FC<{ children: React.ReactNode }> = ({ children }) => {
 
   const dispatch = useAppDispatch();
 
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+
+  if (status === "loading") {
+    return (
+      <div className="flex items-center justify-center w-screen h-[calc(100vh-150px)] overflow-hidden">
+        <Spinner />
+      </div>
+    );
+  }
 
   if (!(session && session.user)) {
     router.push("/");

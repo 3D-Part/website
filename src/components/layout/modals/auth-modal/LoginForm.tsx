@@ -1,4 +1,6 @@
 import { notify } from "@/components/common/toast/Toastify";
+import { useAppDispatch } from "@/redux/hooks";
+import { changeIsModalAuthVisible } from "@/redux/slices/ui/uiSlice";
 import JWT from "@/shared/helper/jwtToken";
 import AuthAPI from "@/shared/services/auth";
 import { signIn } from "next-auth/react";
@@ -7,6 +9,8 @@ import React, { FC, useState } from "react";
 
 const LoginForm = () => {
   const [passType, setPassType] = useState("password");
+
+  const dispatch = useAppDispatch();
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -18,6 +22,9 @@ const LoginForm = () => {
       });
 
       JWT.addJwtTokens(data);
+
+      dispatch(changeIsModalAuthVisible(false));
+      notify("Uspješno logovanje", { type: "success" });
       signIn("credentials", {
         email: e.target.email.value,
         password: e.target.password.value,
