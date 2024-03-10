@@ -1,7 +1,8 @@
 "use client";
 import Spinner from "@/components/common/spinner/Spinner";
 import { UserIcon } from "@/components/layout/modals/auth-modal/SignUpForm";
-import { useAppDispatch } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { isUserVerifiedSelector } from "@/redux/slices/ui/uiSelectors";
 import { changeIsModalAuthVisible } from "@/redux/slices/ui/uiSlice";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
@@ -15,6 +16,8 @@ const Layout: FC<{ children: React.ReactNode }> = ({ children }) => {
   const dispatch = useAppDispatch();
 
   const { data: session, status } = useSession();
+
+  const isVerified = useAppSelector(isUserVerifiedSelector);
 
   if (status === "loading") {
     return (
@@ -52,52 +55,62 @@ const Layout: FC<{ children: React.ReactNode }> = ({ children }) => {
             fill={pathName === "/profile-details" ? "white" : "#888888"}
           />
         </Link>
-        <Link
-          href="/profile-details/coupons"
-          type="button"
-          className={`flex items-center justify-center p-3 rounded-lg transition-all  h-14 w-14 lg:gap-5  lg:w-full  ${
-            pathName === "/profile-details/coupons"
-              ? "bg-neutral-600 lg:text-white lg:bg-transparent lg:hover:bg-neutral-700"
-              : "bg-neutral-800 hover:bg-neutral-700 lg:bg-transparent lg:hover:bg-neutral-700 lg:text-[#888888]"
-          }`}
-        >
-          <div className="flex items-center flex-1 gap-2">
-            <PromoSvg
-              scale={1.5}
-              fill={
-                pathName === "/profile-details/coupons" ? "#387BE8" : "#1A3A73"
-              }
-            />
-            <span className="hidden lg:block">Promo kodovi</span>
-          </div>
-          <ArrowSvg
-            fill={pathName === "/profile-details/coupons" ? "white" : "#888888"}
-          />
-        </Link>
-        <Link
-          href="/profile-details/security"
-          type="button"
-          className={`flex items-center justify-center p-3 rounded-lg transition-all  h-14 w-14 lg:gap-5  lg:w-full ${
-            pathName === "/profile-details/security"
-              ? "bg-neutral-600 lg:text-white lg:bg-transparent lg:hover:bg-neutral-700"
-              : "bg-neutral-800 hover:bg-neutral-700 lg:bg-transparent lg:hover:bg-neutral-700 lg:text-[#888888]"
-          }`}
-        >
-          <div className="flex items-center flex-1 gap-2">
-            <LockSvg
-              scale={1.5}
-              fill={
-                pathName === "/profile-details/security" ? "#387BE8" : "#1A3A73"
-              }
-            />
-            <span className="hidden lg:block">Postavke i sigurnost</span>
-          </div>
-          <ArrowSvg
-            fill={
-              pathName === "/profile-details/security" ? "white" : "#888888"
-            }
-          />
-        </Link>
+        {isVerified && (
+          <>
+            <Link
+              href="/profile-details/coupons"
+              type="button"
+              className={`flex items-center justify-center p-3 rounded-lg transition-all  h-14 w-14 lg:gap-5  lg:w-full  ${
+                pathName === "/profile-details/coupons"
+                  ? "bg-neutral-600 lg:text-white lg:bg-transparent lg:hover:bg-neutral-700"
+                  : "bg-neutral-800 hover:bg-neutral-700 lg:bg-transparent lg:hover:bg-neutral-700 lg:text-[#888888]"
+              }`}
+            >
+              <div className="flex items-center flex-1 gap-2">
+                <PromoSvg
+                  scale={1.5}
+                  fill={
+                    pathName === "/profile-details/coupons"
+                      ? "#387BE8"
+                      : "#1A3A73"
+                  }
+                />
+                <span className="hidden lg:block">Promo kodovi</span>
+              </div>
+              <ArrowSvg
+                fill={
+                  pathName === "/profile-details/coupons" ? "white" : "#888888"
+                }
+              />
+            </Link>
+            <Link
+              href="/profile-details/security"
+              type="button"
+              className={`flex items-center justify-center p-3 rounded-lg transition-all  h-14 w-14 lg:gap-5  lg:w-full ${
+                pathName === "/profile-details/security"
+                  ? "bg-neutral-600 lg:text-white lg:bg-transparent lg:hover:bg-neutral-700"
+                  : "bg-neutral-800 hover:bg-neutral-700 lg:bg-transparent lg:hover:bg-neutral-700 lg:text-[#888888]"
+              }`}
+            >
+              <div className="flex items-center flex-1 gap-2">
+                <LockSvg
+                  scale={1.5}
+                  fill={
+                    pathName === "/profile-details/security"
+                      ? "#387BE8"
+                      : "#1A3A73"
+                  }
+                />
+                <span className="hidden lg:block">Postavke i sigurnost</span>
+              </div>
+              <ArrowSvg
+                fill={
+                  pathName === "/profile-details/security" ? "white" : "#888888"
+                }
+              />
+            </Link>
+          </>
+        )}
       </div>
       <div className="flex-1">{children}</div>
     </div>

@@ -40,8 +40,11 @@ const Search: React.FC<SearchProps> = ({
         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
           setValue(event.target.value);
         }}
+        type="search"
+        id="search"
         className="w-full text-base font-normal bg-transparent outline-none"
         placeholder={placeholder}
+        autoComplete="off"
       />
       <AnimatePresence>
         {clearIcon && value !== "" && (

@@ -7,3 +7,7 @@ export const isGlobalLoadingSelector = (state: RootState) => {
 export const isModalAuthVisibleSelector = (state: RootState) => {
   return state.uiSlice.isModalAuthVisible;
 };
+
+export const isUserVerifiedSelector = (state: RootState) => {
+  return state.uiSlice.isUserVerified;
+};

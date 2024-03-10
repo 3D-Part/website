@@ -5,7 +5,6 @@ import { changeIsModalAuthVisible } from "@/redux/slices/ui/uiSlice";
 import JWT from "@/shared/helper/jwtToken";
 import AuthAPI from "@/shared/services/auth";
 import { signIn } from "next-auth/react";
-import Link from "next/link";
 import React, { FC, useState } from "react";
 
 const SignUpForm = () => {
@@ -47,6 +46,7 @@ const SignUpForm = () => {
           placeholder="Email"
           className="bg-transparent text-[#cccccc] outline-none flex-1"
           id="email"
+          autoComplete="off"
         />
       </div>
 
@@ -57,6 +57,7 @@ const SignUpForm = () => {
           placeholder="Korisničko ime"
           className="bg-transparent text-[#cccccc] outline-none flex-1"
           id="username"
+          autoComplete="off"
         />
       </div>
 
@@ -67,6 +68,7 @@ const SignUpForm = () => {
           placeholder="Password"
           className="bg-transparent text-[#cccccc] outline-none flex-1"
           id="password"
+          autoComplete="off"
         />
         <button
           type="button"

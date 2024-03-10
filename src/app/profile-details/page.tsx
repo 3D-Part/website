@@ -2,11 +2,17 @@
 import Button from "@/components/common/button/Button";
 import Container from "@/components/common/container/Container";
 import Input from "@/components/common/input/Input";
+import Spinner from "@/components/common/spinner/Spinner";
 import Heading2 from "@/components/common/text/heading/Heading2";
 import Heading4 from "@/components/common/text/heading/Heading4";
 import { notify } from "@/components/common/toast/Toastify";
-import { useAppDispatch } from "@/redux/hooks";
-import { changeIsGlobalLoading } from "@/redux/slices/ui/uiSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { isUserVerifiedSelector } from "@/redux/slices/ui/uiSelectors";
+import {
+  changeIsGlobalLoading,
+  changeIsUserVerified,
+} from "@/redux/slices/ui/uiSlice";
+import AuthAPI from "@/shared/services/auth";
 import { userService } from "@/shared/services/userService";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
@@ -24,9 +30,13 @@ const ProfilePage: FC = () => {
     postCode: "",
   });
 
+  const [isLoading, setIsLoading] = useState(false);
+  const isVerified = useAppSelector(isUserVerifiedSelector);
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    setIsLoading(true);
     const fetchUserProfile = async () => {
       try {
         const data = await userService.getUserProfile();
@@ -46,12 +56,18 @@ const ProfilePage: FC = () => {
           city: data.city || "",
           postCode: data.postCode || "",
         });
-      } catch (error) {
+        dispatch(changeIsUserVerified(true));
+      } catch (error: any) {
         console.error("Error fetching user profile:", error);
+        if (error?.response?.data.key === "FORBIDDEN_ERROR") {
+          dispatch(changeIsUserVerified(false));
+        }
       }
     };
 
     fetchUserProfile();
+
+    setIsLoading(false);
   }, []);
 
   const handleSubmit = async (event: any) => {
@@ -81,6 +97,43 @@ const ProfilePage: FC = () => {
     setBUttonDisabled(false);
     dispatch(changeIsGlobalLoading(false));
   };
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center w-screen h-[calc(100vh-150px)] overflow-hidden">
+        <Spinner />
+      </div>
+    );
+  }
+
+  if (!isVerified) {
+    return (
+      <Container className="flex flex-col items-center min-h-screen gap-4 py-6 bg-neutral-900 px-9">
+        <Image
+          alt="3d part logo"
+          src={"/assets/img/logo.svg"}
+          width={138 * 2}
+          height={44 * 2}
+          priority
+          className="my-6 "
+        />
+        <p className="text-4xl text-center">Nalog nije verifikovan</p>
+        <p className="text-lg text-center">
+          Ako niste zaprimili kod na vaš mail, možete ponovo poslati kod
+        </p>
+        <Button
+          onClick={() => {
+            AuthAPI.resendVerificationCode();
+            notify("Kod poslan", { type: "success" });
+          }}
+          type="primary"
+          size="L"
+        >
+          Pošalji ponovo
+        </Button>
+      </Container>
+    );
+  }
 
   return (
     <form onSubmit={handleSubmit}>
