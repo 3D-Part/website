@@ -1,5 +1,5 @@
-import axiosInstance from "@/shared/helper/axiosInstance";
 import { CouponQueryParams } from "@/shared/types";
+import API from "../helper/api";
 
 interface Coupon {
   id: string;
@@ -11,10 +11,10 @@ interface Coupon {
 
 const fetchCoupons = async (params?: CouponQueryParams): Promise<Coupon[]> => {
   try {
-    const response = await axiosInstance.get("shop/promotion-codes/", {
+    const response = await API.get<Coupon[]>("shop/promotion-codes/", {
       params,
     });
-    return response.data.rows as Coupon[];
+    return response;
   } catch (error) {
     throw new Error("Failed to fetch coupons");
   }

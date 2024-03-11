@@ -3,11 +3,15 @@ import Spinner from "@/components/common/spinner/Spinner";
 import { UserIcon } from "@/components/layout/modals/auth-modal/SignUpForm";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { isUserVerifiedSelector } from "@/redux/slices/ui/uiSelectors";
-import { changeIsModalAuthVisible } from "@/redux/slices/ui/uiSlice";
+import {
+  changeIsModalAuthVisible,
+  changeIsUserVerified,
+} from "@/redux/slices/ui/uiSlice";
+import { userService } from "@/shared/services/userService";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 
 const Layout: FC<{ children: React.ReactNode }> = ({ children }) => {
   const router = useRouter();
@@ -18,6 +22,27 @@ const Layout: FC<{ children: React.ReactNode }> = ({ children }) => {
   const { data: session, status } = useSession();
 
   const isVerified = useAppSelector(isUserVerifiedSelector);
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const data = await userService.getUserProfile();
+
+        if (!data) {
+          return;
+        }
+
+        dispatch(changeIsUserVerified(true));
+      } catch (error: any) {
+        console.error("Error fetching user profile:", error);
+        if (error?.response?.data.key === "FORBIDDEN_ERROR") {
+          dispatch(changeIsUserVerified(false));
+        }
+      }
+    };
+
+    fetchUserProfile();
+  }, []);
 
   if (status === "loading") {
     return (
