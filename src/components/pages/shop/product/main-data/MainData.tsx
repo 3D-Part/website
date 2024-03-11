@@ -54,7 +54,7 @@ const MainData: React.FC<{
   const isTablet = useIsTablet();
 
   const amountHandler = (newAmount: number) => {
-    if (newAmount >= 1) {
+    if (newAmount >= 1 && newAmount <= productData.quantity) {
       setAmount(newAmount);
     }
   };
@@ -108,11 +108,12 @@ const MainData: React.FC<{
       >
         <div className="bg-neutral-700 p-[3px] flex gap-4 items-center rounded-lg w-min h-[46px]">
           <motion.button
-            className="w-10 h-10 rounded-[4px] flex items-center justify-center bg-neutral-900 cursor-pointer"
+            className="w-10 h-10 rounded-[4px] flex items-center justify-center bg-neutral-900 cursor-pointer disabled:cursor-not-allowed"
             whileTap="tap"
             onClick={() => {
               amountHandler(amount - 1);
             }}
+            disabled={amount === 1}
           >
             <motion.svg
               xmlns="http://www.w3.org/2000/svg"
@@ -132,11 +133,12 @@ const MainData: React.FC<{
             {amount}
           </Paragraph>
           <motion.button
-            className="w-10 h-10 rounded-[4px] flex items-center justify-center bg-neutral-900 cursor-pointer"
+            className="w-10 h-10 rounded-[4px] flex items-center justify-center bg-neutral-900 cursor-pointer disabled:cursor-not-allowed"
             whileTap="tap"
             onClick={() => {
               amountHandler(amount + 1);
             }}
+            disabled={amount === productData.quantity}
           >
             <motion.svg
               xmlns="http://www.w3.org/2000/svg"
