@@ -17,7 +17,7 @@ const SignUp: FC<{ setActiveModal: (x: number) => void }> = ({
       </div>
       {/* ----------------------------------------------------- */}
       <GoogleButton />
-      <FacebookButton className="mt-2" />
+      {/* <FacebookButton className="mt-2" /> */}
       {/* ----------------------------------------------------- */}
       <p className="mt-4 font-exo2 font-normal text-[#cccccc] text-xs">
         Klikom na ovo dugme slažete se sa našim{" "}

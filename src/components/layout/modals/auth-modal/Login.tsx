@@ -9,7 +9,7 @@ const Login: FC<{ setActiveModal: (x: number) => void }> = ({
   return (
     <div className="flex flex-col justify-center w-full">
       <GoogleButton />
-      <FacebookButton className="mt-2" />
+      {/* <FacebookButton className="mt-2" /> */}
       {/* ----------------------------------------------------- */}
       <p className="mt-4 font-exo2 font-normal text-[#cccccc] text-xs">
         Klikom na ovo dugme slažete se sa našim{" "}

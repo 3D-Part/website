@@ -63,7 +63,7 @@ const Newsletter = () => {
           onSubmit={handleSubmit}
           disabled={isSubmitting}
           className="w-[220px] flex items-center justify-center h-14 bg-primary-500  hover:bg-primary-400 rounded-lg 
-          disabled:cursor-not-allowed active:bg-primary-600 disabled:bg-[rgba(59,130,246,0.5)] disabled:text-neutral-400 cursor-pointer "
+          disabled:cursor-not-allowed transition-all active:bg-primary-600 disabled:bg-[rgba(59,130,246,0.5)] disabled:text-neutral-400 cursor-pointer "
           value="Prijavi me"
         />
       </form>

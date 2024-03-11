@@ -19,7 +19,7 @@ const Security: FC = () => {
 
   const handleSubmit = () => {};
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <div className="w-full">
         <Container className="flex flex-col items-center min-h-screen py-6 lg:items-start bg-neutral-900 px-9">
           <Heading2 className="">Postavke i sigurnost</Heading2>
@@ -31,6 +31,7 @@ const Security: FC = () => {
           <div className="flex items-center p-1 bg-[#313131] rounded-xl px-3 py-2 gap-3 mt-4 w-[430px]">
             <LockIcon />
             <input
+              required
               type={passType}
               placeholder="Stara lozinka"
               className="bg-transparent text-[#cccccc] outline-none flex-1"
@@ -63,6 +64,7 @@ const Security: FC = () => {
           <div className="flex items-center p-1 bg-[#313131] rounded-xl px-3 py-2 gap-3 mt-6 w-[430px]">
             <LockIcon />
             <input
+              required
               type={passType2}
               placeholder="Nova lozinka"
               className="bg-transparent text-[#cccccc] outline-none flex-1"
@@ -90,16 +92,13 @@ const Security: FC = () => {
             </button>
           </div>
 
-          <Button
-            size="L"
-            type="primary"
-            onClick={() => {
-              handleSubmit();
-            }}
-            className="mt-4 font-semibold bg-primary-600"
-          >
-            Sačuvaj promijene{" "}
-          </Button>
+          <input
+            type="submit"
+            onSubmit={handleSubmit}
+            disabled={disabled}
+            className="w-[220px] flex items-center justify-center h-14 bg-primary-500  hover:bg-primary-400 rounded-lg 
+           disabled:cursor-not-allowed active:bg-primary-600 disabled:bg-[rgba(59,130,246,0.5)] disabled:text-neutral-400 cursor-pointer  mt-6 transition-all"
+          />
         </Container>
       </div>
     </form>
