@@ -15,6 +15,7 @@ import {
 } from "@/redux/slices/cart/cartSlice";
 import PickupOptionForm from "./PickupOptionForm";
 import ElectronicOptionForm from "./ElectronicOptionForm";
+import { saveElectronPaymentToLocal } from "@/components/pages/shop/checkout/saveElectronPaymentToLocal";
 
 const CheckoutForm = () => {
   const products = useAppSelector(cartProductsSelector);
@@ -37,8 +38,7 @@ const CheckoutForm = () => {
         ? {
             city: event.target.city.value,
             email: event.target.email.value,
-            fullName:
-              event.target.name.value + " " + event.target.surname.value,
+            fullName: event.target.fullName.value,
             phone: event.target.phone.value,
             postCode: event.target.postCode.value,
             products: products.map((x) => {
@@ -68,6 +68,11 @@ const CheckoutForm = () => {
       notify("Narudžba kreirana", { type: "success" });
       dispatch(resetCart());
       dispatch(changeSuccessfulOrder(data));
+
+      if (payingOption === "1") {
+        saveElectronPaymentToLocal(payload);
+      }
+
       router.push("/shop/checkout/successful");
     } catch (error: any) {
       const parsedError = JSON.parse(error.message);

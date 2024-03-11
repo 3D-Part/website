@@ -31,3 +31,15 @@ export interface OrderBodyInterfaceCompany {
   jib: string;
   description: string;
 }
+
+export interface ElectronPaymentData {
+  companyName: string;
+  companyPdv: string;
+  phone: string;
+  city: string;
+  postCode: string;
+  street: string;
+  email: string;
+  jib: string;
+  description: string;
+}

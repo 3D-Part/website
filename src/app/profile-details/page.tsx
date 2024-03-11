@@ -28,6 +28,7 @@ const ProfilePage: FC = () => {
     // state: "",
     city: "",
     postCode: "",
+    image: "/assets/img/logo.svg",
   });
 
   const [isLoading, setIsLoading] = useState(false);
@@ -41,8 +42,6 @@ const ProfilePage: FC = () => {
       try {
         const data = await userService.getUserProfile();
 
-        console.log("data", data);
-
         if (!data) {
           return;
         }
@@ -55,6 +54,7 @@ const ProfilePage: FC = () => {
           // state: data.state || "",
           city: data.city || "",
           postCode: data.postCode || "",
+          image: data.image || "/assets/img/logo.svg",
         });
         dispatch(changeIsUserVerified(true));
       } catch (error: any) {
@@ -88,7 +88,6 @@ const ProfilePage: FC = () => {
       await userService.updateProfile(payload);
       notify("Profil uređen", { type: "success" });
     } catch (error: any) {
-      console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", error);
       notify(error?.response?.data?.errors[0]?.message, { type: "error" });
 
       console.error(error);
@@ -147,8 +146,8 @@ const ProfilePage: FC = () => {
                   width={151}
                   height={151}
                   alt="profile photo"
-                  src={"/assets/img/slider/product2.png"}
-                  className="rounded-full "
+                  src={userData.image}
+                  className="border border-white rounded-full w-[155px] h-[155px] p-1"
                 />
               </div>
               <div className="lg:flex-row flex flex-col lg:gap-[78px] gap-6">
