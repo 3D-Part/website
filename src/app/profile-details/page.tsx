@@ -97,7 +97,7 @@ const ProfilePage: FC = () => {
     dispatch(changeIsGlobalLoading(false));
   };
 
-  if (isLoading) {
+  if (isLoading || isVerified === null) {
     return (
       <div className="flex items-center justify-center w-screen h-[calc(100vh-150px)] overflow-hidden">
         <Spinner />
@@ -105,7 +105,7 @@ const ProfilePage: FC = () => {
     );
   }
 
-  if (!isVerified) {
+  if (isVerified === false) {
     return (
       <Container className="flex flex-col items-center min-h-screen gap-4 py-6 bg-neutral-900 px-9">
         <Image

@@ -3,13 +3,13 @@ import { createSlice } from "@reduxjs/toolkit";
 type UiState = {
   isGlobalLoading: boolean;
   isModalAuthVisible: boolean;
-  isUserVerified: boolean;
+  isUserVerified: boolean | null;
 };
 
 const initialState = {
   isGlobalLoading: false,
   isModalAuthVisible: false,
-  isUserVerified: false,
+  isUserVerified: null,
 } as UiState;
 
 export const ui = createSlice({
