@@ -1,5 +1,6 @@
 import axiosInstance from "@/shared/helper/axiosInstance";
 import { CouponQueryParams } from "@/shared/types";
+import API from "../helper/api";
 
 interface UserType {
   id: string;
@@ -30,8 +31,8 @@ type updateProfilePayload = {
 
 const getUserProfile = async (): Promise<UserType> => {
   try {
-    const response = await axiosInstance.get("users/profile/");
-    return response.data as UserType;
+    const response = await API.get<UserType>("users/profile/");
+    return response;
   } catch (error) {
     throw error;
   }
@@ -39,10 +40,13 @@ const getUserProfile = async (): Promise<UserType> => {
 
 const updateProfile = async (
   body?: updateProfilePayload
-): Promise<UserType> => {
+): Promise<updateProfilePayload> => {
   try {
-    const response = await axiosInstance.put("users/update-profile/", body);
-    return response.data as UserType;
+    const response = await API.put<updateProfilePayload, updateProfilePayload>(
+      "users/update-profile/",
+      body
+    );
+    return response;
   } catch (error) {
     throw error;
   }

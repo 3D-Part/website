@@ -6,7 +6,7 @@ import React from "react";
 
 const FooterLinks = () => {
   return (
-    <Container className="grid grid-cols-2 px-4 mx-auto pt-11 gap-y-6 lg:grid-cols-3 lg:justify-center lg:pt-24">
+    <Container className="grid grid-cols-2 px-4 mx-auto gap-y-6 lg:grid-cols-3 lg:justify-center ">
       <div className="flex flex-col lg:mx-auto gap:4 lg:flex">
         <Heading5 className="mb-2">Proizvodi</Heading5>
         <Paragraph size="M" weight="Regular" className="py-1 text-neutral-200">

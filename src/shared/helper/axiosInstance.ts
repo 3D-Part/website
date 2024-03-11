@@ -73,7 +73,7 @@ axiosInstance.interceptors.response.use(
 
         setTimeout(() => {
           signOut().then(() => {
-            window.location.href = "/profile-details";
+            window.location.href = "/";
           });
         }, 2000);
 
