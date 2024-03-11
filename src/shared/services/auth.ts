@@ -101,6 +101,18 @@ const verifyAccount = async (body: { code: string }): Promise<any> => {
   }
 };
 
+const resetPassword = async (body: {
+  code: string;
+  password: "";
+}): Promise<any> => {
+  try {
+    return await API.post(`${API_BASE_URL}auth/reset-password/`, body);
+  } catch (error: any) {
+    console.error("Došlo je do greške:", error);
+    throw new Error(error);
+  }
+};
+
 const resendVerificationCode = async (): Promise<any> => {
   try {
     return await API.post(`${API_BASE_URL}auth/resend-verification-code/`);
@@ -117,6 +129,7 @@ const AuthAPI = {
   signUp,
   verifyAccount,
   resendVerificationCode,
+  resetPassword,
 };
 
 export default AuthAPI;

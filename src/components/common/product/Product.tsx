@@ -86,7 +86,7 @@ const Product: React.FC<ProductInterfaceComponent> = ({
           <Paragraph
             size="L"
             weight="Semibold"
-            className="overflow-hidden overflow-ellipsis break-keep whitespace-nowrap max-h-[56px]"
+            className="overflow-hidden overflow-ellipsis break-keep whitespace-nowrap "
           >
             {name}
           </Paragraph>
