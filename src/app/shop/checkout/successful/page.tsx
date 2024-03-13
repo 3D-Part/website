@@ -38,7 +38,7 @@ const Successful = () => {
         </div>
         <Heading3 className="text-center">Hvala na narudžbi!</Heading3>
         <Paragraph size="L" weight="Regular" className="mt-3 text-center">
-          Potvrda o narudžbi je poslana na mejl {data?.email}
+          Potvrda o narudžbi je poslata na mail {data?.email}
         </Paragraph>
 
         <div className="grid grid-cols-[60%40%] gap-2 rounded-2xl mt-9 w-full overflow-hidden">

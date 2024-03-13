@@ -23,7 +23,9 @@ export const metadata: Metadata = {
     template: "%s | 3D Part",
   },
   description: "Description for 3d part",
-  keywords: ["3d, 3d oprema, 3d masine, filamenti, 3d printer"],
+  keywords: [
+    "3d printer, 3d printeri, 3d filamenti, 3d filament, pla filamenti, filamenti za 3d printer, dijelovi za 3d printere, creality, creality printeri, creality filamenti, creality pla, pla filament, petg filament, abs filament, carbon filamenti, asa filamenti, 3d stampa, 3d dijelovi od plastike, 3d stampanje, grijaci, extruderi, ventilatori, sve kategorije sa sajta se mogu uzeti, prusa, prusa printeri, mk4s printer, prusa mk4 kit, flashforge, profesionalni 3d printeri, resin printer, resini, smole , uv smola za 3d printer",
+  ],
   verification: {
     google: "google-site-verification: google12063707349698d2.html",
   },
@@ -78,7 +80,6 @@ export default function RootLayout({
               r.async = 1;
               r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
               a.appendChild(r);
-              console.error("op op");
             })(window, document, "https://static.hotjar.com/c/hotjar-", ".js?sv=");`,
           }}
         />

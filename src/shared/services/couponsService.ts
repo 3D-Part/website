@@ -11,7 +11,7 @@ interface Coupon {
 
 const fetchCoupons = async (params?: CouponQueryParams): Promise<Coupon[]> => {
   try {
-    const response = await API.get<Coupon[]>("shop/promotion-codes/", {
+    const response = await API.get<Coupon[]>("shop/promotion-codes", {
       params,
     });
     return response;

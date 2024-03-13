@@ -72,7 +72,14 @@ const LoginForm = () => {
       </div>
 
       <div className="mt-4">
-        <Link href={"#"}>Zaboravili ste lozinku?</Link>
+        <Link
+          href={"/reset-password/request"}
+          onClick={() => {
+            dispatch(changeIsModalAuthVisible(false));
+          }}
+        >
+          Zaboravili ste lozinku?
+        </Link>
       </div>
 
       {/* -------------------------- */}

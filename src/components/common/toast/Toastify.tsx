@@ -35,7 +35,7 @@ type ToastOptions = {
 
 export const notify = (message: string, options: ToastOptions) =>
   toast(message, {
-    position: "top-center",
+    position: "top-right",
     autoClose: 2000,
     pauseOnHover: false,
     toastClassName: "error_bodyClassName",

@@ -12,14 +12,14 @@ const Verify = () => {
   const token = `${query.get("token")}`;
 
   useEffect(() => {
-    notify("Verifikovanje...", { type: "info", position: "top-right" });
+    // notify("Verifikovanje...", { type: "info", position: "top-right" });
 
     const fetch = async () => {
       try {
         const res = await AuthAPI.verifyAccount({ code: token });
         notify("Profil uspješno verifikovan", {
           type: "success",
-          position: "top-right",
+          // position: "top-right",
         });
         router.replace("/profile-details");
       } catch (error) {

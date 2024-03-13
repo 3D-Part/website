@@ -123,7 +123,7 @@ const ProfilePage: FC = () => {
         <Button
           onClick={() => {
             AuthAPI.resendVerificationCode();
-            notify("Kod poslan", { type: "success" });
+            notify("Kod poslat", { type: "success" });
           }}
           type="primary"
           size="L"

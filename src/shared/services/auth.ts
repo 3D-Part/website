@@ -109,7 +109,16 @@ const resetPassword = async (body: {
     return await API.post(`${API_BASE_URL}auth/reset-password/`, body);
   } catch (error: any) {
     console.error("Došlo je do greške:", error);
-    throw new Error(error);
+    throw error;
+  }
+};
+
+const requestResetPassword = async (body: { email: string }): Promise<any> => {
+  try {
+    return await API.post(`${API_BASE_URL}auth/request-password-reset/`, body);
+  } catch (error: any) {
+    console.error("Došlo je do greške:", error);
+    throw error;
   }
 };
 
@@ -118,7 +127,7 @@ const resendVerificationCode = async (): Promise<any> => {
     return await API.post(`${API_BASE_URL}auth/resend-verification-code/`);
   } catch (error: any) {
     console.error("Došlo je do greške:", error);
-    throw new Error(error);
+    throw Error(error);
   }
 };
 
@@ -130,6 +139,7 @@ const AuthAPI = {
   verifyAccount,
   resendVerificationCode,
   resetPassword,
+  requestResetPassword,
 };
 
 export default AuthAPI;

@@ -27,7 +27,7 @@ const Security: FC = () => {
 
   const dispatch = useAppDispatch();
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     dispatch(changeIsGlobalLoading(true));
     const pass1 = e.target.password.value;
@@ -37,10 +37,12 @@ const Security: FC = () => {
       notify("Lozinke se ne poklapaju", { type: "error", toastId: 12412 });
     } else {
       try {
-        AuthAPI.resetPassword({ password: pass1, code: token });
+        await AuthAPI.resetPassword({ password: pass1, code: token });
         notify("Lozinka promjenjena", { type: "success" });
         router.replace("/");
-      } catch (error) {}
+      } catch (error: any) {
+        notify(error?.response?.data?.errors[0].message, { type: "error" });
+      }
     }
 
     dispatch(changeIsGlobalLoading(false));
@@ -58,8 +60,15 @@ const Security: FC = () => {
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col items-center w-full">
           <Container className="flex flex-col items-center min-h-screen py-6 bg-neutral-900 px-9">
-            <Heading2 className="">Postavke i sigurnost</Heading2>
-            <Heading4 className="mt-7">Promijeni lozinku</Heading4>
+            <Image
+              alt="3d part logo"
+              src={"/assets/img/logo.svg"}
+              width={138 * 2}
+              height={44 * 2}
+              priority
+              className=""
+            />
+            <Heading2 className="mt-7">Promijeni lozinku</Heading2>
             <Paragraph size="M" weight="Medium" className="mt-4 max-w-[550px]">
               Lozinka mora sadržavati barem jedan specijalan znak, veliko slovo
               i broj. Minimalna dužina lozinke treba biti 8 karaktera.

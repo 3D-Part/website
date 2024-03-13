@@ -109,10 +109,10 @@ const Layout: FC<{ children: React.ReactNode }> = ({ children }) => {
               />
             </Link>
             <Link
-              href="/profile-details/security"
+              href="/reset-password"
               type="button"
               className={`flex items-center justify-center p-3 rounded-lg transition-all  h-14 w-14 lg:gap-5  lg:w-full ${
-                pathName === "/profile-details/security"
+                pathName === "/reset-password"
                   ? "bg-neutral-600 lg:text-white lg:bg-transparent lg:hover:bg-neutral-700"
                   : "bg-neutral-800 hover:bg-neutral-700 lg:bg-transparent lg:hover:bg-neutral-700 lg:text-[#888888]"
               }`}
@@ -120,18 +120,12 @@ const Layout: FC<{ children: React.ReactNode }> = ({ children }) => {
               <div className="flex items-center flex-1 gap-2">
                 <LockSvg
                   scale={1.5}
-                  fill={
-                    pathName === "/profile-details/security"
-                      ? "#387BE8"
-                      : "#1A3A73"
-                  }
+                  fill={pathName === "/reset-password" ? "#387BE8" : "#1A3A73"}
                 />
                 <span className="hidden lg:block">Postavke i sigurnost</span>
               </div>
               <ArrowSvg
-                fill={
-                  pathName === "/profile-details/security" ? "white" : "#888888"
-                }
+                fill={pathName === "/reset-password" ? "white" : "#888888"}
               />
             </Link>
           </>
