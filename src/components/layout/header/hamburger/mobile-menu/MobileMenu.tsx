@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect } from "react";
-import { motion } from "framer-motion";
 import Link from "next/link";
 import MobileLinks from "./MobileLinks";
 import Image from "next/image";
@@ -26,7 +25,7 @@ const MobileMenu: React.FC<{ links: any; onClick: () => void }> = ({
   }, []);
 
   return (
-    <motion.div className="fixed top-0 left-0 z-[200] w-screen h-screen bg-[rgba(0,0,0,0.8)] py-4 backdrop-blur">
+    <div className="fixed top-0 left-0 z-[200] w-screen h-screen bg-[rgba(0,0,0,0.8)] py-4 backdrop-blur">
       <div className="flex items-center justify-center pb-6 border-b border-solid border-neutral-600">
         <Link
           href={"/"}
@@ -92,7 +91,7 @@ const MobileMenu: React.FC<{ links: any; onClick: () => void }> = ({
           </div>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 

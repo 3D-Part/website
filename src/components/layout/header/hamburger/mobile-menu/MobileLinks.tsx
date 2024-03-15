@@ -1,8 +1,6 @@
 "use client";
-import Link from "next/link";
 import React, { useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 
 const MobileLinks: React.FC<{
@@ -43,18 +41,10 @@ const LinkSection: React.FC<{
   const router = useRouter();
 
   return (
-    <motion.div
+    <div
       className={`w-full px-4 py-2 border-b border-neutral-600 cursor-pointer ${
         showLine ? "border-solid" : ""
       }`}
-      initial={{ x: -50, opacity: 0 }}
-      animate={{ x: 0, opacity: 1 }}
-      transition={{
-        delay: i * 0.1,
-        type: "tween",
-        duration: 0.3,
-        ease: "easeInOut",
-      }}
     >
       <div
         className="flex items-center justify-between w-full"
@@ -87,6 +77,6 @@ const LinkSection: React.FC<{
           nestedIteration={1}
         />
       )}
-    </motion.div>
+    </div>
   );
 };
