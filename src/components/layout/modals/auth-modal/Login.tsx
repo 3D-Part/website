@@ -8,10 +8,10 @@ const Login: FC<{ setActiveModal: (x: number) => void }> = ({
 }) => {
   return (
     <div className="flex flex-col justify-center w-full">
-      <GoogleButton />
+      {/* <GoogleButton /> */}
       {/* <FacebookButton className="mt-2" /> */}
       {/* ----------------------------------------------------- */}
-      <p className="mt-4 font-exo2 font-normal text-[#cccccc] text-xs">
+      {/* <p className="mt-4 font-exo2 font-normal text-[#cccccc] text-xs">
         Klikom na ovo dugme slažete se sa našim{" "}
         <a href="#" className="underline text-[#3B82F6]">
           Uslovima korišćenja usluge
@@ -21,14 +21,14 @@ const Login: FC<{ setActiveModal: (x: number) => void }> = ({
           Politikom privatnosti
         </a>
         .
-      </p>
+      </p> */}
       {/* ----------------------------------------------------- */}
 
-      <div className="flex items-center my-2 lg:mt-6 lg:my-4">
+      {/* <div className="flex items-center my-2 lg:mt-6 lg:my-4">
         <span className="flex-1 h-[1px] bg-neutral-500"></span>
         <p className="p-4">ili</p>
         <span className="flex-1 h-[1px] bg-neutral-500"></span>
-      </div>
+      </div> */}
 
       {/* ----------------------------------------------------- */}
       <LoginForm />

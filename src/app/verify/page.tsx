@@ -22,7 +22,10 @@ const Verify = () => {
           // position: "top-right",
         });
         router.replace("/profile-details");
-      } catch (error) {
+      } catch (error: any) {
+        if (error.response) {
+          notify(error?.response?.data.errors[0].message, { type: "error" });
+        }
         router.replace("/profile-details");
       }
     };

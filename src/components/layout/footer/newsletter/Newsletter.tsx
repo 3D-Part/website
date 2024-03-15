@@ -1,7 +1,6 @@
 "use client";
-import Button from "@/components/common/button/Button";
-import Input from "@/components/common/input/Input";
-import Spinner from "@/components/common/spinner/Spinner";
+
+import { notify } from "@/components/common/toast/Toastify";
 import { useAppDispatch } from "@/redux/hooks";
 import { changeIsGlobalLoading } from "@/redux/slices/ui/uiSlice";
 import { newsletterService } from "@/shared/services/newsletterService";
@@ -11,7 +10,10 @@ const Newsletter = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const dispatch = useAppDispatch();
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
+    if (isSubmitting) {
+      return;
+    }
     e.preventDefault();
 
     setIsSubmitting(true);
@@ -19,7 +21,8 @@ const Newsletter = () => {
 
     try {
       // ---
-      newsletterService.subscribeToNewsletter(`${e.target.email.value}`);
+      await newsletterService.subscribeToNewsletter(`${e.target.email.value}`);
+      notify("Uspješna prijava na newsletter ", { type: "success" });
     } catch (error) {}
 
     dispatch(changeIsGlobalLoading(false));
@@ -60,7 +63,11 @@ const Newsletter = () => {
         </div>
         <input
           type="submit"
-          onSubmit={handleSubmit}
+          onSubmit={(e) => {
+            if (!isSubmitting) {
+              handleSubmit(e);
+            }
+          }}
           disabled={isSubmitting}
           className="w-[220px] flex items-center justify-center h-14 bg-primary-500  hover:bg-primary-400 rounded-lg 
           disabled:cursor-not-allowed transition-all active:bg-primary-600 disabled:bg-[rgba(59,130,246,0.5)] disabled:text-neutral-400 cursor-pointer "

@@ -1,8 +1,6 @@
-import { LocalStorageHelper } from "@/shared/helper/LocalStorageHelper";
 import {
   GetNewAccessTokenResponseData,
   LoginData,
-  LoginResponseData,
   SignUpData,
 } from "@/shared/types";
 
@@ -97,7 +95,7 @@ const verifyAccount = async (body: { code: string }): Promise<any> => {
     return await API.post(`${API_BASE_URL}auth/verify/`, body);
   } catch (error: any) {
     console.error("Došlo je do greške:", error);
-    throw new Error(error);
+    throw error;
   }
 };
 

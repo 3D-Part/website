@@ -14,7 +14,7 @@ import {
 } from "@/redux/slices/ui/uiSlice";
 import AuthAPI from "@/shared/services/auth";
 import { userService } from "@/shared/services/userService";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import { FC, useEffect, useState } from "react";
 
@@ -35,6 +35,7 @@ const ProfilePage: FC = () => {
   const isVerified = useAppSelector(isUserVerifiedSelector);
 
   const dispatch = useAppDispatch();
+  const { data: session, status } = useSession();
 
   useEffect(() => {
     setIsLoading(true);
@@ -97,7 +98,7 @@ const ProfilePage: FC = () => {
     dispatch(changeIsGlobalLoading(false));
   };
 
-  if (isLoading || isVerified === null) {
+  if (isLoading || isVerified === null || !session || !session.user) {
     return (
       <div className="flex items-center justify-center w-screen h-[calc(100vh-150px)] overflow-hidden">
         <Spinner />

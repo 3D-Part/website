@@ -4,15 +4,35 @@ import UsedCoupons from "@/app/profile-details/coupons/UsedCoupons";
 import Container from "@/components/common/container/Container";
 import Heading2 from "@/components/common/text/heading/Heading2";
 import { couponsService } from "@/shared/services/couponsService";
+import { Coupon } from "@/shared/types";
 import { FC, useEffect, useState } from "react";
 
 const Coupons: FC = () => {
   const [active, setActive] = useState(0);
+  const [coupons, setCoupons] = useState<Coupon[]>([]);
 
   useEffect(() => {
-    couponsService.fetchCoupons().then((res) => {
-      console.log(res);
-    });
+    const fetch = async () => {
+      try {
+        const res = await couponsService.fetchCoupons();
+        setCoupons(res.rows);
+      } catch (error) {
+        console.error(erorr);
+
+        // TODO: DELETE
+        setCoupons([
+          {
+            id: "4bf4f280-e24c-11ee-b7bc-2138ec596686",
+            code: "aposdk aposdm apsodm",
+            discountPercentage: "20",
+            startsAt: "2024-03-14T22:46:00.000Z",
+            endsAt: "2024-03-22T22:46:00.000Z",
+            createdAt: "2024-03-14T21:46:21.480Z",
+            updatedAt: "2024-03-14T21:46:21.480Z",
+          },
+        ]);
+      }
+    };
   }, []);
 
   return (

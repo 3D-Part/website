@@ -57,16 +57,24 @@ const Security: FC = () => {
               weight="Medium"
               className="mt-4 max-w-[550px] text-center"
             >
-              {`Molimo vas unesite vašu email adresu kako biste poslali zahtjev za
-              ${session && session.user ? "promjenu" : "resetovanje"} lozinke.`}
+              {`
+              ${
+                session && session.user
+                  ? "Klikom na dugme ispod, poslaćete zahtjev za promjenu lozinke na vaš mail. "
+                  : "Molimo vas unesite vašu email adresu kako biste poslali zahtjev zaresetovanje lozinke"
+              }`}
             </Paragraph>
             <div className="flex items-center p-1 bg-[#313131] rounded-xl px-3 py-2 gap-3 mt-4 w-[430px]">
               <input
                 required
                 type={"email"}
                 placeholder="Email"
-                className="bg-transparent text-[#cccccc] outline-none flex-1"
+                className="bg-transparent text-[#cccccc] outline-none flex-1 disabled:text-[#818181] disabled:cursor-not-allowed"
                 id="email"
+                defaultValue={`${
+                  session && session.user ? session.user.email : ""
+                }`}
+                disabled={Boolean(session && session.user)}
               />
               {/* 
           <Input
