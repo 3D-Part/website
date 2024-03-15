@@ -60,9 +60,9 @@ const Product: React.FC<ProductInterfaceComponent> = ({
             {checkCartVisible && (
               <div className="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
                 <motion.div
-                  initial={{ scale: 0, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  exit={{ scale: 0, opacity: 0 }}
+                // initial={{ scale: 0, opacity: 0 }}
+                // animate={{ scale: 1, opacity: 1 }}
+                // exit={{ scale: 0, opacity: 0 }}
                 >
                   <Button
                     onClick={() => {
