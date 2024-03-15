@@ -1,5 +1,6 @@
 "use client";
 import Container from "@/components/common/container/Container";
+import Spinner from "@/components/common/spinner/Spinner";
 import Heading2 from "@/components/common/text/heading/Heading2";
 import Paragraph from "@/components/common/text/paragraph/Paragraph";
 import { notify } from "@/components/common/toast/Toastify";
@@ -17,7 +18,7 @@ const Security: FC = () => {
 
   const dispatch = useAppDispatch();
 
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -34,6 +35,15 @@ const Security: FC = () => {
     dispatch(changeIsGlobalLoading(false));
     setDisabled(false);
   };
+
+  if (status === "loading") {
+    return (
+      <div className="flex items-center justify-center w-screen h-[calc(100vh-150px)] overflow-hidden">
+        <Spinner />
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col items-center justify-center p-4 bg-neutral-900">
       <Image
