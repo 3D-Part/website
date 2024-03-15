@@ -11,18 +11,18 @@ const Coupons: FC = () => {
   const [active, setActive] = useState(0);
   const [coupons, setCoupons] = useState<Coupon[]>([]);
 
-  useEffect(() => {
-    const fetch = async () => {
-      try {
-        const res = await couponsService.fetchCoupons();
-        setCoupons(res.rows);
-      } catch (error) {
-        console.error(erorr);
-      }
-    };
+  // useEffect(() => {
+  //   const fetch = async () => {
+  //     try {
+  //       const res = await couponsService.fetchCoupons();
+  //       setCoupons(res.rows);
+  //     } catch (error) {
+  //       console.error(erorr);
+  //     }
+  //   };
 
-    fetch();
-  }, []);
+  //   fetch();
+  // }, []);
 
   return (
     <div className="w-full">
