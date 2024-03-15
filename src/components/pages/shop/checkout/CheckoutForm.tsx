@@ -10,6 +10,7 @@ import { changeIsGlobalLoading } from "@/redux/slices/ui/uiSlice";
 import { useRouter } from "next/navigation";
 import { cartProductsSelector } from "@/redux/slices/cart/cartSelectors";
 import {
+  changePromoCodeInCart,
   changeSuccessfulOrder,
   resetCart,
 } from "@/redux/slices/cart/cartSlice";
@@ -73,6 +74,7 @@ const CheckoutForm = () => {
         saveElectronPaymentToLocal(payload);
       }
 
+      dispatch(changePromoCodeInCart(null));
       router.push("/shop/checkout/successful");
     } catch (error: any) {
       const parsedError = JSON.parse(error.message);

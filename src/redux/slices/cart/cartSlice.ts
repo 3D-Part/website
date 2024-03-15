@@ -20,12 +20,14 @@ type CartState = {
   cartProducts: CartProductsType[];
   cartModalVisible: boolean;
   successfulOrder: SuccessfulOrderType | null;
+  promoCode: null | number;
 };
 
 const initialState = {
   cartProducts: [],
   cartModalVisible: false,
   successfulOrder: null,
+  promoCode: null,
 } as CartState;
 
 export const cart = createSlice({
@@ -115,6 +117,13 @@ export const cart = createSlice({
     ) => {
       state.successfulOrder = action.payload;
     },
+
+    changePromoCodeInCart: (
+      state,
+      action: { type: any; payload: null | number }
+    ) => {
+      state.promoCode = action.payload;
+    },
   },
 });
 
@@ -125,5 +134,6 @@ export const {
   changeCartModalVisible,
   decreaseProductWithAmount,
   changeSuccessfulOrder,
+  changePromoCodeInCart,
 } = cart.actions;
 export default cart.reducer;

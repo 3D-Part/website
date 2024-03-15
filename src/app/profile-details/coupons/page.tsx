@@ -11,29 +11,18 @@ const Coupons: FC = () => {
   const [active, setActive] = useState(0);
   const [coupons, setCoupons] = useState<Coupon[]>([]);
 
-  useEffect(() => {
-    const fetch = async () => {
-      try {
-        const res = await couponsService.fetchCoupons();
-        setCoupons(res.rows);
-      } catch (error) {
-        console.error(erorr);
+  // useEffect(() => {
+  //   const fetch = async () => {
+  //     try {
+  //       const res = await couponsService.fetchCoupons();
+  //       setCoupons(res.rows);
+  //     } catch (error) {
+  //       console.error(erorr);
+  //     }
+  //   };
 
-        // TODO: DELETE
-        setCoupons([
-          {
-            id: "4bf4f280-e24c-11ee-b7bc-2138ec596686",
-            code: "aposdk aposdm apsodm",
-            discountPercentage: "20",
-            startsAt: "2024-03-14T22:46:00.000Z",
-            endsAt: "2024-03-22T22:46:00.000Z",
-            createdAt: "2024-03-14T21:46:21.480Z",
-            updatedAt: "2024-03-14T21:46:21.480Z",
-          },
-        ]);
-      }
-    };
-  }, []);
+  //   fetch();
+  // }, []);
 
   return (
     <div className="w-full">

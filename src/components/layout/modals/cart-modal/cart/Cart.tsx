@@ -9,7 +9,10 @@ import { CartProductsType } from "@/redux/slices/cart/cartSlice";
 import {
   cartLengthSelector,
   cartProductsSelector,
+  promoCodeSelectorAmount,
 } from "@/redux/slices/cart/cartSelectors";
+import Button from "@/components/common/button/Button";
+import Input from "@/components/common/input/Input";
 
 const freeShippingBoundary = 100;
 
@@ -37,7 +40,10 @@ const calculateShippingPrice = (weight: number): number => {
   }
 };
 
-const calculatePriceAndPost = (cart: CartProductsType[]) => {
+const calculatePriceAndPost = (
+  cart: CartProductsType[],
+  promoCode: null | number
+) => {
   let price = 0,
     post = 0,
     weight = 0;
@@ -53,14 +59,19 @@ const calculatePriceAndPost = (cart: CartProductsType[]) => {
     post = 0;
   }
 
+  if (promoCode) {
+    price = price - price * (promoCode / 100);
+  }
+
   return { price, post };
 };
 
 const Cart = () => {
   const cartLength = useAppSelector(cartLengthSelector);
   const cart = useAppSelector(cartProductsSelector);
+  const promoCode = useAppSelector(promoCodeSelectorAmount);
 
-  const { price, post } = calculatePriceAndPost(cart);
+  const { price, post } = calculatePriceAndPost(cart, promoCode);
 
   return (
     <motion.div className="flex flex-col w-full h-full px-4 py-2 overflow-y-auto cursor-default lg:px-8 lg:py-4 bg-neutral-800">
@@ -84,7 +95,24 @@ const Cart = () => {
 
       {/* --------------- */}
       <div className="h-[1px] bg-neutral-500"></div>
-      <div className="flex items-center justify-between mt-3">
+      <div className="flex items-center gap-5 mt-4">
+        <input
+          type="text"
+          placeholder={"Promo kod"}
+          className="w-full h-10 px-4 py-3 rounded-[66px] border border-primary-500 disabled:cursor-not-allowed bg-transparent disabled:text-neutral-400"
+          required
+        />
+        <Button
+          onClick={() => {}}
+          size="L"
+          type="secondary"
+          className="w-[100px] h-12"
+        >
+          Uracunaj
+        </Button>
+      </div>
+
+      <div className="flex items-center justify-between mt-4">
         <Paragraph size="L" weight="Regular" className="text-neutral-200">
           Zbir{" "}
         </Paragraph>
