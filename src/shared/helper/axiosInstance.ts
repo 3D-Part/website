@@ -65,11 +65,11 @@ axiosInstance.interceptors.response.use(
         const message =
           "Your session has expired, you will have to login again";
 
-        toast(message, {
-          hideProgressBar: true,
-          autoClose: 2000,
-          type: "warning",
-        });
+        // toast(message, {
+        //   hideProgressBar: true,
+        //   autoClose: 2000,
+        //   type: "warning",
+        // });
 
         setTimeout(() => {
           signOut().then(() => {
