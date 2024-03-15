@@ -4,6 +4,7 @@ import Spinner from "@/components/common/spinner/Spinner";
 import Paragraph from "@/components/common/text/paragraph/Paragraph";
 import Textarea from "@/components/common/textarea/Textarea";
 import { userService } from "@/shared/services/userService";
+import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 
 const PickupOptionForm = () => {
@@ -19,7 +20,12 @@ const PickupOptionForm = () => {
     image: "/assets/img/logo.svg",
   });
 
+  const { status } = useSession();
+
   useEffect(() => {
+    if (status === "loading" || status === "unauthenticated") {
+      return;
+    }
     setIsLoading(true);
     const fetchUserProfile = async () => {
       try {
