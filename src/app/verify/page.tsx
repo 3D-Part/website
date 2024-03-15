@@ -2,7 +2,9 @@
 
 import Spinner from "@/components/common/spinner/Spinner";
 import { notify } from "@/components/common/toast/Toastify";
+import JWT from "@/shared/helper/jwtToken";
 import AuthAPI from "@/shared/services/auth";
+import { signOut } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect } from "react";
 
@@ -19,9 +21,11 @@ const Verify = () => {
         const res = await AuthAPI.verifyAccount({ code: token });
         notify("Profil uspješno verifikovan", {
           type: "success",
-          // position: "top-right",
+          position: "top-right",
         });
-        router.replace("/profile-details");
+
+        JWT.deleteJwtTokens();
+        router.push("/login");
       } catch (error: any) {
         if (error.response) {
           notify(error?.response?.data.errors[0].message, { type: "error" });

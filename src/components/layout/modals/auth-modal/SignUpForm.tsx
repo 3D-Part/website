@@ -22,14 +22,20 @@ const SignUpForm = () => {
         fullName: e.target.username.value,
       });
 
-      JWT.addJwtTokens(data);
+      // JWT.addJwtTokens(data);
       dispatch(changeIsModalAuthVisible(false));
       notify("Uspješna registracija", { type: "success" });
-      signIn("credentials", {
-        email: e.target.email.value,
-        password: e.target.password.value,
-        redirect: false,
-      });
+      setTimeout(() => {
+        notify("Link za verifikaciju naloga, poslan na mail", {
+          type: "success",
+          autoClose: 4000,
+        });
+      }, 2000);
+      // signIn("credentials", {
+      //   email: e.target.email.value,
+      //   password: e.target.password.value,
+      //   redirect: false,
+      // });
     } catch (error) {
       if (error instanceof Error && error.message) {
         notify(error.message, { type: "error" });

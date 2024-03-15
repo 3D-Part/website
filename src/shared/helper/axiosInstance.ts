@@ -73,6 +73,7 @@ axiosInstance.interceptors.response.use(
 
         setTimeout(() => {
           signOut().then(() => {
+            JWT.deleteJwtTokens();
             window.location.href = "/";
           });
         }, 2000);

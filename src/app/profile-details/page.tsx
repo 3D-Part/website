@@ -12,6 +12,7 @@ import {
   changeIsGlobalLoading,
   changeIsUserVerified,
 } from "@/redux/slices/ui/uiSlice";
+import JWT from "@/shared/helper/jwtToken";
 import AuthAPI from "@/shared/services/auth";
 import { userService } from "@/shared/services/userService";
 import { signOut, useSession } from "next-auth/react";
@@ -218,6 +219,7 @@ const ProfilePage: FC = () => {
               onClick={() => {
                 setBUttonDisabled(true);
                 signOut();
+                JWT.deleteJwtTokens()
                 setBUttonDisabled(false);
               }}
               size="L"
