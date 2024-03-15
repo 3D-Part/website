@@ -26,7 +26,7 @@ const SignUpForm = () => {
       dispatch(changeIsModalAuthVisible(false));
       notify("Uspješna registracija", { type: "success" });
       setTimeout(() => {
-        notify("Link za verifikaciju naloga, poslan na mail", {
+        notify("Link za verifikaciju naloga, poslat na mail", {
           type: "success",
           autoClose: 4000,
         });
