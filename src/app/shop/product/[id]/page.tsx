@@ -30,7 +30,6 @@ export const generateMetadata = async ({
           data.images.length > 0
             ? [getMainImage(data.images)]
             : ["/assets/img/logo_social.png"],
-        description: `${data.description}`,
       },
     };
   } catch (error) {

@@ -14,6 +14,7 @@ import { useAppDispatch } from "@/redux/hooks";
 import { addProductWithAmount } from "@/redux/slices/cart/cartSlice";
 import { getMainImage } from "@/shared/helper/getMainImage";
 import { useIsTablet } from "@/shared/hooks/useMediaQuerry";
+import Heading1 from "@/components/common/text/heading/Heading1";
 
 const MainData: React.FC<{
   productData: ProductInterface;
@@ -68,7 +69,7 @@ const MainData: React.FC<{
     >
       <div>{/* CATEGORY */}</div>
       <motion.div variants={dropUpVariants}>
-        <Heading2>{name}</Heading2>
+        <Heading1>{name}</Heading1>
 
         <Paragraph weight="Regular" size="L">
           <p
