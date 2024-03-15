@@ -208,7 +208,7 @@ const ProfilePage: FC = () => {
               disabled={buttonDisabled}
               onSubmit={handleSubmit}
               className="w-[190px] h-12 whitespace-nowrap bg-primary-600 mt-10 lg:mt-0 font-semibold rounded-lg cursor-pointer"
-              value=" Sačuvaj promijene"
+              value=" Sačuvaj promjene"
             />
           </div>
 

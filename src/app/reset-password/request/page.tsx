@@ -7,6 +7,7 @@ import { notify } from "@/components/common/toast/Toastify";
 import { useAppDispatch } from "@/redux/hooks";
 import { changeIsGlobalLoading } from "@/redux/slices/ui/uiSlice";
 import AuthAPI from "@/shared/services/auth";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { FC, useState } from "react";
 
@@ -15,6 +16,8 @@ const Security: FC = () => {
   const [requestSent, setRequestSent] = useState(false);
 
   const dispatch = useAppDispatch();
+
+  const { data: session } = useSession();
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -44,14 +47,18 @@ const Security: FC = () => {
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col items-center w-full">
           <Container className="flex flex-col items-center min-h-screen py-6 bg-neutral-900 px-9">
-            <Heading2 className="">Zaboravili ste lozinku?</Heading2>
+            <Heading2 className="">
+              {session && session.user
+                ? "Promjena Lozinke"
+                : "Zaboravili ste lozinku?"}
+            </Heading2>
             <Paragraph
               size="M"
               weight="Medium"
               className="mt-4 max-w-[550px] text-center"
             >
-              Molimo vas unesite vašu email adresu kako biste poslali zahtjev za
-              resetovanje šifre.
+              {`Molimo vas unesite vašu email adresu kako biste poslali zahtjev za
+              ${session && session.user ? "promjenu" : "resetovanje"} lozinke.`}
             </Paragraph>
             <div className="flex items-center p-1 bg-[#313131] rounded-xl px-3 py-2 gap-3 mt-4 w-[430px]">
               <input

@@ -1,9 +1,6 @@
 "use client";
-import Button from "@/components/common/button/Button";
 import Container from "@/components/common/container/Container";
-import Input from "@/components/common/input/Input";
 import Heading2 from "@/components/common/text/heading/Heading2";
-import Heading4 from "@/components/common/text/heading/Heading4";
 import Paragraph from "@/components/common/text/paragraph/Paragraph";
 import { notify } from "@/components/common/toast/Toastify";
 import {
@@ -15,7 +12,7 @@ import { changeIsGlobalLoading } from "@/redux/slices/ui/uiSlice";
 import AuthAPI from "@/shared/services/auth";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 
 const Security: FC = () => {
   const [passType, setPassType] = useState("password");
@@ -23,13 +20,24 @@ const Security: FC = () => {
 
   const router = useRouter();
   const query = useSearchParams();
-  const token = `${query.get("token")}`;
+  let token = query.get("token");
+
+  if (token) {
+    token = String(token);
+  }
+
+  useEffect(() => {
+    if (token === null) {
+      router.push("/reset-password/request");
+    }
+  }, [router, token]);
 
   const dispatch = useAppDispatch();
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     dispatch(changeIsGlobalLoading(true));
+    setDisabled(true);
     const pass1 = e.target.password.value;
     const pass2 = e.target.newPassword.value;
 
@@ -37,7 +45,7 @@ const Security: FC = () => {
       notify("Lozinke se ne poklapaju", { type: "error", toastId: 12412 });
     } else {
       try {
-        await AuthAPI.resetPassword({ password: pass1, code: token });
+        await AuthAPI.resetPassword({ password: pass1, code: `${token}` });
         notify("Lozinka promjenjena", { type: "success" });
         router.replace("/");
       } catch (error: any) {
@@ -46,6 +54,7 @@ const Security: FC = () => {
     }
 
     dispatch(changeIsGlobalLoading(false));
+    setDisabled(false);
   };
   return (
     <div className="flex flex-col items-center justify-center bg-neutral-900">
@@ -68,8 +77,12 @@ const Security: FC = () => {
               priority
               className=""
             />
-            <Heading2 className="mt-7">Promijeni lozinku</Heading2>
-            <Paragraph size="M" weight="Medium" className="mt-4 max-w-[550px]">
+            <Heading2 className="mt-7">Promjena lozinke</Heading2>
+            <Paragraph
+              size="M"
+              weight="Medium"
+              className="mt-4 max-w-[550px] text-center"
+            >
               Lozinka mora sadržavati barem jedan specijalan znak, veliko slovo
               i broj. Minimalna dužina lozinke treba biti 8 karaktera.
             </Paragraph>
