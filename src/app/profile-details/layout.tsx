@@ -59,7 +59,7 @@ const Layout: FC<{ children: React.ReactNode }> = ({ children }) => {
 
   return (
     <div className="flex flex-col lg:flex-row lg:w-full">
-      <div className="flex items-center justify-center h-auto gap-4 p-2 lg:px-6 lg:py-3 border-b border-solid border-neutral-600 bg-neutral-900 lg:flex-col lg:justify-start lg:w-[300px] lg:border-r lg:border-b-0">
+      <div className="flex items-center justify-center h-auto gap-4 p-2 lg:px-6 lg:py-3 border-b border-solid border-neutral-600 bg-neutral-900 lg:flex-col lg:justify-start lg:w-[300px] lg:w-[300px] lg:border-r lg:border-b-0">
         <Link
           href="/profile-details"
           type="button"
@@ -131,7 +131,7 @@ const Layout: FC<{ children: React.ReactNode }> = ({ children }) => {
           </>
         )}
       </div>
-      <div className="flex-1">{children}</div>
+      <div className="flex-1 lg:max-w-[calc(100%-300px)]">{children}</div>
     </div>
   );
 };

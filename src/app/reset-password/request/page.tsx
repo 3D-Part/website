@@ -56,9 +56,9 @@ const Security: FC = () => {
       />
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col items-center w-full">
-          <Container className="flex !max-w-none flex-col items-center min-h-screen py-6 bg-neutral-900 px-9">
+          <Container className="flex !max-w-auto flex-col items-center min-h-screen py-6 bg-neutral-900 px-9">
             <Heading2 className="">
-              {session && session.user
+              {status === "authenticated"
                 ? "Promjena Lozinke"
                 : "Zaboravili ste lozinku?"}
             </Heading2>
