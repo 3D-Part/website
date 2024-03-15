@@ -68,7 +68,7 @@ const Security: FC = () => {
       /> */}
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col items-center w-full">
-          <Container className="flex flex-col items-center min-h-screen py-6 bg-neutral-900 px-9">
+          <Container className="flex !max-w-none flex-col items-center min-h-screen py-6 bg-neutral-900 px-9">
             <Image
               alt="3d part logo"
               src={"/assets/img/logo.svg"}
