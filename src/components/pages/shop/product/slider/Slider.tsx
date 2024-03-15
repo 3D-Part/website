@@ -51,7 +51,7 @@ const Slider: React.FC<{ images: ProductImageInterface[]; name: string }> = ({
                 <motion.div
                   className="w-full h-full "
                   initial={{ y: -100, scale: 0.5 }}
-                  whileInView={"animate"}
+                  animate={"animate"}
                   variants={{
                     animate: {
                       y: 0,

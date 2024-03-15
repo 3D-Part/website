@@ -35,7 +35,7 @@ const InfoCard: FC<InfoCardProps> = ({
             background: `linear-gradient(to bottom, ${borderColor}, transparent)`,
           }}
           initial="hidden"
-          whileInView="visible"
+          animate="visible"
           viewport={{ once: true }}
           transition={{
             duration: 0.35,
@@ -73,7 +73,7 @@ const InfoCard: FC<InfoCardProps> = ({
             background: `linear-gradient(to bottom, ${borderColor}, transparent)`,
           }}
           initial="hidden"
-          whileInView="visible"
+          animate="visible"
           viewport={{ once: true }}
           transition={{
             duration: 0.35,
