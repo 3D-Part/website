@@ -47,7 +47,8 @@ const Slider: React.FC<{ images: ProductImageInterface[]; name: string }> = ({
         >
           {images.map((img, i) => {
             return (
-              <SwiperSlide key={i}>
+              // eslint-disable-next-line react/jsx-key
+              <SwiperSlide>
                 <motion.div
                   className="w-full h-full "
                   initial={{ y: -100, scale: 0.5 }}

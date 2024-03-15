@@ -41,7 +41,8 @@ const ProductsSlide: React.FC<{
       >
         {products.map((product, i) => {
           return (
-            <SwiperSlide key={product.id}>
+            // eslint-disable-next-line react/jsx-key
+            <SwiperSlide>
               {isTablet ? (
                 <div>
                   <Product {...product} className={"ml-4 lg:ml-0"} />

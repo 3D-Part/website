@@ -44,7 +44,6 @@ const NavSubLinks: React.FC<NavSubLinksProps> = ({
         height: !showLine ? 0 : "auto",
       }}
       transition={{ width: { duration: 0.2 } }}
-      key={i}
       className="flex "
     >
       {showLine && (
@@ -58,10 +57,10 @@ const NavSubLinks: React.FC<NavSubLinksProps> = ({
       <div className="flex flex-col gap-1 px-4">
         {links.map((x, i) => {
           return (
+            // eslint-disable-next-line react/jsx-key
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              key={i}
               transition={{ duration: 0.5, delay: 0.1 * i + 0.25 }}
               className={`flex items-center w-full gap-1  rounded-lg  hover:bg-primary-500 transition-all ${
                 !showLine && activeLink === i ? "bg-primary-500" : ""
