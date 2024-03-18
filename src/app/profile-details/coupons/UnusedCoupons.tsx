@@ -1,18 +1,23 @@
 import Coupon from "@/app/profile-details/coupons/Coupon";
-import React from "react";
+import { CouponType } from "@/shared/types";
+import React, { FC } from "react";
 
-const UnusedCoupons = () => {
+const UsedCoupons: FC<{ coupons: CouponType[] }> = ({ coupons }) => {
   return (
     <div className="flex flex-col gap-3">
-      <Coupon active={true} percent={10}>
-        asafasf dsgs d gsaf sdg dssad asd sad sa d
-      </Coupon>
-
-      <Coupon active={true} percent={15}>
-        asafasf dsgs d gsdgasd sad sa d
-      </Coupon>
+      {coupons.map((coupon) => {
+        return (
+          <Coupon
+            active={true}
+            percent={Number(coupon.discountPercentage)}
+            key={coupon.id}
+          >
+            {coupon.code}
+          </Coupon>
+        );
+      })}
     </div>
   );
 };
 
-export default UnusedCoupons;
+export default UsedCoupons;

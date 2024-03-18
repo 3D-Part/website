@@ -6,6 +6,7 @@ import {
   getCartProducts,
   saveCartProducts,
 } from "@/shared/helper/cartProducts";
+import { CouponType } from "@/shared/types";
 
 export type ProductDataType = {
   image: string;
@@ -25,7 +26,7 @@ type CartState = {
   cartProducts: CartProductsType[];
   cartModalVisible: boolean;
   successfulOrder: SuccessfulOrderType | null;
-  promoCode: null | number;
+  promoCode: null | CouponType;
 };
 
 const cartProducts = getCartProducts();
@@ -130,7 +131,7 @@ export const cart = createSlice({
 
     changePromoCodeInCart: (
       state,
-      action: { type: any; payload: null | number }
+      action: { type: any; payload: null | CouponType }
     ) => {
       state.promoCode = action.payload;
     },

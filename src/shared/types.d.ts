@@ -271,10 +271,10 @@ export interface OrderFormBody {
 
 // Coupons
 
-export interface Coupon {
+export interface CouponType {
   id: string;
   code: string;
-  discountPercentage: number;
+  discountPercentage: string;
   startsAt: Date;
   endsAt: Date;
 }

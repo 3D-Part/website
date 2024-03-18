@@ -8,7 +8,10 @@ import { notify } from "@/components/common/toast/Toastify";
 import { useState } from "react";
 import { changeIsGlobalLoading } from "@/redux/slices/ui/uiSlice";
 import { useRouter } from "next/navigation";
-import { cartProductsSelector } from "@/redux/slices/cart/cartSelectors";
+import {
+  cartProductsSelector,
+  promoCodeSelectorAmount,
+} from "@/redux/slices/cart/cartSelectors";
 import {
   changePromoCodeInCart,
   changeSuccessfulOrder,
@@ -21,6 +24,7 @@ import { clearCartProducts } from "@/shared/helper/cartProducts";
 
 const CheckoutForm = () => {
   const products = useAppSelector(cartProductsSelector);
+  const promoCode = useAppSelector(promoCodeSelectorAmount);
 
   const [buttonDisabled, setBUttonDisabled] = useState(false);
   const [payingOption, setPayingOption] = useState("0");
@@ -35,7 +39,7 @@ const CheckoutForm = () => {
     setBUttonDisabled(true);
     dispatch(changeIsGlobalLoading(true));
 
-    const payload =
+    const payload: any =
       payingOption === "0"
         ? {
             city: event.target.city.value,
@@ -64,6 +68,10 @@ const CheckoutForm = () => {
               return { productId: x.idProduct, quantity: x.amount };
             }),
           };
+
+    if (promoCode) {
+      payload.code = promoCode.code;
+    }
 
     try {
       const data = await orderServices.createOrder(payload);

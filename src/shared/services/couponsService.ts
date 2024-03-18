@@ -1,19 +1,11 @@
-import { CouponQueryParams } from "@/shared/types";
+import { CouponType, CouponQueryParams } from "@/shared/types";
 import API from "../helper/api";
-
-interface Coupon {
-  id: string;
-  code: string;
-  discountPercentage: string;
-  startsAt: string;
-  endsAt: string;
-}
 
 const fetchCoupons = async (
   params?: CouponQueryParams
-): Promise<{ count: number; rows: Coupon[] }> => {
+): Promise<{ count: number; rows: CouponType[] }> => {
   try {
-    const response = await API.get<{ count: number; rows: Coupon[] }>(
+    const response = await API.get<{ count: number; rows: CouponType[] }>(
       "shop/promotion-codes",
       {
         params,
