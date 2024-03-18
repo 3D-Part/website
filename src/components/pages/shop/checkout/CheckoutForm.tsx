@@ -17,6 +17,7 @@ import {
 import PickupOptionForm from "./PickupOptionForm";
 import ElectronicOptionForm from "./ElectronicOptionForm";
 import { saveElectronPaymentToLocal } from "@/components/pages/shop/checkout/saveElectronPaymentToLocal";
+import { clearCartProducts } from "@/shared/helper/cartProducts";
 
 const CheckoutForm = () => {
   const products = useAppSelector(cartProductsSelector);
@@ -75,6 +76,7 @@ const CheckoutForm = () => {
       }
 
       dispatch(changePromoCodeInCart(null));
+      clearCartProducts();
       router.push("/shop/checkout/successful");
     } catch (error: any) {
       const parsedError = JSON.parse(error.message);
