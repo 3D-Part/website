@@ -1,6 +1,9 @@
 import { notify } from "@/components/common/toast/Toastify";
 import { useAppDispatch } from "@/redux/hooks";
-import { changeIsModalAuthVisible } from "@/redux/slices/ui/uiSlice";
+import {
+  changeIsGlobalLoading,
+  changeIsModalAuthVisible,
+} from "@/redux/slices/ui/uiSlice";
 import JWT from "@/shared/helper/jwtToken";
 import AuthAPI from "@/shared/services/auth";
 import { signIn, useSession } from "next-auth/react";
@@ -15,6 +18,7 @@ const LoginForm = () => {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
+    dispatch(changeIsGlobalLoading(true));
     try {
       const data = await AuthAPI.login({
         email: e.target.email.value,
@@ -35,6 +39,7 @@ const LoginForm = () => {
         notify(error.message, { type: "error" });
       }
     }
+    dispatch(changeIsGlobalLoading(false));
   };
 
   return (
@@ -125,7 +130,7 @@ const LoginForm = () => {
         // TODO: add logic for disabling
         disabled={false}
       >
-        Login
+        Prijavi se
       </button>
 
       {/* -------------------------- */}

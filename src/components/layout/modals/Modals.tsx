@@ -7,8 +7,9 @@ const Modals = () => {
   return (
     <>
       <CartModal />
-      <SpinnerModal />
       <AuthModal />
+      {/* -Spinner last- */}
+      <SpinnerModal />
     </>
   );
 };

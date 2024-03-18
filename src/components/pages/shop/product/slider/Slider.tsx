@@ -57,7 +57,11 @@ const Slider: React.FC<{ images: ProductImageInterface[]; name: string }> = ({
                     animate: {
                       y: 0,
                       scale: 1,
-                      transition: { type: "spring", stiffness: 100, mass: 0.4 },
+                      transition: {
+                        type: "spring",
+                        stiffness: 100,
+                        mass: 0.4,
+                      },
                     },
                   }}
                 >

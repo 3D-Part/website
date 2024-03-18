@@ -1,7 +1,10 @@
 "use client";
 import { notify } from "@/components/common/toast/Toastify";
 import { useAppDispatch } from "@/redux/hooks";
-import { changeIsModalAuthVisible } from "@/redux/slices/ui/uiSlice";
+import {
+  changeIsGlobalLoading,
+  changeIsModalAuthVisible,
+} from "@/redux/slices/ui/uiSlice";
 import JWT from "@/shared/helper/jwtToken";
 import AuthAPI from "@/shared/services/auth";
 import { signIn } from "next-auth/react";
@@ -14,6 +17,7 @@ const SignUpForm = () => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+    dispatch(changeIsGlobalLoading(true));
 
     try {
       const data = await AuthAPI.signUp({
@@ -41,6 +45,7 @@ const SignUpForm = () => {
         notify(error.message, { type: "error" });
       }
     }
+    dispatch(changeIsGlobalLoading(false));
   };
 
   return (

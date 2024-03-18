@@ -24,7 +24,7 @@ const Products: React.FC<InterfaceProducts> = ({
     <motion.div
       className={`relative max-w-full ${className}`}
       initial="initial"
-      animate="animate"
+      whileInView="animate"
       exit="initial"
       viewport={{ once: false }}
     >

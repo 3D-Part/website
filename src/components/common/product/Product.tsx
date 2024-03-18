@@ -37,7 +37,7 @@ const Product: React.FC<ProductInterfaceComponent> = ({
   return (
     <Link href={"/shop/product/" + id}>
       <motion.div
-        className={`cursor-pointer bg-neutral-800 p-[10px] rounded-xl max-w-[220px] max-h-[363px] ${className}`}
+        className={`cursor-pointer bg-neutral-800 p-[10px] rounded-xl max-w-[220px] max-h-[391px] ${className}`}
         // whileTap={{
         //   scale: 0.95,
         //   transition: { duration: 0.35, type: "spring" },
@@ -86,9 +86,19 @@ const Product: React.FC<ProductInterfaceComponent> = ({
           <Paragraph
             size="L"
             weight="Semibold"
-            className="overflow-hidden overflow-ellipsis break-keep whitespace-nowrap "
+            className="overflow-hidden h-14 max-h-14 overflow-ellipsis"
+            style={
+              {
+                // display: "-webkit-box",
+                // WebkitLineClamp: 2,
+                // WebkitBoxOrient: "vertical",
+                // overflow: "hidden",
+                // textOverflow: "ellipsis",
+              }
+            }
           >
-            {name}
+            {name.slice(0, 45)}
+            {name.length > 45 ? "..." : ""}
           </Paragraph>
           <div className="flex items-center gap-2 mt-2">
             <Image

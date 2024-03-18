@@ -4,6 +4,7 @@ import React from "react";
 const Paragraph: React.FC<ParagraphComponentInterface> = ({
   children,
   className = "",
+  style = {},
 
   size,
   weight,
