@@ -76,7 +76,6 @@ const Cart = () => {
   const { price, post } = calculatePriceAndPost(cart);
 
   const fetchCouponsAndAddDiscount = async (code: string) => {
-    console.log(code);
     if (!code) {
       return;
     }
@@ -84,7 +83,6 @@ const Cart = () => {
       dispatch(changeIsGlobalLoading(true));
       const res = await couponsService.fetchCoupons();
       res.rows.forEach((row) => {
-        console.log(row.code, code);
         if (row.code === code) {
           dispatch(changePromoCodeInCart(row));
         }

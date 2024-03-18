@@ -18,7 +18,6 @@ const Coupons: FC = () => {
       setLoading(true);
       try {
         const res = await couponsService.fetchCoupons();
-        console.log(res);
         setCoupons(res.rows);
       } catch (error) {
         console.error(error);
