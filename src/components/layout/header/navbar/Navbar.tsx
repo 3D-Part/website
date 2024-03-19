@@ -304,7 +304,7 @@ const Navbar = () => {
 
           <div className="items-center hidden gap-3 lg:flex">
             <CartIcon className="" />
-            <ProfileIcon />
+            {/* <ProfileIcon /> */}
           </div>
 
           <Hamburger links={links} isOpen={isOpen} setIsOpen={setIsOpen} />
