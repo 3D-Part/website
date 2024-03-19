@@ -19,16 +19,19 @@ export const metadata: Metadata = {
     default: "3D Part",
     template: "%s | 3D Part",
   },
-  description: "Description for 3d part",
+  description:
+    "Pružamo najnovije modele 3D printera, širok spektar filamenata i kvalitetne dijelove po najpovoljnijim cijenama. Olakšajte svoje 3D printanje s našim proizvodima i uslugama.",
   keywords: ["3d, 3d oprema, 3d masine, filamenti, 3d printer"],
   verification: {
     google: "google-site-verification: google12063707349698d2.html",
   },
+
   openGraph: {
     type: "website",
     url: "https://3dpartshop.com",
     title: "3D Part",
-    description: "3D Part Description",
+    description:
+      "Pružamo najnovije modele 3D printera, širok spektar filamenata i kvalitetne dijelove po najpovoljnijim cijenama. Olakšajte svoje 3D printanje s našim proizvodima i uslugama.",
     siteName: "3D Part",
     images: [
       {
