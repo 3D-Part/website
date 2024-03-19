@@ -38,7 +38,7 @@ const ProductsSlide: React.FC<{
           disableOnInteraction: true,
           pauseOnMouseEnter: true,
         }}
-        speed={750}
+        speed={950}
         navigation={true}
       >
         {products.map((product, i) => {
