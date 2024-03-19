@@ -16,7 +16,8 @@ const exo2 = Exo_2({
 
 export const metadata: Metadata = {
   title: {
-    default: "3D Part",
+    default:
+      "3D Part: 3D printeri, širok spektar filamenata i kvalitetne dijelove po najpovoljnijim cijenama",
     template: "%s | 3D Part",
   },
   description:
