@@ -23,6 +23,8 @@ export const generateMetadata = async ({
 
     return {
       title: `${data.name}`,
+      keywords: ` ${data.description} ${data.name}`,
+
       description: `${data.description}`,
       colorScheme: "dark",
       openGraph: {

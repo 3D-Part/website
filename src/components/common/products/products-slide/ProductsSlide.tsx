@@ -23,6 +23,7 @@ const ProductsSlide: React.FC<{
       <Swiper
         spaceBetween={isTablet ? 0 : 24}
         slidesPerView="auto"
+        slidesPerGroup={3}
         modules={[Scrollbar, Autoplay, Navigation]}
         className="swiper_products"
         grabCursor={true}
@@ -31,12 +32,13 @@ const ProductsSlide: React.FC<{
           draggable: true,
           // snapOnRelease: true,
         }}
+        longSwipes={true}
         autoplay={{
           delay: 3000,
           disableOnInteraction: true,
           pauseOnMouseEnter: true,
         }}
-        speed={750}
+        speed={950}
         navigation={true}
       >
         {products.map((product, i) => {

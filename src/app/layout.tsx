@@ -19,7 +19,8 @@ const exo2 = Exo_2({
 
 export const metadata: Metadata = {
   title: {
-    default: "3D Part",
+    default:
+      "3D Part: 3D printeri, širok spektar filamenata i kvalitetne dijelove po najpovoljnijim cijenama",
     template: "%s | 3D Part",
   },
   description: "Description for 3d part",
@@ -29,11 +30,13 @@ export const metadata: Metadata = {
   verification: {
     google: "google-site-verification: google12063707349698d2.html",
   },
+
   openGraph: {
     type: "website",
     url: "https://3dpartshop.com",
     title: "3D Part",
-    description: "3D Part Description",
+    description:
+      "Pružamo najnovije modele 3D printera, širok spektar filamenata i kvalitetne dijelove po najpovoljnijim cijenama. Olakšajte svoje 3D printanje s našim proizvodima i uslugama.",
     siteName: "3D Part",
     images: [
       {
