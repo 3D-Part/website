@@ -14,6 +14,8 @@ import {
   addProductWithAmount,
   changeCartModalVisible,
 } from "@/redux/slices/cart/cartSlice";
+import { useSession } from "next-auth/react";
+import FavoriteButton from "@/components/common/product/FavoriteButton";
 
 interface ProductInterfaceComponent extends ProductInterface {
   className?: string;
@@ -34,14 +36,12 @@ const Product: React.FC<ProductInterfaceComponent> = ({
   const dispatch = useAppDispatch();
   const [checkCartVisible, setCheckCartVisible] = useState(false);
 
+  const { data: session } = useSession();
+
   return (
     <Link href={"/shop/product/" + id}>
-      <motion.div
+      <div
         className={`cursor-pointer bg-neutral-800 p-[10px] rounded-xl max-w-[220px] max-h-[391px] ${className}`}
-        // whileTap={{
-        //   scale: 0.95,
-        //   transition: { duration: 0.35, type: "spring" },
-        // }}
       >
         <div
           className={`overflow-hidden aspect-square rounded-xl w-[${imageWidth}]`}
@@ -80,6 +80,8 @@ const Product: React.FC<ProductInterfaceComponent> = ({
                 </motion.div>
               </div>
             )}
+
+            {session?.user && session && <FavoriteButton productId={id} />}
           </div>
         </div>
         <div className="max-w-full mt-4 overflow-hidden overflow-ellipsis">
@@ -161,7 +163,7 @@ const Product: React.FC<ProductInterfaceComponent> = ({
             </div>
           </Button>
         </div>
-      </motion.div>
+      </div>
     </Link>
   );
 };

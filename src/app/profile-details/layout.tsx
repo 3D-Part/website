@@ -4,9 +4,11 @@ import { UserIcon } from "@/components/layout/modals/auth-modal/SignUpForm";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { isUserVerifiedSelector } from "@/redux/slices/ui/uiSelectors";
 import {
+  changeFavoriteProducts,
   changeIsModalAuthVisible,
   changeIsUserVerified,
 } from "@/redux/slices/ui/uiSlice";
+import { favoritesService } from "@/shared/services/favoritesService";
 import { userService } from "@/shared/services/userService";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";

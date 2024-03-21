@@ -77,34 +77,41 @@ const AuthModal = () => {
               }}
               aria-label="Menu"
             >
-              <svg viewBox="0 0 21.5 20" className={`h-6 w-6`}>
-                <Path
-                  variants={{
-                    open: { d: "M 3 16.5 L 17 2.5" },
-                  }}
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                />
-                <Path
-                  d="M 2 9.423 L 20 9.423"
-                  variants={{
-                    open: { opacity: 0 },
-                  }}
-                  transition={{ duration: 0.1 }}
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                />
-                <Path
-                  variants={{
-                    open: { d: "M 3 2.5 L 17 16.346" },
-                  }}
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                />
-              </svg>
+              <motion.div
+                whileHover={{
+                  rotate: 90,
+                  transition: { duration: 0.3, delay: 0, ease: "easeInOut" },
+                }}
+              >
+                <svg viewBox="0 0 21.5 20" className={`h-6 w-6`}>
+                  <Path
+                    variants={{
+                      open: { d: "M 3 16.5 L 17 2.5" },
+                    }}
+                    stroke="white"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
+                  <Path
+                    d="M 2 9.423 L 20 9.423"
+                    variants={{
+                      open: { opacity: 0 },
+                    }}
+                    transition={{ duration: 0.1 }}
+                    stroke="white"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
+                  <Path
+                    variants={{
+                      open: { d: "M 3 2.5 L 17 16.346" },
+                    }}
+                    stroke="white"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </motion.div>
             </motion.button>
             {/* --------- */}
 

@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Hamburger from "../hamburger/Hamburger";
 import SearchProducts from "./search-products/SearchProducts";
 import NavLinks from "./nav-links/NavLinks";
@@ -8,6 +8,15 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import CartIcon from "../cart-icon/CartIcon";
 import ProfileIcon from "@/components/layout/header/profile-icon/ProfileIcon";
+import { favoritesService } from "@/shared/services/favoritesService";
+import { useAppDispatch } from "@/redux/hooks";
+import {
+  changeFavoriteProducts,
+  changeIsUserVerified,
+} from "@/redux/slices/ui/uiSlice";
+import { useSession } from "next-auth/react";
+import { RiHeart3Line } from "react-icons/ri";
+import FavoritesIcon from "@/components/layout/header/navbar/favorites-icon/FavoritesIcon";
 
 const creality = "062c42d0-3dab-11ee-bb4e-994af83111f0";
 const azurefilm = "03cbbd90-3dab-11ee-bb4e-994af83111f0";
@@ -276,7 +285,32 @@ const links: any = [
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const router = useRouter();
+  const dispatch = useAppDispatch();
+  const { data: session, status } = useSession();
+
+  useEffect(() => {
+    const fetchFavorites = async () => {
+      try {
+        const data = await favoritesService.fetchFavorites();
+
+        if (!data) {
+          return;
+        }
+
+        const favorites = data.rows.map((x) => {
+          return x.id;
+        });
+
+        dispatch(changeFavoriteProducts(favorites));
+      } catch (error: any) {
+        console.error("Error ", error);
+      }
+    };
+
+    if (session && session.user) {
+      fetchFavorites();
+    }
+  }, [dispatch, session]);
 
   return (
     <div className="md:bg-[rgba(17,17,17,0.55)] md:backdrop-blur-[30px] md:border-t border-b border-[rgba(242,242,242,0.3)] border-solid lg:sticky lg:top-0 lg:left-0 z-50">
@@ -294,6 +328,7 @@ const Navbar = () => {
           </Link>
 
           <div className="flex items-center gap-3 lg:hidden">
+            {session && session.user && <FavoritesIcon />}
             <CartIcon className="" />
             <ProfileIcon />
           </div>
@@ -303,8 +338,9 @@ const Navbar = () => {
           <SearchProducts />
 
           <div className="items-center hidden gap-3 lg:flex">
+            {session && session.user && <FavoritesIcon />}
             <CartIcon className="" />
-            {/* <ProfileIcon /> */}
+            <ProfileIcon />
           </div>
 
           <Hamburger links={links} isOpen={isOpen} setIsOpen={setIsOpen} />

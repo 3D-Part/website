@@ -4,12 +4,14 @@ type UiState = {
   isGlobalLoading: boolean;
   isModalAuthVisible: boolean;
   isUserVerified: boolean | null;
+  favoriteProducts: string[];
 };
 
 const initialState = {
   isGlobalLoading: false,
   isModalAuthVisible: false,
   isUserVerified: null,
+  favoriteProducts: [],
 } as UiState;
 
 export const ui = createSlice({
@@ -32,6 +34,27 @@ export const ui = createSlice({
         document.querySelector("body")?.classList.remove("overflow-hidden");
       }
     },
+
+    changeFavoriteProducts: (
+      state,
+      action: { type: any; payload: string[] }
+    ) => {
+      state.favoriteProducts = action.payload;
+    },
+
+    changeSingleFavoriteProduct: (
+      state,
+      action: { type: any; payload: { id: string; isFavorite: boolean } }
+    ) => {
+      const { id, isFavorite } = action.payload;
+      const index = state.favoriteProducts.indexOf(id);
+
+      if (isFavorite && index === -1) {
+        state.favoriteProducts.push(id);
+      } else if (!isFavorite && index !== -1) {
+        state.favoriteProducts.splice(index, 1);
+      }
+    },
   },
 });
 
@@ -39,5 +62,7 @@ export const {
   changeIsGlobalLoading,
   changeIsModalAuthVisible,
   changeIsUserVerified,
+  changeFavoriteProducts,
+  changeSingleFavoriteProduct,
 } = ui.actions;
 export default ui.reducer;

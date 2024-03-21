@@ -18,6 +18,7 @@ export interface ProductInterface {
   updatedAt: Date;
   weight: string;
   quantity: number;
+
   // stock: number;
   // imgUrls: string[];
   // salePrice?: number;

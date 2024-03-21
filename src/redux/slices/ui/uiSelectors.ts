@@ -11,3 +11,14 @@ export const isModalAuthVisibleSelector = (state: RootState) => {
 export const isUserVerifiedSelector = (state: RootState) => {
   return state.uiSlice.isUserVerified;
 };
+
+export const favoriteProductsSelector = (state: RootState) => {
+  return state.uiSlice.favoriteProducts;
+};
+
+export const isProductFavoriteSelector = (
+  state: RootState,
+  productId: string
+) => {
+  return state.uiSlice.favoriteProducts.includes(productId);
+};

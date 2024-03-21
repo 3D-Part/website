@@ -15,7 +15,11 @@ import { useIsTablet } from "@/shared/hooks/useMediaQuerry";
 const ProductsSlide: React.FC<{
   products: ProductInterface[];
   animationVariants?: { initial: Object; animate: Object };
-}> = ({ products, animationVariants = { initial: {}, animate: {} } }) => {
+  reverseDirection?: boolean | undefined;
+}> = (
+  { products, animationVariants = { initial: {}, animate: {} } },
+  reverseDirection = false
+) => {
   const isTablet = useIsTablet();
 
   return (
@@ -37,6 +41,7 @@ const ProductsSlide: React.FC<{
           delay: 3000,
           disableOnInteraction: true,
           pauseOnMouseEnter: true,
+          reverseDirection,
         }}
         speed={950}
         navigation={true}

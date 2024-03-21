@@ -37,7 +37,8 @@ export const metadata: Metadata = {
     title: "3D Part",
     description:
       "Pružamo najnovije modele 3D printera, širok spektar filamenata i kvalitetne dijelove po najpovoljnijim cijenama. Olakšajte svoje 3D printanje s našim proizvodima i uslugama.",
-    siteName: "3D Part",
+    siteName:
+      "3D Part: 3D printeri, širok spektar filamenata i kvalitetne dijelove po najpovoljnijim cijenama",
     images: [
       {
         url: "/assets/img/logo_social.png",
