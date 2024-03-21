@@ -1,26 +1,12 @@
 "use client";
-import Button from "@/components/common/button/Button";
 import Container from "@/components/common/container/Container";
-import Input from "@/components/common/input/Input";
 import Spinner from "@/components/common/spinner/Spinner";
-import Heading2 from "@/components/common/text/heading/Heading2";
-import Heading4 from "@/components/common/text/heading/Heading4";
-import { notify } from "@/components/common/toast/Toastify";
 import ProductGrid from "@/components/pages/shop/category/category-products/product-grid/ProductGrid";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { isUserVerifiedSelector } from "@/redux/slices/ui/uiSelectors";
-import {
-  changeFavoriteProducts,
-  changeIsGlobalLoading,
-  changeIsUserVerified,
-} from "@/redux/slices/ui/uiSlice";
-import JWT from "@/shared/helper/jwtToken";
+import { useAppDispatch } from "@/redux/hooks";
+
 import { ProductInterface } from "@/shared/interfaces/productsInterface";
-import AuthAPI from "@/shared/services/auth";
 import { favoritesService } from "@/shared/services/favoritesService";
-import { userService } from "@/shared/services/userService";
-import { signOut, useSession } from "next-auth/react";
-import Image from "next/image";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { FC, useEffect, useState } from "react";
 

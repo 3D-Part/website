@@ -26,7 +26,6 @@ const Slider: React.FC<{ images: ProductImageInterface[]; name: string }> = ({
       } as ProductImageInterface,
     ];
   }
-  console.log(images[0]);
 
   images.push({
     id: "837c0fa0-e697-11ee-a531-55d319ede9ea",

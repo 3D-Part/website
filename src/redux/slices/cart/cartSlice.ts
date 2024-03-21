@@ -64,7 +64,7 @@ export const cart = createSlice({
         const newValue = state.cartProducts[productIndex].amount + amount;
         if (newValue > productData.quantity) {
           state.cartProducts[productIndex].amount = productData.quantity;
-          notify(`"Nema dovoljno proizvoda na zalihi za željenu količinu."`, {
+          notify(`Nema dovoljno proizvoda na zalihi `, {
             type: "warning",
             toastId: 2,
           });

@@ -6,7 +6,6 @@ import React, { useState } from "react";
 import Paragraph from "../text/paragraph/Paragraph";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { getMainImage } from "@/shared/helper/getMainImage";
 import Button from "../button/Button";
 import { useAppDispatch } from "@/redux/hooks";
@@ -32,14 +31,13 @@ const Product: React.FC<ProductInterfaceComponent> = ({
   className = "",
   imageWidth = "200px",
 }) => {
-  const router = useRouter();
   const dispatch = useAppDispatch();
   const [checkCartVisible, setCheckCartVisible] = useState(false);
 
   const { data: session } = useSession();
 
   return (
-    <Link href={"/shop/product/" + id}>
+    <Link href={"/shop/product/" + id} prefetch>
       <div
         className={`cursor-pointer bg-neutral-800 p-[10px] rounded-xl max-w-[220px] max-h-[391px] ${className}`}
       >

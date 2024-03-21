@@ -15,6 +15,7 @@ import { addProductWithAmount } from "@/redux/slices/cart/cartSlice";
 import { getMainImage } from "@/shared/helper/getMainImage";
 import { useIsTablet } from "@/shared/hooks/useMediaQuerry";
 import Heading1 from "@/components/common/text/heading/Heading1";
+import { notify } from "@/components/common/toast/Toastify";
 
 const MainData: React.FC<{
   productData: ProductInterface;
@@ -134,12 +135,25 @@ const MainData: React.FC<{
             {amount}
           </Paragraph>
           <motion.button
-            className="w-10 h-10 rounded-[4px] flex items-center justify-center bg-neutral-900 cursor-pointer disabled:cursor-not-allowed"
+            className={
+              "w-10 h-10 rounded-[4px] flex items-center justify-center bg-neutral-900 " +
+              ` ${
+                amount === productData.quantity
+                  ? "cursor-not-allowed"
+                  : "cursor-pointer"
+              }`
+            }
             whileTap="tap"
             onClick={() => {
+              if (amount === productData.quantity) {
+                notify(`Nema dovoljno proizvoda u zalihi`, {
+                  type: "warning",
+                  toastId: 2,
+                });
+                return;
+              }
               amountHandler(amount + 1);
             }}
-            disabled={amount === productData.quantity}
           >
             <motion.svg
               xmlns="http://www.w3.org/2000/svg"

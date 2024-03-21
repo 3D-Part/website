@@ -5,17 +5,12 @@ import Hamburger from "../hamburger/Hamburger";
 import SearchProducts from "./search-products/SearchProducts";
 import NavLinks from "./nav-links/NavLinks";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import CartIcon from "../cart-icon/CartIcon";
 import ProfileIcon from "@/components/layout/header/profile-icon/ProfileIcon";
 import { favoritesService } from "@/shared/services/favoritesService";
 import { useAppDispatch } from "@/redux/hooks";
-import {
-  changeFavoriteProducts,
-  changeIsUserVerified,
-} from "@/redux/slices/ui/uiSlice";
+import { changeFavoriteProducts } from "@/redux/slices/ui/uiSlice";
 import { useSession } from "next-auth/react";
-import { RiHeart3Line } from "react-icons/ri";
 import FavoritesIcon from "@/components/layout/header/navbar/favorites-icon/FavoritesIcon";
 
 const creality = "062c42d0-3dab-11ee-bb4e-994af83111f0";
@@ -286,7 +281,7 @@ const links: any = [
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useAppDispatch();
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
 
   useEffect(() => {
     const fetchFavorites = async () => {

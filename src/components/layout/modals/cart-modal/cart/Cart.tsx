@@ -124,6 +124,7 @@ const Cart = () => {
               promoCode ? "!border-success-500" : ""
             }`}
             required
+            defaultValue={promoCode?.code}
             ref={inputRef}
           />
           {promoCode && (
