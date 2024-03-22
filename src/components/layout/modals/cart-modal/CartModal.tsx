@@ -111,6 +111,7 @@ const CartModal = () => {
                       dispatch(changeCartModalVisible(false));
                     }}
                     className="w-1/2"
+                    prefetch
                   >
                     <Button
                       onClick={() => {

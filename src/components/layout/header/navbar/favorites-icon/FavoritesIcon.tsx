@@ -7,7 +7,7 @@ import { RiHeart3Line } from "react-icons/ri";
 const FavoritesIcon = () => {
   const favoriteProducts = useAppSelector(favoriteProductsSelector);
   return (
-    <Link className="relative cursor-pointer" href={"/favorites"}>
+    <Link className="relative cursor-pointer" href={"/favorites"} prefetch>
       <RiHeart3Line className="w-7 h-7" />
       <div
         className={`text-white ${

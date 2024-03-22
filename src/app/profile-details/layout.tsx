@@ -70,6 +70,7 @@ const Layout: FC<{ children: React.ReactNode }> = ({ children }) => {
               ? "bg-neutral-600 lg:text-white lg:bg-transparent lg:hover:bg-neutral-700"
               : "bg-neutral-800 hover:bg-neutral-700 lg:bg-transparent lg:hover:bg-neutral-700 lg:text-[#888888]"
           }`}
+          prefetch
         >
           <div className="flex items-center flex-1 gap-2">
             <UserIcon

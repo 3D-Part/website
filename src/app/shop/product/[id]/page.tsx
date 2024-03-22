@@ -8,6 +8,7 @@ import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import { getMainImage } from "@/shared/helper/getMainImage";
 import { Product, WithContext } from "schema-dts";
+import FavoriteButton from "@/components/common/product/FavoriteButton";
 
 interface ProductParams {
   params: {
@@ -75,7 +76,8 @@ export default async function ProductPage({ params }: ProductParams) {
         />
         <Container className="min-h-screen px-4 lg:px-9">
           <div className="w-full  border-solid border-b border-[rgba(242,242,242,0.3)] pt-6 pb-4 lg:flex lg:gap-14  lg:pt-8 lg:pb-14">
-            <div className="h-[380px] lg:h-[586px] lg:w-[586px] w-auto">
+            <div className="h-[380px] lg:h-[586px] lg:w-[586px] w-auto relative">
+              <FavoriteButton productId={data.id} />
               <Slider images={data.images} name={data.name} />
             </div>
             <MainData

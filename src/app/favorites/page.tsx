@@ -28,11 +28,7 @@ const FavoritesPage: FC = () => {
           return;
         }
 
-        setData([
-          ...data.rows.map((x) => {
-            return { ...x, images: [] };
-          }),
-        ]);
+        setData(data.rows);
       } catch (error: any) {
         console.error("Error ", error);
       }

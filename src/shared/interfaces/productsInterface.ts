@@ -18,10 +18,10 @@ export interface ProductInterface {
   updatedAt: Date;
   weight: string;
   quantity: number;
+  salePrice?: string;
 
   // stock: number;
   // imgUrls: string[];
-  // salePrice?: number;
   // className?: string;
 }
 

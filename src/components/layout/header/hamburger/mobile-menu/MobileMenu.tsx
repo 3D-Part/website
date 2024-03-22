@@ -33,6 +33,7 @@ const MobileMenu: React.FC<{ links: any; onClick: () => void }> = ({
           onClick={() => {
             router.push("/");
           }}
+          prefetch
         >
           <Image
             alt="3d part logo"

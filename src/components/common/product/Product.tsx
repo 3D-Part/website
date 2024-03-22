@@ -30,6 +30,7 @@ const Product: React.FC<ProductInterfaceComponent> = ({
   weight,
   className = "",
   imageWidth = "200px",
+  salePrice,
 }) => {
   const dispatch = useAppDispatch();
   const [checkCartVisible, setCheckCartVisible] = useState(false);
@@ -116,17 +117,17 @@ const Product: React.FC<ProductInterfaceComponent> = ({
             </Paragraph>
           </div>
           <div className="flex items-center gap-2 mt-2">
-            {/* {salePrice && (
+            {salePrice && (
               <Paragraph
                 size="S"
                 weight="Bold"
                 className="text-[rgba(248,250,252,0.5)] line-through"
               >
-                {price.toFixed(2)} KM
+                {Number(price).toFixed(2)} KM
               </Paragraph>
-            )} */}
+            )}
             <Paragraph size="L" weight="Bold">
-              {`${parseFloat(price).toFixed(2)} KM`}
+              {`${Number(price).toFixed(2)} KM`}
             </Paragraph>
           </div>
           <Button

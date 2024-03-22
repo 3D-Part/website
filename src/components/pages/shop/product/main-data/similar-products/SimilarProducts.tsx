@@ -33,23 +33,25 @@ const SimilarProducts: React.FC<{
           return (
             <SwiperSlide
               key={product.id}
-              className={`w-[90px] h-[90px] bg-neutral-700 rounded-lg ${
-                product.id === productId
-                  ? "border-[1px] border-primary-500 border-solid"
-                  : ""
-              }`}
+              className={`w-[90px] h-[90px] bg-neutral-700 rounded-lg `}
               style={{ width: "90px", height: "90px" }}
             >
-              <div className="w-[90px] h-[90px]">
+              <div className="w-[90px] h-[90px] ">
                 <Link
                   href={`/shop/product/${product.id}`}
-                  className="w-[90px] h-[90px] "
+                  className={`w-[90px] h-[90px] flex items-center ${
+                    product.id === productId
+                      ? "border-[1px] border-primary-500 border-solid rounded-lg "
+                      : ""
+                  } `}
+                  prefetch
                 >
                   <Image
                     className="border border-solid "
                     alt={product.name}
                     src={getMainImage(product.images)}
-                    fill
+                    width={90}
+                    height={90}
                   ></Image>
                 </Link>
               </div>
