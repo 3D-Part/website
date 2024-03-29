@@ -19,7 +19,7 @@ export interface ProductInterface {
   weight: string;
   quantity: number;
   salePrice?: string;
-
+  productOnSale: { discountedPrice: string }[];
   // stock: number;
   // imgUrls: string[];
   // className?: string;

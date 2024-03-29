@@ -123,7 +123,7 @@ const Product: React.FC<ProductInterfaceComponent> = ({
                 weight="Bold"
                 className="text-[rgba(248,250,252,0.5)] line-through"
               >
-                {Number(price).toFixed(2)} KM
+                {Number(salePrice).toFixed(2)} KM
               </Paragraph>
             )}
             <Paragraph size="L" weight="Bold">
