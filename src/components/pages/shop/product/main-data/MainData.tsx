@@ -21,7 +21,7 @@ const MainData: React.FC<{
   productData: ProductInterface;
   similarProducts: ProductInterface[];
 }> = ({ productData, similarProducts }) => {
-  let { name, price, sku, description, weight, images, quantity, } = productData;
+  let { name, price, sku, description, weight, images, quantity } = productData;
   const containerVariants = {
     hidden: {
       opacity: 0,
@@ -49,6 +49,8 @@ const MainData: React.FC<{
       },
     },
   };
+
+  const salePrice = "13";
 
   const [amount, setAmount] = useState(1);
   const dispatch = useAppDispatch();
@@ -100,7 +102,20 @@ const MainData: React.FC<{
         variants={dropUpVariants}
         className="flex mt-[60px] gap-9 flex-wrap"
       >
-        <Display2>{parseFloat(price).toFixed(2)} KM</Display2>
+        <Display2 className="flex ">
+          <span
+            className={
+              salePrice ? " flex items-center line-through mr-2 !text-4xl" : ""
+            }
+          >
+            {parseFloat(price).toFixed(2)} KM
+          </span>
+          {salePrice && (
+            <span className="text-[48px]">
+              {parseFloat(salePrice).toFixed(2)} KM
+            </span>
+          )}
+        </Display2>
         {!isTablet && <Stock stock={productData.quantity} />}
       </motion.div>
 
