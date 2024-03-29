@@ -27,7 +27,7 @@ const ProductsSlide: React.FC<{
       <Swiper
         spaceBetween={isTablet ? 0 : 24}
         slidesPerView="auto"
-        slidesPerGroup={3}
+        slidesPerGroup={isTablet ? 2 : 3}
         modules={[Scrollbar, Autoplay, Navigation]}
         className="swiper_products"
         grabCursor={true}

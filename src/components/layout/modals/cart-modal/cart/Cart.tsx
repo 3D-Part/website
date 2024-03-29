@@ -181,7 +181,11 @@ const Cart = () => {
       <div className="flex items-center justify-between my-3">
         <p className="text-white text-[20px] font-semibold">UKUPNO </p>
         <p className="text-success-500 text-[28px] font-exo2 font-semibold">{`${(
-          price + post
+          price -
+          (promoCode
+            ? price * (Number(promoCode.discountPercentage) / 100)
+            : 0) +
+          post
         ).toFixed(2)} KM`}</p>
       </div>
     </motion.div>

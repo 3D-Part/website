@@ -11,7 +11,13 @@ const fetchCoupons = async (
         params,
       }
     );
-    return response;
+
+    const data = response.rows.filter((x) => {
+      if (new Date(x.endsAt) > new Date()) {
+        return x;
+      }
+    });
+    return { count: data.length, rows: data };
   } catch (error) {
     throw new Error("Failed to fetch coupons");
   }

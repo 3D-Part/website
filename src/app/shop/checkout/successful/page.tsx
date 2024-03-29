@@ -53,7 +53,16 @@ const Successful = () => {
             Kupljeni proizvodi {`(${data?.products.length})`}
           </div>
           <div className="flex text-lg font-normal text-white bg-neutral-700 px-4 py-[21px]">
-            {data?.price} KM
+            <span className={data?.discount ? "line-through" : ""}>
+              {" "}
+              {data?.price} KM
+            </span>{" "}
+            {data?.discount && (
+              <span className="ml-1">
+                {" "}
+                {data?.price - data?.price * (data.discount / 100)} KM
+              </span>
+            )}
           </div>
 
           <div className="flex text-lg font-normal text-white bg-neutral-700 px-4 py-[21px]">
@@ -67,7 +76,7 @@ const Successful = () => {
             UKUPNO
           </div>
           <div className="flex text-lg font-bold text-white bg-neutral-700 px-4 py-[21px]">
-            {Number(data?.price) + Number(data?.shippingPrice)} KM
+            {Number(data?.total)} KM
           </div>
         </div>
 

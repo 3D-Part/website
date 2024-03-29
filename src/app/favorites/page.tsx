@@ -53,8 +53,8 @@ const FavoritesPage: FC = () => {
   }
 
   return (
-    <div className="w-full">
-      <Container className="min-h-screen py-6 !max-w-auto bg-neutral-900 px-9">
+    <div className="w-full bg-neutral-900 ">
+      <Container className="min-h-screen py-6 !max-w-auto bg-neutral-900 w-full px-9">
         <div className="flex flex-col items-center ">
           <h1 className="mb-8 text-4xl font-semibold text-center">
             Omiljeni proizvodi

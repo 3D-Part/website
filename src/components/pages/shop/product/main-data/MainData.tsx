@@ -21,7 +21,7 @@ const MainData: React.FC<{
   productData: ProductInterface;
   similarProducts: ProductInterface[];
 }> = ({ productData, similarProducts }) => {
-  let { name, price, sku, description, weight, images, quantity } = productData;
+  let { name, price, sku, description, weight, images, quantity, } = productData;
   const containerVariants = {
     hidden: {
       opacity: 0,

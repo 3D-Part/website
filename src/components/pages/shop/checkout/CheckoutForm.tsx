@@ -87,13 +87,10 @@ const CheckoutForm = () => {
       clearCartProducts();
       router.push("/shop/checkout/successful");
     } catch (error: any) {
-      const parsedError = JSON.parse(error.message);
-      if (parsedError.key === "VALIDATION_ERROR") {
-        parsedError.errors.forEach((err: any, i: number) => {
-          setTimeout(() => {
-            notify(err.message, { type: "error" });
-          }, 100 * i);
-        });
+      if (error?.response?.data.errors[0].message) {
+        setTimeout(() => {
+          notify(error?.response?.data.errors[0].message, { type: "error" });
+        }, 300);
       } else {
         router.push("/shop/checkout/failed");
       }
