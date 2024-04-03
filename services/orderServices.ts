@@ -20,7 +20,7 @@ export type SuccessfulOrderType = {
   }[];
   price: number;
   shippingPrice: number;
-  discount: number;
+  discount: string;
   total: number;
   status: string;
   orderNumber: string;

@@ -14,6 +14,8 @@ const Successful = () => {
   const router = useRouter();
   const data = useAppSelector(successfulOrderSelector);
 
+  const dataDiscount = Number(data?.discount);
+
   useEffect(() => {
     if (!data) {
       router.push("/");
@@ -53,14 +55,14 @@ const Successful = () => {
             Kupljeni proizvodi {`(${data?.products.length})`}
           </div>
           <div className="flex text-lg font-normal text-white bg-neutral-700 px-4 py-[21px]">
-            <span className={data?.discount ? "line-through" : ""}>
+            <span className={dataDiscount ? "line-through" : ""}>
               {" "}
               {data?.price} KM
             </span>{" "}
-            {data?.discount && (
+            {dataDiscount !== 0 && data?.price && (
               <span className="ml-1">
                 {" "}
-                {data?.price - data?.price * (data.discount / 100)} KM
+                {data?.price - data?.price * (dataDiscount / 100)} KM
               </span>
             )}
           </div>
