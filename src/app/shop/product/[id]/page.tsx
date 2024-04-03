@@ -1,4 +1,3 @@
-"use client";
 import Container from "@/components/common/container/Container";
 import AdditionalData from "@/components/pages/shop/product/additional-data/AdditionalData";
 import MainData from "@/components/pages/shop/product/main-data/MainData";
@@ -17,32 +16,32 @@ interface ProductParams {
   };
 }
 
-// export const generateMetadata = async ({
-//   params,
-// }: ProductParams): Promise<Metadata> => {
-//   try {
-//     const data = await productsServices.getSingleProduct(params.id);
+export const generateMetadata = async ({
+  params,
+}: ProductParams): Promise<Metadata> => {
+  try {
+    const data = await productsServices.getSingleProduct(params.id);
 
-//     return {
-//       title: `${data.name}`,
-//       keywords: ` ${data.description} ${data.name}`,
+    return {
+      title: `${data.name}`,
+      keywords: ` ${data.description} ${data.name}`,
 
-//       description: `${data.description}`,
-//       colorScheme: "dark",
-//       openGraph: {
-//         images:
-//           data.images.length > 0
-//             ? [getMainImage(data.images)]
-//             : ["/assets/img/logo_social.png"],
-//       },
-//     };
-//   } catch (error) {
-//     return {
-//       title: `404 Greška - Proizvod nije pronađen`,
-//       description: `Proizvod nije pronađen`,
-//     };
-//   }
-// };
+      description: `${data.description}`,
+      colorScheme: "dark",
+      openGraph: {
+        images:
+          data.images.length > 0
+            ? [getMainImage(data.images)]
+            : ["/assets/img/logo_social.png"],
+      },
+    };
+  } catch (error) {
+    return {
+      title: `404 Greška - Proizvod nije pronađen`,
+      description: `Proizvod nije pronađen`,
+    };
+  }
+};
 
 export default async function ProductPage({ params }: ProductParams) {
   try {
