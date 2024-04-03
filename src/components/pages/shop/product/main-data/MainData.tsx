@@ -116,11 +116,11 @@ const MainData: React.FC<{
         <Display2 className="flex ">
           {salePrice && (
             <span className="flex items-center mr-2 text-4xl line-through">
-              {parseFloat(salePrice).toFixed(2)} KM
+              {parseFloat(price).toFixed(2)} KM
             </span>
           )}
           <span className={salePrice ? "  " : ""}>
-            {parseFloat(price).toFixed(2)} KM
+            {parseFloat(salePrice ? salePrice : price).toFixed(2)} KM
           </span>
         </Display2>
         {!isTablet && <Stock stock={productData.quantity} />}
@@ -205,6 +205,7 @@ const MainData: React.FC<{
                   price,
                   quantity,
                   name,
+                  salePrice,
                 },
                 shouldNotify: true,
               })

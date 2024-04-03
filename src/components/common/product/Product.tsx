@@ -123,11 +123,11 @@ const Product: React.FC<ProductInterfaceComponent> = ({
                 weight="Bold"
                 className="text-[rgba(248,250,252,0.5)] line-through"
               >
-                {Number(salePrice).toFixed(2)} KM
+                {Number(price).toFixed(2)} KM
               </Paragraph>
             )}
             <Paragraph size="L" weight="Bold">
-              {`${Number(price).toFixed(2)} KM`}
+              {`${Number(salePrice ? salePrice : price).toFixed(2)} KM`}
             </Paragraph>
           </div>
           <Button
@@ -146,6 +146,7 @@ const Product: React.FC<ProductInterfaceComponent> = ({
                     price,
                     quantity,
                     name,
+                    salePrice,
                   },
                   shouldNotify: true,
                 })

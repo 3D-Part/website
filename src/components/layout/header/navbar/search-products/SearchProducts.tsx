@@ -19,6 +19,11 @@ const SearchProducts = () => {
       const x = await productsServices.getAllProducts({
         nameLike: text,
       });
+      x.rows.forEach((a) => {
+        if (a.productOnSale.length) {
+          a.salePrice = a.productOnSale[0].discountedPrice;
+        }
+      });
       setLoading(false);
       setProducts(x.rows);
       return x;

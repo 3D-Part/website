@@ -14,6 +14,7 @@ export type ProductDataType = {
   price: string;
   quantity: number;
   name: string;
+  salePrice?: string | null;
 };
 
 export type CartProductsType = {

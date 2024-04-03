@@ -35,7 +35,10 @@ const SearchResult: React.FC<{
             {product.name}
           </Paragraph>
           <Paragraph weight="Semibold" size="S" className="text-lg md:text-sm">
-            {parseFloat(product.price).toFixed(2)} KM
+            {parseFloat(
+              product.salePrice ? product.salePrice : product.price
+            ).toFixed(2)}{" "}
+            KM
           </Paragraph>
         </div>
       </div>

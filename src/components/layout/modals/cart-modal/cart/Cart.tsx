@@ -52,7 +52,14 @@ const calculatePriceAndPost = (cart: CartProductsType[]) => {
     weight = 0;
 
   cart.forEach((x) => {
-    price = price + x.amount * Number(x.productData.price);
+    price =
+      price +
+      x.amount *
+        Number(
+          x.productData.salePrice
+            ? x.productData.salePrice
+            : x.productData.price
+        );
     weight += parseFloat(x.productData.weight) * x.amount;
   });
 
