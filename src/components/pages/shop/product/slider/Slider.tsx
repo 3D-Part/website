@@ -27,13 +27,6 @@ const Slider: React.FC<{ images: ProductImageInterface[]; name: string }> = ({
     ];
   }
 
-  images.push({
-    id: "837c0fa0-e697-11ee-a531-55d319ede9ea",
-    productId: "7d6dc4a0-e697-11ee-a531-55d319ede9ea",
-    imageId: "bf2e11a4-9df7-462c-a23d-95ecba5e5a3b",
-    isMain: true,
-  });
-
   return (
     <div className="w-full h-full lg:w-[586px]">
       <div className="w-full h-full">
