@@ -37,7 +37,7 @@ const Coupons: FC = () => {
       <Container className="flex !max-w-auto flex-col items-center min-h-screen gap-8 py-6 bg-neutral-900 px-9 lg:items-start ">
         <Heading2 className="">
           {orders.map((order) => {
-            return <div>{order.price}</div>;
+            return <div key={order.id}>{order.price}</div>;
           })}
         </Heading2>
       </Container>

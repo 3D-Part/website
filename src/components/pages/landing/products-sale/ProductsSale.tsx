@@ -11,7 +11,7 @@ import { saleService } from "@/shared/services/saleService";
 import Spinner from "@/components/common/spinner/Spinner";
 
 const ProductsSale = () => {
-  const [list, setList] = useState<ProductInterface[]>([]);
+  const [list, setList] = useState<ProductInterface[] | any[]>([]);
   const [ends, setEnds] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);

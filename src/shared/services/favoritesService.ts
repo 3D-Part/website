@@ -1,4 +1,3 @@
-import { ProductDataType } from "@/redux/slices/cart/cartSlice";
 import API from "../helper/api";
 import { ProductInterface } from "@/shared/interfaces/productsInterface";
 

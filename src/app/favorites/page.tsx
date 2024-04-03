@@ -42,6 +42,7 @@ const FavoritesPage: FC = () => {
     if (status === "unauthenticated") {
       router.replace("/login");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, session]);
 
   if (isLoading || !session || !session.user) {

@@ -1,5 +1,3 @@
-import axiosInstance from "@/shared/helper/axiosInstance";
-import { CouponQueryParams } from "@/shared/types";
 import API from "../helper/api";
 
 interface UserType {
