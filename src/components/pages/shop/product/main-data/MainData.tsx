@@ -1,6 +1,5 @@
 "use client";
 import Display2 from "@/components/common/text/display/Display2";
-import Heading2 from "@/components/common/text/heading/Heading2";
 import Heading6 from "@/components/common/text/heading/Heading6";
 import Paragraph from "@/components/common/text/paragraph/Paragraph";
 import { ProductInterface } from "@/shared/interfaces/productsInterface";
