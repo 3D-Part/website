@@ -14,6 +14,8 @@ const Successful = () => {
   const router = useRouter();
   const data = useAppSelector(successfulOrderSelector);
 
+  const dataDiscount = Number(data?.discount);
+
   useEffect(() => {
     if (!data) {
       router.push("/");
@@ -38,7 +40,7 @@ const Successful = () => {
         </div>
         <Heading3 className="text-center">Hvala na narudžbi!</Heading3>
         <Paragraph size="L" weight="Regular" className="mt-3 text-center">
-          Potvrda o narudžbi je poslana na mejl {data?.email}
+          Potvrda o narudžbi je poslata na mail {data?.email}
         </Paragraph>
 
         <div className="grid grid-cols-[60%40%] gap-2 rounded-2xl mt-9 w-full overflow-hidden">
@@ -53,7 +55,16 @@ const Successful = () => {
             Kupljeni proizvodi {`(${data?.products.length})`}
           </div>
           <div className="flex text-lg font-normal text-white bg-neutral-700 px-4 py-[21px]">
-            {data?.price} KM
+            <span className={dataDiscount ? "line-through" : ""}>
+              {" "}
+              {data?.price} KM
+            </span>{" "}
+            {dataDiscount !== 0 && data?.price && (
+              <span className="ml-1">
+                {" "}
+                {data?.price - data?.price * (dataDiscount / 100)} KM
+              </span>
+            )}
           </div>
 
           <div className="flex text-lg font-normal text-white bg-neutral-700 px-4 py-[21px]">
@@ -67,7 +78,7 @@ const Successful = () => {
             UKUPNO
           </div>
           <div className="flex text-lg font-bold text-white bg-neutral-700 px-4 py-[21px]">
-            {Number(data?.price) + Number(data?.shippingPrice)} KM
+            {Number(data?.total)} KM
           </div>
         </div>
 

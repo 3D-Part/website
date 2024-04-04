@@ -6,7 +6,6 @@ import React, { useState } from "react";
 import Paragraph from "../text/paragraph/Paragraph";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { getMainImage } from "@/shared/helper/getMainImage";
 import Button from "../button/Button";
 import { useAppDispatch } from "@/redux/hooks";
@@ -14,6 +13,8 @@ import {
   addProductWithAmount,
   changeCartModalVisible,
 } from "@/redux/slices/cart/cartSlice";
+import { useSession } from "next-auth/react";
+import FavoriteButton from "@/components/common/product/FavoriteButton";
 
 interface ProductInterfaceComponent extends ProductInterface {
   className?: string;
@@ -29,19 +30,17 @@ const Product: React.FC<ProductInterfaceComponent> = ({
   weight,
   className = "",
   imageWidth = "200px",
+  salePrice,
 }) => {
-  const router = useRouter();
   const dispatch = useAppDispatch();
   const [checkCartVisible, setCheckCartVisible] = useState(false);
 
+  const { data: session } = useSession();
+
   return (
-    <Link href={"/shop/product/" + id}>
-      <motion.div
-        className={`cursor-pointer bg-neutral-800 p-[10px] rounded-xl max-w-[220px] max-h-[363px] ${className}`}
-        // whileTap={{
-        //   scale: 0.95,
-        //   transition: { duration: 0.35, type: "spring" },
-        // }}
+    <Link href={"/shop/product/" + id} prefetch>
+      <div
+        className={`cursor-pointer bg-neutral-800 p-[10px] rounded-xl max-w-[220px] max-h-[391px] ${className}`}
       >
         <div
           className={`overflow-hidden aspect-square rounded-xl w-[${imageWidth}]`}
@@ -60,9 +59,9 @@ const Product: React.FC<ProductInterfaceComponent> = ({
             {checkCartVisible && (
               <div className="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
                 <motion.div
-                  initial={{ scale: 0, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  exit={{ scale: 0, opacity: 0 }}
+                // initial={{ scale: 0, opacity: 0 }}
+                // animate={{ scale: 1, opacity: 1 }}
+                // exit={{ scale: 0, opacity: 0 }}
                 >
                   <Button
                     onClick={() => {
@@ -80,15 +79,27 @@ const Product: React.FC<ProductInterfaceComponent> = ({
                 </motion.div>
               </div>
             )}
+
+            {session?.user && session && <FavoriteButton productId={id} />}
           </div>
         </div>
         <div className="max-w-full mt-4 overflow-hidden overflow-ellipsis">
           <Paragraph
             size="L"
             weight="Semibold"
-            className="overflow-hidden overflow-ellipsis break-keep whitespace-nowrap"
+            className="overflow-hidden h-14 max-h-14 overflow-ellipsis"
+            style={
+              {
+                // display: "-webkit-box",
+                // WebkitLineClamp: 2,
+                // WebkitBoxOrient: "vertical",
+                // overflow: "hidden",
+                // textOverflow: "ellipsis",
+              }
+            }
           >
-            {name}
+            {name.slice(0, 45)}
+            {name.length > 45 ? "..." : ""}
           </Paragraph>
           <div className="flex items-center gap-2 mt-2">
             <Image
@@ -106,17 +117,17 @@ const Product: React.FC<ProductInterfaceComponent> = ({
             </Paragraph>
           </div>
           <div className="flex items-center gap-2 mt-2">
-            {/* {salePrice && (
+            {salePrice && (
               <Paragraph
                 size="S"
                 weight="Bold"
                 className="text-[rgba(248,250,252,0.5)] line-through"
               >
-                {price.toFixed(2)} KM
+                {Number(price).toFixed(2)} KM
               </Paragraph>
-            )} */}
+            )}
             <Paragraph size="L" weight="Bold">
-              {`${parseFloat(price).toFixed(2)} KM`}
+              {`${Number(salePrice ? salePrice : price).toFixed(2)} KM`}
             </Paragraph>
           </div>
           <Button
@@ -135,6 +146,7 @@ const Product: React.FC<ProductInterfaceComponent> = ({
                     price,
                     quantity,
                     name,
+                    salePrice,
                   },
                   shouldNotify: true,
                 })
@@ -151,7 +163,7 @@ const Product: React.FC<ProductInterfaceComponent> = ({
             </div>
           </Button>
         </div>
-      </motion.div>
+      </div>
     </Link>
   );
 };

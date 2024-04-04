@@ -1,6 +1,5 @@
 "use client";
 import Display2 from "@/components/common/text/display/Display2";
-import Heading2 from "@/components/common/text/heading/Heading2";
 import Heading6 from "@/components/common/text/heading/Heading6";
 import Paragraph from "@/components/common/text/paragraph/Paragraph";
 import { ProductInterface } from "@/shared/interfaces/productsInterface";
@@ -14,12 +13,23 @@ import { useAppDispatch } from "@/redux/hooks";
 import { addProductWithAmount } from "@/redux/slices/cart/cartSlice";
 import { getMainImage } from "@/shared/helper/getMainImage";
 import { useIsTablet } from "@/shared/hooks/useMediaQuerry";
+import Heading1 from "@/components/common/text/heading/Heading1";
+import { notify } from "@/components/common/toast/Toastify";
 
 const MainData: React.FC<{
   productData: ProductInterface;
   similarProducts: ProductInterface[];
 }> = ({ productData, similarProducts }) => {
-  let { name, price, sku, description, weight, images, quantity } = productData;
+  let {
+    name,
+    price,
+    sku,
+    description,
+    weight,
+    images,
+    quantity,
+    productOnSale,
+  } = productData;
   const containerVariants = {
     hidden: {
       opacity: 0,
@@ -48,13 +58,17 @@ const MainData: React.FC<{
     },
   };
 
+  const salePrice = productOnSale.length
+    ? productOnSale[0].discountedPrice
+    : null;
+
   const [amount, setAmount] = useState(1);
   const dispatch = useAppDispatch();
 
   const isTablet = useIsTablet();
 
   const amountHandler = (newAmount: number) => {
-    if (newAmount >= 1) {
+    if (newAmount >= 1 && newAmount <= productData.quantity) {
       setAmount(newAmount);
     }
   };
@@ -68,7 +82,7 @@ const MainData: React.FC<{
     >
       <div>{/* CATEGORY */}</div>
       <motion.div variants={dropUpVariants}>
-        <Heading2>{name}</Heading2>
+        <Heading1>{name}</Heading1>
 
         <Paragraph weight="Regular" size="L">
           <p
@@ -98,7 +112,16 @@ const MainData: React.FC<{
         variants={dropUpVariants}
         className="flex mt-[60px] gap-9 flex-wrap"
       >
-        <Display2>{parseFloat(price).toFixed(2)} KM</Display2>
+        <Display2 className="flex ">
+          {salePrice && (
+            <span className="flex items-center mr-2 text-4xl line-through">
+              {parseFloat(price).toFixed(2)} KM
+            </span>
+          )}
+          <span className={salePrice ? "  " : ""}>
+            {parseFloat(salePrice ? salePrice : price).toFixed(2)} KM
+          </span>
+        </Display2>
         {!isTablet && <Stock stock={productData.quantity} />}
       </motion.div>
 
@@ -108,11 +131,12 @@ const MainData: React.FC<{
       >
         <div className="bg-neutral-700 p-[3px] flex gap-4 items-center rounded-lg w-min h-[46px]">
           <motion.button
-            className="w-10 h-10 rounded-[4px] flex items-center justify-center bg-neutral-900 cursor-pointer"
+            className="w-10 h-10 rounded-[4px] flex items-center justify-center bg-neutral-900 cursor-pointer disabled:cursor-not-allowed"
             whileTap="tap"
             onClick={() => {
               amountHandler(amount - 1);
             }}
+            disabled={amount === 1}
           >
             <motion.svg
               xmlns="http://www.w3.org/2000/svg"
@@ -132,9 +156,23 @@ const MainData: React.FC<{
             {amount}
           </Paragraph>
           <motion.button
-            className="w-10 h-10 rounded-[4px] flex items-center justify-center bg-neutral-900 cursor-pointer"
+            className={
+              "w-10 h-10 rounded-[4px] flex items-center justify-center bg-neutral-900 " +
+              ` ${
+                amount === productData.quantity
+                  ? "cursor-not-allowed"
+                  : "cursor-pointer"
+              }`
+            }
             whileTap="tap"
             onClick={() => {
+              if (amount === productData.quantity) {
+                notify(`Nema dovoljno proizvoda u zalihi`, {
+                  type: "warning",
+                  toastId: 2,
+                });
+                return;
+              }
               amountHandler(amount + 1);
             }}
           >
@@ -166,6 +204,7 @@ const MainData: React.FC<{
                   price,
                   quantity,
                   name,
+                  salePrice,
                 },
                 shouldNotify: true,
               })

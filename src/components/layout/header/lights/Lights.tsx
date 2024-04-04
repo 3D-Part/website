@@ -29,7 +29,7 @@ const Lights = () => {
         initial={{ x: -200, y: -200 }}
         // animate={blueAnimate}
         // transition={{ type: Infinity, duration: 25 }}
-        className="fixed top-0 left-0 bg-[rgba(0,50,160,0.73)] lg:w-[745px] lg:h-[745px] z-[-1] blur-[100px] w-[410px] h-[410px] "
+        className="fixed top-[0] left-[0] bg-[rgba(0,50,160,0.73)] lg:w-[745px] lg:h-[745px] z-[-1] blur-[100px] w-[410px] h-[410px] "
       ></motion.div>
       <motion.div
         initial={{ x: 100, y: 100 }}

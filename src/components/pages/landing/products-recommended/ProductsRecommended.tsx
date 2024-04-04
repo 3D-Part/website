@@ -15,6 +15,7 @@ const ProductsRecommended = async () => {
           initial: { opacity: 0, scale: 0.7, x: -30 },
           animate: { opacity: 1, scale: 1, x: 0 },
         }}
+        reverseDirection={true}
       >
         <div className="flex flex-col w-full px-4 lg:px-0">
           <Heading2> Izdvojili smo za Vas </Heading2>

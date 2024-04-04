@@ -8,16 +8,23 @@ import { notify } from "@/components/common/toast/Toastify";
 import { useState } from "react";
 import { changeIsGlobalLoading } from "@/redux/slices/ui/uiSlice";
 import { useRouter } from "next/navigation";
-import { cartProductsSelector } from "@/redux/slices/cart/cartSelectors";
 import {
+  cartProductsSelector,
+  promoCodeSelectorAmount,
+} from "@/redux/slices/cart/cartSelectors";
+import {
+  changePromoCodeInCart,
   changeSuccessfulOrder,
   resetCart,
 } from "@/redux/slices/cart/cartSlice";
 import PickupOptionForm from "./PickupOptionForm";
 import ElectronicOptionForm from "./ElectronicOptionForm";
+import { saveElectronPaymentToLocal } from "@/components/pages/shop/checkout/saveElectronPaymentToLocal";
+import { clearCartProducts } from "@/shared/helper/cartProducts";
 
 const CheckoutForm = () => {
   const products = useAppSelector(cartProductsSelector);
+  const promoCode = useAppSelector(promoCodeSelectorAmount);
 
   const [buttonDisabled, setBUttonDisabled] = useState(false);
   const [payingOption, setPayingOption] = useState("0");
@@ -32,13 +39,12 @@ const CheckoutForm = () => {
     setBUttonDisabled(true);
     dispatch(changeIsGlobalLoading(true));
 
-    const payload =
+    const payload: any =
       payingOption === "0"
         ? {
             city: event.target.city.value,
             email: event.target.email.value,
-            fullName:
-              event.target.name.value + " " + event.target.surname.value,
+            fullName: event.target.fullName.value,
             phone: event.target.phone.value,
             postCode: event.target.postCode.value,
             products: products.map((x) => {
@@ -63,20 +69,28 @@ const CheckoutForm = () => {
             }),
           };
 
+    if (promoCode) {
+      payload.code = promoCode.code;
+    }
+
     try {
       const data = await orderServices.createOrder(payload);
       notify("Narudžba kreirana", { type: "success" });
       dispatch(resetCart());
       dispatch(changeSuccessfulOrder(data));
+
+      if (payingOption === "1") {
+        saveElectronPaymentToLocal(payload);
+      }
+
+      dispatch(changePromoCodeInCart(null));
+      clearCartProducts();
       router.push("/shop/checkout/successful");
     } catch (error: any) {
-      const parsedError = JSON.parse(error.message);
-      if (parsedError.key === "VALIDATION_ERROR") {
-        parsedError.errors.forEach((err: any, i: number) => {
-          setTimeout(() => {
-            notify(err.message, { type: "error" });
-          }, 100 * i);
-        });
+      if (error?.response?.data.errors[0].message) {
+        setTimeout(() => {
+          notify(error?.response?.data.errors[0].message, { type: "error" });
+        }, 300);
       } else {
         router.push("/shop/checkout/failed");
       }

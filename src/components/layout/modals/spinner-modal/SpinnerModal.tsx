@@ -11,7 +11,7 @@ const SpinnerModal = () => {
       <AnimatePresence mode="wait">
         {isOpen && (
           <motion.div
-            className="fixed top-0 left-0 z-50 w-full h-full bg-[rgba(17,17,17,0.78)] cursor-pointer min-w-[360px] flex items-center justify-center"
+            className="fixed top-0 left-0 z-[9999] w-full h-full bg-[rgba(17,17,17,0.78)] cursor-pointer min-w-[360px] flex items-center justify-center"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}

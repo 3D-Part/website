@@ -6,23 +6,33 @@ import React from "react";
 
 const FooterLinks = () => {
   return (
-    <Container className="grid grid-cols-2 px-4 mx-auto pt-11 gap-y-6 lg:grid-cols-3 lg:justify-center lg:pt-24">
+    <Container className="grid grid-cols-2 px-4 mx-auto gap-y-6 lg:grid-cols-3 lg:justify-center ">
       <div className="flex flex-col lg:mx-auto gap:4 lg:flex">
         <Heading5 className="mb-2">Proizvodi</Heading5>
         <Paragraph size="M" weight="Regular" className="py-1 text-neutral-200">
-          <Link href={"/shop/category/filamenti"}>Filamenti</Link>
+          <Link prefetch href={"/shop/category/filamenti"}>
+            Filamenti
+          </Link>
         </Paragraph>
         <Paragraph size="M" weight="Regular" className="py-1 text-neutral-200">
-          <Link href={"/shop/category/resini"}>Resini</Link>
+          <Link prefetch href={"/shop/category/resini"}>
+            Resini
+          </Link>
         </Paragraph>
         <Paragraph size="M" weight="Regular" className="py-1 text-neutral-200">
-          <Link href={"/shop/category/3d-printeri"}>3D Printeri</Link>
+          <Link prefetch href={"/shop/category/3d-printeri"}>
+            3D Printeri
+          </Link>
         </Paragraph>
         <Paragraph size="M" weight="Regular" className="py-1 text-neutral-200">
-          <Link href={"/shop/category/laseri"}>Laseri</Link>
+          <Link prefetch href={"/shop/category/laseri"}>
+            Laseri
+          </Link>
         </Paragraph>
         <Paragraph size="M" weight="Regular" className="py-1 text-neutral-200">
-          <Link href={"/shop/category/dijelovi"}>Dijelovi</Link>
+          <Link prefetch href={"/shop/category/dijelovi"}>
+            Dijelovi
+          </Link>
         </Paragraph>
       </div>
       <div className="flex flex-col gap:4 lg:flex lg:mx-auto">

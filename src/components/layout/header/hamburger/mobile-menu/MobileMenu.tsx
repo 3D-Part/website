@@ -26,24 +26,14 @@ const MobileMenu: React.FC<{ links: any; onClick: () => void }> = ({
   }, []);
 
   return (
-    <motion.div
-      className="fixed top-0 left-0 z-[200] w-screen h-screen bg-[rgba(0,0,0,0.8)] py-4 backdrop-blur"
-      initial={{ y: "-100%" }}
-      animate={{ y: "0" }}
-      exit={{ y: "-100%" }}
-      transition={{
-        type: "spring",
-        // duration: 0.5,
-        stiffness: 400,
-        damping: 40,
-      }}
-    >
+    <motion.div className="fixed top-0 left-0 z-[200] w-screen h-screen bg-[rgba(0,0,0,0.8)] py-4 backdrop-blur">
       <div className="flex items-center justify-center pb-6 border-b border-solid border-neutral-600">
         <Link
           href={"/"}
           onClick={() => {
             router.push("/");
           }}
+          prefetch
         >
           <Image
             alt="3d part logo"

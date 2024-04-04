@@ -15,6 +15,7 @@ const SearchResult: React.FC<{
       onClick={() => {
         closeDropdown();
       }}
+      prefetch
     >
       <div className="flex gap-4 p-2 border-[1px] border-solid border-primary-500 rounded-lg cursor-pointer items-center bg-ne">
         <div className="relative overflow-hidden rounded-lg w-28 h-28 md:w-16 md:h-16 ">
@@ -34,7 +35,10 @@ const SearchResult: React.FC<{
             {product.name}
           </Paragraph>
           <Paragraph weight="Semibold" size="S" className="text-lg md:text-sm">
-            {parseFloat(product.price).toFixed(2)} KM
+            {parseFloat(
+              product.salePrice ? product.salePrice : product.price
+            ).toFixed(2)}{" "}
+            KM
           </Paragraph>
         </div>
       </div>

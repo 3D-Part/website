@@ -104,7 +104,12 @@ const CartProducts: React.FC<{ product: CartProductsType }> = ({ product }) => {
             </motion.button>
           </div>
           <p className="text-white  text-[20px] lg:text-[28px] font-exo2 font-semibold">{`${(
-            product.amount * Number(product.productData.price)
+            product.amount *
+            Number(
+              product.productData.salePrice
+                ? product.productData.salePrice
+                : product.productData.price
+            )
           ).toFixed(2)} KM`}</p>
         </div>
       </div>

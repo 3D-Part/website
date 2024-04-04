@@ -29,12 +29,7 @@ const Slider: React.FC<{ images: ProductImageInterface[]; name: string }> = ({
 
   return (
     <div className="w-full h-full lg:w-[586px]">
-      <motion.div
-        initial={{ x: -200, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        transition={{ type: "spring", stiffness: 100, mass: 0.3 }}
-        className="w-full h-full"
-      >
+      <div className="w-full h-full">
         <Swiper
           pagination={{
             dynamicBullets: true,
@@ -47,18 +42,23 @@ const Slider: React.FC<{ images: ProductImageInterface[]; name: string }> = ({
         >
           {images.map((img, i) => {
             return (
-              <SwiperSlide key={i}>
+              // eslint-disable-next-line react/jsx-key
+              <SwiperSlide>
                 <motion.div
                   className="w-full h-full "
-                  initial={{ y: -100, scale: 0.5 }}
-                  whileInView={"animate"}
-                  variants={{
-                    animate: {
-                      y: 0,
-                      scale: 1,
-                      transition: { type: "spring", stiffness: 100, mass: 0.4 },
-                    },
-                  }}
+                  // initial={{ y: -100, scale: 0.5 }}
+                  // animate={"animate"}
+                  // variants={{
+                  //   animate: {
+                  //     y: 0,
+                  //     scale: 1,
+                  //     transition: {
+                  //       type: "spring",
+                  //       stiffness: 100,
+                  //       mass: 0.4,
+                  //     },
+                  //   },
+                  // }}
                 >
                   <Image
                     alt={name}
@@ -72,7 +72,7 @@ const Slider: React.FC<{ images: ProductImageInterface[]; name: string }> = ({
             );
           })}
         </Swiper>
-      </motion.div>
+      </div>
     </div>
   );
 };

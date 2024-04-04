@@ -1,6 +1,7 @@
 export interface TextComponentInterface {
   children: React.ReactNode;
   className?: string;
+  style?: any;
 }
 
 export interface ParagraphComponentInterface extends TextComponentInterface {

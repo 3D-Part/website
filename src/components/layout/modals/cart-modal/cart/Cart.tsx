@@ -1,15 +1,24 @@
 "use client";
 import Heading2 from "@/components/common/text/heading/Heading2";
 import Paragraph from "@/components/common/text/paragraph/Paragraph";
-import { useAppSelector } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 
 import { AnimatePresence, motion } from "framer-motion";
 import CartProducts from "./CartProducts";
-import { CartProductsType } from "@/redux/slices/cart/cartSlice";
+import {
+  CartProductsType,
+  changePromoCodeInCart,
+} from "@/redux/slices/cart/cartSlice";
 import {
   cartLengthSelector,
   cartProductsSelector,
+  promoCodeSelectorAmount,
 } from "@/redux/slices/cart/cartSelectors";
+import Button from "@/components/common/button/Button";
+import { changeIsGlobalLoading } from "@/redux/slices/ui/uiSlice";
+import { couponsService } from "@/shared/services/couponsService";
+import { useRef } from "react";
+import { MdClear } from "react-icons/md";
 
 const freeShippingBoundary = 100;
 
@@ -43,7 +52,14 @@ const calculatePriceAndPost = (cart: CartProductsType[]) => {
     weight = 0;
 
   cart.forEach((x) => {
-    price = price + x.amount * Number(x.productData.price);
+    price =
+      price +
+      x.amount *
+        Number(
+          x.productData.salePrice
+            ? x.productData.salePrice
+            : x.productData.price
+        );
     weight += parseFloat(x.productData.weight) * x.amount;
   });
 
@@ -59,8 +75,30 @@ const calculatePriceAndPost = (cart: CartProductsType[]) => {
 const Cart = () => {
   const cartLength = useAppSelector(cartLengthSelector);
   const cart = useAppSelector(cartProductsSelector);
+  const promoCode = useAppSelector(promoCodeSelectorAmount);
+  const dispatch = useAppDispatch();
+
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const { price, post } = calculatePriceAndPost(cart);
+
+  const fetchCouponsAndAddDiscount = async (code: string) => {
+    if (!code) {
+      return;
+    }
+    try {
+      dispatch(changeIsGlobalLoading(true));
+      const res = await couponsService.fetchCoupons();
+      res.rows.forEach((row) => {
+        if (row.code === code) {
+          dispatch(changePromoCodeInCart(row));
+        }
+      });
+    } catch (error) {
+      console.error(error);
+    }
+    dispatch(changeIsGlobalLoading(false));
+  };
 
   return (
     <motion.div className="flex flex-col w-full h-full px-4 py-2 overflow-y-auto cursor-default lg:px-8 lg:py-4 bg-neutral-800">
@@ -84,13 +122,57 @@ const Cart = () => {
 
       {/* --------------- */}
       <div className="h-[1px] bg-neutral-500"></div>
-      <div className="flex items-center justify-between mt-3">
+      <div className="flex items-center gap-5 mt-4">
+        <div className="relative flex w-full">
+          <input
+            type="text"
+            placeholder={"Promo kod"}
+            className={`w-full h-10 px-4 py-3 rounded-[66px] border border-primary-500 disabled:cursor-not-allowed bg-transparent disabled:text-neutral-400 ${
+              promoCode ? "!border-success-500" : ""
+            }`}
+            required
+            defaultValue={promoCode?.code}
+            ref={inputRef}
+          />
+          {promoCode && (
+            <MdClear
+              className=" text-neutral-200 min-w-[20px] min-h-[20px] cursor-pointer absolute top-[10px] right-4"
+              onClick={() => {
+                dispatch(changePromoCodeInCart(null));
+              }}
+            />
+          )}
+        </div>
+        <Button
+          onClick={() => {
+            fetchCouponsAndAddDiscount(inputRef.current?.value || "");
+          }}
+          size="L"
+          type="secondary"
+          className="w-[100px] h-12"
+        >
+          Uracunaj
+        </Button>
+      </div>
+
+      <div className="flex items-center justify-between mt-4">
         <Paragraph size="L" weight="Regular" className="text-neutral-200">
           Zbir{" "}
         </Paragraph>
-        <p className="text-white text-[28px] font-exo2 font-semibold">{`${price.toFixed(
-          2
-        )} KM`}</p>
+        <div className="flex gap-2">
+          <p
+            className={`text-white text-[28px] font-exo2 font-semibold ${
+              promoCode ? "line-through !text-neutral-300 !font-light" : ""
+            }`}
+          >{`${price.toFixed(2)} KM 
+          `}</p>
+          {promoCode && (
+            <p className=" text-[28px] font-exo2 font-semibold text-success-500">{`${(
+              price -
+              price * (Number(promoCode.discountPercentage) / 100)
+            ).toFixed(2)} KM`}</p>
+          )}
+        </div>
       </div>
 
       <div className="flex items-center justify-between my-3">
@@ -106,7 +188,11 @@ const Cart = () => {
       <div className="flex items-center justify-between my-3">
         <p className="text-white text-[20px] font-semibold">UKUPNO </p>
         <p className="text-success-500 text-[28px] font-exo2 font-semibold">{`${(
-          price + post
+          price -
+          (promoCode
+            ? price * (Number(promoCode.discountPercentage) / 100)
+            : 0) +
+          post
         ).toFixed(2)} KM`}</p>
       </div>
     </motion.div>

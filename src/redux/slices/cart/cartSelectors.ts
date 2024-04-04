@@ -12,3 +12,6 @@ export const cartModalVisibleSelector = (state: RootState) => {
 export const successfulOrderSelector = (state: RootState) => {
   return state.cartSlice.successfulOrder;
 };
+export const promoCodeSelectorAmount = (state: RootState) => {
+  return state.cartSlice.promoCode;
+};

@@ -15,7 +15,11 @@ import { useIsTablet } from "@/shared/hooks/useMediaQuerry";
 const ProductsSlide: React.FC<{
   products: ProductInterface[];
   animationVariants?: { initial: Object; animate: Object };
-}> = ({ products, animationVariants = { initial: {}, animate: {} } }) => {
+  reverseDirection?: boolean | undefined;
+}> = (
+  { products, animationVariants = { initial: {}, animate: {} } },
+  reverseDirection = false
+) => {
   const isTablet = useIsTablet();
 
   return (
@@ -23,7 +27,7 @@ const ProductsSlide: React.FC<{
       <Swiper
         spaceBetween={isTablet ? 0 : 24}
         slidesPerView="auto"
-        slidesPerGroup={3}
+        slidesPerGroup={isTablet ? 2 : 3}
         modules={[Scrollbar, Autoplay, Navigation]}
         className="swiper_products"
         grabCursor={true}
@@ -37,13 +41,15 @@ const ProductsSlide: React.FC<{
           delay: 3000,
           disableOnInteraction: true,
           pauseOnMouseEnter: true,
+          reverseDirection,
         }}
         speed={950}
         navigation={true}
       >
         {products.map((product, i) => {
           return (
-            <SwiperSlide key={product.id}>
+            // eslint-disable-next-line react/jsx-key
+            <SwiperSlide>
               {isTablet ? (
                 <div>
                   <Product {...product} className={"ml-4 lg:ml-0"} />

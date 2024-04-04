@@ -1,36 +1,39 @@
-"use client";
-import Paragraph from "@/components/common/text/paragraph/Paragraph";
-import moment from "moment";
 import React, { useEffect, useState } from "react";
+import moment from "moment";
+import Paragraph from "@/components/common/text/paragraph/Paragraph";
 import { motion } from "framer-motion";
 
 const SaleCountdown: React.FC<{ date: string }> = ({ date }) => {
-  const [countdown, setCountdown] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-  });
+  const calculateCountdown = () => {
+    const now = moment();
+    const targetDate = moment.utc(date);
+
+    const diff = targetDate.diff(now);
+
+    const duration = moment.duration(diff);
+
+    const days = Math.floor(duration.asDays());
+    const hours = duration.hours();
+    const minutes = duration.minutes();
+    const seconds = duration.seconds();
+
+    return {
+      days: days,
+      hours: hours,
+      minutes: minutes,
+      seconds: seconds,
+    };
+  };
+
+  const [countdown, setCountdown] = useState(calculateCountdown());
 
   useEffect(() => {
-    const targetDate = moment.utc(date); // Replace with your target date
     const interval = setInterval(() => {
-      const now = moment();
-      const diff = targetDate.diff(now);
-      const duration = moment.duration(diff);
-      const remainingTime = {
-        days: duration.days(),
-        hours: duration.hours(),
-        minutes: duration.minutes(),
-        seconds: duration.seconds(),
-      };
-      setCountdown(remainingTime);
+      setCountdown(calculateCountdown());
     }, 1000);
 
-    return () => {
-      clearInterval(interval);
-    };
-  }, [date]);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <>
@@ -43,7 +46,8 @@ const SaleCountdown: React.FC<{ date: string }> = ({ date }) => {
           initial={{ scale: 0, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
         >
-          <TimeBox text={"Čas"} time={countdown.hours + countdown.days * 24} />
+          <TimeBox text={"Dan"} time={countdown.days} />
+          <TimeBox text={"Čas"} time={countdown.hours} />
           <TimeBox text={"Min"} time={countdown.minutes} />
           <TimeBox text={"Sek"} time={countdown.seconds} />
         </motion.div>

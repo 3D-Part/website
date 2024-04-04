@@ -40,7 +40,7 @@ const Search: React.FC<SearchProps> = ({
         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
           setValue(event.target.value);
         }}
-        className="w-full text-base font-normal bg-transparent outline-none"
+        className="flex-1 w-full text-base font-normal bg-transparent outline-none"
         placeholder={placeholder}
       />
       <AnimatePresence>
@@ -51,7 +51,7 @@ const Search: React.FC<SearchProps> = ({
             exit={{ scale: 0, rotate: 45 }}
           >
             <MdClear
-              className="text-neutral-200 min-w-[20px] min-h-[20px] cursor-pointer"
+              className=" text-neutral-200 min-w-[20px] min-h-[20px] cursor-pointer"
               onClick={() => {
                 setValue("");
               }}
@@ -60,7 +60,7 @@ const Search: React.FC<SearchProps> = ({
         )}
       </AnimatePresence>
 
-      {text.length >= 3 && (
+      {text.length >= 3 ? (
         <SearchResults
           products={products}
           loading={loading}
@@ -68,6 +68,8 @@ const Search: React.FC<SearchProps> = ({
             setValue("");
           }}
         />
+      ) : (
+        <div></div>
       )}
     </div>
   );

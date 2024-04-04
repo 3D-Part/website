@@ -18,7 +18,7 @@ const CartIcon: React.FC<{ className: string }> = ({ className }) => {
       <div
         className={`text-white ${
           cartLength > 0 ? "bg-primary-500" : "bg-neutral-500"
-        } w-4 h-4 rounded-full flex items-center justify-center text-[10px] font-exo2 font-normal absolute top-[-2px] right-[-2px]`}
+        } w-4 h-4 rounded-full flex items-center justify-center text-[10px] font-exo2 font-normal absolute top-[-6px] right-[-6px]`}
       >
         {cartLength}
       </div>

@@ -1,4 +1,5 @@
 import { OrderBodyInterface } from "@/shared/interfaces/orderInterface";
+import API from "../src/shared/helper/api";
 
 const defaultRoute = process.env.NEXT_PUBLIC_BACKEND_URL + "order";
 
@@ -19,7 +20,7 @@ export type SuccessfulOrderType = {
   }[];
   price: number;
   shippingPrice: number;
-  discount: number;
+  discount: string;
   total: number;
   status: string;
   orderNumber: string;
@@ -29,21 +30,9 @@ const createOrder = async (
   body: OrderBodyInterface
 ): Promise<SuccessfulOrderType> => {
   try {
-    const res = await fetch(`${defaultRoute}`, {
-      method: "POST",
-      body: JSON.stringify(body),
-      headers: { "Content-Type": "application/json" },
-    });
+    const res = await API.post<any, any>(`${defaultRoute}`, body);
 
-    const data = await res.json();
-
-    if ("key" in data && "message" in data) {
-      // Error response
-      throw new Error(JSON.stringify(data));
-    } else {
-      // Success response
-      return data as any;
-    }
+    return res;
   } catch (err) {
     throw err;
   }

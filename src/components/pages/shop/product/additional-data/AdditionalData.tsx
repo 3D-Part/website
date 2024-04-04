@@ -24,18 +24,22 @@ const AdditionalData: React.FC<{
             Detaljan opis
           </Heading5>
         </button>
-        <button
-          className={`px-4 py-2 rounded-lg cursor-pointer ${
-            activeSection === 1 ? "bg-neutral-700" : "bg-neutral-800"
-          }`}
-          onClick={() => {
-            setActiveSection(1);
-          }}
-        >
-          <Heading5 className="inline-block whitespace-nowrap">
-            Tehničke specifikacije
-          </Heading5>
-        </button>
+        {productsAttributes.length ? (
+          <button
+            className={`px-4 py-2 rounded-lg cursor-pointer ${
+              activeSection === 1 ? "bg-neutral-700" : "bg-neutral-800"
+            }`}
+            onClick={() => {
+              setActiveSection(1);
+            }}
+          >
+            <Heading5 className="inline-block whitespace-nowrap">
+              Tehničke specifikacije
+            </Heading5>
+          </button>
+        ) : (
+          <></>
+        )}
       </div>
       {activeSection === 0 && (
         <p

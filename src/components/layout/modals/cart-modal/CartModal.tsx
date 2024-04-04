@@ -7,7 +7,10 @@ import { Path } from "../../header/hamburger/Hamburger";
 import Button from "@/components/common/button/Button";
 import { useRouter } from "next/navigation";
 import Paragraph from "@/components/common/text/paragraph/Paragraph";
-import { cartModalVisibleSelector } from "@/redux/slices/cart/cartSelectors";
+import {
+  cartModalVisibleSelector,
+  promoCodeSelectorAmount,
+} from "@/redux/slices/cart/cartSelectors";
 import { changeCartModalVisible } from "@/redux/slices/cart/cartSlice";
 import Link from "next/link";
 
@@ -108,6 +111,7 @@ const CartModal = () => {
                       dispatch(changeCartModalVisible(false));
                     }}
                     className="w-1/2"
+                    prefetch
                   >
                     <Button
                       onClick={() => {

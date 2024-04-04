@@ -1,13 +1,20 @@
 import { notify } from "@/components/common/toast/Toastify";
 import { createSlice } from "@reduxjs/toolkit";
 import { SuccessfulOrderType } from "../../../../services/orderServices";
+import { LocalStorageHelper } from "@/shared/helper/LocalStorageHelper";
+import {
+  getCartProducts,
+  saveCartProducts,
+} from "@/shared/helper/cartProducts";
+import { CouponType } from "@/shared/types";
 
-type ProductDataType = {
+export type ProductDataType = {
   image: string;
   weight: string;
   price: string;
   quantity: number;
   name: string;
+  salePrice?: string | null;
 };
 
 export type CartProductsType = {
@@ -20,12 +27,16 @@ type CartState = {
   cartProducts: CartProductsType[];
   cartModalVisible: boolean;
   successfulOrder: SuccessfulOrderType | null;
+  promoCode: null | CouponType;
 };
 
+const cartProducts = getCartProducts();
+
 const initialState = {
-  cartProducts: [],
+  cartProducts: cartProducts || [],
   cartModalVisible: false,
   successfulOrder: null,
+  promoCode: null,
 } as CartState;
 
 export const cart = createSlice({
@@ -54,7 +65,7 @@ export const cart = createSlice({
         const newValue = state.cartProducts[productIndex].amount + amount;
         if (newValue > productData.quantity) {
           state.cartProducts[productIndex].amount = productData.quantity;
-          notify(`"Nema dovoljno proizvoda na zalihi za željenu količinu."`, {
+          notify(`Nema dovoljno proizvoda na zalihi `, {
             type: "warning",
             toastId: 2,
           });
@@ -71,6 +82,7 @@ export const cart = createSlice({
         });
       }
       shouldNotify && notify("Proizvod je u korpi", { type: "success" });
+      saveCartProducts(state.cartProducts);
     },
     decreaseProductWithAmount: (
       state,
@@ -89,6 +101,7 @@ export const cart = createSlice({
           state.cartProducts.splice(productIndex, 1);
         }
       }
+      saveCartProducts(state.cartProducts);
     },
     removeProduct: (state, action) => {
       const { productId } = action.payload;
@@ -100,6 +113,7 @@ export const cart = createSlice({
       if (productIndex !== -1) {
         state.cartProducts.splice(productIndex, 1);
       }
+      saveCartProducts(state.cartProducts);
     },
     changeCartModalVisible: (state, action) => {
       state.cartModalVisible = action.payload;
@@ -115,6 +129,13 @@ export const cart = createSlice({
     ) => {
       state.successfulOrder = action.payload;
     },
+
+    changePromoCodeInCart: (
+      state,
+      action: { type: any; payload: null | CouponType }
+    ) => {
+      state.promoCode = action.payload;
+    },
   },
 });
 
@@ -125,5 +146,6 @@ export const {
   changeCartModalVisible,
   decreaseProductWithAmount,
   changeSuccessfulOrder,
+  changePromoCodeInCart,
 } = cart.actions;
 export default cart.reducer;
