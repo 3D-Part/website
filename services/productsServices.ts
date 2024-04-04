@@ -1,5 +1,4 @@
 import { ProductInterface } from "@/shared/interfaces/productsInterface";
-import { revalidateTime } from "./setup";
 
 const defaultRoute = process.env.NEXT_PUBLIC_BACKEND_URL + "shop/products";
 
@@ -74,7 +73,7 @@ const getAllProducts = async ({
   try {
     const res = await fetch(`${defaultRoute}?${params}`, {
       method: "GET",
-      next: { revalidate: revalidateTime },
+      cache: "no-store",
     });
     const data = await res.json();
 
@@ -89,7 +88,7 @@ const getSingleProduct = async (id: string): Promise<ProductInterface> => {
   try {
     const res = await fetch(`${defaultRoute}/${id}`, {
       method: "GET",
-      next: { revalidate: revalidateTime / 2 },
+      cache: "no-store",
     });
 
     const data = await res.json();
@@ -116,7 +115,7 @@ const getRecommended = async (): Promise<ProductPaginatedInterface> => {
   try {
     const res = await fetch(`${defaultRoute}?${params}`, {
       method: "GET",
-      next: { revalidate: revalidateTime },
+      cache: "no-store",
     });
     const data = await res.json();
     if ("key" in data && "message" in data) {
@@ -141,7 +140,7 @@ const getMostSold = async (): Promise<ProductPaginatedInterface> => {
   try {
     const res = await fetch(`${defaultRoute}?${params}`, {
       method: "GET",
-      next: { revalidate: revalidateTime },
+      cache: "no-store",
     });
     const data = await res.json();
     if ("key" in data && "message" in data) {

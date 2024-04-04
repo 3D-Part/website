@@ -1,5 +1,4 @@
 import { CategoryInterface } from "@/shared/interfaces/categoryInterface";
-import { revalidateTime } from "./setup";
 
 const defaultRoute = process.env.NEXT_PUBLIC_BACKEND_URL + "shop/categories";
 
@@ -12,7 +11,7 @@ const getAllCategories = async (): Promise<CategoriesPaginatedInterface> => {
   try {
     const res = await fetch(`${defaultRoute}`, {
       method: "GET",
-      next: { revalidate: revalidateTime },
+      cache: "no-store",
     });
 
     const data = await res.json();
@@ -33,7 +32,7 @@ const getSingleCategory = async (id: string) => {
   try {
     const res = await fetch(`${defaultRoute}/${id}`, {
       method: "GET",
-      next: { revalidate: revalidateTime },
+      cache: "no-store",
     });
     const data = await res.json();
     return data;
@@ -46,7 +45,7 @@ const getSingleCategoryWithSlug = async (
   try {
     const res = await fetch(`${defaultRoute}/slug/${slug}`, {
       method: "GET",
-      next: { revalidate: revalidateTime },
+      cache: "no-store",
     });
     const data = await res.json();
 

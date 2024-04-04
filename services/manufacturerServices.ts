@@ -1,5 +1,4 @@
 import { ManufacturerInterface } from "@/shared/interfaces/manufacturerInterface";
-import { revalidateTime } from "./setup";
 
 const defaultRoute = process.env.NEXT_PUBLIC_BACKEND_URL + "shop/manufactures";
 
@@ -18,7 +17,7 @@ const getAllManufacturers =
     try {
       const res = await fetch(`${defaultRoute}?${params}`, {
         method: "GET",
-        next: { revalidate: revalidateTime },
+        cache: "no-store",
       });
       const data = await res.json();
 
@@ -35,7 +34,7 @@ const getSingleManufacturer = async (
   try {
     const res = await fetch(`${defaultRoute}/${id}`, {
       method: "GET",
-      next: { revalidate: revalidateTime },
+      cache: "no-store",
     });
 
     const data = await res.json();
