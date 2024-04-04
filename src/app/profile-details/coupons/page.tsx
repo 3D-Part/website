@@ -37,7 +37,7 @@ const Coupons: FC = () => {
   }
 
   return (
-    <div className="w-full">
+    <div className="w-full bg-neutral-900">
       <Container className="flex !max-w-auto flex-col items-center min-h-screen gap-8 py-6 bg-neutral-900 px-9 lg:items-start ">
         <Heading2 className="">Promo kodovi</Heading2>
         {/* ------------------------------------------------------------- */}

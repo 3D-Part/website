@@ -138,7 +138,7 @@ const ProfilePage: FC = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="w-full">
+      <div className="w-full bg-neutral-900">
         <Container className="min-h-screen py-6 !max-w-auto bg-neutral-900 px-9">
           <div className="flex flex-col items-center lg:items-start lg:flex-row">
             <div className="lg:flex-1">
