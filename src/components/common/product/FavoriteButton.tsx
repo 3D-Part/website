@@ -14,8 +14,6 @@ import { RiHeart3Fill } from "react-icons/ri";
 const FavoriteButton: FC<{ productId: string }> = ({ productId }) => {
   const { data: session } = useSession();
 
-  console.log(session);
-
   const isFavorite = useAppSelector((state) =>
     isProductFavoriteSelector(state, productId)
   );
