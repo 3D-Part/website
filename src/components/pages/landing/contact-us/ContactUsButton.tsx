@@ -7,15 +7,13 @@ const ContactUsButton = () => {
   const router = useRouter();
   return (
     <div>
-      <Button
-        type="primary"
-        size="M"
-        onClick={() => {
-          router.push("/");
-        }}
-        className="w-full mt-6 md:w-fit"
-        text="Kontaktirajte nas"
-      ></Button>
+      <a
+        className={`px-4 transition-all font-bold text-sm w-full mt-6 md:w-fit bg-primary-500 hover:bg-primary-400 active:bg-primary-600 disabled:bg-[rgba(59,130,246,0.5)] disabled:text-neutral-400 ${"py-3"} rounded-lg flex justify-center items-center
+        disabled:cursor-not-allowed`}
+        href="mailto:info@3dpartshop.com"
+      >
+        Kontaktirajte nas
+      </a>
     </div>
   );
 };
