@@ -266,12 +266,12 @@ const links: any = [
       },
       // { text: "Zupčanici", link: "/shop/category/zupčanici", links: [] },
       { text: "Ležajevi", link: "/shop/category/ležajevi", links: [] },
-      { text: "Remeni", link: "/shop/category/remeni", links: [] },
-      {
-        text: "Silicon Cover",
-        link: "/shop/category/silicon-cover",
-        links: [],
-      },
+      // { text: "Remeni", link: "/shop/category/remeni", links: [] },
+      // {
+      //   text: "Silicon Cover",
+      //   link: "/shop/category/silicon-cover",
+      //   links: [],
+      // },
       // { text: "Opruge", link: "/shop/category/opruge", links: [] },
       { text: "-- OSTALO --", link: "/shop/category/ostalo", links: [] },
     ],

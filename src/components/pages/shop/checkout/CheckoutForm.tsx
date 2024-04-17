@@ -51,6 +51,7 @@ const CheckoutForm = () => {
               return { productId: x.idProduct, quantity: x.amount };
             }),
             street: event.target.street.value,
+            description: event.target.description.value,
           }
         : {
             companyName: event.target.companyName.value,
