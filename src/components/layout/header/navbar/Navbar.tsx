@@ -18,6 +18,7 @@ const azurefilm = "03cbbd90-3dab-11ee-bb4e-994af83111f0";
 const flashforge = "0c796b90-3dab-11ee-bb4e-994af83111f0";
 const snapmaker = "0ef0fb40-3dab-11ee-bb4e-994af83111f0";
 const prusa = "11d97530-3dab-11ee-bb4e-994af83111f0";
+const bambuLab = "c443cf80-711e-11ee-827a-7b9a99b62772";
 
 const links: any = [
   {
@@ -149,17 +150,17 @@ const links: any = [
       },
     ],
   },
-  // {
-  //   text: "Resini",
-  //   link: "/shop/category/resini",
-  //   links: [
-  //     { text: "Sve", link: "/shop/category/resini", links: [] },
-  //     {
-  //       text: "Creality",
-  //       link: "/shop/category/resini?manufacturerId=" + creality,
-  //     },
-  //   ],
-  // },
+  {
+    text: "Resini",
+    link: "/shop/category/resini",
+    links: [
+      // { text: "Sve", link: "/shop/category/resini", links: [] },
+      {
+        text: "Creality",
+        link: "/shop/category/resini?manufacturerId=" + creality,
+      },
+    ],
+  },
   {
     text: "3D Printeri",
     link: "/shop/category/3d-printeri",
@@ -201,6 +202,11 @@ const links: any = [
       {
         text: "Prusa",
         link: "/shop/category/3d-printeri?manufacturerId=" + prusa,
+        links: [],
+      },
+      {
+        text: "Bambu Lab",
+        link: "/shop/category/3d-printeri?manufacturerId=" + bambuLab,
         links: [],
       },
     ],

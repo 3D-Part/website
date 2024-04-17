@@ -80,7 +80,7 @@ const MainData: React.FC<{
       animate="visible"
       variants={containerVariants}
     >
-      <div>{/* CATEGORY */}</div>
+      {/* <div>{productData.category.name}</div> */}
       <motion.div variants={dropUpVariants}>
         <Heading1>{name}</Heading1>
 

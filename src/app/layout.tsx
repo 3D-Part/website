@@ -23,7 +23,8 @@ export const metadata: Metadata = {
       "3D Part: 3D printeri, širok spektar filamenata i kvalitetne dijelove po najpovoljnijim cijenama",
     template: "%s | 3D Part",
   },
-  description: "Description for 3d part",
+  description:
+    "Pružamo najveci izbor 3D printera, širok spektar filamenata i kvalitetne dijelove po najpovoljnijim cijenama. Olakšajte svoje 3D printanje s našim proizvodima i uslugama.",
   keywords: [
     "3d printer, 3d printeri, 3d filamenti, 3d filament, pla filamenti, filamenti za 3d printer, dijelovi za 3d printere, creality, creality printeri, creality filamenti, creality pla, pla filament, petg filament, abs filament, carbon filamenti, asa filamenti, 3d stampa, 3d dijelovi od plastike, 3d stampanje, grijaci, extruderi, ventilatori, sve kategorije sa sajta se mogu uzeti, prusa, prusa printeri, mk4s printer, prusa mk4 kit, flashforge, profesionalni 3d printeri, resin printer, resini, smole , uv smola za 3d printer",
   ],
