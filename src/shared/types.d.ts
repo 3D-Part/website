@@ -277,6 +277,7 @@ export interface CouponType {
   discountPercentage: string;
   startsAt: Date;
   endsAt: Date;
+  userPromotionCode: { isRedeemed: boolean }[];
 }
 
 interface CouponQueryParams {

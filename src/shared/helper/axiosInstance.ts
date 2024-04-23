@@ -4,6 +4,7 @@ import JWT from "./jwtToken";
 import { ErrorCodeEnum, URLPartsEnum } from "@/shared/enums";
 import AuthAPI from "@/shared/services/auth";
 import { signOut } from "next-auth/react";
+import { LocalStorageHelper } from "@/shared/helper/LocalStorageHelper";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
@@ -18,6 +19,10 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   (config) => {
     // Here we can add additional configurations here before sending the request, if needed
+
+    const accessToken = LocalStorageHelper.getItem("accessToken");
+
+    config.headers["Authorization"] = `Bearer ${accessToken}`;
 
     return config;
   },
