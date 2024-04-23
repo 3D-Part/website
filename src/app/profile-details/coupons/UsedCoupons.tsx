@@ -8,7 +8,7 @@ const UsedCoupons: FC<{ coupons: CouponType[] }> = ({ coupons }) => {
       {coupons.map((coupon) => {
         return (
           <Coupon
-            active={true}
+            active={!coupon?.userPromotionCode[0].isRedeemed}
             percent={Number(coupon.discountPercentage)}
             key={coupon.id}
           >
