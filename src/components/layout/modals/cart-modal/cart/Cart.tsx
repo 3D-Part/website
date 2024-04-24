@@ -19,6 +19,7 @@ import { changeIsGlobalLoading } from "@/redux/slices/ui/uiSlice";
 import { couponsService } from "@/shared/services/couponsService";
 import { useRef } from "react";
 import { MdClear } from "react-icons/md";
+import { notify } from "@/components/common/toast/Toastify";
 
 const freeShippingBoundary = 100;
 
@@ -90,8 +91,11 @@ const Cart = () => {
       dispatch(changeIsGlobalLoading(true));
       const res = await couponsService.fetchCoupons();
       res.rows.forEach((row) => {
-        if (row.code === code) {
+        if (row.code === code && !row.userPromotionCode[0].isRedeemed) {
           dispatch(changePromoCodeInCart(row));
+        } else {
+          notify("Kod nije validan", { type: "error", toastId: 25252 });
+          //
         }
       });
     } catch (error) {
