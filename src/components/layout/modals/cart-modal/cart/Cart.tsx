@@ -95,6 +95,7 @@ const Cart = () => {
           dispatch(changePromoCodeInCart(row));
         } else {
           notify("Kod nije validan", { type: "error", toastId: 25252 });
+          //
         }
       });
     } catch (error) {
