@@ -13,6 +13,7 @@ export class LocalStorageHelper {
   static getItem(key: string): any {
     try {
       const serializedValue = localStorage.getItem(key);
+      console.log(serializedValue);
       if (serializedValue === null) {
         return undefined;
       }

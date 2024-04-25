@@ -90,14 +90,18 @@ const Cart = () => {
     try {
       dispatch(changeIsGlobalLoading(true));
       const res = await couponsService.fetchCoupons();
+      let found = false;
       res.rows.forEach((row) => {
         if (row.code === code && !row.userPromotionCode[0].isRedeemed) {
           dispatch(changePromoCodeInCart(row));
+          found = true;
         } else {
-          notify("Kod nije validan", { type: "error", toastId: 25252 });
           //
         }
       });
+      if (!found) {
+        notify("Kod nije validan", { type: "error", toastId: 25252 });
+      }
     } catch (error) {
       console.error(error);
     }
