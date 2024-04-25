@@ -20,9 +20,11 @@ axiosInstance.interceptors.request.use(
   (config) => {
     // Here we can add additional configurations here before sending the request, if needed
 
-    const accessToken = LocalStorageHelper.getItem("accessToken");
+    try {
+      const accessToken = localStorage.getItem("accessToken");
 
-    config.headers["Authorization"] = `Bearer ${accessToken}`;
+      config.headers["Authorization"] = `Bearer ${accessToken}`;
+    } catch (error) {}
 
     return config;
   },
