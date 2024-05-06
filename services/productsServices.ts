@@ -108,12 +108,8 @@ const getSingleProduct = async (id: string): Promise<ProductInterface> => {
 const getRecommended = async (): Promise<ProductPaginatedInterface> => {
   const payload: any = {};
 
-  payload["filters[isRecommended][is]"] = true;
-
-  const params = new URLSearchParams({ ...payload }).toString();
-
   try {
-    const res = await fetch(`${defaultRoute}?${params}`, {
+    const res = await fetch(`${defaultRoute}/recommended`, {
       method: "GET",
       cache: "no-store",
     });
