@@ -41,6 +41,12 @@ const CategoryProducts: React.FC<{ categoryId: string }> = ({ categoryId }) => {
       setIsLoading(false);
       setData(x);
 
+      x.rows.forEach((a) => {
+        if (a.productOnSale.length) {
+          a.salePrice = a.productOnSale[0].discountedPrice;
+        }
+      });
+
       return x;
     };
     setIsLoading(true);
@@ -69,6 +75,11 @@ const CategoryProducts: React.FC<{ categoryId: string }> = ({ categoryId }) => {
       });
       setIsLoading(false);
       setData(x);
+      x.rows.forEach((a) => {
+        if (a.productOnSale.length) {
+          a.salePrice = a.productOnSale[0].discountedPrice;
+        }
+      });
       return x;
     };
     setIsLoading(true);
