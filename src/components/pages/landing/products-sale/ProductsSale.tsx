@@ -33,7 +33,6 @@ const ProductsSale = () => {
               return {
                 salePrice: prod.discountedPrice,
                 ...prod.product,
-                images: [{ imageId: "/assets/img/logo_social.png" }],
               };
             }),
           ]);
