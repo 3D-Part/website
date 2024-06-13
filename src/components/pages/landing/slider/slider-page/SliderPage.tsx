@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import React from "react";
+import React, { ReactNode } from "react";
 import { motion } from "framer-motion";
 import Display1 from "@/components/common/text/display/Display1";
 import Heading4 from "@/components/common/text/heading/Heading4";
@@ -10,8 +10,8 @@ import { HiOutlineArrowNarrowRight } from "react-icons/hi";
 import { useIsTablet } from "@/shared/hooks/useMediaQuerry";
 
 interface SliderPageProps {
-  title: string;
-  titleClassName: string;
+  title: ReactNode;
+  titleClassName?: string;
   subtitle: string;
   description: string;
   buttonText: string;
@@ -29,7 +29,7 @@ const SliderPage: React.FC<SliderPageProps> = ({
   productUrl,
   subtitle,
   title,
-  titleClassName,
+  titleClassName = "",
   priority = false,
 }) => {
   const isTablet = useIsTablet();
@@ -60,7 +60,7 @@ const SliderPage: React.FC<SliderPageProps> = ({
           }}
         >
           <Image
-            alt={title}
+            alt={""}
             src={productUrl}
             fill={true}
             style={{ objectFit: "contain" }}
@@ -84,8 +84,8 @@ const SliderPage: React.FC<SliderPageProps> = ({
         }}
         className="lg:pt-24"
       >
-        <Display1 className={`${titleClassName} `}>{title}</Display1>
-        <Heading4 className="mt-3 lg:mt-0">{subtitle}</Heading4>
+        {title}
+        {subtitle && <Heading4 className="mt-3 lg:mt-0">{subtitle}</Heading4>}
         <Paragraph size="M" weight="Regular" className="mt-6 lg:mt-8">
           {description}
         </Paragraph>
@@ -104,7 +104,7 @@ const SliderPage: React.FC<SliderPageProps> = ({
             size="M"
             type="primary"
             onClick={buttonOnClick}
-            className="flex items-center w-full gap-2 lg:w-fit lg:absolute lg:bottom-[-60px] lg:left-0 px-6 py-3 "
+            className="flex items-center truncate w-fit gap-2 lg:w-fit  lg:absolute lg:bottom-[-60px] lg:left-0 px-6 py-3 "
             text={buttonText}
           >
             <HiOutlineArrowNarrowRight className="text-2xl" />
