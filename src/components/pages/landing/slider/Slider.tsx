@@ -38,7 +38,7 @@ const Slider = () => {
         spaceBetween={50}
         navigation={true}
       >
-        <SwiperSlide>
+        {/* <SwiperSlide>
           <SliderPage
             bgUrl="/assets/img/slider/bg3.jpg"
             productUrl="/assets/img/slider/product1.webp"
@@ -58,7 +58,7 @@ const Slider = () => {
               router.push("/shop/product/8b2268b0-6ce6-11ee-a90e-137eed755a1c");
             }}
           />
-        </SwiperSlide>
+        </SwiperSlide> */}
 
         <SwiperSlide>
           <SliderPage

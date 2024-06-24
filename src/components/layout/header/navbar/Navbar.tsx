@@ -41,6 +41,11 @@ const links: any = [
             links: [],
           },
           {
+            text: "PLA+",
+            link: "/shop/category/pla+?manufacturerId=" + azurefilm,
+            links: [],
+          },
+          {
             text: "PETG",
             link: "/shop/category/ptg?manufacturerId=" + azurefilm,
             links: [],
@@ -104,6 +109,11 @@ const links: any = [
           {
             text: "PLA",
             link: "/shop/category/pla?manufacturerId=" + creality,
+            links: [],
+          },
+          {
+            text: "PLA+",
+            link: "/shop/category/pla+?manufacturerId=" + creality,
             links: [],
           },
           {
