@@ -44,20 +44,16 @@ export const generateMetadata = async ({
 };
 
 export default async function Category({ params }: CategoryParams) {
-  try {
-    const categoryData = await categoriesServices.getSingleCategoryWithSlug(
-      params.slug
-    );
+  const categoryData = await categoriesServices.getSingleCategoryWithSlug(
+    params.slug
+  );
 
-    return (
-      <div className="w-full">
-        <Container className="min-h-screen p-4 lg:px-8">
-          <Description description={categoryData.description} />
-          <CategoryProducts categoryId={categoryData.id} />
-        </Container>
-      </div>
-    );
-  } catch (error) {
-    notFound();
-  }
+  return (
+    <div className="w-full">
+      <Container className="min-h-screen p-4 lg:px-8">
+        <Description description={categoryData.description} />
+        <CategoryProducts categoryId={categoryData.id} />
+      </Container>
+    </div>
+  );
 }
