@@ -42,7 +42,7 @@ const links: any = [
           },
           {
             text: "PLA+",
-            link: "/shop/category/pla?manufacturerId=" + azurefilm,
+            link: "/shop/category/pla+?manufacturerId=" + azurefilm,
             links: [],
           },
           {
