@@ -49,6 +49,8 @@ export default async function Category({ params }: CategoryParams) {
     params.slug
   );
 
+  console.log(categoryData);
+
   return (
     <div className="w-full">
       <Container className="min-h-screen p-4 lg:px-8">
