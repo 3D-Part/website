@@ -42,7 +42,7 @@ const links: any = [
           },
           {
             text: "PLA+",
-            link: "/shop/category/pla+?manufacturerId=" + azurefilm,
+            link: "/shop/category/plaplus?manufacturerId=" + azurefilm,
             links: [],
           },
           {
@@ -113,7 +113,7 @@ const links: any = [
           },
           {
             text: "PLA+",
-            link: "/shop/category/pla+?manufacturerId=" + creality,
+            link: "/shop/category/plaplus?manufacturerId=" + creality,
             links: [],
           },
           {
