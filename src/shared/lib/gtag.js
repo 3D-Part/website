@@ -1,5 +1,5 @@
 // export const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GOOGLE_ID;
-export const GA_TRACKING_ID = "G-MGWTHBS08V";
+export const GA_TRACKING_ID = "GTM-KLWJ7QZV";
 
 export const pageview = (url) => {
   window.gtag("config", GA_TRACKING_ID, {
