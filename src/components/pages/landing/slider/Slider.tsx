@@ -82,7 +82,7 @@ const Slider = () => {
             description="Nova Azurefilm PLA Matte kolekcija nudi visokokvalitetne filamente sa mat završnicom za glatke i estetske 3D modele."
             buttonText="Detaljnije"
             buttonOnClick={() => {
-              router.push(`/shop/category/pla?manufacturerId=${azurefilmId}`);
+              // router.push(`/shop/category/pla?manufacturerId=${azurefilmId}`);
             }}
             priority={true}
           />
