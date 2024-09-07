@@ -14,7 +14,7 @@ import { useAppDispatch } from "@/redux/hooks";
 import { changeIsModalAuthVisible } from "@/redux/slices/ui/uiSlice";
 import Display1 from "@/components/common/text/display/Display1";
 
-const azurefilmId = "03cbbd90-3dab-11ee-bb4e-994af83111f0";
+// const azurefilmId = "03cbbd90-3dab-11ee-bb4e-994af83111f0";
 
 const Slider = () => {
   const modules = [Pagination, Navigation, Autoplay];
@@ -62,7 +62,7 @@ const Slider = () => {
           />
         </SwiperSlide> */}
 
-        <SwiperSlide>
+        {/* <SwiperSlide>
           <SliderPage
             bgUrl="/assets/img/slider/new_azurefilm_collection_bg.png"
             productUrl="/assets/img/slider/new_azurefilm_collection_product.png"
@@ -82,11 +82,11 @@ const Slider = () => {
             description="Nova Azurefilm PLA Matte kolekcija nudi visokokvalitetne filamente sa mat završnicom za glatke i estetske 3D modele."
             buttonText="Detaljnije"
             buttonOnClick={() => {
-              // router.push(`/shop/category/pla?manufacturerId=${azurefilmId}`);
+              router.push(`/shop/category/pla?manufacturerId=${azurefilmId}`);
             }}
             priority={true}
           />
-        </SwiperSlide>
+        </SwiperSlide> */}
 
         <SwiperSlide>
           <SliderPage
