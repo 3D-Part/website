@@ -14,7 +14,7 @@ import { useAppDispatch } from "@/redux/hooks";
 import { changeIsModalAuthVisible } from "@/redux/slices/ui/uiSlice";
 import Display1 from "@/components/common/text/display/Display1";
 
-// const azurefilmId = "03cbbd90-3dab-11ee-bb4e-994af83111f0";
+const azurefilmId = "03cbbd90-3dab-11ee-bb4e-994af83111f0";
 
 const Slider = () => {
   const modules = [Pagination, Navigation, Autoplay];
@@ -62,10 +62,10 @@ const Slider = () => {
           />
         </SwiperSlide> */}
 
-        {/* <SwiperSlide>
+        <SwiperSlide>
           <SliderPage
-            bgUrl="/assets/img/slider/new_azurefilm_collection_bg.png"
-            productUrl="/assets/img/slider/new_azurefilm_collection_product.png"
+            bgUrl="/assets/img/slider/newAzurefilmCollectionBg.png"
+            productUrl="/assets/img/slider/newAzurefilmCollectionProduct.png"
             title={
               (
                 <>
@@ -86,7 +86,7 @@ const Slider = () => {
             }}
             priority={true}
           />
-        </SwiperSlide> */}
+        </SwiperSlide>
 
         <SwiperSlide>
           <SliderPage
