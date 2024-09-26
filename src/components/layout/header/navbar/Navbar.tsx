@@ -214,11 +214,12 @@ const links: any = [
         link: "/shop/category/3d-printeri?manufacturerId=" + prusa,
         links: [],
       },
-      {
-        text: "Bambu Lab",
-        link: "/shop/category/3d-printeri?manufacturerId=" + bambuLab,
-        links: [],
-      },
+      // TODO: OPASNO, NE DIRAJ
+      // {
+      //   text: "Bambu Lab",
+      //   link: "/shop/category/3d-printeri?manufacturerId=" + bambuLab,
+      //   links: [],
+      // },
     ],
   },
   {
