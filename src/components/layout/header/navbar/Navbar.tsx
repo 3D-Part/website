@@ -18,6 +18,8 @@ const azurefilm = "03cbbd90-3dab-11ee-bb4e-994af83111f0";
 const flashforge = "0c796b90-3dab-11ee-bb4e-994af83111f0";
 const snapmaker = "0ef0fb40-3dab-11ee-bb4e-994af83111f0";
 const prusa = "11d97530-3dab-11ee-bb4e-994af83111f0";
+const Anycubic = "32c26d40-fee6-11ee-8633-b7ded7f10ea0";
+const flsun = "cd5b80c0-ae65-11ee-90e0-ef6a4a1db11a";
 const bambuLab = "c443cf80-711e-11ee-827a-7b9a99b62772";
 
 const links: any = [
@@ -212,6 +214,33 @@ const links: any = [
       {
         text: "Prusa",
         link: "/shop/category/3d-printeri?manufacturerId=" + prusa,
+        links: [],
+      },
+
+      {
+        text: "Anycubic",
+        link: "/",
+        links: [
+          {
+            text: "Sve",
+            link: "/shop/category/3d-printeri?manufacturerId=" + Anycubic,
+          },
+          {
+            text: "FDM",
+            link: "/shop/category/fdm?manufacturerId=" + Anycubic,
+            links: [],
+          },
+          {
+            text: "Resin",
+            link: "/shop/category/resin?manufacturerId=" + Anycubic,
+            links: [],
+          },
+        ],
+      },
+
+      {
+        text: "Flsun",
+        link: "/shop/category/3d-printeri?manufacturerId=" + flsun,
         links: [],
       },
       // TODO: OPASNO, NE DIRAJ
