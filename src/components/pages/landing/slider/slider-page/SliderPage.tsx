@@ -14,9 +14,9 @@ interface SliderPageProps {
   titleClassName?: string;
   subtitle: string;
   description: string;
-  buttonText: string;
+  buttonText?: string;
   bgUrl: string;
-  productUrl: string;
+  productUrl?: string;
   buttonOnClick: () => void;
   priority?: boolean;
 }
@@ -47,26 +47,28 @@ const SliderPage: React.FC<SliderPageProps> = ({
         className={`bg-center bg-no-repeat bg-cover w-full lg:order-2 `}
         style={{ backgroundImage: isTablet ? `url(${bgUrl})` : "none" }}
       >
-        <motion.div
-          className="h-[250px]  relative lg:order-1 w-full lg:h-full "
-          transition={{ duration: 1.3, type: "spring" }}
-          variants={{
-            hidden: { opacity: 0, scale: 0, rotate: 0 },
-            visible: {
-              opacity: 1,
-              scale: 1,
-              rotate: isTablet ? 0 : [-45, 45, 0],
-            },
-          }}
-        >
-          <Image
-            alt={""}
-            src={productUrl}
-            fill={true}
-            style={{ objectFit: "contain" }}
-            priority={priority}
-          />
-        </motion.div>
+        {productUrl && (
+          <motion.div
+            className="h-[250px]  relative lg:order-1 w-full lg:h-full "
+            transition={{ duration: 1.3, type: "spring" }}
+            variants={{
+              hidden: { opacity: 0, scale: 0, rotate: 0 },
+              visible: {
+                opacity: 1,
+                scale: 1,
+                rotate: isTablet ? 0 : [-45, 45, 0],
+              },
+            }}
+          >
+            <Image
+              alt={""}
+              src={productUrl}
+              fill={true}
+              style={{ objectFit: "contain" }}
+              priority={priority}
+            />
+          </motion.div>
+        )}
       </div>
 
       <motion.div
@@ -89,27 +91,29 @@ const SliderPage: React.FC<SliderPageProps> = ({
         <Paragraph size="M" weight="Regular" className="mt-6 lg:mt-8">
           {description}
         </Paragraph>
-        <motion.div
-          variants={{
-            hidden: { opacity: 0, y: 100 },
-            visible: { opacity: 1, y: 0 },
-          }}
-          transition={{
-            duration: 0.25,
-            delay: 0.55,
-          }}
-          className="mt-3 lg:absolute bottom:0 left:0"
-        >
-          <Button
-            size="M"
-            type="primary"
-            onClick={buttonOnClick}
-            className="flex items-center truncate w-fit gap-2 lg:w-fit  lg:absolute lg:bottom-[-60px] lg:left-0 px-6 py-3 "
-            text={buttonText}
+        {buttonText && (
+          <motion.div
+            variants={{
+              hidden: { opacity: 0, y: 100 },
+              visible: { opacity: 1, y: 0 },
+            }}
+            transition={{
+              duration: 0.25,
+              delay: 0.55,
+            }}
+            className="mt-3 lg:absolute bottom:0 left:0"
           >
-            <HiOutlineArrowNarrowRight className="text-2xl" />
-          </Button>
-        </motion.div>
+            <Button
+              size="M"
+              type="primary"
+              onClick={buttonOnClick}
+              className="flex items-center truncate w-fit gap-2 lg:w-fit  lg:absolute lg:bottom-[-60px] lg:left-0 px-6 py-3 "
+              text={buttonText}
+            >
+              <HiOutlineArrowNarrowRight className="text-2xl" />
+            </Button>
+          </motion.div>
+        )}
       </motion.div>
     </motion.div>
   );

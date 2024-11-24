@@ -64,13 +64,28 @@ const Slider = () => {
 
         <SwiperSlide>
           <SliderPage
+            bgUrl="/assets/img/slider/black-friday.png"
+            productUrl={undefined}
+            title={(<></>) as ReactNode}
+            subtitle=""
+            description=""
+            buttonText={""}
+            buttonOnClick={() => {
+              router.push(`/shop/category/pla?manufacturerId=${azurefilmId}`);
+            }}
+            priority={true}
+          />
+        </SwiperSlide>
+
+        <SwiperSlide>
+          <SliderPage
             bgUrl="/assets/img/slider/newAzurefilmCollectionBg.png"
             productUrl="/assets/img/slider/newAzurefilmCollectionProduct.png"
             title={
               (
                 <>
                   <span className="text-[24px]">Nova Kolekcija!</span>
-                  <Display1 className="text-white mt-4">
+                  <Display1 className="mt-4 text-white">
                     <span className="text-transparent whitespace-nowrap from-[rgba(164,105,110,1)] to-[rgba(255,255,255,0.8)] bg-gradient-to-r bg-clip-text">
                       Azurefilm Pla Matte
                     </span>
