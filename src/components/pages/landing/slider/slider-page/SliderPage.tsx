@@ -15,6 +15,7 @@ interface SliderPageProps {
   subtitle: string;
   description: string;
   buttonText?: string;
+  bgClassname?: string;
   bgUrl: string;
   productUrl?: string;
   buttonOnClick: () => void;
@@ -30,6 +31,7 @@ const SliderPage: React.FC<SliderPageProps> = ({
   subtitle,
   title,
   titleClassName = "",
+  bgClassname,
   priority = false,
 }) => {
   const isTablet = useIsTablet();
@@ -44,7 +46,7 @@ const SliderPage: React.FC<SliderPageProps> = ({
     >
       <link rel="preload" href={bgUrl} as="image" />
       <div
-        className={`bg-center bg-no-repeat bg-cover w-full lg:order-2 `}
+        className={`bg-center bg-no-repeat bg-cover w-full lg:order-2 ${bgClassname}`}
         style={{ backgroundImage: isTablet ? `url(${bgUrl})` : "none" }}
       >
         {productUrl && (

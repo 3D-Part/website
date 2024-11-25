@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/redux/hooks";
 import { changeIsModalAuthVisible } from "@/redux/slices/ui/uiSlice";
 import Display1 from "@/components/common/text/display/Display1";
+import { useIsTablet } from "@/shared/hooks/useMediaQuerry";
 
 const azurefilmId = "03cbbd90-3dab-11ee-bb4e-994af83111f0";
 
@@ -22,6 +23,8 @@ const Slider = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
+  const isTablet = useIsTablet();
+
   return (
     <Container className="w-full px-4 py-6 lg:px-9 lg:py-8 landing_slider">
       <Swiper
@@ -29,7 +32,7 @@ const Slider = () => {
           dynamicBullets: true,
         }}
         modules={modules}
-        className="relative rounded-md cursor-pointer lg:rounded-3xl"
+        className="relative h-full rounded-md cursor-pointer lg:rounded-3xl"
         autoplay={{
           delay: 3000,
           disableOnInteraction: true,
@@ -66,12 +69,28 @@ const Slider = () => {
           <SliderPage
             bgUrl="/assets/img/slider/black-friday.png"
             productUrl={undefined}
-            title={(<></>) as ReactNode}
-            subtitle=""
+            title={
+              isTablet ? (
+                ((
+                  <Display1 className={`text-white`}>
+                    <span className="text-transparent  from-[rgba(0,209,255,1)] to-[rgba(0,147,255,1)] bg-gradient-to-r bg-clip-text">
+                      BLACK{""}
+                    </span>
+                    {""} FRIDAY
+                  </Display1>
+                ) as ReactNode)
+              ) : (
+                <></>
+              )
+            }
+            subtitle={
+              isTablet ? "20% popusta na sve artikle od 25.11 do 29.11" : ""
+            }
             description=""
-            buttonText={""}
+            bgClassname="h-[250px]"
+            buttonText={isTablet ? "Registruj se" : ""}
             buttonOnClick={() => {
-              router.push(`/shop/category/pla?manufacturerId=${azurefilmId}`);
+              dispatch(changeIsModalAuthVisible(true));
             }}
             priority={true}
           />
