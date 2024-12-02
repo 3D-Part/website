@@ -65,7 +65,8 @@ const Slider = () => {
           />
         </SwiperSlide> */}
 
-        <SwiperSlide>
+        {/* ----------------- Black Friday -----------------  */}
+        {/* <SwiperSlide>
           <SliderPage
             bgUrl="/assets/img/slider/black-friday.png"
             productUrl={undefined}
@@ -94,7 +95,7 @@ const Slider = () => {
             }}
             priority={true}
           />
-        </SwiperSlide>
+        </SwiperSlide> */}
 
         <SwiperSlide>
           <SliderPage
