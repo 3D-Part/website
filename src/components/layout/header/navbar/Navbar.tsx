@@ -21,6 +21,7 @@ const prusa = "11d97530-3dab-11ee-bb4e-994af83111f0";
 const Anycubic = "32c26d40-fee6-11ee-8633-b7ded7f10ea0";
 const flsun = "cd5b80c0-ae65-11ee-90e0-ef6a4a1db11a";
 const bambuLab = "c443cf80-711e-11ee-827a-7b9a99b62772";
+const polyterra = "1d3112b0-b322-11ef-8fdc-2538e41a7280";
 
 const links: any = [
   {
@@ -159,6 +160,11 @@ const links: any = [
             links: [],
           },
         ],
+      },
+      {
+        text: "Polyterra",
+        link: "/shop/category/filamenti?manufacturerId=" + polyterra,
+        links: [],
       },
     ],
   },
