@@ -17,13 +17,13 @@ type ToastOptions = {
   onClose?: () => void | undefined;
   type?: "info" | "success" | "warning" | "error" | undefined;
   position?:
-    | "top-right"
-    | "top-center"
-    | "top-left"
-    | "bottom-right"
-    | "bottom-center"
-    | "bottom-left"
-    | undefined;
+  | "top-right"
+  | "top-center"
+  | "top-left"
+  | "bottom-right"
+  | "bottom-center"
+  | "bottom-left"
+  | undefined;
   progressClassName?: string | undefined;
   progressStyle?: object | undefined;
   role?: string | undefined;
@@ -39,6 +39,7 @@ export const notify = (message: string, options: ToastOptions) =>
     autoClose: 2000,
     pauseOnHover: false,
     toastClassName: "error_bodyClassName",
+    hideProgressBar: true,
     ...options,
   });
 

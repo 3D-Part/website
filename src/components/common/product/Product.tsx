@@ -15,6 +15,7 @@ import {
 } from "@/redux/slices/cart/cartSlice";
 import { useSession } from "next-auth/react";
 import FavoriteButton from "@/components/common/product/FavoriteButton";
+import Ribbon from "../ribbon/ribbon";
 
 interface ProductInterfaceComponent extends ProductInterface {
   className?: string;
@@ -46,6 +47,7 @@ const Product: React.FC<ProductInterfaceComponent> = ({
           className={`overflow-hidden aspect-square rounded-xl w-[${imageWidth}]`}
           style={{ width: imageWidth }}
         >
+          {salePrice && <Ribbon text="SALE" background="bg-error-500" textSize="sm" />}
           <div className="relative aspect-square bg-neutral-700 rounded-xl">
             <Image
               alt={name}

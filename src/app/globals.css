@@ -66,6 +66,25 @@ body {
   .swiper-button-next {
     display: none !important;
   }
+
+    .swiper_products2 .swiper-button-prev,
+  .swiper_products2 .swiper-button-next {
+    display: none !important;
+  }
+}
+
+.swiper_products2 .swiper-button-prev{
+left: 4px !important;
+}
+
+.swiper_products2 .swiper-button-next{
+right: 4px !important;
+}
+
+.swiper_products2 .swiper-button-prev,
+.swiper_products2 .swiper-button-next {
+    top: 35% !important;
+    scale: 0.9;
 }
 
 .swiper_products .swiper-slide {
