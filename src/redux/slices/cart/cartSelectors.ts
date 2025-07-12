@@ -15,3 +15,6 @@ export const successfulOrderSelector = (state: RootState) => {
 export const promoCodeSelectorAmount = (state: RootState) => {
   return state.cartSlice.promoCode;
 };
+export const discountSelector = (state: RootState) => {
+  return state.cartSlice.discount;
+}

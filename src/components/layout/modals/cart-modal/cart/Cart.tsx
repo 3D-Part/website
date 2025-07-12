@@ -12,6 +12,7 @@ import {
 import {
   cartLengthSelector,
   cartProductsSelector,
+  discountSelector,
   promoCodeSelectorAmount,
 } from "@/redux/slices/cart/cartSelectors";
 import Button from "@/components/common/button/Button";
@@ -77,6 +78,7 @@ const Cart = () => {
   const cartLength = useAppSelector(cartLengthSelector);
   const cart = useAppSelector(cartProductsSelector);
   const promoCode = useAppSelector(promoCodeSelectorAmount);
+  const discount = useAppSelector(discountSelector);
   const dispatch = useAppDispatch();
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -189,24 +191,22 @@ const Cart = () => {
         )} KM`}</p>
       </div>
 
-      {/* <div className="flex items-center justify-between my-3">
+      {discount ? <div className="flex items-center justify-between my-3">
         <Paragraph size="L" weight="Regular" className="text-neutral-200">
           Popust{" "}
         </Paragraph>
-        <p className="text-white text-[28px] font-exo2 font-semibold">{`${post.toFixed(
-          2
-        )} KM`}</p>
-      </div> */}
+        <p className="text-white text-[28px] font-exo2 font-semibold">{discount}%</p>
+      </div> : null}
       <div className="h-[1px] bg-neutral-500"></div>
 
       <div className="flex items-center justify-between my-3">
         <p className="text-white text-[20px] font-semibold">UKUPNO </p>
         <p className="text-success-500 text-[28px] font-exo2 font-semibold">{`${(
-          price -
-          (promoCode
-            ? price * (Number(promoCode.discountPercentage) / 100)
-            : 0) +
-          post
+          (price -
+            (promoCode
+              ? price * (Number(promoCode.discountPercentage) / 100)
+              : 0) +
+            post) * ((100 - discount) / 100)
         ).toFixed(2)} KM`}</p>
       </div>
     </motion.div>

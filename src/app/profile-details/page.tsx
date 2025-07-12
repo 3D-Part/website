@@ -41,36 +41,35 @@ const ProfilePage: FC = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    const fetchUserProfile = async () => {
-      try {
-        const data = await userService.getUserProfile();
 
-        console.log(data)
-        if (!data) {
-          return;
-        }
+    const fetchProfile = async () => {
+      const data = await userService.fetchUserProfile();
 
-        setUserData({
-          fullName: data.fullName || "",
-          email: data.email || "",
-          phone: data.phone || "",
-          street: data.street || "",
-          // state: data.state || "",
-          city: data.city || "",
-          postCode: data.postCode || "",
-          image: data.image || "/assets/img/logo.svg",
-          discount: data.discount || 0
-        });
-        dispatch(changeIsUserVerified(true));
-      } catch (error: any) {
-        console.error("Error fetching user profile:", error);
-        if (error?.response?.data.key === "FORBIDDEN_ERROR") {
-          dispatch(changeIsUserVerified(false));
-        }
+      if (!data) return;
+
+      setUserData({
+        fullName: data.fullName || "",
+        email: data.email || "",
+        phone: data.phone || "",
+        street: data.street || "",
+        // state: data.state || "",
+        city: data.city || "",
+        postCode: data.postCode || "",
+        image: data.image || "/assets/img/logo.svg",
+        discount: data.discount || 0
+      });
+    }
+
+    try {
+      fetchProfile();
+
+      dispatch(changeIsUserVerified(true));
+    } catch (error: any) {
+      console.error("Error fetching user profile:", error);
+      if (error?.response?.data.key === "FORBIDDEN_ERROR") {
+        dispatch(changeIsUserVerified(false));
       }
-    };
-
-    fetchUserProfile();
+    }
 
     setIsLoading(false);
   }, []);
@@ -154,7 +153,7 @@ const ProfilePage: FC = () => {
                   src={userData.image}
                   className="border border-white rounded-full w-[155px] h-[155px] p-1"
                 />
-                <div className="lg:text-[28px] font-semibold lg:leading-9 text-2xl leading-8">Discount: <span className="text-primary-400">-{userData.discount}%</span></div>
+                {userData.discount > 0 && <div className="lg:text-[28px] font-semibold lg:leading-9 text-2xl leading-8">Discount: <span className="text-primary-400">{userData.discount}%</span></div>}
               </div>
               <div className="lg:flex-row flex flex-col lg:gap-[78px] gap-6">
                 <div>

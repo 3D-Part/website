@@ -51,4 +51,19 @@ const updateProfile = async (
   }
 };
 
-export const userService = { getUserProfile, updateProfile };
+const fetchUserProfile = async () => {
+  try {
+    const data = await userService.getUserProfile();
+
+    if (!data) {
+      return;
+    }
+
+    return data;
+
+  } catch (error: any) {
+    console.error("Error fetching user profile:", error);
+  }
+};
+
+export const userService = { getUserProfile, updateProfile, fetchUserProfile };
