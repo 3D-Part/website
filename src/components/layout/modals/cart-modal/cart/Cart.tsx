@@ -189,14 +189,14 @@ const Cart = () => {
         )} KM`}</p>
       </div>
 
-      <div className="flex items-center justify-between my-3">
+      {/* <div className="flex items-center justify-between my-3">
         <Paragraph size="L" weight="Regular" className="text-neutral-200">
           Popust{" "}
         </Paragraph>
         <p className="text-white text-[28px] font-exo2 font-semibold">{`${post.toFixed(
           2
         )} KM`}</p>
-      </div>
+      </div> */}
       <div className="h-[1px] bg-neutral-500"></div>
 
       <div className="flex items-center justify-between my-3">
