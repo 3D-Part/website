@@ -15,6 +15,7 @@ interface UserType {
   street: string;
   updatedAt: Date;
   createdAt: Date;
+  discount: number;
 }
 
 type updateProfilePayload = {

@@ -30,6 +30,7 @@ const ProfilePage: FC = () => {
     city: "",
     postCode: "",
     image: "/assets/img/logo.svg",
+    discount: 0
   });
 
   const [isLoading, setIsLoading] = useState(false);
@@ -44,6 +45,7 @@ const ProfilePage: FC = () => {
       try {
         const data = await userService.getUserProfile();
 
+        console.log(data)
         if (!data) {
           return;
         }
@@ -57,6 +59,7 @@ const ProfilePage: FC = () => {
           city: data.city || "",
           postCode: data.postCode || "",
           image: data.image || "/assets/img/logo.svg",
+          discount: data.discount || 0
         });
         dispatch(changeIsUserVerified(true));
       } catch (error: any) {
@@ -151,6 +154,7 @@ const ProfilePage: FC = () => {
                   src={userData.image}
                   className="border border-white rounded-full w-[155px] h-[155px] p-1"
                 />
+                <div className="lg:text-[28px] font-semibold lg:leading-9 text-2xl leading-8">Discount: <span className="text-primary-400">-{userData.discount}%</span></div>
               </div>
               <div className="lg:flex-row flex flex-col lg:gap-[78px] gap-6">
                 <div>

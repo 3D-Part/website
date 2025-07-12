@@ -56,11 +56,11 @@ const calculatePriceAndPost = (cart: CartProductsType[]) => {
     price =
       price +
       x.amount *
-        Number(
-          x.productData.salePrice
-            ? x.productData.salePrice
-            : x.productData.price
-        );
+      Number(
+        x.productData.salePrice
+          ? x.productData.salePrice
+          : x.productData.price
+      );
     weight += parseFloat(x.productData.weight) * x.amount;
   });
 
@@ -116,9 +116,8 @@ const Cart = () => {
           size="XS"
           weight="Regular"
           className="whitespace-nowrap"
-        >{`${cartLength} ${
-          cartLength === 1 ? "Proizvod" : "Proizvoda"
-        } u korpi`}</Paragraph>
+        >{`${cartLength} ${cartLength === 1 ? "Proizvod" : "Proizvoda"
+          } u korpi`}</Paragraph>
       </div>
       <div className="flex-1 my-2 overflow-x-hidden overflow-y-auto lg:my-4">
         <AnimatePresence>
@@ -135,9 +134,8 @@ const Cart = () => {
           <input
             type="text"
             placeholder={"Promo kod"}
-            className={`w-full h-10 px-4 py-3 rounded-[66px] border border-primary-500 disabled:cursor-not-allowed bg-transparent disabled:text-neutral-400 ${
-              promoCode ? "!border-success-500" : ""
-            }`}
+            className={`w-full h-10 px-4 py-3 rounded-[66px] border border-primary-500 disabled:cursor-not-allowed bg-transparent disabled:text-neutral-400 ${promoCode ? "!border-success-500" : ""
+              }`}
             required
             defaultValue={promoCode?.code}
             ref={inputRef}
@@ -169,9 +167,8 @@ const Cart = () => {
         </Paragraph>
         <div className="flex gap-2">
           <p
-            className={`text-white text-[28px] font-exo2 font-semibold ${
-              promoCode ? "line-through !text-neutral-300 !font-light" : ""
-            }`}
+            className={`text-white text-[28px] font-exo2 font-semibold ${promoCode ? "line-through !text-neutral-300 !font-light" : ""
+              }`}
           >{`${price.toFixed(2)} KM 
           `}</p>
           {promoCode && (
@@ -186,6 +183,15 @@ const Cart = () => {
       <div className="flex items-center justify-between my-3">
         <Paragraph size="L" weight="Regular" className="text-neutral-200">
           Poštarina{" "}
+        </Paragraph>
+        <p className="text-white text-[28px] font-exo2 font-semibold">{`${post.toFixed(
+          2
+        )} KM`}</p>
+      </div>
+
+      <div className="flex items-center justify-between my-3">
+        <Paragraph size="L" weight="Regular" className="text-neutral-200">
+          Popust{" "}
         </Paragraph>
         <p className="text-white text-[28px] font-exo2 font-semibold">{`${post.toFixed(
           2

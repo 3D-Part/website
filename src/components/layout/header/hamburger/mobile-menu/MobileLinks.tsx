@@ -11,21 +11,23 @@ const MobileLinks: React.FC<{
   nestedIteration: number;
 }> = ({ className = "", links, onClick, nestedIteration }) => {
   return (
-    <div className={`flex flex-col items-center transition-all ${className}`}>
-      {links.map((x: any, i: number) => {
-        return (
-          <LinkSection
-            onClick={() => {
-              onClick();
-            }}
-            key={i}
-            x={x}
-            i={i}
-            showLine={nestedIteration === 0 || i < links.length - 1}
-          />
-        );
-      })}
-    </div>
+    <motion.div className={`flex flex-col items-center transition-all ${className}`}>
+      {
+        links.map((x: any, i: number) => {
+          return (
+            <LinkSection
+              onClick={() => {
+                onClick();
+              }}
+              key={i}
+              x={x}
+              i={i}
+              showLine={nestedIteration === 0 || i < links.length - 1}
+            />
+          );
+        })
+      }
+    </motion.div >
   );
 };
 
@@ -43,19 +45,19 @@ const LinkSection: React.FC<{
 
   return (
     <motion.div
-      className={`w-full px-4 py-2 border-b border-neutral-600 cursor-pointer ${
-        showLine ? "border-solid" : ""
-      }`}
+      className={`w-full px-4 py-2 border-b border-neutral-600 cursor-pointer ${showLine ? "border-solid" : ""
+        }`}
       initial={{ x: -50, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       transition={{
-        delay: i * 0.1,
+        delay: i * .1,
         type: "tween",
         duration: 0.3,
         ease: "easeInOut",
       }}
     >
-      <div
+      <motion.div
+        initial={{ scaleY: 0 }} animate={{ scaleY: 1 }} transition={{ delay: 0.3, duration: 0.1 }}
         className="flex items-center justify-between w-full"
         onClick={() => {
           if (x.links && x.links?.length > 0) {
@@ -75,7 +77,7 @@ const LinkSection: React.FC<{
         {x.links && x.links?.length > 0 && isOpen && (
           <IoIosArrowUp className="text-2xl cursor-pointer"></IoIosArrowUp>
         )}
-      </div>
+      </motion.div>
       {isOpen && (
         <MobileLinks
           links={x.links}
