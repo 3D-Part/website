@@ -62,7 +62,10 @@ const ProfilePage: FC = () => {
     }
 
     try {
-      fetchProfile();
+      if (status === 'authenticated') {
+
+        fetchProfile();
+      }
 
       dispatch(changeIsUserVerified(true));
     } catch (error: any) {
@@ -73,7 +76,7 @@ const ProfilePage: FC = () => {
     }
 
     setIsLoading(false);
-  }, []);
+  }, [status]);
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();

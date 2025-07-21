@@ -43,8 +43,11 @@ const Layout: FC<{ children: React.ReactNode }> = ({ children }) => {
       }
     };
 
-    fetchUserProfile();
-  }, []);
+    if (status === 'authenticated') {
+
+      fetchUserProfile();
+    }
+  }, [status]);
 
   if (status === "loading") {
     return (
@@ -65,11 +68,10 @@ const Layout: FC<{ children: React.ReactNode }> = ({ children }) => {
         <Link
           href="/profile-details"
           type="button"
-          className={`flex items-center justify-center p-3 rounded-lg transition-all  h-14 w-14 lg:gap-5   lg:w-full ${
-            pathName === "/profile-details"
+          className={`flex items-center justify-center p-3 rounded-lg transition-all  h-14 w-14 lg:gap-5   lg:w-full ${pathName === "/profile-details"
               ? "bg-neutral-600 lg:text-white lg:bg-transparent lg:hover:bg-neutral-700"
               : "bg-neutral-800 hover:bg-neutral-700 lg:bg-transparent lg:hover:bg-neutral-700 lg:text-[#888888]"
-          }`}
+            }`}
           prefetch
         >
           <div className="flex items-center flex-1 gap-2">
@@ -88,11 +90,10 @@ const Layout: FC<{ children: React.ReactNode }> = ({ children }) => {
             <Link
               href="/profile-details/coupons"
               type="button"
-              className={`flex items-center justify-center p-3 rounded-lg transition-all  h-14 w-14 lg:gap-5  lg:w-full  ${
-                pathName === "/profile-details/coupons"
+              className={`flex items-center justify-center p-3 rounded-lg transition-all  h-14 w-14 lg:gap-5  lg:w-full  ${pathName === "/profile-details/coupons"
                   ? "bg-neutral-600 lg:text-white lg:bg-transparent lg:hover:bg-neutral-700"
                   : "bg-neutral-800 hover:bg-neutral-700 lg:bg-transparent lg:hover:bg-neutral-700 lg:text-[#888888]"
-              }`}
+                }`}
             >
               <div className="flex items-center flex-1 gap-2">
                 <PromoSvg
@@ -114,11 +115,10 @@ const Layout: FC<{ children: React.ReactNode }> = ({ children }) => {
             <Link
               href="/reset-password"
               type="button"
-              className={`flex items-center justify-center p-3 rounded-lg transition-all  h-14 w-14 lg:gap-5  lg:w-full ${
-                pathName === "/reset-password"
+              className={`flex items-center justify-center p-3 rounded-lg transition-all  h-14 w-14 lg:gap-5  lg:w-full ${pathName === "/reset-password"
                   ? "bg-neutral-600 lg:text-white lg:bg-transparent lg:hover:bg-neutral-700"
                   : "bg-neutral-800 hover:bg-neutral-700 lg:bg-transparent lg:hover:bg-neutral-700 lg:text-[#888888]"
-              }`}
+                }`}
             >
               <div className="flex items-center flex-1 gap-2">
                 <LockSvg

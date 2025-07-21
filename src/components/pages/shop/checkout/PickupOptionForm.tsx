@@ -52,10 +52,13 @@ const PickupOptionForm = () => {
       }
     };
 
-    fetchUserProfile();
+    if (status === 'authenticated') {
+
+      fetchUserProfile();
+    }
 
     setIsLoading(false);
-  }, []);
+  }, [status]);
 
   if (isLoading) {
     return <Spinner />;

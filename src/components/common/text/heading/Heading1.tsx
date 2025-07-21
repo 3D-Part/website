@@ -5,12 +5,14 @@ import { TextComponentInterface } from "../../../../shared/interfaces/textInterf
 import { userService } from "@/shared/services/userService";
 import { useAppDispatch } from "@/redux/hooks";
 import { changeDiscount } from "@/redux/slices/cart/cartSlice";
+import { useSession } from "next-auth/react";
 
 const Heading1: React.FC<TextComponentInterface> = ({
   children,
   className = "",
 }) => {
   const dispatch = useAppDispatch();
+  const { status } = useSession()
   const fetchProfileData = async () => {
     const data = await userService.fetchUserProfile()
 
@@ -20,8 +22,11 @@ const Heading1: React.FC<TextComponentInterface> = ({
   }
 
   useEffect(() => {
-    fetchProfileData()
-  }, [])
+    if (status === 'authenticated') {
+
+      fetchProfileData()
+    }
+  }, [status])
   return (
     <h1
       className={`text-[48px] font-semibold leading-[48px] lg:text-[56px] lg:leading-[72px] ${className}`}
