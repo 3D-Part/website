@@ -15,9 +15,9 @@ export default function Home() {
       <SliderServer />
       <Commercial />
       <ProductOffer />
+      <ProductsRecommended />
       <ProductsSale />
       <ProductsBestSelling />
-      <ProductsRecommended />
       <ContactUs />
       <InfoCards />
     </main>

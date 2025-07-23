@@ -19,7 +19,7 @@ const ProductsRecommended = async () => {
           reverseDirection={true}
         >
           <div className="flex flex-col w-full px-4 lg:px-0">
-            <Heading2> Izdvojili smo za Vas </Heading2>
+            <Heading2> Super ponuda </Heading2>
           </div>
         </Products>
       )}
