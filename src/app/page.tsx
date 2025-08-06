@@ -1,5 +1,4 @@
 import Heading1 from "@/components/common/text/heading/Heading1";
-import Commercial from "@/components/pages/landing/commercial/Commercial";
 import ContactUs from "@/components/pages/landing/contact-us/ContactUs";
 import InfoCards from "@/components/pages/landing/info-cards/InfoCards";
 import ProductOffer from "@/components/pages/landing/product-offers/ProductOffer";
@@ -13,7 +12,7 @@ export default function Home() {
     <main className="relative flex flex-col items-center min-h-screen">
       <Heading1 className="w-0 h-0 opacity-0">3D Part</Heading1>
       <SliderServer />
-      <Commercial />
+      {/* <Commercial /> */}
       <ProductOffer />
       <ProductsRecommended />
       <ProductsSale />
