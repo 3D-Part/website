@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback, useRef } from "react";
 import Filters from "./filters/Filters";
 import Heading2 from "@/components/common/text/heading/Heading2";
 import ProductGrid from "./product-grid/ProductGrid";
@@ -7,99 +7,126 @@ import {
   ProductPaginatedInterface,
   productsServices,
 } from "../../../../../../services/productsServices";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import Spinner from "@/components/common/spinner/Spinner";
 
 const CategoryProducts: React.FC<{ categoryId: string }> = ({ categoryId }) => {
-  //TODO: Redux this
-  const [initialFetch, setInitialFetch] = useState(true);
+  const initCount = 10;
+
   const [priceMin, setPriceMin] = useState<number | null>(null);
   const [priceMax, setPriceMax] = useState<number | null>(null);
   const [field, setField] = useState<"name" | "price" | null>(null);
   const [order, setOrder] = useState<"ASC" | "DESC" | null>(null);
+
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState<ProductPaginatedInterface>({
     count: 0,
     rows: [],
   });
 
+  const [offset, setOffset] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
+
   const params = useParams();
-  const {} = useRouter();
   const searchParams = useSearchParams();
+  const manufacturerId = searchParams.get("manufacturerId");
 
-  let manufacturerId = searchParams.get("manufacturerId");
+  // Cooldown flag between scroll fetches
+  const canLoadRef = useRef(true);
 
-  useEffect(() => {
-    const fetch = async () => {
-      const x = await productsServices.getAllProducts({
+  const fetchProducts = useCallback(
+    async (append = false) => {
+      if (append && !hasMore) return;
+
+      setIsLoading(true);
+      const res = await productsServices.getAllProducts({
         categoryId,
         price: { gt: priceMin, lt: priceMax },
         field,
         order,
         manufacturerId,
+        offset,
+        limit: initCount,
       });
-      setIsLoading(false);
-      setData(x);
 
-      x.rows.forEach((a) => {
+      res.rows.forEach((a) => {
         if (a.productOnSale.length) {
           a.salePrice = a.productOnSale[0].discountedPrice;
         }
       });
 
-      return x;
-    };
-    setIsLoading(true);
+      setData((prev) => ({
+        count: res.count,
+        rows: append ? [...prev.rows, ...res.rows] : res.rows,
+      }));
 
-    const delayDebounceFn = setTimeout(
-      () => {
-        fetch();
-        setInitialFetch(false);
-      },
-      initialFetch ? 0 : 500
-    );
+      setHasMore(offset < res.count);
+      setIsLoading(false);
+    },
+    [categoryId, priceMin, priceMax, field, order, manufacturerId, offset, hasMore]
+  );
 
-    return () => clearTimeout(delayDebounceFn);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [priceMin, priceMax, params.slug, manufacturerId]);
-
+  // Initial + filters/sorting load
   useEffect(() => {
-    if (initialFetch) return;
-    const fetch = async () => {
-      const x = await productsServices.getAllProducts({
-        categoryId,
-        price: { gt: priceMin, lt: priceMax },
-        field,
-        order,
-        manufacturerId,
-      });
-      setIsLoading(false);
-      setData(x);
-      x.rows.forEach((a) => {
-        if (a.productOnSale.length) {
-          a.salePrice = a.productOnSale[0].discountedPrice;
-        }
-      });
-      return x;
-    };
-    setIsLoading(true);
+    setOffset(0);
+    setHasMore(true);
+    fetchProducts(false);
+  }, [priceMin, priceMax, field, order, categoryId, manufacturerId, params.slug]);
 
-    fetch();
-    setInitialFetch(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [order, field]);
+  // Infinite scroll listener
+  useEffect(() => {
+    let cooldownTimer: NodeJS.Timeout | null = null;
+
+    const handleScroll = () => {
+      if (!canLoadRef.current || isLoading || !hasMore) return;
+
+      const footerHeight =
+        document.getElementsByTagName("footer")[0]?.clientHeight || 0;
+
+      if (
+        window.innerHeight + document.documentElement.scrollTop + 50 >=
+        document.documentElement.scrollHeight - footerHeight
+      ) {
+        canLoadRef.current = false; // prevent multiple triggers until cooldown ends
+        setOffset((prev) => prev + initCount);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (cooldownTimer) clearTimeout(cooldownTimer);
+    };
+  }, [isLoading, hasMore]);
+
+  // Fetch more when offset changes
+  useEffect(() => {
+    if (offset !== 0) {
+      fetchProducts(true);
+    }
+  }, [offset]);
+
+  // Cooldown after fetch finishes
+  useEffect(() => {
+    let cooldownTimer: NodeJS.Timeout | null = null;
+    if (!isLoading) {
+      cooldownTimer = setTimeout(() => {
+        canLoadRef.current = true;
+      }, 20); // 2s cooldown
+    }
+    return () => {
+      if (cooldownTimer) clearTimeout(cooldownTimer);
+    };
+  }, [isLoading]);
 
   return (
     <>
       <Filters
         priceMin={priceMin}
         priceMax={priceMax}
-        setPriceMax={(x) => {
-          setPriceMax(x);
-        }}
-        setPriceMin={(x) => {
-          setPriceMin(x);
-        }}
+        setPriceMax={setPriceMax}
+        setPriceMin={setPriceMin}
         field={field}
         order={order}
         setField={setField}
@@ -111,7 +138,8 @@ const CategoryProducts: React.FC<{ categoryId: string }> = ({ categoryId }) => {
         Proizvodi <span className="text-primary-500">({data.count})</span>
       </Heading2>
 
-      {isLoading ? <Spinner /> : <ProductGrid productList={data.rows} />}
+      <ProductGrid productList={data.rows} />
+      {isLoading && <Spinner />}
     </>
   );
 };

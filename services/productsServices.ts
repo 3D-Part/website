@@ -18,6 +18,8 @@ const getAllProducts = async ({
   order,
   field,
   manufacturerId,
+  limit,
+  offset
 }: {
   slug?: string;
   attributeId?: string;
@@ -29,6 +31,8 @@ const getAllProducts = async ({
   field?: "name" | "price" | null;
   order?: "ASC" | "DESC" | null;
   manufacturerId?: string | null;
+  limit?: number;
+  offset?: number;
 }): Promise<ProductPaginatedInterface> => {
   const payload: any = {};
 
@@ -65,6 +69,14 @@ const getAllProducts = async ({
 
   if (manufacturerId) {
     payload["filters[manufacturer.id][is]"] = manufacturerId;
+  }
+
+  if (offset) {
+    payload["offset"] = offset;
+  }
+
+  if (limit) {
+    payload["limit"] = limit;
   }
 
   const params = new URLSearchParams({ ...payload }).toString();
