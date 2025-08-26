@@ -11,7 +11,7 @@ import { useParams, useSearchParams } from "next/navigation";
 import Spinner from "@/components/common/spinner/Spinner";
 
 const CategoryProducts: React.FC<{ categoryId: string }> = ({ categoryId }) => {
-  const initCount = 10;
+  const initCount = 30;
 
   const [priceMin, setPriceMin] = useState<number | null>(null);
   const [priceMax, setPriceMax] = useState<number | null>(null);
