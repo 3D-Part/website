@@ -19,6 +19,11 @@ export interface SignUpData {
   email: string;
   password: string;
   fullName: string;
+  phone: string;
+  state: string;
+  city: string;
+  postCode: string;
+  street: string;
 }
 
 export interface LoginResponseData {

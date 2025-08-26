@@ -41,7 +41,7 @@ const Product: React.FC<ProductInterfaceComponent> = ({
   return (
     <Link href={"/shop/product/" + id} prefetch>
       <div
-        className={`cursor-pointer bg-neutral-800 p-[10px] rounded-xl max-w-[220px] max-h-[391px] ${className}`}
+        className={`cursor-pointer bg-neutral-800 p-[10px] rounded-xl max-w-[220px] max-h-[435px] ${className}`}
       >
         <div
           className={`overflow-hidden aspect-square rounded-xl w-[${imageWidth}]`}
@@ -89,7 +89,7 @@ const Product: React.FC<ProductInterfaceComponent> = ({
           <Paragraph
             size="L"
             weight="Semibold"
-            className="overflow-hidden h-14 max-h-14 overflow-ellipsis"
+            className="overflow-hidden h-20 max-h-20 overflow-ellipsis"
             style={
               {
                 // display: "-webkit-box",

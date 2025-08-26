@@ -1,3 +1,4 @@
+
 import Products from "@/components/common/products/Products";
 import Heading2 from "@/components/common/text/heading/Heading2";
 import Container from "@/components/common/container/Container";
@@ -5,6 +6,7 @@ import { productsServices } from "../../../../../services/productsServices";
 
 const ProductsRecommended = async () => {
   const data = await productsServices.getRecommended();
+
 
   return (
     <Container className="w-full mb-[60px] lg:mb-24 lg:px-9">
