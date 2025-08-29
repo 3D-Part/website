@@ -47,7 +47,6 @@ const ProfilePage: FC = () => {
 
       if (!data) return;
 
-
       setUserData({
         fullName: data.fullName || "",
         email: data.email || "",

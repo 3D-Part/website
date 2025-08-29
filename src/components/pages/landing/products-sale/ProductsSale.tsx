@@ -108,6 +108,8 @@ const ProductsSale = () => {
     return <></>;
   }
 
+  if (list.length === 0) return <></>;
+
   return (
     <Container className="w-full mb-[60px] lg:mb-24 lg:px-9">
       <Products

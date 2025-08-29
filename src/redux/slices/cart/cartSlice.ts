@@ -29,6 +29,7 @@ type CartState = {
   successfulOrder: SuccessfulOrderType | null;
   promoCode: null | CouponType;
   discount: number
+  points: number
 };
 
 const cartProducts = getCartProducts();
@@ -38,13 +39,18 @@ const initialState = {
   cartModalVisible: false,
   successfulOrder: null,
   promoCode: null,
-  discount: 0
+  discount: 0,
+  points: 0
 } as CartState;
 
 export const cart = createSlice({
   name: "cart",
   initialState,
   reducers: {
+    changePointsInCart: (state, action) => {
+      console.log(action.payload)
+      state.points = action.payload
+    },
     resetCart: () => initialState,
     addProductWithAmount: (
       state,
@@ -146,6 +152,7 @@ export const cart = createSlice({
 });
 
 export const {
+  changePointsInCart,
   resetCart,
   removeProduct,
   addProductWithAmount,

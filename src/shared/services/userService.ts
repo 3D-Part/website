@@ -1,6 +1,6 @@
 import API from "../helper/api";
 
-interface UserType {
+export interface UserType {
   id: string;
   fullName: string;
   email: string;
@@ -16,6 +16,7 @@ interface UserType {
   updatedAt: Date;
   createdAt: Date;
   discount: number;
+  availablePoints: number;
 }
 
 type updateProfilePayload = {

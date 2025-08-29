@@ -31,8 +31,6 @@ const PickupOptionForm = () => {
       try {
         const data = await userService.getUserProfile();
 
-        console.log(data)
-
         if (!data) {
           return;
         }

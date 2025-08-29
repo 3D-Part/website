@@ -10,6 +10,7 @@ import { changeIsGlobalLoading } from "@/redux/slices/ui/uiSlice";
 import { useRouter } from "next/navigation";
 import {
   cartProductsSelector,
+  pointsSelector,
   promoCodeSelectorAmount,
 } from "@/redux/slices/cart/cartSelectors";
 import {
@@ -25,6 +26,7 @@ import { clearCartProducts } from "@/shared/helper/cartProducts";
 const CheckoutForm = () => {
   const products = useAppSelector(cartProductsSelector);
   const promoCode = useAppSelector(promoCodeSelectorAmount);
+  const points = useAppSelector(pointsSelector);
 
   const [buttonDisabled, setBUttonDisabled] = useState(false);
   const [payingOption, setPayingOption] = useState("0");
@@ -42,33 +44,34 @@ const CheckoutForm = () => {
     const payload: any =
       payingOption === "0"
         ? {
-            city: event.target.city.value,
-            email: event.target.email.value,
-            fullName: event.target.fullName.value,
-            phone: event.target.phone.value,
-            postCode: event.target.postCode.value,
-            products: products.map((x) => {
-              return { productId: x.idProduct, quantity: x.amount };
-            }),
-            street: event.target.street.value,
-            description: event.target.description.value,
-          }
+          city: event.target.city.value,
+          email: event.target.email.value,
+          fullName: event.target.fullName.value,
+          phone: event.target.phone.value,
+          postCode: event.target.postCode.value,
+          products: products.map((x) => {
+            return { productId: x.idProduct, quantity: x.amount };
+          }),
+          street: event.target.street.value,
+          description: event.target.description.value,
+          points: points > 0 ? points : undefined
+        }
         : {
-            companyName: event.target.companyName.value,
-            companyPdv: event.target.companyPdv.value,
-            email: event.target.email.value,
-            phone: event.target.phone.value,
-            // country: event.target.country.value,
-            street: event.target.street.value,
-            city: event.target.city.value,
-            postCode: event.target.postCode.value,
-            jib: event.target.jib.value,
-            description: event.target.description.value,
-
-            products: products.map((x) => {
-              return { productId: x.idProduct, quantity: x.amount };
-            }),
-          };
+          companyName: event.target.companyName.value,
+          companyPdv: event.target.companyPdv.value,
+          email: event.target.email.value,
+          phone: event.target.phone.value,
+          // country: event.target.country.value,
+          street: event.target.street.value,
+          city: event.target.city.value,
+          postCode: event.target.postCode.value,
+          jib: event.target.jib.value,
+          description: event.target.description.value,
+          points: points > 0 ? points : undefined,
+          products: products.map((x) => {
+            return { productId: x.idProduct, quantity: x.amount };
+          }),
+        };
 
     if (promoCode) {
       payload.code = promoCode.code;
@@ -134,11 +137,10 @@ const CheckoutForm = () => {
           type="submit"
           value={`Završi kupovinu `}
           onSubmit={handleSubmit}
-          className={`w-full h-12 mt-10 text-base font-bold rounded-lg ${
-            isButtonDisabled
-              ? "cursor-not-allowed bg-neutral-500"
-              : "cursor-pointer bg-primary-500"
-          }`}
+          className={`w-full h-12 mt-10 text-base font-bold rounded-lg ${isButtonDisabled
+            ? "cursor-not-allowed bg-neutral-500"
+            : "cursor-pointer bg-primary-500"
+            }`}
           disabled={isButtonDisabled}
         />
       </form>

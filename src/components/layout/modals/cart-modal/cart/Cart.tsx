@@ -7,20 +7,24 @@ import { AnimatePresence, motion } from "framer-motion";
 import CartProducts from "./CartProducts";
 import {
   CartProductsType,
+  changePointsInCart,
   changePromoCodeInCart,
 } from "@/redux/slices/cart/cartSlice";
 import {
   cartLengthSelector,
   cartProductsSelector,
   discountSelector,
+  pointsSelector,
   promoCodeSelectorAmount,
 } from "@/redux/slices/cart/cartSelectors";
 import Button from "@/components/common/button/Button";
 import { changeIsGlobalLoading } from "@/redux/slices/ui/uiSlice";
 import { couponsService } from "@/shared/services/couponsService";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { MdClear } from "react-icons/md";
 import { notify } from "@/components/common/toast/Toastify";
+import { userService, UserType } from "@/shared/services/userService";
+import { useSession } from "next-auth/react";
 
 const freeShippingBoundary = 100;
 
@@ -75,6 +79,8 @@ const calculatePriceAndPost = (cart: CartProductsType[]) => {
 };
 
 const Cart = () => {
+  const [userData, setUserData] = useState<UserType>();
+  const points = useAppSelector(pointsSelector);
   const cartLength = useAppSelector(cartLengthSelector);
   const cart = useAppSelector(cartProductsSelector);
   const promoCode = useAppSelector(promoCodeSelectorAmount);
@@ -84,6 +90,7 @@ const Cart = () => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const { price, post } = calculatePriceAndPost(cart);
+  const { status } = useSession();
 
   const fetchCouponsAndAddDiscount = async (code: string) => {
     if (!code) {
@@ -108,6 +115,49 @@ const Cart = () => {
       console.error(error);
     }
     dispatch(changeIsGlobalLoading(false));
+  };
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const data = await userService.getUserProfile();
+
+        if (!data) {
+          return;
+        }
+
+
+        setUserData(data);
+
+      } catch (error: any) {
+        console.error("Error fetching user profile:", error);
+      }
+    };
+
+    if (status === 'authenticated') {
+
+      fetchUserProfile();
+    }
+  }, [status]);
+
+  const minusPoints = () => {
+    if (points <= 0) return;
+
+    dispatch(changePointsInCart(points - 1));
+  };
+
+  const plusPoints = () => {
+    if (!userData) return;
+    if (userData.availablePoints) return;
+    if (points >= userData!.availablePoints) return;
+
+    if ((price -
+      (promoCode
+        ? price * (Number(promoCode.discountPercentage) / 100)
+        : 0) +
+      post) * ((100 - discount) / 100) - (points + 1 * 10) <= 0) return;
+
+    dispatch(changePointsInCart(points + 1));
   };
 
   return (
@@ -163,6 +213,18 @@ const Cart = () => {
         </Button>
       </div>
 
+      {status === 'authenticated' && <div className="flex items-center justify-between mt-4">
+        <Paragraph size="L" weight="Regular" className="text-neutral-200">
+          Poeni {`(Dostupno: ${userData?.availablePoints || 0})`}
+        </Paragraph>
+        <div className="flex gap-2 justify-center items-center">
+          <button disabled={userData?.availablePoints === 0 || points === 0} onClick={minusPoints} className=" cursor-pointer py-4 px-6 transition-all bg-[rgba(59,130,246,0.2)] text-white border border-primary-500 active:border-primary-400 active:bg-primary-500 xl:hover:border-primary-400 xl:hover:bg-[rgba(59,130,246,0.5)] disabled:border-primary-400 disabled:bg-[rgba(100,100,100,0.3)] disabled:text-primary-400  rounded-lg flex justify-center items-center">-</button>
+          <div className="px-6 text-[28px] font-bold">{points}</div>
+          <button disabled={Number(points) === Number(userData?.availablePoints)} onClick={plusPoints} className=" cursor-pointer py-4 px-6 transition-all bg-[rgba(59,130,246,0.2)] text-white border border-primary-500 active:border-primary-400 active:bg-primary-500 xl:hover:border-primary-400 xl:hover:bg-[rgba(59,130,246,0.5)]  disabled:border-primary-400 disabled:bg-[rgba(100,100,100,0.3)] disabled:text-primary-400  rounded-lg flex justify-center items-center">+</button>
+
+        </div>
+      </div>}
+
       <div className="flex items-center justify-between mt-4">
         <Paragraph size="L" weight="Regular" className="text-neutral-200">
           Zbir{" "}
@@ -191,7 +253,7 @@ const Cart = () => {
         )} KM`}</p>
       </div>
 
-      {discount ? <div className="flex items-center justify-between my-3">
+      {status === 'authenticated' && userData?.discount ? <div className="flex items-center justify-between my-3">
         <Paragraph size="L" weight="Regular" className="text-neutral-200">
           Popust{" "}
         </Paragraph>
@@ -206,7 +268,7 @@ const Cart = () => {
             (promoCode
               ? price * (Number(promoCode.discountPercentage) / 100)
               : 0) +
-            post) * ((100 - discount) / 100)
+            post) * ((100 - discount) / 100) - (points)
         ).toFixed(2)} KM`}</p>
       </div>
     </motion.div>
