@@ -218,9 +218,9 @@ const Cart = () => {
           Poeni {`(Dostupno: ${userData?.availablePoints || 0})`}
         </Paragraph>
         <div className="flex gap-2 justify-center items-center">
-          <button disabled={userData?.availablePoints === 0 || points === 0} onClick={minusPoints} className=" cursor-pointer py-4 px-6 transition-all bg-[rgba(59,130,246,0.2)] text-white border border-primary-500 active:border-primary-400 active:bg-primary-500 xl:hover:border-primary-400 xl:hover:bg-[rgba(59,130,246,0.5)] disabled:border-primary-400 disabled:bg-[rgba(100,100,100,0.3)] disabled:text-primary-400  rounded-lg flex justify-center items-center">-</button>
-          <div className="px-6 text-[28px] font-bold">{points}</div>
-          <button disabled={Number(points) === Number(userData?.availablePoints)} onClick={plusPoints} className=" cursor-pointer py-4 px-6 transition-all bg-[rgba(59,130,246,0.2)] text-white border border-primary-500 active:border-primary-400 active:bg-primary-500 xl:hover:border-primary-400 xl:hover:bg-[rgba(59,130,246,0.5)]  disabled:border-primary-400 disabled:bg-[rgba(100,100,100,0.3)] disabled:text-primary-400  rounded-lg flex justify-center items-center">+</button>
+          <button disabled={userData?.availablePoints === 0 || points === 0} onClick={minusPoints} className=" cursor-pointer py-3 px-5 md:py-4 md:px-6 transition-all bg-[rgba(59,130,246,0.2)] text-white border border-primary-500 active:border-primary-400 active:bg-primary-500 xl:hover:border-primary-400 xl:hover:bg-[rgba(59,130,246,0.5)] disabled:border-primary-400 disabled:bg-[rgba(100,100,100,0.3)] disabled:text-primary-400  rounded-lg flex justify-center items-center">-</button>
+          <div className="px-4 md:px-6 text-[28px] font-bold">{points}</div>
+          <button disabled={Number(points) === Number(userData?.availablePoints)} onClick={plusPoints} className=" cursor-pointer py-3 px-5 md:py-4 md:px-6 transition-all bg-[rgba(59,130,246,0.2)] text-white border border-primary-500 active:border-primary-400 active:bg-primary-500 xl:hover:border-primary-400 xl:hover:bg-[rgba(59,130,246,0.5)]  disabled:border-primary-400 disabled:bg-[rgba(100,100,100,0.3)] disabled:text-primary-400  rounded-lg flex justify-center items-center">+</button>
 
         </div>
       </div>}
