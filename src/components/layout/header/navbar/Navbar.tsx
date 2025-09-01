@@ -12,6 +12,8 @@ import { useAppDispatch } from "@/redux/hooks";
 import { changeFavoriteProducts } from "@/redux/slices/ui/uiSlice";
 import { useSession } from "next-auth/react";
 import FavoritesIcon from "@/components/layout/header/navbar/favorites-icon/FavoritesIcon";
+import axios from "axios";
+import { MenuItem } from "@/shared/types";
 
 const creality = "062c42d0-3dab-11ee-bb4e-994af83111f0";
 const azurefilm = "03cbbd90-3dab-11ee-bb4e-994af83111f0";
@@ -332,6 +334,7 @@ const links: any = [
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [menuLinks, setMenuLinks] = useState<MenuItem[]>([]);
   const dispatch = useAppDispatch();
   const { data: session } = useSession();
 
@@ -359,6 +362,21 @@ const Navbar = () => {
     }
   }, [dispatch, session]);
 
+  useEffect(() => {
+    const fetchLinks = async () => {
+      try {
+        const response = await axios.get('/menu-structure.json');
+        setMenuLinks(response.data);
+      } catch (error) {
+        console.error('Error loading menu structure:', error);
+        // Fallback to hardcoded links if JSON fails to load
+        setMenuLinks(links);
+      }
+    };
+
+    fetchLinks();
+  }, [])
+
   return (
     <div className="md:bg-[rgba(17,17,17,0.55)] md:backdrop-blur-[30px] md:border-t border-b border-[rgba(242,242,242,0.3)] border-solid lg:sticky lg:top-0 lg:left-0 z-50">
       <div className="px-4 py-2 lg:px-9 lg:flex md:justify-between lg:max-w-[1920px] lg:mx-auto">
@@ -381,7 +399,7 @@ const Navbar = () => {
           </div>
         </div>
         <div className="flex items-center h-[69px] gap-4 py-[10.5px] md:px-2 w-full md:w-auto lg:w-full md:flex-grow-1 ">
-          <NavLinks links={links} />
+          <NavLinks links={menuLinks} />
           <SearchProducts />
 
           <div className="items-center hidden gap-3 lg:flex">
@@ -390,7 +408,7 @@ const Navbar = () => {
             <ProfileIcon />
           </div>
 
-          <Hamburger links={links} isOpen={isOpen} setIsOpen={setIsOpen} />
+          <Hamburger links={menuLinks} isOpen={isOpen} setIsOpen={setIsOpen} />
         </div>
       </div>
     </div>

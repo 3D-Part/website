@@ -7,9 +7,10 @@ import { motion } from "framer-motion";
 import Paragraph from "@/components/common/text/paragraph/Paragraph";
 import { IoIosArrowDown } from "react-icons/io";
 import { useRouter } from "next/navigation";
+import { MenuItem } from "@/shared/types";
 
 interface NavSubLinksProps {
-  links: { text: string; link: string; links: any[] }[];
+  links: MenuItem[];
   setActive?: (x: number | null) => void;
   activeLink?: number | null;
   i: number;
@@ -62,21 +63,18 @@ const NavSubLinks: React.FC<NavSubLinksProps> = ({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.1 * i + 0.25 }}
-              className={`flex items-center w-full gap-1  rounded-lg  hover:bg-primary-500 transition-all ${
-                !showLine && activeLink === i ? "bg-primary-500" : ""
-              } ${
-                x.links && x.links?.length > 0 && !showLine && activeLink === i
+              className={`flex items-center w-full gap-1  rounded-lg  hover:bg-primary-500 transition-all ${!showLine && activeLink === i ? "bg-primary-500" : ""
+                } ${x.children && x.children?.length > 0 && !showLine && activeLink === i
                   ? "px-2"
                   : ""
-              } ${
-                x.links && x.links?.length > 0 && !showLine && activeLink !== i
+                } ${x.children && x.children?.length > 0 && !showLine && activeLink !== i
                   ? "pr-2"
                   : ""
-              }`}
+                }`}
             >
               <div
                 onClick={() => {
-                  if (x.links && x.links?.length > 0) {
+                  if (x.children && x.children?.length > 0) {
                     if (!setActive) return;
                     if (activeLink === i) {
                       setActive(null);
@@ -85,15 +83,15 @@ const NavSubLinks: React.FC<NavSubLinksProps> = ({
                     }
                   } else {
                     onClick();
-                    router.push(x.link);
+                    router.push(x.url || "#");
                   }
                 }}
                 className={`flex-1  flex items-center whitespace-nowrap`}
               >
                 <Paragraph size="M" weight="Regular" className="p-[10px] px-2 ">
-                  {x.text}
+                  {x.label}
                 </Paragraph>
-                {x.links && x.links?.length > 0 && (
+                {x.children && x.children?.length > 0 && (
                   <IoIosArrowDown className="transition-all cursor-pointer hover:scale-125 "></IoIosArrowDown>
                 )}
               </div>

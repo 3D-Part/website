@@ -1,0 +1,488 @@
+[
+  {
+    "type": "text",
+    "label": "Filamenti",
+    "children": [
+      {
+        "type": "category-manufacturer",
+        "label": "Sve",
+        "url": "/shop/category/filamenti",
+        "categorySlug": "filamenti",
+        "children": []
+      },
+      {
+        "type": "text",
+        "label": "Azurefilm",
+        "children": [
+          {
+            "type": "category-manufacturer",
+            "label": "Sve",
+            "url": "/shop/category/filamenti?manufacturerId=03cbbd90-3dab-11ee-bb4e-994af83111f0",
+            "categorySlug": "filamenti",
+            "manufacturerId": "03cbbd90-3dab-11ee-bb4e-994af83111f0",
+            "children": []
+          },
+          {
+            "type": "category-manufacturer",
+            "label": "PLA",
+            "url": "/shop/category/pla?manufacturerId=03cbbd90-3dab-11ee-bb4e-994af83111f0",
+            "categorySlug": "pla",
+            "manufacturerId": "03cbbd90-3dab-11ee-bb4e-994af83111f0",
+            "children": []
+          },
+          {
+            "type": "category-manufacturer",
+            "label": "PLA+",
+            "url": "/shop/category/plaplus?manufacturerId=03cbbd90-3dab-11ee-bb4e-994af83111f0",
+            "categorySlug": "plaplus",
+            "manufacturerId": "03cbbd90-3dab-11ee-bb4e-994af83111f0",
+            "children": []
+          },
+          {
+            "type": "category-manufacturer",
+            "label": "PETG",
+            "url": "/shop/category/petg?manufacturerId=03cbbd90-3dab-11ee-bb4e-994af83111f0",
+            "categorySlug": "petg",
+            "manufacturerId": "03cbbd90-3dab-11ee-bb4e-994af83111f0",
+            "children": []
+          },
+          {
+            "type": "category-manufacturer",
+            "label": "Silk",
+            "url": "/shop/category/silk?manufacturerId=03cbbd90-3dab-11ee-bb4e-994af83111f0",
+            "categorySlug": "silk",
+            "manufacturerId": "03cbbd90-3dab-11ee-bb4e-994af83111f0",
+            "children": []
+          },
+          {
+            "type": "category-manufacturer",
+            "label": "ABS",
+            "url": "/shop/category/abs?manufacturerId=03cbbd90-3dab-11ee-bb4e-994af83111f0",
+            "categorySlug": "abs",
+            "manufacturerId": "03cbbd90-3dab-11ee-bb4e-994af83111f0",
+            "children": []
+          },
+          {
+            "type": "category-manufacturer",
+            "label": "ASA",
+            "url": "/shop/category/asa?manufacturerId=03cbbd90-3dab-11ee-bb4e-994af83111f0",
+            "categorySlug": "asa",
+            "manufacturerId": "03cbbd90-3dab-11ee-bb4e-994af83111f0",
+            "children": []
+          },
+          {
+            "type": "category-manufacturer",
+            "label": "Fleksibilni",
+            "url": "/shop/category/fleksibilni?manufacturerId=03cbbd90-3dab-11ee-bb4e-994af83111f0",
+            "categorySlug": "fleksibilni",
+            "manufacturerId": "03cbbd90-3dab-11ee-bb4e-994af83111f0",
+            "children": []
+          },
+          {
+            "type": "category-manufacturer",
+            "label": "PCTG",
+            "url": "/shop/category/pctg?manufacturerId=03cbbd90-3dab-11ee-bb4e-994af83111f0",
+            "categorySlug": "pctg",
+            "manufacturerId": "03cbbd90-3dab-11ee-bb4e-994af83111f0",
+            "children": []
+          },
+          {
+            "type": "category-manufacturer",
+            "label": "Pet Carbon",
+            "url": "/shop/category/pet-carbon?manufacturerId=03cbbd90-3dab-11ee-bb4e-994af83111f0",
+            "categorySlug": "pet-carbon",
+            "manufacturerId": "03cbbd90-3dab-11ee-bb4e-994af83111f0",
+            "children": []
+          },
+          {
+            "type": "category-manufacturer",
+            "label": "Paht Carbon",
+            "url": "/shop/category/paht-carbon?manufacturerId=03cbbd90-3dab-11ee-bb4e-994af83111f0",
+            "categorySlug": "paht-carbon",
+            "manufacturerId": "03cbbd90-3dab-11ee-bb4e-994af83111f0",
+            "children": []
+          },
+          {
+            "type": "category-manufacturer",
+            "label": "Nylon",
+            "url": "/shop/category/nylon?manufacturerId=03cbbd90-3dab-11ee-bb4e-994af83111f0",
+            "categorySlug": "nylon",
+            "manufacturerId": "03cbbd90-3dab-11ee-bb4e-994af83111f0",
+            "children": []
+          },
+          {
+            "type": "category-manufacturer",
+            "label": "Wood",
+            "url": "/shop/category/wood?manufacturerId=03cbbd90-3dab-11ee-bb4e-994af83111f0",
+            "categorySlug": "wood",
+            "manufacturerId": "03cbbd90-3dab-11ee-bb4e-994af83111f0",
+            "children": []
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "label": "Creality",
+        "children": [
+          {
+            "type": "category-manufacturer",
+            "label": "Sve",
+            "url": "/shop/category/filamenti?manufacturerId=062c42d0-3dab-11ee-bb4e-994af83111f0",
+            "categorySlug": "filamenti",
+            "manufacturerId": "062c42d0-3dab-11ee-bb4e-994af83111f0",
+            "children": []
+          },
+          {
+            "type": "category-manufacturer",
+            "label": "PLA",
+            "url": "/shop/category/pla?manufacturerId=062c42d0-3dab-11ee-bb4e-994af83111f0",
+            "categorySlug": "pla",
+            "manufacturerId": "062c42d0-3dab-11ee-bb4e-994af83111f0",
+            "children": []
+          },
+          {
+            "type": "category-manufacturer",
+            "label": "PLA+",
+            "url": "/shop/category/plaplus?manufacturerId=062c42d0-3dab-11ee-bb4e-994af83111f0",
+            "categorySlug": "plaplus",
+            "manufacturerId": "062c42d0-3dab-11ee-bb4e-994af83111f0",
+            "children": []
+          },
+          {
+            "type": "category-manufacturer",
+            "label": "PLA Matte",
+            "url": "/shop/category/pla-matte?manufacturerId=062c42d0-3dab-11ee-bb4e-994af83111f0",
+            "categorySlug": "pla-matte",
+            "manufacturerId": "062c42d0-3dab-11ee-bb4e-994af83111f0",
+            "children": []
+          },
+          {
+            "type": "category-manufacturer",
+            "label": "PETG",
+            "url": "/shop/category/petg?manufacturerId=062c42d0-3dab-11ee-bb4e-994af83111f0",
+            "categorySlug": "petg",
+            "manufacturerId": "062c42d0-3dab-11ee-bb4e-994af83111f0",
+            "children": []
+          },
+          {
+            "type": "category-manufacturer",
+            "label": "Silk",
+            "url": "/shop/category/silk?manufacturerId=062c42d0-3dab-11ee-bb4e-994af83111f0",
+            "categorySlug": "silk",
+            "manufacturerId": "062c42d0-3dab-11ee-bb4e-994af83111f0",
+            "children": []
+          },
+          {
+            "type": "category-manufacturer",
+            "label": "ABS",
+            "url": "/shop/category/abs?manufacturerId=062c42d0-3dab-11ee-bb4e-994af83111f0",
+            "categorySlug": "abs",
+            "manufacturerId": "062c42d0-3dab-11ee-bb4e-994af83111f0",
+            "children": []
+          },
+          {
+            "type": "category-manufacturer",
+            "label": "TPU",
+            "url": "/shop/category/tpu?manufacturerId=062c42d0-3dab-11ee-bb4e-994af83111f0",
+            "categorySlug": "tpu",
+            "manufacturerId": "062c42d0-3dab-11ee-bb4e-994af83111f0",
+            "children": []
+          },
+          {
+            "type": "category-manufacturer",
+            "label": "Floroscent",
+            "url": "/shop/category/floroscent?manufacturerId=062c42d0-3dab-11ee-bb4e-994af83111f0",
+            "categorySlug": "floroscent",
+            "manufacturerId": "062c42d0-3dab-11ee-bb4e-994af83111f0",
+            "children": []
+          }
+        ]
+      },
+      {
+        "type": "category-manufacturer",
+        "label": "Polyterra",
+        "url": "/shop/category/filamenti?manufacturerId=1d3112b0-b322-11ef-8fdc-2538e41a7280",
+        "categorySlug": "filamenti",
+        "manufacturerId": "1d3112b0-b322-11ef-8fdc-2538e41a7280",
+        "children": []
+      }
+    ]
+  },
+  {
+    "type": "text",
+    "label": "Resini",
+    "children": [
+      {
+        "type": "category-manufacturer",
+        "label": "Creality",
+        "url": "/shop/category/resini?manufacturerId=062c42d0-3dab-11ee-bb4e-994af83111f0",
+        "categorySlug": "resini",
+        "manufacturerId": "062c42d0-3dab-11ee-bb4e-994af83111f0",
+        "children": []
+      }
+    ]
+  },
+  {
+    "type": "text",
+    "label": "3D Printeri",
+    "children": [
+      {
+        "type": "category-manufacturer",
+        "label": "Sve",
+        "url": "/shop/category/3d-printeri",
+        "categorySlug": "3d-printeri",
+        "children": []
+      },
+      {
+        "type": "text",
+        "label": "Creality",
+        "children": [
+          {
+            "type": "category-manufacturer",
+            "label": "Sve",
+            "url": "/shop/category/3d-printeri?manufacturerId=062c42d0-3dab-11ee-bb4e-994af83111f0",
+            "categorySlug": "3d-printeri",
+            "manufacturerId": "062c42d0-3dab-11ee-bb4e-994af83111f0",
+            "children": []
+          },
+          {
+            "type": "category-manufacturer",
+            "label": "FDM",
+            "url": "/shop/category/fdm?manufacturerId=062c42d0-3dab-11ee-bb4e-994af83111f0",
+            "categorySlug": "fdm",
+            "manufacturerId": "062c42d0-3dab-11ee-bb4e-994af83111f0",
+            "children": []
+          },
+          {
+            "type": "category-manufacturer",
+            "label": "Resin",
+            "url": "/shop/category/resin?manufacturerId=062c42d0-3dab-11ee-bb4e-994af83111f0",
+            "categorySlug": "resin",
+            "manufacturerId": "062c42d0-3dab-11ee-bb4e-994af83111f0",
+            "children": []
+          }
+        ]
+      },
+      {
+        "type": "category-manufacturer",
+        "label": "Flash Forge",
+        "url": "/shop/category/3d-printeri?manufacturerId=0c796b90-3dab-11ee-bb4e-994af83111f0",
+        "categorySlug": "3d-printeri",
+        "manufacturerId": "0c796b90-3dab-11ee-bb4e-994af83111f0",
+        "children": []
+      },
+      {
+        "type": "category-manufacturer",
+        "label": "Snapmaker",
+        "url": "/shop/category/3d-printeri?manufacturerId=0ef0fb40-3dab-11ee-bb4e-994af83111f0",
+        "categorySlug": "3d-printeri",
+        "manufacturerId": "0ef0fb40-3dab-11ee-bb4e-994af83111f0",
+        "children": []
+      },
+      {
+        "type": "category-manufacturer",
+        "label": "Prusa",
+        "url": "/shop/category/3d-printeri?manufacturerId=11d97530-3dab-11ee-bb4e-994af83111f0",
+        "categorySlug": "3d-printeri",
+        "manufacturerId": "11d97530-3dab-11ee-bb4e-994af83111f0",
+        "children": []
+      },
+      {
+        "type": "text",
+        "label": "Anycubic",
+        "children": [
+          {
+            "type": "category-manufacturer",
+            "label": "Sve",
+            "url": "/shop/category/3d-printeri?manufacturerId=32c26d40-fee6-11ee-8633-b7ded7f10ea0",
+            "categorySlug": "3d-printeri",
+            "manufacturerId": "32c26d40-fee6-11ee-8633-b7ded7f10ea0",
+            "children": []
+          },
+          {
+            "type": "category-manufacturer",
+            "label": "FDM",
+            "url": "/shop/category/fdm?manufacturerId=32c26d40-fee6-11ee-8633-b7ded7f10ea0",
+            "categorySlug": "fdm",
+            "manufacturerId": "32c26d40-fee6-11ee-8633-b7ded7f10ea0",
+            "children": []
+          },
+          {
+            "type": "category-manufacturer",
+            "label": "Resin",
+            "url": "/shop/category/resin?manufacturerId=32c26d40-fee6-11ee-8633-b7ded7f10ea0",
+            "categorySlug": "resin",
+            "manufacturerId": "32c26d40-fee6-11ee-8633-b7ded7f10ea0",
+            "children": []
+          }
+        ]
+      },
+      {
+        "type": "category-manufacturer",
+        "label": "Flsun",
+        "url": "/shop/category/3d-printeri?manufacturerId=cd5b80c0-ae65-11ee-90e0-ef6a4a1db11a",
+        "categorySlug": "3d-printeri",
+        "manufacturerId": "cd5b80c0-ae65-11ee-90e0-ef6a4a1db11a",
+        "children": []
+      }
+    ]
+  },
+  {
+    "type": "category-manufacturer",
+    "label": "3D Skeneri",
+    "url": "/shop/category/3d-skeneri",
+    "categorySlug": "3d-skeneri",
+    "children": []
+  },
+  {
+    "type": "text",
+    "label": "Laseri",
+    "children": [
+      {
+        "type": "category-manufacturer",
+        "label": "Sve",
+        "url": "/shop/category/laseri",
+        "categorySlug": "laseri",
+        "children": []
+      },
+      {
+        "type": "category-manufacturer",
+        "label": "Creality",
+        "url": "/shop/category/laseri?manufacturerId=062c42d0-3dab-11ee-bb4e-994af83111f0",
+        "categorySlug": "laseri",
+        "manufacturerId": "062c42d0-3dab-11ee-bb4e-994af83111f0",
+        "children": []
+      }
+    ]
+  },
+  {
+    "type": "text",
+    "label": "Dijelovi",
+    "children": [
+      {
+        "type": "category-manufacturer",
+        "label": "Sve",
+        "url": "/shop/category/dijelovi",
+        "categorySlug": "dijelovi",
+        "children": []
+      },
+      {
+        "type": "category-manufacturer",
+        "label": "Dizne",
+        "url": "/shop/category/dizne",
+        "categorySlug": "dizne",
+        "children": []
+      },
+      {
+        "type": "text",
+        "label": "Podloge",
+        "children": [
+          {
+            "type": "category-manufacturer",
+            "label": "Sve",
+            "url": "/shop/category/podloge",
+            "categorySlug": "podloge",
+            "children": []
+          },
+          {
+            "type": "category-manufacturer",
+            "label": "Soft",
+            "url": "/shop/category/soft",
+            "categorySlug": "soft",
+            "children": []
+          },
+          {
+            "type": "category-manufacturer",
+            "label": "Pei",
+            "url": "/shop/category/pei",
+            "categorySlug": "pei",
+            "children": []
+          },
+          {
+            "type": "category-manufacturer",
+            "label": "Carbon Glass",
+            "url": "/shop/category/carbon-glass",
+            "categorySlug": "carbon-glass",
+            "children": []
+          }
+        ]
+      },
+      {
+        "type": "category-manufacturer",
+        "label": "Full Hotend Kit",
+        "url": "/shop/category/full-hotend-kit",
+        "categorySlug": "full-hotend-kit",
+        "children": []
+      },
+      {
+        "type": "category-manufacturer",
+        "label": "Hotend Kit",
+        "url": "/shop/category/hotend-kit",
+        "categorySlug": "hotend-kit",
+        "children": []
+      },
+      {
+        "type": "category-manufacturer",
+        "label": "Ekstruderi",
+        "url": "/shop/category/ekstruderi",
+        "categorySlug": "ekstruderi",
+        "children": []
+      },
+      {
+        "type": "category-manufacturer",
+        "label": "Heat Block",
+        "url": "/shop/category/heat-block",
+        "categorySlug": "heat-block",
+        "children": []
+      },
+      {
+        "type": "text",
+        "label": "Ventilatori",
+        "children": [
+          {
+            "type": "category-manufacturer",
+            "label": "Sve",
+            "url": "/shop/category/ventilatori",
+            "categorySlug": "ventilatori",
+            "children": []
+          },
+          {
+            "type": "category-manufacturer",
+            "label": "Blower Fan",
+            "url": "/shop/category/blower-fan",
+            "categorySlug": "blower-fan",
+            "children": []
+          },
+          {
+            "type": "category-manufacturer",
+            "label": "Axial Fan",
+            "url": "/shop/category/axial-fan",
+            "categorySlug": "axial-fan",
+            "children": []
+          }
+        ]
+      },
+      {
+        "type": "category-manufacturer",
+        "label": "Stepper Motori",
+        "url": "/shop/category/stepper-motori",
+        "categorySlug": "stepper-motori",
+        "children": []
+      },
+      {
+        "type": "category-manufacturer",
+        "label": "Lezajevi",
+        "url": "/shop/category/ležajevi",
+        "categorySlug": "ležajevi",
+        "children": []
+      },
+      {
+        "type": "category-manufacturer",
+        "label": "-- OSTALO --",
+        "url": "/shop/category/ostalo",
+        "categorySlug": "ostalo",
+        "children": []
+      }
+    ]
+  }
+]

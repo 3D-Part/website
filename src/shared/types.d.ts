@@ -49,6 +49,16 @@ export interface ManufacturesData {
   rows: ManufacturerData[];
 }
 
+export interface MenuItem {
+  type: string;
+  label: string;
+  url?: string;
+  categorySlug?: string;
+  manufacturerId?: string;
+  children: MenuItem[];
+}
+
+
 export interface ManufacturerFormBody {
   name: string;
 }

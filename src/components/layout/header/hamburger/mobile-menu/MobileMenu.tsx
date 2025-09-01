@@ -10,8 +10,9 @@ import SocialApps from "@/components/common/social/SocialApps";
 import Paragraph from "@/components/common/text/paragraph/Paragraph";
 import TruckIcon from "../../header-info/TruckIcon";
 import { useRouter } from "next/navigation";
+import { MenuItem } from "@/shared/types";
 
-const MobileMenu: React.FC<{ links: any; onClick: () => void }> = ({
+const MobileMenu: React.FC<{ links: MenuItem[]; onClick: () => void }> = ({
   links,
   onClick,
 }) => {

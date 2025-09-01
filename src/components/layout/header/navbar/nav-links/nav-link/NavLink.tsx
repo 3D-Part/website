@@ -9,12 +9,13 @@ import NavSubLinks from "../nav-sub-links/NavSubLinks";
 import { IoIosArrowDown } from "react-icons/io";
 import OutsideAlerter from "@/shared/hooks/useOutsideAlerter";
 import { useRouter } from "next/navigation";
+import { MenuItem } from "@/shared/types";
 
 export interface NavLinkProps {
   i?: number;
   text: string;
   link: string;
-  links: NavLinkProps[];
+  links: MenuItem[];
   activeLink: null | number;
   activeSubLink: null | number;
   setActiveLink: (x: number | null) => void;
@@ -97,7 +98,7 @@ const NavLink: React.FC<NavLinkProps> = ({
             )}
             {activeSubLink !== null && (
               <NavSubLinks
-                links={links[activeSubLink].links}
+                links={links[activeSubLink].children}
                 i={activeSubLink}
                 activeLink={0}
                 showLine={true}

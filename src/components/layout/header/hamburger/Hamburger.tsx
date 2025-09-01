@@ -4,6 +4,7 @@ import { useIsPhone, useIsTablet } from "@/shared/hooks/useMediaQuerry";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import MobileMenu from "./mobile-menu/MobileMenu";
+import { MenuItem } from "@/shared/types";
 
 export const Path = (props: any) => (
   <motion.path
@@ -16,7 +17,7 @@ export const Path = (props: any) => (
 );
 
 const Hamburger: React.FC<{
-  links: any;
+  links: MenuItem[];
   isOpen: boolean;
   setIsOpen: (x: boolean) => void;
 }> = ({ links, isOpen, setIsOpen }) => {
@@ -31,9 +32,8 @@ const Hamburger: React.FC<{
             onClick={() => {
               setIsOpen(!isOpen);
             }}
-            className={`h-9 w-9 z-[300] transition-all duration-500 ${
-              isOpen && isPhone && "translate-y-[-68px]"
-            }`}
+            className={`h-9 w-9 z-[300] transition-all duration-500 ${isOpen && isPhone && "translate-y-[-68px]"
+              }`}
             animate={isOpen ? "open" : "closed"}
             aria-label="Menu"
           >
