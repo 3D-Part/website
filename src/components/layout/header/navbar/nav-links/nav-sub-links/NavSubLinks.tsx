@@ -2,7 +2,7 @@
 "use client";
 
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import Paragraph from "@/components/common/text/paragraph/Paragraph";
 import { IoIosArrowDown } from "react-icons/io";
@@ -27,6 +27,7 @@ const NavSubLinks: React.FC<NavSubLinksProps> = ({
   onClick,
 }) => {
   const router = useRouter();
+  const [localActive, setLocalActive] = useState<number | null>(null);
   return (
     <motion.div
       initial={{
@@ -63,7 +64,7 @@ const NavSubLinks: React.FC<NavSubLinksProps> = ({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.1 * i + 0.25 }}
-              className={`flex items-center w-full gap-1  rounded-lg  hover:bg-primary-500 transition-all ${!showLine && activeLink === i ? "bg-primary-500" : ""
+              className={`flex items-center w-full gap-1  rounded-lg  hover:bg-neutral-500 transition-all ${!showLine && activeLink === i ? "bg-neutral-600" : ""
                 } ${x.children && x.children?.length > 0 && !showLine && activeLink === i
                   ? "px-2"
                   : ""
@@ -75,11 +76,18 @@ const NavSubLinks: React.FC<NavSubLinksProps> = ({
               <div
                 onClick={() => {
                   if (x.children && x.children?.length > 0) {
-                    if (!setActive) return;
-                    if (activeLink === i) {
-                      setActive(null);
+                    if (setActive) {
+                      if (activeLink === i) {
+                        setActive(null);
+                      } else {
+                        setActive(i);
+                      }
                     } else {
-                      setActive(i);
+                      if (localActive === i) {
+                        setLocalActive(null);
+                      } else {
+                        setLocalActive(i);
+                      }
                     }
                   } else {
                     onClick();
@@ -95,6 +103,17 @@ const NavSubLinks: React.FC<NavSubLinksProps> = ({
                   <IoIosArrowDown className="transition-all cursor-pointer hover:scale-125 "></IoIosArrowDown>
                 )}
               </div>
+              {x.children && x.children.length > 0 && (
+                ((setActive && activeLink === i) || (!setActive && localActive === i)) && (
+                  <NavSubLinks
+                    links={x.children}
+                    i={i}
+                    activeLink={null}
+                    showLine={true}
+                    onClick={onClick}
+                  />
+                )
+              )}
             </motion.div>
           );
         })}

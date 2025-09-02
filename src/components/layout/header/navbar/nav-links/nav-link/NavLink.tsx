@@ -96,18 +96,7 @@ const NavLink: React.FC<NavLinkProps> = ({
                 }}
               />
             )}
-            {activeSubLink !== null && (
-              <NavSubLinks
-                links={links[activeSubLink].children}
-                i={activeSubLink}
-                activeLink={0}
-                showLine={true}
-                onClick={() => {
-                  setActiveLink(null);
-                  setActiveSubLink(null);
-                }}
-              />
-            )}
+
           </div>
         )}
       </motion.div>

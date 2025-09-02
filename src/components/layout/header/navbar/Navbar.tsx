@@ -25,8 +25,6 @@ const flsun = "cd5b80c0-ae65-11ee-90e0-ef6a4a1db11a";
 const bambuLab = "c443cf80-711e-11ee-827a-7b9a99b62772";
 const polyterra = "1d3112b0-b322-11ef-8fdc-2538e41a7280";
 
-// Ovo treba obrisati
-console.log('Testiramo');
 
 const links: any = [
   {
