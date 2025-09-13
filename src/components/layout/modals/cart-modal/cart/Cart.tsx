@@ -25,6 +25,7 @@ import { MdClear } from "react-icons/md";
 import { notify } from "@/components/common/toast/Toastify";
 import { userService, UserType } from "@/shared/services/userService";
 import { useSession } from "next-auth/react";
+import FreeDeliveryProgress from "@/components/common/free-delivery-progress/FreeDeliveryBar";
 
 const freeShippingBoundary = 100;
 
@@ -36,7 +37,7 @@ const calculateShippingPrice = (weight: number): number => {
 
   switch (true) {
     case weight <= 10:
-      return 8;
+      return 10;
     case weight <= 20:
       return 12;
     case weight <= 30:
@@ -200,6 +201,7 @@ const Cart = () => {
               }}
             />
           )}
+
         </div>
         <Button
           onClick={() => {
@@ -212,6 +214,9 @@ const Cart = () => {
           Uracunaj
         </Button>
       </div>
+
+      <FreeDeliveryProgress currentAmount={price} freeDeliveryThreshold={freeShippingBoundary} />
+
 
       {status === 'authenticated' && <div className="flex items-center justify-between mt-4">
         <Paragraph size="L" weight="Regular" className="text-neutral-200">

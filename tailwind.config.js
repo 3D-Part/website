@@ -9,6 +9,20 @@ module.exports = {
   theme: {
     colors: {
       //
+      gray: {
+        50: "#f9fafb",
+        100: "#f3f4f6",
+        200: "#e5e7eb",
+        300: "#d1d5db",
+        400: "#9ca3af",
+      },
+      green: {
+        200: "#bbf7d0",
+        300: "#86efac",
+        400: "#4ed17e",
+        500: "#22c55e",
+        600: "#1b9e4b",
+      },
       white: "#ffffff",
       black: "#101010",
       lightBlue: '#9bc7fc',
@@ -76,6 +90,16 @@ module.exports = {
     extend: {
       screens: {
         xsm: "480px",
+      },
+      animation: {
+        'progress-bar': 'progress-filled 1s ease-out',
+      },
+      keyframes: {
+        'progress-filled': {
+          '0%': { transform: 'scaleX(1)' },
+          '50%': { transform: 'scaleX(1.1)' },
+          '100%': { transform: 'scaleX(1)' },
+        },
       },
     },
   },
