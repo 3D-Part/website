@@ -18,6 +18,7 @@ export default function Home() {
       <ProductsSale />
       <ProductsBestSelling />
       <ContactUs />
+      {/* <Blog /> */}
       <InfoCards />
     </main>
   );

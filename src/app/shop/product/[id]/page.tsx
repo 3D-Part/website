@@ -9,7 +9,6 @@ import { Metadata } from "next";
 import { getMainImage } from "@/shared/helper/getMainImage";
 import { Product, WithContext } from "schema-dts";
 import FavoriteButton from "@/components/common/product/FavoriteButton";
-import { useEffect } from "react";
 import Ribbon from "@/components/common/ribbon/ribbon";
 
 interface ProductParams {
