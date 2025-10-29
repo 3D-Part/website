@@ -13,12 +13,15 @@ interface SliderPageProps {
   title: ReactNode;
   titleClassName?: string;
   subtitle: string;
-  description: string;
+  description?: string;
   buttonText?: string;
   bgClassname?: string;
   bgUrl: string;
   productUrl?: string;
   buttonOnClick: () => void;
+  onlyImage?: boolean;
+  buttonStyles?: string;
+  descriptionStyles?: string
   priority?: boolean;
 }
 
@@ -32,6 +35,9 @@ const SliderPage: React.FC<SliderPageProps> = ({
   title,
   titleClassName = "",
   bgClassname,
+  onlyImage,
+  buttonStyles,
+  descriptionStyles,
   priority = false,
 }) => {
   const isTablet = useIsTablet();
@@ -42,16 +48,16 @@ const SliderPage: React.FC<SliderPageProps> = ({
       animate="visible"
       viewport={{ once: false }}
       className="w-full bg-none bg-center bg-no-repeat bg-cover lg:h-[540px] flex flex-col gap-3 lg:grid lg:grid-cols-2 xl:gap-11 lg:gap-x-6 lg:px-[88px] lg:pt-0 lg:pb-0 lg:relative "
-      style={{ backgroundImage: isTablet === false ? `url(${bgUrl})` : "none" }}
+      style={{ backgroundImage: isTablet === false && bgUrl ? `url(${bgUrl})` : "none" }}
     >
       <link rel="preload" href={bgUrl} as="image" />
       <div
-        className={`bg-center bg-no-repeat bg-cover w-full lg:order-2 ${bgClassname}`}
+        className={`bg-center bg-no-repeat ${onlyImage ? "bg-cover min-[490px]:bg-contain" : "bg-cover"} w-full lg:order-2 ${bgClassname}`}
         style={{ backgroundImage: isTablet ? `url(${bgUrl})` : "none" }}
       >
         {productUrl && (
           <motion.div
-            className="h-[250px]  relative lg:order-1 w-full lg:h-full "
+            className={`${onlyImage ? 'h-[400px] min-[440px]:h-[500px]' : 'h-[250px]'}  relative lg:order-1 w-full lg:h-full `}
             transition={{ duration: 1.3, type: "spring" }}
             variants={{
               hidden: { opacity: 0, scale: 0, rotate: 0 },
@@ -90,9 +96,9 @@ const SliderPage: React.FC<SliderPageProps> = ({
       >
         {title}
         {subtitle && <Heading4 className="mt-3 lg:mt-0">{subtitle}</Heading4>}
-        <Paragraph size="M" weight="Regular" className="mt-6 lg:mt-8">
+        {description && <Paragraph size="M" weight="Regular" className={`mt-6 lg:mt-8 ${descriptionStyles}`}>
           {description}
-        </Paragraph>
+        </Paragraph>}
         {buttonText && (
           <motion.div
             variants={{
@@ -103,7 +109,7 @@ const SliderPage: React.FC<SliderPageProps> = ({
               duration: 0.25,
               delay: 0.55,
             }}
-            className="mt-3 lg:absolute bottom:0 left:0"
+            className={`mt-3 lg:absolute bottom:0 left:0 ${buttonStyles}`}
           >
             <Button
               size="M"

@@ -1,6 +1,10 @@
+'use client'
+
+import useSettingsApi from "@/redux/api/useSettingsApi";
 import Paragraph from "../text/paragraph/Paragraph";
 
 const Mail: React.FC<{ className?: string }> = ({ className }) => {
+  const { settings } = useSettingsApi();
   return (
     <div className={`flex items-center gap-2 w-max ${className}`}>
       <svg
@@ -16,7 +20,7 @@ const Mail: React.FC<{ className?: string }> = ({ className }) => {
         />
       </svg>
       <Paragraph size="S" weight="Semibold" className="select-all">
-        info@3dpartshop.com
+        {settings.settings.company.email}
       </Paragraph>
     </div>
   );

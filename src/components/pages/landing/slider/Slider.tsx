@@ -14,6 +14,7 @@ import { useAppDispatch } from "@/redux/hooks";
 import { changeIsModalAuthVisible } from "@/redux/slices/ui/uiSlice";
 import Display1 from "@/components/common/text/display/Display1";
 import { useIsTablet } from "@/shared/hooks/useMediaQuerry";
+import Image from "next/image";
 
 const azurefilmId = "03cbbd90-3dab-11ee-bb4e-994af83111f0";
 
@@ -129,7 +130,7 @@ const Slider = () => {
             productUrl="/assets/img/slider/product4.png"
             title={
               (
-                <Display1 className={`text-white`}>
+                <Display1 className={`text-white `}>
                   <span className="text-transparent  from-[rgba(0,209,255,1)] to-[rgba(0,147,255,1)] bg-gradient-to-r bg-clip-text">
                     Registruj{""}
                   </span>
@@ -143,12 +144,50 @@ const Slider = () => {
             subtitle=""
             description="Pridruži nam se danas i iskoristi posebne pogodnosti! Registracijom na naš sajt dobijaš ekskluzivni popust  i pristup najnovijim ponudama, promotivnim akcijama i specijalnim događajima."
             buttonText="Registruj se"
+            buttonStyles='pb-6'
             buttonOnClick={() => {
               dispatch(changeIsModalAuthVisible(true));
             }}
             priority={true}
           />
         </SwiperSlide>
+
+        <SwiperSlide>
+          <SliderPage
+            bgUrl={isTablet ? "/assets/img/slider/halloween_mob.jpg" : "/assets/img/slider/halloween.jpg"}
+            onlyImage={true}
+            productUrl="/assets/img/slider/prod-placeholder.png"
+            title={
+              (
+                <Display1 className={`text-white `}>
+                  <span className="text-transparent  from-[#982bfd] to-[#5c00b3] bg-gradient-to-r bg-clip-text">
+                    Posebna{""}
+                  </span>
+                  {""} halloween
+                  <span className="text-transparent from-[#982bfd] to-[#5c00b3] bg-gradient-to-r bg-clip-text">
+                    {""} ponuda
+                  </span>
+                </Display1>
+              ) as ReactNode
+            }
+            subtitle=""
+            description="Za samo 34.00KM po kilogramu!"
+            descriptionStyles="lg:text-[#F9FF43] text-lg lg:text-xl lg:hidden !font-bold pb-6"
+            // buttonText="Registruj se"
+            buttonOnClick={() => {
+
+            }}
+            priority={true}
+          />
+        </SwiperSlide>
+
+        {/* <SwiperSlide>
+          <div className="w-full min-h-full bg-green-500 object-fill">
+
+            <Image src={'/assets/img/slider/halloween.jpg'} width={0} height={0} alt="halloween_promotion" className="w-full h-full hidden lg:block" />
+            <Image src={'/assets/img/slider/halloween_mob.jpg'} width={0} height={0} alt="halloween_promotion" className="w-full h-full lg:hidden" />
+          </div>
+        </SwiperSlide> */}
 
         {/* <SwiperSlide>
           <SliderPage

@@ -1,7 +1,12 @@
+'use client'
+
 import React from "react";
 import Paragraph from "../text/paragraph/Paragraph";
+import useSettingsApi from "@/redux/api/useSettingsApi";
 
 const PhoneNumber: React.FC<{ className?: string }> = ({ className }) => {
+  const { settings } = useSettingsApi();
+
   return (
     <div className={`flex items-center gap-3 w-max ${className}`}>
       <svg
@@ -17,7 +22,7 @@ const PhoneNumber: React.FC<{ className?: string }> = ({ className }) => {
         />
       </svg>
       <Paragraph size="S" weight="Regular" className="select-all">
-        +387 66 684 675
+        {settings.settings.company.phone}
       </Paragraph>
     </div>
   );

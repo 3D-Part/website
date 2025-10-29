@@ -1,10 +1,16 @@
+'use client'
+
 import Container from "@/components/common/container/Container";
 import Heading5 from "@/components/common/text/heading/Heading5";
 import Paragraph from "@/components/common/text/paragraph/Paragraph";
+import useSettingsApi from "@/redux/api/useSettingsApi";
 import Link from "next/link";
 import React from "react";
 
 const FooterLinks = () => {
+  const { settings } = useSettingsApi();
+
+
   return (
     <Container className="grid grid-cols-2 px-4 mx-auto gap-y-6 lg:grid-cols-3 lg:justify-center ">
       <div className="flex flex-col lg:mx-auto gap:4 lg:flex">
@@ -55,7 +61,7 @@ const FooterLinks = () => {
             Email:
           </Paragraph>
           <Paragraph size="M" weight="Regular" className="text-neutral-200">
-            info@3dpartshop.com
+            {settings.settings.company.email}
           </Paragraph>
         </div>
         <div>
@@ -63,10 +69,10 @@ const FooterLinks = () => {
             Ulica:
           </Paragraph>
           <Paragraph size="M" weight="Regular" className="text-neutral-200">
-            Blagoja Parovića 108
+            {settings.settings.company.address}
           </Paragraph>
           <Paragraph size="M" weight="Regular" className="text-neutral-200">
-            Banja Luka, 78000
+            {settings.settings.company.town}
           </Paragraph>
         </div>
       </div>

@@ -11,6 +11,7 @@ import Toastify from "@/components/common/toast/Toastify";
 import { NextAuthProvider } from "@/app/providers";
 import GoogleAnalytics from "./GoogleAnalytics";
 import Script from "next/script";
+import NonRendableComponent from "@/components/helper/NonRendableComponent";
 
 const exo2 = Exo_2({
   variable: "--font-exo2",
@@ -60,6 +61,7 @@ export default function RootLayout({
       >
         <NextAuthProvider>
           <Providers>
+            <NonRendableComponent />
             <Header />
             <Lights />
             <GoogleAnalytics />

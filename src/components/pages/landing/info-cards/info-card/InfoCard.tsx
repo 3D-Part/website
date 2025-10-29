@@ -9,6 +9,7 @@ import FastDelivery from "../icons/FastDelivery";
 import ProductsIcon from "../icons/ProductsIcon";
 import SupportIcon from "../icons/SupportIcon";
 import { useIsTablet } from "@/shared/hooks/useMediaQuerry";
+import useSettingsApi from "@/redux/api/useSettingsApi";
 
 interface InfoCardProps {
   title: string;
@@ -26,6 +27,8 @@ const InfoCard: FC<InfoCardProps> = ({
   title,
 }) => {
   const isTablet = useIsTablet();
+  const { settings } = useSettingsApi();
+
   return (
     <>
       {isTablet ? (

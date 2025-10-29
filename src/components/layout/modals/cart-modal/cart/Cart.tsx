@@ -26,8 +26,9 @@ import { notify } from "@/components/common/toast/Toastify";
 import { userService, UserType } from "@/shared/services/userService";
 import { useSession } from "next-auth/react";
 import FreeDeliveryProgress from "@/components/common/free-delivery-progress/FreeDeliveryBar";
+import useSettingsApi from "@/redux/api/useSettingsApi";
 
-const freeShippingBoundary = 100;
+// const freeShippingBoundary = 100;
 
 const calculateShippingPrice = (weight: number): number => {
   if (weight === 0) {
@@ -53,7 +54,7 @@ const calculateShippingPrice = (weight: number): number => {
   }
 };
 
-const calculatePriceAndPost = (cart: CartProductsType[]) => {
+const calculatePriceAndPost = (cart: CartProductsType[], freeShippingBoundary: number) => {
   let price = 0,
     post = 0,
     weight = 0;
@@ -88,9 +89,11 @@ const Cart = () => {
   const discount = useAppSelector(discountSelector);
   const dispatch = useAppDispatch();
 
+  const { settings } = useSettingsApi();
+
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const { price, post } = calculatePriceAndPost(cart);
+  const { price, post } = calculatePriceAndPost(cart, settings.settings.delivery.freeDeliveryLimit);
   const { status } = useSession();
 
   const fetchCouponsAndAddDiscount = async (code: string) => {
@@ -215,7 +218,7 @@ const Cart = () => {
         </Button>
       </div>
 
-      <FreeDeliveryProgress currentAmount={price} freeDeliveryThreshold={freeShippingBoundary} />
+      <FreeDeliveryProgress currentAmount={price} freeDeliveryThreshold={settings.settings.delivery.freeDeliveryLimit} />
 
 
       {status === 'authenticated' && <div className="flex items-center justify-between mt-4">
@@ -253,7 +256,7 @@ const Cart = () => {
         <Paragraph size="L" weight="Regular" className="text-neutral-200">
           Poštarina{" "}
         </Paragraph>
-        <p className="text-white text-[28px] font-exo2 font-semibold">{`${post.toFixed(
+        <p className="text-white text-[28px] font-exo2 font-semibold">{`${settings.settings.delivery.cost.toFixed(
           2
         )} KM`}</p>
       </div>
