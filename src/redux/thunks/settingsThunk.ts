@@ -7,7 +7,6 @@ export const settingsThunk = createAsyncThunk(
         try {
             const response = await settingsService.fetchSettings();
 
-            console.log(response);
 
             return response as ISettings['data'];
         } catch (e) {

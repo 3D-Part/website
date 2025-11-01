@@ -7,7 +7,6 @@ const NonRendableComponent = () => {
     const { fetchSettings } = useSettingsApi();
 
     useEffect(() => {
-        console.log('aaa')
         fetchSettings();
     }, [])
 

@@ -48,7 +48,6 @@ export const cart = createSlice({
   initialState,
   reducers: {
     changePointsInCart: (state, action) => {
-      console.log(action.payload)
       state.points = action.payload
     },
     resetCart: () => initialState,
