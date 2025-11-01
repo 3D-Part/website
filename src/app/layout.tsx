@@ -61,7 +61,7 @@ export default function RootLayout({
       >
         <NextAuthProvider>
           <Providers>
-            <NonRendableComponent />
+            {/* <NonRendableComponent /> */}
             <Header />
             <Lights />
             <GoogleAnalytics />

@@ -1,16 +1,29 @@
 
+'use client'
+
 import Products from "@/components/common/products/Products";
 import Heading2 from "@/components/common/text/heading/Heading2";
 import Container from "@/components/common/container/Container";
-import { productsServices } from "../../../../../services/productsServices";
+import { ProductPaginatedInterface, productsServices } from "../../../../../services/productsServices";
+import { useEffect, useState } from "react";
 
-const ProductsRecommended = async () => {
-  const data = await productsServices.getRecommended();
+const ProductsRecommended = () => {
+  const [data, setData] = useState<any>();
 
+  const fetchData = async () => {
+    const resData = await productsServices.getRecommended();
+
+    setData(resData)
+  }
+  useEffect(() => {
+    fetchData();
+  }, [])
+
+  if (!data) return null;
 
   return (
     <Container className="w-full mb-[60px] lg:mb-24 lg:px-9">
-      {data.rows.length !== 0 && (
+      {data && data.rows.length !== 0 && (
         <Products
           products={data.rows}
           className="mt-3 "

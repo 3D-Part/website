@@ -1,6 +1,13 @@
 import { CategoryInterface } from "@/shared/interfaces/categoryInterface";
 
-const defaultRoute = process.env.NEXT_PUBLIC_BACKEND_URL + "shop/categories";
+const RAW_BASE = process.env.NEXT_PUBLIC_BACKEND_URL ?? "";
+if (!RAW_BASE) {
+  throw new Error("Missing NEXT_PUBLIC_BACKEND_URL");
+}
+// Trim trailing slashes, then add exactly one.
+const API_BASE = RAW_BASE.replace(/\/+$/, "");
+const defaultRoute = `${API_BASE}/shop/categories`;
+
 
 export interface CategoriesPaginatedInterface {
   count: number;
@@ -36,7 +43,7 @@ const getSingleCategory = async (id: string) => {
     });
     const data = await res.json();
     return data;
-  } catch (err) {}
+  } catch (err) { }
 };
 
 const getSingleCategoryWithSlug = async (

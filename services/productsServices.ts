@@ -126,6 +126,7 @@ const getRecommended = async (): Promise<ProductPaginatedInterface> => {
       cache: "no-store",
     });
     const data = await res.json();
+    console.log(data);
     if ("key" in data && "message" in data) {
       // Error response
       throw new Error(data.message);
