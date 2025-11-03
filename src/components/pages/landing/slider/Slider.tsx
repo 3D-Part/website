@@ -159,7 +159,7 @@ const Slider = () => {
             productUrl="/assets/img/slider/prod-placeholder.png"
             title={
               (
-                <Display1 className={`text-white `}>
+                <Display1 className={`text-white lg:hidden`}>
                   <span className="text-transparent  from-[#982bfd] to-[#5c00b3] bg-gradient-to-r bg-clip-text">
                     Posebna{""}
                   </span>
