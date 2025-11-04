@@ -93,12 +93,17 @@ module.exports = {
       },
       animation: {
         'progress-bar': 'progress-filled 1s ease-out',
+        marquee: 'marquee var(--marquee-duration, 20s) linear infinite',
       },
       keyframes: {
         'progress-filled': {
           '0%': { transform: 'scaleX(1)' },
           '50%': { transform: 'scaleX(1.1)' },
           '100%': { transform: 'scaleX(1)' },
+        },
+        marquee: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(calc(-1 * var(--text-width)))' },
         },
       },
     },
