@@ -46,6 +46,12 @@ const YellowStripe = () => {
                 <span className="px-8">{text}</span>
                 <span className="px-8">{text}</span>
                 <span className="px-8">{text}</span>
+                <span className="px-8">{text}</span>
+                <span className="px-8">{text}</span>
+                <span className="px-8">{text}</span>
+                <span className="px-8">{text}</span>
+                <span className="px-8">{text}</span>
+                <span className="px-8">{text}</span>
             </div>
         </div>
     )
