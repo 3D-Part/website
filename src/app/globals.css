@@ -56,34 +56,12 @@ body {
   background-color: rgba(248, 250, 252, 0.3) !important;
 }
 
-@media only screen  and (max-width: 395px) {
-.landing_slider .swiper-pagination {
-    top: 600px !important;
-  }
-}
-
-@media only screen and (min-width: 396px) and (max-width: 439px) {
+@media only screen and (max-width: 1024px) {
   .landing_slider .swiper-pagination {
-    top: 555px !important;
-  }
-}
-
-@media only screen and (min-width: 440px) and (max-width: 580px) {
-  .landing_slider .swiper-pagination {
-    top: 654px !important;
-  }
-}
-
-@media only screen and (min-width: 580px) and (max-width: 1024px) {
-.landing_slider .swiper-pagination {
-    top: 560px !important;
+    top: 238px !important;
     position: absolute !important;
     height: min-content !important;
   }
-}
-
-@media only screen and (max-width: 1024px) {
-  
   .swiper-button-prev,
   .swiper-button-next {
     display: none !important;
