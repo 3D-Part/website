@@ -42,16 +42,16 @@ const YellowStripe = () => {
                     } as React.CSSProperties
                 }
             >
-                <span ref={textRef} className="px-8">{text}</span>
-                <span className="px-8">{text}</span>
-                <span className="px-8">{text}</span>
-                <span className="px-8">{text}</span>
-                <span className="px-8">{text}</span>
-                <span className="px-8">{text}</span>
-                <span className="px-8">{text}</span>
-                <span className="px-8">{text}</span>
-                <span className="px-8">{text}</span>
-                <span className="px-8">{text}</span>
+                <span ref={textRef} className="px-8 whitespace-pre">{text}</span>
+                <span className="px-8 whitespace-pre">{text}</span>
+                <span className="px-8 whitespace-pre">{text}</span>
+                <span className="px-8 whitespace-pre">{text}</span>
+                <span className="px-8 whitespace-pre">{text}</span>
+                <span className="px-8 whitespace-pre">{text}</span>
+                <span className="px-8 whitespace-pre">{text}</span>
+                <span className="px-8 whitespace-pre">{text}</span>
+                <span className="px-8 whitespace-pre">{text}</span>
+                <span className="px-8 whitespace-pre">{text}</span>
             </div>
         </div>
     )
