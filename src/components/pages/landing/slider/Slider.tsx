@@ -13,7 +13,7 @@ import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/redux/hooks";
 import { changeIsModalAuthVisible } from "@/redux/slices/ui/uiSlice";
 import Display1 from "@/components/common/text/display/Display1";
-import { useIsTablet } from "@/shared/hooks/useMediaQuerry";
+import { useIsMobileSlider, useIsTablet } from "@/shared/hooks/useMediaQuerry";
 
 const azurefilmId = "03cbbd90-3dab-11ee-bb4e-994af83111f0";
 
@@ -24,6 +24,7 @@ const Slider = () => {
   const dispatch = useAppDispatch();
 
   const isTablet = useIsTablet();
+  const isMobileSlider = useIsMobileSlider();
 
   return (
     <Container className="w-full px-4 py-6 lg:px-9 lg:py-8 landing_slider">
@@ -66,9 +67,9 @@ const Slider = () => {
         </SwiperSlide> */}
 
         {/* ----------------- Black Friday -----------------  */}
-        {/* <SwiperSlide>
+        <SwiperSlide>
           <SliderPage
-            bgUrl="/assets/img/slider/black-friday.png"
+            bgUrl={isMobileSlider ? "/assets/img/slider/black_friday-mobile.png" : "/assets/img/slider/black_friday-desktop.png"}
             productUrl={undefined}
             title={
               isTablet ? (
@@ -85,7 +86,7 @@ const Slider = () => {
               )
             }
             subtitle={
-              isTablet ? "20% popusta na sve artikle od 25.11 do 29.11" : ""
+              isTablet ? "Povodom crnog petka, 3D Part donosi posebno pripremljene ponude za sve ljubitelje 3D printa. Kreiraj nalog na našem šopu i ostvari dodatnih 10% popusta." : ""
             }
             description=""
             bgClassname="h-[250px]"
@@ -95,7 +96,7 @@ const Slider = () => {
             }}
             priority={true}
           />
-        </SwiperSlide> */}
+        </SwiperSlide>
 
         <SwiperSlide>
           <SliderPage

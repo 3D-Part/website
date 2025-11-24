@@ -19,5 +19,6 @@ export function useMediaQuery(query: string) {
   return matches;
 }
 
+export const useIsMobileSlider = () => useMediaQuery("(max-width: 450px)");
 export const useIsPhone = () => useMediaQuery("(max-width: 768px)");
 export const useIsTablet = () => useMediaQuery("(max-width: 1024px)");
