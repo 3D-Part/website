@@ -22,6 +22,7 @@ const Successful = () => {
     }
   }, []);
 
+
   return (
     <main className="min-h-screen px-4">
       <motion.div
@@ -68,7 +69,7 @@ const Successful = () => {
           </div>
 
           <div className="flex text-lg font-normal text-white bg-neutral-700 px-4 py-[21px]">
-            Poštarina
+            Dostava
           </div>
           <div className="flex text-lg font-normal text-white bg-neutral-700 px-4 py-[21px]">
             {data?.shippingPrice} KM

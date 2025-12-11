@@ -13,7 +13,7 @@ const FreeDeliveryProgress: React.FC<FreeDeliveryProgressProps> = ({
     const remaining = Math.max(freeDeliveryThreshold - currentAmount, 0);
 
     return (
-        <div className="w-full pt-7 px-4 rounded-2xl ">
+        <div className="w-full pt-7 rounded-2xl ">
             <div className="relative w-full h-1 bg-gray-200 rounded-full overflow-hidden animate-progress-bar">
                 <div
                     className="h-full bg-gradient-to-r from-primary-400 to-green-600 rounded-full transition-[width] duration-700 ease-out "

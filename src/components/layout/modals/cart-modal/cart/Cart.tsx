@@ -164,6 +164,8 @@ const Cart = () => {
     dispatch(changePointsInCart(points + 1));
   };
 
+
+
   return (
     <motion.div className="flex flex-col w-full h-full px-4 py-2 overflow-y-auto cursor-default lg:px-8 lg:py-4 bg-neutral-800">
       <Heading2>Korpa</Heading2>
@@ -254,9 +256,9 @@ const Cart = () => {
 
       <div className="flex items-center justify-between my-3">
         <Paragraph size="L" weight="Regular" className="text-neutral-200">
-          Poštarina{" "}
+          Dostava{" "}
         </Paragraph>
-        <p className="text-white text-[28px] font-exo2 font-semibold">{`${settings.settings.delivery.cost.toFixed(
+        <p className={`text-white text-[28px] font-exo2 font-semibold ${price >= settings.settings.delivery.freeDeliveryLimit ? 'line-through' : ''}`}>{`${settings.settings.delivery.cost.toFixed(
           2
         )} KM`}</p>
       </div>
