@@ -1,3 +1,4 @@
+
 import Container from "@/components/common/container/Container";
 import Products from "@/components/common/products/Products";
 import Heading2 from "@/components/common/text/heading/Heading2";
@@ -9,6 +10,9 @@ const RelatedProducts: React.FC<{
   productId: string;
   productSku: string;
 }> = async ({ categoryId, productId, productSku }) => {
+  console.log('--------------------------------------------');
+  console.log('PROBLEEEEEEEEM', categoryId, productId, productSku);
+  console.log('--------------------------------------------');
   const data = await productsServices.getAllProducts({
     categoryId: categoryId,
   });

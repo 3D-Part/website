@@ -36,6 +36,8 @@ const getAllProducts = async ({
 }): Promise<ProductPaginatedInterface> => {
   const payload: any = {};
 
+  console.log("KATEGORI AJDI", categoryId)
+
   if (slug !== undefined) {
     payload["filters[category.slug][is]"] = slug;
   }
@@ -81,6 +83,8 @@ const getAllProducts = async ({
 
   const params = new URLSearchParams({ ...payload }).toString();
   /////////
+
+  console.log(`${defaultRoute}?${params}`);
 
   try {
     const res = await fetch(`${defaultRoute}?${params}`, {

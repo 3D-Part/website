@@ -67,7 +67,7 @@ const Slider = () => {
         </SwiperSlide> */}
 
         {/* ----------------- Black Friday -----------------  */}
-        <SwiperSlide>
+        {/* <SwiperSlide>
           <SliderPage
             bgUrl={isMobileSlider ? "/assets/img/slider/black_friday-mobile.png" : "/assets/img/slider/black_friday-desktop.png"}
             productUrl={undefined}
@@ -96,9 +96,9 @@ const Slider = () => {
             }}
             priority={true}
           />
-        </SwiperSlide>
+        </SwiperSlide> */}
 
-        <SwiperSlide>
+        {/* <SwiperSlide>
           <SliderPage
             bgUrl="/assets/img/slider/newAzurefilmCollectionBg.png"
             productUrl="/assets/img/slider/newAzurefilmCollectionProduct.png"
@@ -122,7 +122,7 @@ const Slider = () => {
             }}
             priority={true}
           />
-        </SwiperSlide>
+        </SwiperSlide> */}
 
         <SwiperSlide>
           <SliderPage
