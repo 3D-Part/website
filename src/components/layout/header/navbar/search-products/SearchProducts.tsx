@@ -7,9 +7,18 @@ import { ProductInterface } from "@/shared/interfaces/productsInterface";
 import { productsServices } from "../../../../../../services/productsServices";
 
 const SearchProducts = () => {
-  const queryParams = new URLSearchParams(window.location.search);
-  const searchParam = queryParams.get("search") || "";
-  const [text, setText] = useState(searchParam);
+  const [text, setText] = useState("");
+  // read initial search param on client only
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    try {
+      const queryParams = new URLSearchParams(window.location.search);
+      const searchParam = queryParams.get("search") || "";
+      setText(searchParam);
+    } catch (e) {
+      setText("");
+    }
+  }, []);
   const [products, setProducts] = useState<ProductInterface[]>([]);
   const [loading, setLoading] = useState(false);
 
