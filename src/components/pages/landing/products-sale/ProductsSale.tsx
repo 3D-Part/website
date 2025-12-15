@@ -9,6 +9,7 @@ import Container from "@/components/common/container/Container";
 import { useEffect, useState } from "react";
 import { saleService } from "@/shared/services/saleService";
 import Spinner from "@/components/common/spinner/Spinner";
+import Link from "next/link";
 
 const ProductsSale = () => {
   const [list, setList] = useState<ProductInterface[] | any[]>([]);
@@ -122,10 +123,12 @@ const ProductsSale = () => {
         }}
       >
         <div className="flex flex-col w-full px-4 lg:px-0">
+          {/* <Link href="/shop/all?sale=true"> */}
           <Heading2>
             Proizvodi na akciji{" "}
             <span className="text-primary-500">({list.length})</span>
           </Heading2>
+          {/* </Link> */}
           <div className="flex items-center gap-2 mt-2 h-7">
             <svg
               xmlns="http://www.w3.org/2000/svg"

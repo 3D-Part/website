@@ -278,3 +278,61 @@ input[type="number"]::-webkit-outer-spin-button {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   scroll-behavior: smooth !important;
 }
+
+/* Thin horizontal scrollbar for recommended product lists (scoped) */
+.horizontal-thin-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(59,130,246,0.6) transparent;
+}
+.horizontal-thin-scroll::-webkit-scrollbar {
+  height: 4px;
+}
+.horizontal-thin-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.horizontal-thin-scroll::-webkit-scrollbar-thumb {
+  background: rgba(59,130,246,0.6);
+  border-radius: 9999px;
+}
+
+/* Product card image wrapper + gradient overlay */
+.product-card-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100px;
+  overflow: hidden;
+  border-radius: 8px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.product-card-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.product-card-gradient {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 48%;
+  background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.55) 40%, rgba(0,0,0,0) 100%);
+  display: flex;
+  align-items: flex-end;
+  padding: 8px;
+  box-sizing: border-box;
+}
+.product-card-footer {
+  color: #fff;
+  font-size: 13px;
+  line-height: 1;
+}
+.product-card-name {
+  font-weight: 600;
+}
+.product-card-price {
+  font-weight: 700;
+}

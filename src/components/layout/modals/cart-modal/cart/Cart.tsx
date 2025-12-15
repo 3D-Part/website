@@ -22,6 +22,7 @@ import Button from "@/components/common/button/Button";
 import { changeIsGlobalLoading } from "@/redux/slices/ui/uiSlice";
 import { couponsService } from "@/shared/services/couponsService";
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { MdClear } from "react-icons/md";
 import { notify } from "@/components/common/toast/Toastify";
 import { userService, UserType } from "@/shared/services/userService";
@@ -32,6 +33,9 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import Heading3 from "@/components/common/text/heading/Heading3";
 import Heading4 from "@/components/common/text/heading/Heading4";
+import { addProductWithAmount } from "@/redux/slices/cart/cartSlice";
+import Heading6 from "@/components/common/text/heading/Heading6";
+import { CartIcon } from "@/components/common/product/Product";
 
 // const freeShippingBoundary = 100;
 
@@ -98,6 +102,7 @@ const Cart = () => {
   const router = useRouter();
 
   const { settings } = useSettingsApi();
+  const [recommended, setRecommended] = useState<any[] | null>(null);
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -152,6 +157,25 @@ const Cart = () => {
     }
   }, [status]);
 
+  // fetch shopping cart recommended products
+  useEffect(() => {
+    const fetchRecommended = async () => {
+      try {
+        const res = await fetch(
+          "https://api.3dpartshop.com/shop/products/shopping-cart-recommended",
+          { method: "GET", headers: { accept: "application/json" } }
+        );
+        if (!res.ok) return;
+        const data = await res.json();
+        setRecommended(data.rows || []);
+      } catch (err) {
+        console.error("Failed to load recommended products", err);
+      }
+    };
+
+    fetchRecommended();
+  }, []);
+
   const minusPoints = () => {
     if (points <= 0) return;
 
@@ -194,11 +218,73 @@ const Cart = () => {
           {cart.map((product) => {
             return <CartProducts product={product} key={product.idProduct} />;
           })}
+          {recommended && recommended.length > 0 && (
+            <div className="mt-3">
+              <Heading6>Preporučujemo</Heading6>
+              <div className="mt-2 overflow-x-auto horizontal-thin-scroll">
+                <div className="flex gap-3 w-max py-2">
+                  {recommended.map((p) => (
+                    <div
+                      key={p.id}
+                      className="w-[110px] bg-neutral-900 rounded-lg flex-shrink-0 cursor-pointer"
+                      onClick={() => {
+                        router.push(`/shop/product/${p.id}`);
+                        dispatch(changeCartModalVisible(false));
+                      }}
+                    >
+                      <div className="product-card-image-wrapper">
+                        {p.images && p.images[0] ? (
+                          <img src={`https://bucket3dpart.s3.eu-central-1.amazonaws.com/${p.images[0].imageId}`} alt={p.name} className="w-full" />
+                        ) : (
+                          <div className="w-full h-full bg-neutral-700" />
+                        )}
+                        <div className="product-card-gradient">
+                          <div className="product-card-footer">
+                            <div className="product-card-name truncate w-[100px]">{p.name}</div>
+                            <div className="product-card-price">{p.price} KM</div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="mt-2 flex justify-center items-center">
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            dispatch(
+                              addProductWithAmount({
+                                amount: 1,
+                                productId: p.id,
+                                productData: {
+                                  image: p.images && p.images[0] ? `https://bucket3dpart.s3.eu-central-1.amazonaws.com/${p.images[0].imageId}` : "/assets/img/no-image.svg",
+                                  weight: p.weight || "0",
+                                  price: p.price,
+                                  quantity: p.quantity || 1,
+                                  name: p.name,
+                                  salePrice: p.salePrice || null,
+                                },
+                                shouldNotify: true,
+                              })
+                            );
+                          }}
+                          className="mb-2 mx-2 w-full px-4 text-xs bg-primary-500 hover:bg-primary-600 text-white rounded-md py-2 flex justify-center items-center transition-colors gap-2"
+                        >
+                          <div className="items-center hidden xsm:flex">
+                            +<CartIcon color={"#ffffff"} />
+                          </div>
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
         </AnimatePresence>
       </div>
 
       {/* --------------- */}
       <div className="h-[1px] bg-neutral-500"></div>
+
+      {/* Recommended products (horizontal scroll) */}
 
       {/* PROMO CODE */}
       {pathname === "/shop/checkout" && <div className="flex items-center gap-5 mt-3 mb-1">
