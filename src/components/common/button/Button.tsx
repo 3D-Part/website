@@ -25,7 +25,7 @@ const Button: React.FC<ButtonProps> = ({
   let colors = "";
   if (type === "primary") {
     colors =
-      "bg-primary-500 hover:bg-primary-400 active:bg-primary-600 disabled:bg-[rgba(59,130,246,0.5)] disabled:text-neutral-400 ";
+      "bg-primary-500 border border-primary-500 hover:bg-primary-400 active:bg-primary-600 disabled:bg-[rgba(59,130,246,0.5)] disabled:text-neutral-400 ";
   } else if (type === "secondary") {
     colors =
       "bg-[rgba(59,130,246,0.2)] text-white border border-primary-500 hover:border-primary-400 hover:bg-[rgba(59,130,246,0.5)] active:bg-[rgba(59,130,246,0.2)] active:border-primary-600 disabled:border-primary-400 disabled:bg-[rgba(59,130,246,0.2)] disabled:text-primary-400";
@@ -40,9 +40,8 @@ const Button: React.FC<ButtonProps> = ({
         e.stopPropagation();
         e.preventDefault();
       }}
-      className={`px-4 transition-all ${className} ${colors} ${
-        size === "M" ? "py-3" : "py-4"
-      } rounded-lg flex justify-center items-center
+      className={`px-4 transition-all ${className} ${colors} ${size === "M" ? "py-3" : "py-4"
+        } rounded-lg flex justify-center items-center
         disabled:cursor-not-allowed`}
     >
       <motion.div

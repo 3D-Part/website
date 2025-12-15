@@ -11,7 +11,7 @@ export interface ISettings {
             },
             company: {
                 town: string,
-                email: string,
+                email: string[],
                 phone: string,
                 address: string
             },
@@ -35,7 +35,7 @@ const initialState: ISettings = {
             },
             company: {
                 town: '',
-                email: '',
+                email: [],
                 phone: '',
                 address: ''
             },

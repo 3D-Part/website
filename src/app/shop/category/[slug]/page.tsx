@@ -1,7 +1,7 @@
 import Container from "@/components/common/container/Container";
 import { categoriesServices } from "../../../../../services/categoriesServices";
-import Description from "@/components/pages/shop/category/description/Description";
-import CategoryProducts from "@/components/pages/shop/category/category-products/CategoryProducts";
+import Description from "@/components/pages/shop/common/description/Description";
+import CategoryProducts from "@/components/pages/shop/category/CategoryProducts";
 import { Metadata } from "next";
 
 interface CategoryParams {
@@ -51,7 +51,7 @@ export default async function Category({ params }: CategoryParams) {
     <div className="w-full">
       <Container className="min-h-screen p-4 lg:px-8">
         <Description description={categoryData.description} />
-        <CategoryProducts categoryId={categoryData.id} />
+        <CategoryProducts categoryId={categoryData.id} parameters={params} />
       </Container>
     </div>
   );

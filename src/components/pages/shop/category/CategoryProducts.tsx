@@ -1,22 +1,23 @@
 "use client";
 import React, { useEffect, useState, useCallback, useRef } from "react";
-import Filters from "./filters/Filters";
+import Filters from "../common/filters/Filters";
 import Heading2 from "@/components/common/text/heading/Heading2";
-import ProductGrid from "./product-grid/ProductGrid";
+import ProductGrid from "../common/product-grid/ProductGrid";
 import {
   ProductPaginatedInterface,
   productsServices,
-} from "../../../../../../services/productsServices";
+} from "../../../../../services/productsServices";
 import { useParams, useSearchParams } from "next/navigation";
 import Spinner from "@/components/common/spinner/Spinner";
 
-const CategoryProducts: React.FC<{ categoryId: string }> = ({ categoryId }) => {
+const CategoryProducts: React.FC<{ categoryId: string, parameters: any }> = ({ categoryId, parameters }) => {
   const initCount = 30;
 
   const [priceMin, setPriceMin] = useState<number | null>(null);
   const [priceMax, setPriceMax] = useState<number | null>(null);
   const [field, setField] = useState<"name" | "price" | null>(null);
   const [order, setOrder] = useState<"ASC" | "DESC" | null>(null);
+  const [filterByProductAttributes, setFilterByProductAttributes] = useState<string | undefined>(undefined);
 
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState<ProductPaginatedInterface>({
@@ -38,9 +39,11 @@ const CategoryProducts: React.FC<{ categoryId: string }> = ({ categoryId }) => {
     async (append = false) => {
       if (append && !hasMore) return;
 
+
       setIsLoading(true);
       const res = await productsServices.getAllProducts({
         categoryId,
+        filterByProductAttributes,
         price: { gt: priceMin, lt: priceMax },
         field,
         order,
@@ -63,7 +66,7 @@ const CategoryProducts: React.FC<{ categoryId: string }> = ({ categoryId }) => {
       setHasMore(offset < res.count);
       setIsLoading(false);
     },
-    [categoryId, priceMin, priceMax, field, order, manufacturerId, offset, hasMore]
+    [categoryId, priceMin, priceMax, field, order, manufacturerId, offset, hasMore, filterByProductAttributes]
   );
 
   // Initial + filters/sorting load
@@ -71,7 +74,7 @@ const CategoryProducts: React.FC<{ categoryId: string }> = ({ categoryId }) => {
     setOffset(0);
     setHasMore(true);
     fetchProducts(false);
-  }, [priceMin, priceMax, field, order, categoryId, manufacturerId, params.slug]);
+  }, [priceMin, priceMax, field, order, categoryId, manufacturerId, params.slug, filterByProductAttributes]);
 
   // Infinite scroll listener
   useEffect(() => {
@@ -129,6 +132,8 @@ const CategoryProducts: React.FC<{ categoryId: string }> = ({ categoryId }) => {
         setPriceMin={setPriceMin}
         field={field}
         order={order}
+        filterByProductAttributes={filterByProductAttributes}
+        setFilterByProductAttributes={setFilterByProductAttributes}
         setField={setField}
         setOrder={setOrder}
         isLoading={isLoading}

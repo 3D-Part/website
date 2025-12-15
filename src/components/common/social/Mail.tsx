@@ -20,7 +20,7 @@ const Mail: React.FC<{ className?: string }> = ({ className }) => {
         />
       </svg>
       <Paragraph size="S" weight="Semibold" className="select-all">
-        {settings.settings.company.email}
+        {settings.settings.company.email[0]}
       </Paragraph>
     </div>
   );

@@ -1,4 +1,6 @@
 import { CategoryInterface } from "@/shared/interfaces/categoryInterface";
+import { IProductAttribute } from "@/shared/types";
+import { get } from "http";
 
 const RAW_BASE = process.env.NEXT_PUBLIC_BACKEND_URL ?? "";
 if (!RAW_BASE) {
@@ -7,11 +9,17 @@ if (!RAW_BASE) {
 // Trim trailing slashes, then add exactly one.
 const API_BASE = RAW_BASE.replace(/\/+$/, "");
 const defaultRoute = `${API_BASE}/shop/categories`;
+const attributesRoute = `${API_BASE}/shop/product-attributes`;
 
 
 export interface CategoriesPaginatedInterface {
   count: number;
   rows: CategoryInterface[];
+}
+
+export interface ProductAttributePaginatedInterface {
+  count: number;
+  rows: IProductAttribute[];
 }
 
 const getAllCategories = async (): Promise<CategoriesPaginatedInterface> => {
@@ -29,6 +37,27 @@ const getAllCategories = async (): Promise<CategoriesPaginatedInterface> => {
     } else {
       // Success response
       return data as CategoriesPaginatedInterface;
+    }
+  } catch (err) {
+    throw err;
+  }
+};
+
+const getAllProductAttributes = async (): Promise<ProductAttributePaginatedInterface> => {
+  try {
+    const res = await fetch(`${attributesRoute}`, {
+      method: "GET",
+      cache: "no-store",
+    });
+
+    const data = await res.json();
+
+    if ("key" in data && "message" in data) {
+      // Error response
+      throw new Error(data.message);
+    } else {
+      // Success response
+      return data as ProductAttributePaginatedInterface;
     }
   } catch (err) {
     throw err;
@@ -72,5 +101,6 @@ const getSingleCategoryWithSlug = async (
 export const categoriesServices = {
   getAllCategories,
   getSingleCategory,
+  getAllProductAttributes,
   getSingleCategoryWithSlug,
 };

@@ -88,6 +88,25 @@ const Layout: FC<{ children: React.ReactNode }> = ({ children }) => {
         {isVerified && (
           <>
             <Link
+              href="/profile-details/history"
+              type="button"
+              className={`flex items-center justify-center p-3 rounded-lg transition-all  h-14 w-14 lg:gap-5  lg:w-full  ${pathName === "/profile-details/history"
+                ? "bg-neutral-600 lg:text-white lg:bg-transparent lg:hover:bg-neutral-700"
+                : "bg-neutral-800 hover:bg-neutral-700 lg:bg-transparent lg:hover:bg-neutral-700 lg:text-[#888888]"
+                }`}
+            >
+              <div className="flex items-center flex-1 gap-2">
+                <HistorySvg
+                  scale={1.5}
+                  fill={pathName === "/profile-details/history" ? "#387BE8" : "#1A3A73"}
+                />
+                <span className="hidden lg:block">Istorija narudzbi</span>
+              </div>
+              <ArrowSvg
+                fill={pathName === "/profile-details/history" ? "white" : "#888888"}
+              />
+            </Link>
+            <Link
               href="/profile-details/coupons"
               type="button"
               className={`flex items-center justify-center p-3 rounded-lg transition-all  h-14 w-14 lg:gap-5  lg:w-full  ${pathName === "/profile-details/coupons"
@@ -198,6 +217,33 @@ const LockSvg: FC<{ scale?: number; fill?: string }> = ({
           <rect width="16" height="16" fill="white" />
         </clipPath>
       </defs>
+    </svg>
+  );
+};
+const HistorySvg: FC<{ scale?: number; fill?: string }> = ({
+  scale = 1,
+  fill = "#387BE8",
+}) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={20 * scale}
+      height={20 * scale}
+      viewBox="0 0 24 24"
+      fill="none"
+    >
+      {/* outer circle */}
+      <path
+        d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2z"
+        fill={fill}
+        opacity="0.12"
+      />
+      <path
+        d="M12 4.5a7.5 7.5 0 1 0 0 15 7.5 7.5 0 0 0 0-15zm0 1.5a6 6 0 1 1 0 12 6 6 0 0 1 0-12z"
+        fill={fill}
+      />
+      {/* clock hands */}
+      <path d="M12.75 7.5h-1.5v5.25l4.5 2.7.75-1.23-3.75-2.25V7.5z" fill={fill} />
     </svg>
   );
 };

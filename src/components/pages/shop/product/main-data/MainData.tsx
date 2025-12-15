@@ -158,10 +158,9 @@ const MainData: React.FC<{
           <motion.button
             className={
               "w-10 h-10 rounded-[4px] flex items-center justify-center bg-neutral-900 " +
-              ` ${
-                amount === productData.quantity
-                  ? "cursor-not-allowed"
-                  : "cursor-pointer"
+              ` ${amount === productData.quantity
+                ? "cursor-not-allowed"
+                : "cursor-pointer"
               }`
             }
             whileTap="tap"
@@ -206,7 +205,7 @@ const MainData: React.FC<{
                   name,
                   salePrice,
                 },
-                shouldNotify: true,
+                shouldNotify: false,
               })
             );
           }}

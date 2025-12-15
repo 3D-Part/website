@@ -4,6 +4,7 @@ import { MdClear } from "react-icons/md";
 import { AnimatePresence, motion } from "framer-motion";
 import { ProductInterface } from "@/shared/interfaces/productsInterface";
 import SearchResults from "@/components/layout/header/navbar/search-products/search-results/SearchResults";
+import { useState } from "react";
 
 interface SearchProps {
   searchIcon?: boolean;
@@ -28,15 +29,32 @@ const Search: React.FC<SearchProps> = ({
   text,
   loading,
 }) => {
+  const [searchOpen, setSearchOpen] = useState(false);
+
+  const seeMoreProducts = () => {
+    window.location.href = `/shop/all?search=${encodeURIComponent(value)}`;
+  }
+
   return (
     <div
       className={`relative text-neutral-200 flex items-center w-full lg:w-min h-12 gap-3 px-6 py-3 bg-neutral-700 rounded-[58px] appearance-none  flex-grow ${className}`}
     >
       {searchIcon && (
-        <BiSearch className="text-neutral-200 min-w-[20px] min-h-[20px]" />
+        <BiSearch className="text-neutral-200 min-w-[20px] min-h-[20px] cursor-pointer" onClick={seeMoreProducts} />
       )}
       <input
         value={value}
+        onFocus={() => {
+          setSearchOpen(true);
+        }}
+        // onBlur={() => {
+        //   setSearchOpen(false);
+        // }}
+        onKeyDown={(e) => {
+          if (e.code === 'Enter') {
+            seeMoreProducts();
+          }
+        }}
         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
           setValue(event.target.value);
         }}
@@ -60,17 +78,19 @@ const Search: React.FC<SearchProps> = ({
         )}
       </AnimatePresence>
 
-      {text.length >= 3 ? (
+      {text.length >= 3 && searchOpen ? (
         <SearchResults
           products={products}
           loading={loading}
+          search={value}
           closeDropdown={() => {
-            setValue("");
+            setSearchOpen(false);
           }}
         />
       ) : (
         <div></div>
       )}
+
     </div>
   );
 };

@@ -1,7 +1,7 @@
 "use client";
 import Container from "@/components/common/container/Container";
 import Spinner from "@/components/common/spinner/Spinner";
-import ProductGrid from "@/components/pages/shop/category/category-products/product-grid/ProductGrid";
+import ProductGrid from "@/components/pages/shop/common/product-grid/ProductGrid";
 import { useAppDispatch } from "@/redux/hooks";
 
 import { ProductInterface } from "@/shared/interfaces/productsInterface";

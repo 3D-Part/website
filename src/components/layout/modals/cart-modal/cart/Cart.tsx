@@ -7,6 +7,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import CartProducts from "./CartProducts";
 import {
   CartProductsType,
+  changeCartModalVisible,
   changePointsInCart,
   changePromoCodeInCart,
 } from "@/redux/slices/cart/cartSlice";
@@ -27,6 +28,10 @@ import { userService, UserType } from "@/shared/services/userService";
 import { useSession } from "next-auth/react";
 import FreeDeliveryProgress from "@/components/common/free-delivery-progress/FreeDeliveryBar";
 import useSettingsApi from "@/redux/api/useSettingsApi";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import Heading3 from "@/components/common/text/heading/Heading3";
+import Heading4 from "@/components/common/text/heading/Heading4";
 
 // const freeShippingBoundary = 100;
 
@@ -88,6 +93,9 @@ const Cart = () => {
   const promoCode = useAppSelector(promoCodeSelectorAmount);
   const discount = useAppSelector(discountSelector);
   const dispatch = useAppDispatch();
+  const pathname = usePathname();
+
+  const router = useRouter();
 
   const { settings } = useSettingsApi();
 
@@ -152,8 +160,9 @@ const Cart = () => {
 
   const plusPoints = () => {
     if (!userData) return;
-    if (userData.availablePoints) return;
+    if (!userData.availablePoints) return;
     if (points >= userData!.availablePoints) return;
+
 
     if ((price -
       (promoCode
@@ -168,8 +177,8 @@ const Cart = () => {
 
   return (
     <motion.div className="flex flex-col w-full h-full px-4 py-2 overflow-y-auto cursor-default lg:px-8 lg:py-4 bg-neutral-800">
-      <Heading2>Korpa</Heading2>
-      <div className="lg:mt-[10px] mt-1 bg-neutral-600 w-min px-2 py-1 rounded-[77px]">
+      {/* <Heading4>Korpa</Heading4> */}
+      <div className="lg:mt-2 mt-1 bg-neutral-600 w-min px-2 py-1 rounded-[77px]">
         <Paragraph
           size="XS"
           weight="Regular"
@@ -177,7 +186,10 @@ const Cart = () => {
         >{`${cartLength} ${cartLength === 1 ? "Proizvod" : "Proizvoda"
           } u korpi`}</Paragraph>
       </div>
-      <div className="flex-1 my-2 overflow-x-hidden overflow-y-auto lg:my-4">
+
+      {/* <div className="overflow-y-auto px-2"> */}
+      {/* CART ITEMS */}
+      <div className="flex-1 my-2 overflow-x-hidden overflow-y-auto  lg:my-4">
         <AnimatePresence>
           {cart.map((product) => {
             return <CartProducts product={product} key={product.idProduct} />;
@@ -187,12 +199,14 @@ const Cart = () => {
 
       {/* --------------- */}
       <div className="h-[1px] bg-neutral-500"></div>
-      <div className="flex items-center gap-5 mt-4">
+
+      {/* PROMO CODE */}
+      {pathname === "/shop/checkout" && <div className="flex items-center gap-5 mt-3 mb-1">
         <div className="relative flex w-full">
           <input
             type="text"
             placeholder={"Promo kod"}
-            className={`w-full h-10 px-4 py-3 rounded-[66px] border border-primary-500 disabled:cursor-not-allowed bg-transparent disabled:text-neutral-400 ${promoCode ? "!border-success-500" : ""
+            className={`w-full h-10 px-4 py-3 rounded-lg border border-primary-500 disabled:cursor-not-allowed bg-transparent disabled:text-neutral-400 ${promoCode ? "!border-success-500" : ""
               }`}
             required
             defaultValue={promoCode?.code}
@@ -212,41 +226,42 @@ const Cart = () => {
           onClick={() => {
             fetchCouponsAndAddDiscount(inputRef.current?.value || "");
           }}
-          size="L"
+          size="M"
           type="secondary"
-          className="w-[100px] h-12"
+          className="w-[100px] h-10"
         >
           Uracunaj
         </Button>
-      </div>
+      </div>}
 
-      <FreeDeliveryProgress currentAmount={price} freeDeliveryThreshold={settings.settings.delivery.freeDeliveryLimit} />
+      {/* FREE DELIVERY */}
+      {pathname !== "/shop/checkout" && <FreeDeliveryProgress currentAmount={price} freeDeliveryThreshold={settings.settings.delivery.freeDeliveryLimit} />}
 
-
-      {status === 'authenticated' && <div className="flex items-center justify-between mt-4">
-        <Paragraph size="L" weight="Regular" className="text-neutral-200">
+      {/* PRICE DATA */}
+      {status === 'authenticated' && <div className="flex items-center justify-between mt-2">
+        <Paragraph size="M" weight="Regular" className="text-neutral-200">
           Poeni {`(Dostupno: ${userData?.availablePoints || 0})`}
         </Paragraph>
         <div className="flex gap-2 justify-center items-center">
-          <button disabled={userData?.availablePoints === 0 || points === 0} onClick={minusPoints} className=" cursor-pointer py-3 px-5 md:py-4 md:px-6 transition-all bg-[rgba(59,130,246,0.2)] text-white border border-primary-500 active:border-primary-400 active:bg-primary-500 xl:hover:border-primary-400 xl:hover:bg-[rgba(59,130,246,0.5)] disabled:border-primary-400 disabled:bg-[rgba(100,100,100,0.3)] disabled:text-primary-400  rounded-lg flex justify-center items-center">-</button>
-          <div className="px-4 md:px-6 text-[28px] font-bold">{points}</div>
-          <button disabled={Number(points) === Number(userData?.availablePoints)} onClick={plusPoints} className=" cursor-pointer py-3 px-5 md:py-4 md:px-6 transition-all bg-[rgba(59,130,246,0.2)] text-white border border-primary-500 active:border-primary-400 active:bg-primary-500 xl:hover:border-primary-400 xl:hover:bg-[rgba(59,130,246,0.5)]  disabled:border-primary-400 disabled:bg-[rgba(100,100,100,0.3)] disabled:text-primary-400  rounded-lg flex justify-center items-center">+</button>
+          <button disabled={userData?.availablePoints === 0 || points === 0} onClick={minusPoints} className=" cursor-pointer py-2 px-4 md:py-2 md:px-4 transition-all bg-[rgba(59,130,246,0.2)] text-white border border-primary-500 active:border-primary-400 active:bg-primary-500 xl:hover:border-primary-400 xl:hover:bg-[rgba(59,130,246,0.5)] disabled:border-primary-400 disabled:bg-[rgba(100,100,100,0.3)] disabled:text-primary-400  rounded-lg flex justify-center items-center">-</button>
+          <div className="px-4 md:px-6 text-[18px] font-bold">{points}</div>
+          <button disabled={Number(points) === Number(userData?.availablePoints)} onClick={plusPoints} className=" cursor-pointer py-2 px-4 md:py-2 md:px-4 transition-all bg-[rgba(59,130,246,0.2)] text-white border border-primary-500 active:border-primary-400 active:bg-primary-500 xl:hover:border-primary-400 xl:hover:bg-[rgba(59,130,246,0.5)]  disabled:border-primary-400 disabled:bg-[rgba(100,100,100,0.3)] disabled:text-primary-400  rounded-lg flex justify-center items-center">+</button>
 
         </div>
       </div>}
 
-      <div className="flex items-center justify-between mt-4">
-        <Paragraph size="L" weight="Regular" className="text-neutral-200">
+      <div className="flex items-center justify-between mt-2">
+        <Paragraph size="M" weight="Regular" className="text-neutral-200">
           Zbir{" "}
         </Paragraph>
         <div className="flex gap-2">
           <p
-            className={`text-white text-[28px] font-exo2 font-semibold ${promoCode ? "line-through !text-neutral-300 !font-light" : ""
+            className={`text-white text-[18px] font-exo2 font-semibold ${promoCode ? "line-through !text-neutral-300 !font-light" : ""
               }`}
           >{`${price.toFixed(2)} KM 
           `}</p>
           {promoCode && (
-            <p className=" text-[28px] font-exo2 font-semibold text-success-500">{`${(
+            <p className=" text-[18px] font-exo2 font-semibold text-success-500">{`${(
               price -
               price * (Number(promoCode.discountPercentage) / 100)
             ).toFixed(2)} KM`}</p>
@@ -254,24 +269,27 @@ const Cart = () => {
         </div>
       </div>
 
-      <div className="flex items-center justify-between my-3">
-        <Paragraph size="L" weight="Regular" className="text-neutral-200">
+      <div className="flex items-center justify-between mb-2 mt-1">
+        <Paragraph size="M" weight="Regular" className="text-neutral-200">
           Dostava{" "}
         </Paragraph>
-        <p className={`text-white text-[28px] font-exo2 font-semibold ${price >= settings.settings.delivery.freeDeliveryLimit ? 'line-through' : ''}`}>{`${settings.settings.delivery.cost.toFixed(
+        <p className={`text-white text-[18px] font-exo2 font-semibold ${price >= settings.settings.delivery.freeDeliveryLimit ? 'line-through' : ''}`}>{`${settings.settings.delivery.cost.toFixed(
           2
         )} KM`}</p>
       </div>
 
       {status === 'authenticated' && userData?.discount ? <div className="flex items-center justify-between my-3">
-        <Paragraph size="L" weight="Regular" className="text-neutral-200">
+        <Paragraph size="M" weight="Regular" className="text-neutral-200">
           Popust{" "}
         </Paragraph>
-        <p className="text-white text-[28px] font-exo2 font-semibold">{discount}%</p>
+        <p className="text-white text-[18px] font-exo2 font-semibold">{discount}%</p>
       </div> : null}
+      {/* </div> */}
+
+
       <div className="h-[1px] bg-neutral-500"></div>
 
-      <div className="flex items-center justify-between my-3">
+      <div className="flex items-center justify-between my-2">
         <p className="text-white text-[20px] font-semibold">UKUPNO </p>
         <p className="text-success-500 text-[28px] font-exo2 font-semibold">{`${(
           (price -
@@ -280,6 +298,44 @@ const Cart = () => {
               : 0) +
             post) * ((100 - discount) / 100) - (points)
         ).toFixed(2)} KM`}</p>
+      </div>
+
+      <div className="flex items-center gap-3   bg-neutral-800">
+        <Button
+          onClick={() => {
+            dispatch(changeCartModalVisible(false));
+          }}
+          type="secondary"
+          size="M"
+          className="w-1/2 !p-2.5"
+        >
+          <Paragraph size="S" weight="Bold">
+            Nastavi kupovinu
+          </Paragraph>
+        </Button>
+        <Link
+          href={"/shop/checkout"}
+          onClick={() => {
+            router.push("/shop/checkout");
+            dispatch(changeCartModalVisible(false));
+          }}
+          className="w-1/2 "
+          prefetch
+        >
+          <Button
+            onClick={() => {
+              router.push("/shop/checkout");
+              dispatch(changeCartModalVisible(false));
+            }}
+            type="primary"
+            size="M"
+            className="w-full !p-2.5"
+          >
+            <Paragraph size="S" weight="Bold">
+              Kupi
+            </Paragraph>
+          </Button>
+        </Link>
       </div>
     </motion.div>
   );

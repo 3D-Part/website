@@ -150,7 +150,7 @@ const Product: React.FC<ProductInterfaceComponent> = ({
                     name,
                     salePrice,
                   },
-                  shouldNotify: true,
+                  shouldNotify: false,
                 })
               );
               setCheckCartVisible(true);

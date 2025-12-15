@@ -305,3 +305,28 @@ interface CouponQueryParams {
     userId?: { is: string };
   };
 }
+
+
+export interface IContactFormBody {
+  name: string;
+  email: string;
+  phone: string;
+  title: string;
+  body: string;
+}
+
+export interface IProductAttribute {
+  id: string;
+  productId: string;
+  attributeId: string;
+  value: string;
+  createdAt: string;
+  updatedAt: string;
+  product: ProductData;
+  attribute: {
+    id: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+  };
+}

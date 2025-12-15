@@ -1,14 +1,20 @@
+
+
 import { ProductInterface } from "@/shared/interfaces/productsInterface";
 import React from "react";
 import SearchResult from "./SearchResult";
 import OutsideAlerter from "@/shared/hooks/useOutsideAlerter";
 import Spinner from "@/components/common/spinner/Spinner";
+import SeeMoreButton from "./SeeMoreButton";
 
 const SearchResults: React.FC<{
   products: ProductInterface[];
   loading: boolean;
+  search: string;
   closeDropdown: () => void;
-}> = ({ products, loading, closeDropdown }) => {
+}> = ({ products, loading, search, closeDropdown }) => {
+
+
   return (
     <OutsideAlerter
       outsideClickHandler={() => {
@@ -33,6 +39,9 @@ const SearchResults: React.FC<{
                 />
               );
             })}
+
+            {/* Styled like other buttons */}
+            <SeeMoreButton search={search} />
           </>
         )}
       </div>

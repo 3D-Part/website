@@ -16,8 +16,10 @@ const getAllProducts = async ({
   price,
   sku,
   order,
+  search,
   field,
   manufacturerId,
+  filterByProductAttributes,
   limit,
   offset
 }: {
@@ -26,8 +28,10 @@ const getAllProducts = async ({
   nameLike?: string;
   categoryNameLike?: string;
   categoryId?: string;
+  filterByProductAttributes?: Record<string, any> | string | undefined;
   price?: { gt: number | null; lt: number | null };
   sku?: string;
+  search?: string | null;
   field?: "name" | "price" | null;
   order?: "ASC" | "DESC" | null;
   manufacturerId?: string | null;
@@ -35,8 +39,6 @@ const getAllProducts = async ({
   offset?: number;
 }): Promise<ProductPaginatedInterface> => {
   const payload: any = {};
-
-  console.log("KATEGORI AJDI", categoryId)
 
   if (slug !== undefined) {
     payload["filters[category.slug][is]"] = slug;
@@ -55,6 +57,48 @@ const getAllProducts = async ({
 
   if (nameLike) {
     payload["filters[name][like]"] = "%" + nameLike + "%";
+  }
+
+  if (search) {
+    payload["filters[name][like]"] = "%" + search + "%";
+  }
+
+  // support category name filter (partial match)
+  if (categoryNameLike) {
+    payload["filters[category.name][like]"] = "%" + categoryNameLike + "%";
+  }
+
+  // handle complex product attribute filters passed as an object or JSON string
+  if (filterByProductAttributes) {
+    let attrs: any = filterByProductAttributes;
+
+    if (typeof attrs === "string") {
+      try {
+        attrs = JSON.parse(attrs);
+      } catch {
+        // if it's not JSON, skip parsing and ignore
+        attrs = null;
+      }
+    }
+
+    if (attrs && typeof attrs === "object") {
+      Object.keys(attrs).forEach((key) => {
+        const value = attrs[key];
+        if (value === null || value === undefined) return;
+
+        // if value is an object with operators (is, like, gt, lt, etc.)
+        if (typeof value === "object" && !Array.isArray(value)) {
+          Object.keys(value).forEach((op) => {
+            const opVal = value[op];
+            if (opVal === null || opVal === undefined) return;
+            payload[`filters[${key}][${op}]`] = typeof opVal === "string" ? opVal : String(opVal);
+          });
+        } else {
+          // scalar -> treat as "is"
+          payload[`filters[${key}][is]`] = typeof value === "string" ? value : String(value);
+        }
+      });
+    }
   }
 
   if (sku !== undefined) {

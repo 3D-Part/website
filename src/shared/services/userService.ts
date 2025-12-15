@@ -1,5 +1,31 @@
 import API from "../helper/api";
 
+export interface OrderType {
+  id: string;
+  orderNumber: string;
+  userId: string;
+  fullName: string;
+  email: string;
+  phone: string;
+  city: string;
+  street: string;
+  postCode: string;
+  code: string | null;
+  companyName: string | null;
+  companyPdv: string | null;
+  jib: string | null;
+  description: string;
+  price: string;
+  shippingPrice: string;
+  discount: string;
+  total: string;
+  points: number;
+  status: string;
+  createdAt: string;
+  updatedAt: string;
+  products: any[]; // refine if you have a product-order item type
+}
+
 export interface UserType {
   id: string;
   fullName: string;
@@ -8,6 +34,7 @@ export interface UserType {
   image: string;
   role: string;
   provider: string;
+  orders: OrderType[];
   phone: string;
   state: string;
   city: string;
@@ -61,7 +88,6 @@ const fetchUserProfile = async () => {
     }
 
     return data;
-
   } catch (error: any) {
     console.error("Error fetching user profile:", error);
   }

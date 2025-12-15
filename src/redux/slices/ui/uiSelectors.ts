@@ -16,6 +16,10 @@ export const favoriteProductsSelector = (state: RootState) => {
   return state.uiSlice.favoriteProducts;
 };
 
+export const isContactModalVisibleSelector = (state: RootState) => {
+  return state.uiSlice.isContactModalVisible;
+};
+
 export const isProductFavoriteSelector = (
   state: RootState,
   productId: string

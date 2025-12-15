@@ -17,7 +17,6 @@ import Link from "next/link";
 const CartModal = () => {
   const isOpen = useAppSelector(cartModalVisibleSelector);
   const dispatch = useAppDispatch();
-  const router = useRouter();
 
   return (
     <>
@@ -91,43 +90,7 @@ const CartModal = () => {
                 }}
               >
                 <Cart />
-                <div className=" px-4 lg:px-8 flex items-center gap-3 pb-8 lg:pb-[58px] bg-neutral-800">
-                  <Button
-                    onClick={() => {
-                      dispatch(changeCartModalVisible(false));
-                    }}
-                    type="secondary"
-                    size="L"
-                    className="w-1/2"
-                  >
-                    <Paragraph size="M" weight="Bold">
-                      Nastavi kupovinu
-                    </Paragraph>
-                  </Button>
-                  <Link
-                    href={"/shop/checkout"}
-                    onClick={() => {
-                      router.push("/shop/checkout");
-                      dispatch(changeCartModalVisible(false));
-                    }}
-                    className="w-1/2"
-                    prefetch
-                  >
-                    <Button
-                      onClick={() => {
-                        router.push("/shop/checkout");
-                        dispatch(changeCartModalVisible(false));
-                      }}
-                      type="primary"
-                      size="L"
-                      className="w-full"
-                    >
-                      <Paragraph size="M" weight="Bold">
-                        Kupi
-                      </Paragraph>
-                    </Button>
-                  </Link>
-                </div>
+
               </motion.div>
             </div>
           </motion.div>

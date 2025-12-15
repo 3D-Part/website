@@ -7,7 +7,9 @@ import { ProductInterface } from "@/shared/interfaces/productsInterface";
 import { productsServices } from "../../../../../../services/productsServices";
 
 const SearchProducts = () => {
-  const [text, setText] = useState("");
+  const queryParams = new URLSearchParams(window.location.search);
+  const searchParam = queryParams.get("search") || "";
+  const [text, setText] = useState(searchParam);
   const [products, setProducts] = useState<ProductInterface[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -18,6 +20,7 @@ const SearchProducts = () => {
     const fetch = async () => {
       const x = await productsServices.getAllProducts({
         nameLike: text,
+        limit: 10,
       });
       x.rows.forEach((a) => {
         if (a.productOnSale.length) {

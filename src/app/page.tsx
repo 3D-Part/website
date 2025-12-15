@@ -1,5 +1,6 @@
 import YellowStripe from "@/components/common/stripe/YellowStripe";
 import Heading1 from "@/components/common/text/heading/Heading1";
+import ContactModal from "@/components/layout/modals/auth-modal/ContactModal";
 import Blog from "@/components/pages/landing/blog/Blog";
 import ContactUs from "@/components/pages/landing/contact-us/ContactUs";
 import InfoCards from "@/components/pages/landing/info-cards/InfoCards";
@@ -15,6 +16,7 @@ export default function Home() {
       <Heading1 className="w-0 h-0 opacity-0">3D Part</Heading1>
       <YellowStripe />
       <SliderServer />
+      <ContactModal />
       {/* <Commercial /> */}
       <ProductOffer />
       <ProductsRecommended />

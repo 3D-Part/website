@@ -60,9 +60,11 @@ const FooterLinks = () => {
           <Paragraph size="M" weight="Semibold">
             Email:
           </Paragraph>
-          <Paragraph size="M" weight="Regular" className="text-neutral-200">
-            {settings.settings.company.email}
-          </Paragraph>
+          {settings.settings.company.email.map((e, i) => (
+            <Paragraph key={`email-${i}`} size="M" weight="Regular" className="text-neutral-200">
+              {e}
+            </Paragraph>
+          ))}
         </div>
         <div>
           <Paragraph size="M" weight="Semibold">

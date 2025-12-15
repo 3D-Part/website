@@ -5,6 +5,7 @@ type UiState = {
   isModalAuthVisible: boolean;
   isUserVerified: boolean | null;
   favoriteProducts: string[];
+  isContactModalVisible?: boolean;
 };
 
 const initialState = {
@@ -12,6 +13,7 @@ const initialState = {
   isModalAuthVisible: false,
   isUserVerified: null,
   favoriteProducts: [],
+  isContactModalVisible: false,
 } as UiState;
 
 export const ui = createSlice({
@@ -21,6 +23,9 @@ export const ui = createSlice({
     resetUi: () => initialState,
     changeIsGlobalLoading: (state, action) => {
       state.isGlobalLoading = action.payload;
+    },
+    changeIsContactModalVisible: (state, action) => {
+      state.isContactModalVisible = action.payload;
     },
     changeIsUserVerified: (state, action) => {
       state.isUserVerified = action.payload;
@@ -64,5 +69,6 @@ export const {
   changeIsUserVerified,
   changeFavoriteProducts,
   changeSingleFavoriteProduct,
+  changeIsContactModalVisible
 } = ui.actions;
 export default ui.reducer;
