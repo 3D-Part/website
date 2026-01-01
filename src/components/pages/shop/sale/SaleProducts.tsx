@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState, useCallback, useRef } from "react";
 // import Heading2 from "@/components/common/text/heading/Heading2";
+import FilterHeader from "../common/FilterHeader";
 
 import { useParams, useSearchParams } from "next/navigation";
 import Spinner from "@/components/common/spinner/Spinner";
@@ -8,12 +9,11 @@ import { ProductPaginatedInterface, productsServices } from "../../../../../serv
 import { saleService } from "@/shared/services/saleService";
 // import Filters from "../common/filters/Filters";
 import FiltersSidebar from "../common/filters/FiltersSidebar";
-import FilterHeader from "../common/FilterHeader";
 import ProductGrid from "../common/product-grid/ProductGrid";
 import useUiApi from "@/redux/api/useUiApi";
-// import Filters from "../common/filters/Filters";
+import Filters from "../common/filters/Filters";
 
-const AllProducts = ({ queryParams }: { queryParams: any }) => {
+const SaleProducts = ({ queryParams }: { queryParams: any }) => {
     const initCount = 30;
 
     const [priceMin, setPriceMin] = useState<number | null>(null);
@@ -200,7 +200,8 @@ const AllProducts = ({ queryParams }: { queryParams: any }) => {
                 setField={setField}
                 setOrder={setOrder}
             />
-            <FilterHeader title="Proizvodi" count={data.count} />
+
+            <FilterHeader title={saleQuery ? "Proizvodi na akciji" : "Proizvodi"} count={data.count} />
 
             <ProductGrid productList={data.rows} />
             {isLoading && <Spinner />}
@@ -208,4 +209,4 @@ const AllProducts = ({ queryParams }: { queryParams: any }) => {
     );
 };
 
-export default AllProducts;
+export default SaleProducts;

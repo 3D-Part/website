@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 type UiState = {
   isGlobalLoading: boolean;
   isModalAuthVisible: boolean;
+  isFilteringSidebarVisible: boolean,
   isUserVerified: boolean | null;
   favoriteProducts: string[];
   isContactModalVisible?: boolean;
@@ -11,6 +12,7 @@ type UiState = {
 const initialState = {
   isGlobalLoading: false,
   isModalAuthVisible: false,
+  isFilteringSidebarVisible: false,
   isUserVerified: null,
   favoriteProducts: [],
   isContactModalVisible: false,
@@ -38,6 +40,10 @@ export const ui = createSlice({
       } else {
         document.querySelector("body")?.classList.remove("overflow-hidden");
       }
+    },
+
+    changeIsFilteringSidebarVisible: (state, action) => {
+      state.isFilteringSidebarVisible = action.payload;
     },
 
     changeFavoriteProducts: (
@@ -69,6 +75,7 @@ export const {
   changeIsUserVerified,
   changeFavoriteProducts,
   changeSingleFavoriteProduct,
-  changeIsContactModalVisible
+  changeIsContactModalVisible,
+  changeIsFilteringSidebarVisible
 } = ui.actions;
 export default ui.reducer;

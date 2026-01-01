@@ -26,4 +26,23 @@ const fetchActiveSaleProducts = async (params: { saleId: string }) => {
   }
 };
 
-export const saleService = { fetchActiveSale, fetchActiveSaleProducts };
+const fetchSale = async () => {
+  try {
+    const response = await fetch('https://api.3dpartshop.com/shop/sale', {
+      headers: {
+        'accept': 'application/json'
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch sale data');
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw new Error("Failed to fetch sale data");
+  }
+};
+
+export const saleService = { fetchActiveSale, fetchActiveSaleProducts, fetchSale };

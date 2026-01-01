@@ -8,6 +8,10 @@ export const isModalAuthVisibleSelector = (state: RootState) => {
   return state.uiSlice.isModalAuthVisible;
 };
 
+export const isFilteringSidebarVisibleSelector = (state: RootState) => {
+  return state.uiSlice.isFilteringSidebarVisible;
+}
+
 export const isUserVerifiedSelector = (state: RootState) => {
   return state.uiSlice.isUserVerified;
 };

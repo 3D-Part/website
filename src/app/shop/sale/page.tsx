@@ -38,7 +38,7 @@ export default async function All({ searchParams }: { searchParams: any }) {
     return (
         <div className="w-full">
             <Container className="min-h-screen p-4 lg:px-8">
-                <AllProducts queryParams={searchParams} />
+                <></>
             </Container>
         </div>
     );

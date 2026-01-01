@@ -10,8 +10,10 @@ interface InterfaceProducts {
   children: React.ReactNode;
   linkToAll?: string;
   className?: string;
+  firstChildClass?: string;
   animationVariants?: { initial: Object; animate: Object };
   reverseDirection?: boolean;
+  extraSlide?: React.ReactNode;
 }
 
 const Products: React.FC<InterfaceProducts> = ({
@@ -19,8 +21,10 @@ const Products: React.FC<InterfaceProducts> = ({
   products,
   linkToAll = "",
   className = "",
+  firstChildClass,
   animationVariants,
   reverseDirection,
+  extraSlide,
 }) => {
   return (
     <motion.div
@@ -31,16 +35,15 @@ const Products: React.FC<InterfaceProducts> = ({
       viewport={{ once: false }}
     >
       <div
-        className={`flex flex-col w-full lg:flex-row  lg:items-center ${
-          children ? "lg:justify-between" : "lg:justify-end"
-        }`}
+        className={`flex flex-col w-full lg:flex-row  lg:items-center ${children ? "lg:justify-between" : "lg:justify-end"
+          }`}
       >
-        <div>{children}</div>
+        <div className={firstChildClass}>{children}</div>
         {linkToAll !== "" && (
           <div className="hidden lg:block">
             <Button
               text="Pogledaj sve"
-              onClick={() => {}}
+              onClick={() => { }}
               size="L"
               type="secondary"
               className="bottom-0 left-0 "
@@ -52,11 +55,12 @@ const Products: React.FC<InterfaceProducts> = ({
         products={products}
         animationVariants={animationVariants}
         reverseDirection={reverseDirection}
+        extraSlide={extraSlide}
       />
       {linkToAll !== "" && (
         <Button
           text="Pogledaj sve"
-          onClick={() => {}}
+          onClick={() => { }}
           size="L"
           type="secondary"
           className="bottom-0 left-0 mx-auto mt-6 lg:hidden"

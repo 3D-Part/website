@@ -31,7 +31,7 @@ const Categories = ({ filterByProductAttributes,
     return (
         <div>
             <Paragraph size="L" weight="Bold" className="mb-1">
-                Kategorije
+                Atributi
             </Paragraph>
 
             <select
@@ -43,9 +43,9 @@ const Categories = ({ filterByProductAttributes,
                 className="bg-neutral-700 h-8 w-[174px] rounded-lg px-3 focus:ring-primary-600 focus:border-primary-400 block dark:bg-black dark:border-black dark:placeholder-bg-success-400 dark:text-white dark:focus:ring-error-400 dark:focus:border-success-100 select"
                 value={selected}
             >
-                <option key={0} value={undefined}>Sve kategorije</option>
-                {productAttributes.map((productAttr) => (
-                    <option key={productAttr.attribute.id} value={productAttr.attribute.name}>{productAttr.attribute.name}</option>
+                <option key="all-categories" value={undefined}>Sve kategorije</option>
+                {productAttributes.map((productAttr, index) => (
+                    <option key={`${productAttr.attribute.id}-${index}`} value={productAttr.attribute.name}>{productAttr.attribute.name}</option>
                 ))}
             </select>
         </div>

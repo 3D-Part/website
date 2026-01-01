@@ -1,7 +1,8 @@
 "use client";
 import React, { useEffect, useState, useCallback, useRef } from "react";
-import Filters from "../common/filters/Filters";
-import Heading2 from "@/components/common/text/heading/Heading2";
+// import Filters from "../common/filters/Filters";
+import FiltersSidebar from "../common/filters/FiltersSidebar";
+import FilterHeader from "../common/FilterHeader";
 import ProductGrid from "../common/product-grid/ProductGrid";
 import {
   ProductPaginatedInterface,
@@ -9,6 +10,7 @@ import {
 } from "../../../../../services/productsServices";
 import { useParams, useSearchParams } from "next/navigation";
 import Spinner from "@/components/common/spinner/Spinner";
+import useUiApi from "@/redux/api/useUiApi";
 
 const CategoryProducts: React.FC<{ categoryId: string, parameters: any }> = ({ categoryId, parameters }) => {
   const initCount = 30;
@@ -31,6 +33,12 @@ const CategoryProducts: React.FC<{ categoryId: string, parameters: any }> = ({ c
   const params = useParams();
   const searchParams = useSearchParams();
   const manufacturerId = searchParams.get("manufacturerId");
+  const { toggleFilteringSidebar } = useUiApi();
+
+  // Close sidebar on page load
+  useEffect(() => {
+    toggleFilteringSidebar(false);
+  }, []);
 
   // Cooldown flag between scroll fetches
   const canLoadRef = useRef(true);
@@ -38,7 +46,6 @@ const CategoryProducts: React.FC<{ categoryId: string, parameters: any }> = ({ c
   const fetchProducts = useCallback(
     async (append = false) => {
       if (append && !hasMore) return;
-
 
       setIsLoading(true);
       const res = await productsServices.getAllProducts({
@@ -125,7 +132,7 @@ const CategoryProducts: React.FC<{ categoryId: string, parameters: any }> = ({ c
 
   return (
     <>
-      <Filters
+      {/* <Filters
         priceMin={priceMin}
         priceMax={priceMax}
         setPriceMax={setPriceMax}
@@ -137,11 +144,22 @@ const CategoryProducts: React.FC<{ categoryId: string, parameters: any }> = ({ c
         setField={setField}
         setOrder={setOrder}
         isLoading={isLoading}
+      /> */}
+
+      <FiltersSidebar
+        priceMin={priceMin}
+        priceMax={priceMax}
+        setPriceMax={setPriceMax}
+        setPriceMin={setPriceMin}
+        field={field}
+        order={order}
+        filterByProductAttributes={filterByProductAttributes}
+        setFilterByProductAttributes={setFilterByProductAttributes}
+        setField={setField}
+        setOrder={setOrder}
       />
 
-      <Heading2 className="my-8">
-        Proizvodi <span className="text-primary-500">({data.count})</span>
-      </Heading2>
+      <FilterHeader title="Proizvodi" count={data.count} />
 
       <ProductGrid productList={data.rows} />
       {isLoading && <Spinner />}

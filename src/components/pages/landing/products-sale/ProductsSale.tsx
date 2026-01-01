@@ -8,11 +8,12 @@ import SaleCountdown from "./sale-countdown/SaleCountdown";
 import Container from "@/components/common/container/Container";
 import { useEffect, useState } from "react";
 import { saleService } from "@/shared/services/saleService";
-import Spinner from "@/components/common/spinner/Spinner";
+import Button from "@/components/common/button/Button";
 import Link from "next/link";
 
 const ProductsSale = () => {
   const [list, setList] = useState<ProductInterface[] | any[]>([]);
+  const [saleId, setSaleId] = useState("");
   const [ends, setEnds] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -29,6 +30,7 @@ const ProductsSale = () => {
           const data = await saleService.fetchActiveSaleProducts({
             saleId: dataSale.id,
           });
+          setSaleId(dataSale.id);
           setList([
             ...data.rows.map((prod) => {
               return {
@@ -114,22 +116,53 @@ const ProductsSale = () => {
   return (
     <Container className="w-full mb-[60px] lg:mb-24 lg:px-9">
       <Products
-        // linkToAll="/shop/category/sale"
         products={list}
-        className="mt-3 "
+        className="mt-3 w-full"
+        firstChildClass="w-full"
         animationVariants={{
           initial: { opacity: 0, scale: 0.7, x: -30 },
           animate: { opacity: 1, scale: 1, x: 0 },
         }}
+      // extraSlide={
+      //   saleId && (
+      //     <div className="ml-4 lg:ml-0">
+      //       <Link href={`/shop/sale/${saleId}`} prefetch>
+      //         <div className="cursor-pointer bg-neutral-800 p-[10px] rounded-xl w-[160px] h-[320px] sm:w-[220px] sm:h-[418px]">
+      //           <div className="w-full h-full rounded-xl bg-primary-600 hover:bg-primary-500 transition-colors flex items-center justify-center text-center px-4">
+      //             <div className="flex flex-col items-center gap-2">
+      //               <Heading2 className="text-white text-lg sm:text-2xl">Pogledaj sve</Heading2>
+      //               <Paragraph size="S" weight="Regular" className="text-white/90">
+      //                 Proizvodi na akciji
+      //               </Paragraph>
+      //             </div>
+      //           </div>
+      //         </div>
+      //       </Link>
+      //     </div>
+      //   )
+      // }
       >
         <div className="flex flex-col w-full px-4 lg:px-0">
-          <Link href="/shop/all?sale=true" >
-            <Heading2 className="hover:text-white/70 transition-colors duration-100">
+          <div className="flex items-center justify-between w-full">
+            {/* <Link href={`/shop/sale/${saleId}`} > */}
+            <Heading2 className="hover:text-white/70 transition-colors duration-100 text-xl sm:text-2xl">
               Proizvodi na akciji{" "}
               <span className="text-primary-500">({list.length})</span>
             </Heading2>
+            {/* </Link> */}
+            {/* <div className="block">
+              <Link href={`/shop/sale/${saleId}`} prefetch>
+                <Button
+                  text="Pogledaj sve"
+                  size="M"
+                  type="secondary"
+                  className="bottom-0 left-0"
+                  onClick={() => { }}
+                ></Button>
+              </Link>
+            </div> */}
 
-          </Link>
+          </div>
           <div className="flex items-center gap-2 mt-2 h-7">
             <svg
               xmlns="http://www.w3.org/2000/svg"
