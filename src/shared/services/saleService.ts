@@ -4,7 +4,7 @@ import API from "../helper/api";
 const fetchActiveSale = async () => {
   try {
     const response = await API.get<{ id?: string; endsAt: string }>(
-      "shop/sale/get-active-sale"
+      "shop/sale"
     );
     return response;
   } catch (error) {
