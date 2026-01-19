@@ -54,7 +54,11 @@ const Filters: React.FC<{
           setOrder={setOrder}
         />
         {/* TODO - add filters for category attributes */}
-        <Categories filterByProductAttributes={filterByProductAttributes} setFilterByProductAttributes={setFilterByProductAttributes} />
+        <Categories
+          filterByProductAttributes={filterByProductAttributes}
+          setFilterByProductAttributes={setFilterByProductAttributes}
+          categoryAttributes={[]}
+        />
       </div>
     );
   };

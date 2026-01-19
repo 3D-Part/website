@@ -19,7 +19,7 @@ const ProductsSale = () => {
   useEffect(() => {
     (async () => {
       try {
-        const data = await saleService.fetchActiveSale();
+        const data: any = await saleService.fetchActiveSale();
         const normalized = [];
 
         if (data?.rows) {
