@@ -137,7 +137,11 @@ const Categories = ({
                 );
 
             case 'select':
-                const options = (item as any).attribute.productAttributes || [];
+                const options = ((item as any).attribute.productAttributes || [])
+                    .filter((attr: any, i: number, arr: any[]) =>
+                        arr.findIndex(a => a.value === attr.value) === i
+                    );
+
                 return (
                     <select
                         id={attributeId}
