@@ -37,6 +37,7 @@ const FiltersSidebar: React.FC<{
 }) => {
         const { isFilteringSidebarVisible, toggleFilteringSidebar } = useUiApi();
         const sidebarRef = useRef<HTMLDivElement>(null);
+        const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
 
         // Staged/pending filter states
         const [pendingPriceMin, setPendingPriceMin] = useState<number | null>(priceMin);
@@ -64,6 +65,30 @@ const FiltersSidebar: React.FC<{
             setFilterByProductAttributes(pendingFilterByProductAttributes);
             toggleFilteringSidebar(false);
         };
+
+        // Auto-apply filters with debounce when values change
+        useEffect(() => {
+            // Clear existing timer
+            if (debounceTimerRef.current) {
+                clearTimeout(debounceTimerRef.current);
+            }
+
+            // Set new timer to auto-apply filters after 800ms of inactivity
+            debounceTimerRef.current = setTimeout(() => {
+                setPriceMin(pendingPriceMin);
+                setPriceMax(pendingPriceMax);
+                setField(pendingField);
+                setOrder(pendingOrder);
+                setFilterByProductAttributes(pendingFilterByProductAttributes);
+            }, 800);
+
+            // Cleanup timer on unmount
+            return () => {
+                if (debounceTimerRef.current) {
+                    clearTimeout(debounceTimerRef.current);
+                }
+            };
+        }, [pendingPriceMin, pendingPriceMax, pendingField, pendingOrder, pendingFilterByProductAttributes]);
 
         const resetFilters = () => {
             setPendingPriceMin(null);
@@ -193,7 +218,7 @@ const FiltersSidebar: React.FC<{
                                     onClick={applyFilters}
                                     className="flex-1 px-4 py-3 bg-primary-500 hover:bg-primary-600 active:bg-primary-700 text-white font-semibold rounded-lg transition-all"
                                 >
-                                    Primeni
+                                    Zatvori
                                 </button>
                                 <button
                                     onClick={resetFilters}
