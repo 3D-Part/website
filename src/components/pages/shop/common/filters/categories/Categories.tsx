@@ -71,8 +71,6 @@ const Categories = ({
             }
         });
 
-        console.log("Sending to parent:", activeFilters);
-
         if (activeFilters.length > 0) {
             setFilterByProductAttributes(JSON.stringify(activeFilters));
         } else {
@@ -216,10 +214,6 @@ const Categories = ({
                 return null;
         }
     };
-
-    useEffect(() => {
-        console.log(categoryAttributes);
-    }, [categoryAttributes])
 
     if (categoryAttributes.length === 0 || pathname === '/shop/all' /*|| !categoryAttributes.some(attr => attr.attribute.type) */) return null;
 

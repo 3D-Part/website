@@ -10,9 +10,6 @@ const RelatedProducts: React.FC<{
   productId: string;
   productSku: string;
 }> = async ({ categoryId, productId, productSku }) => {
-  console.log('--------------------------------------------');
-  console.log('PROBLEEEEEEEEM', categoryId, productId, productSku);
-  console.log('--------------------------------------------');
   const data = await productsServices.getAllProducts({
     categoryId: categoryId,
   });
