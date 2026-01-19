@@ -9,7 +9,7 @@ if (!RAW_BASE) {
 // Trim trailing slashes, then add exactly one.
 const API_BASE = RAW_BASE.replace(/\/+$/, "");
 const defaultRoute = `${API_BASE}/shop/categories`;
-const attributesRoute = `${API_BASE}/shop/product-attributes`;
+const attributesRoute = `${API_BASE}/shop/category-attributes`;
 
 
 export interface CategoriesPaginatedInterface {

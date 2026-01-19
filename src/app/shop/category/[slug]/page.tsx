@@ -51,7 +51,7 @@ export default async function Category({ params }: CategoryParams) {
     <div className="w-full">
       <Container className="min-h-screen p-4 lg:px-8">
         <Description description={categoryData.description} />
-        <CategoryProducts categoryId={categoryData.id} parameters={params} />
+        <CategoryProducts categoryAttributes={categoryData.categoryAttributes} categoryId={categoryData.id} parameters={params} />
       </Container>
     </div>
   );

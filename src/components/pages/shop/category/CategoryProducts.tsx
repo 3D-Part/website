@@ -11,8 +11,9 @@ import {
 import { useParams, useSearchParams } from "next/navigation";
 import Spinner from "@/components/common/spinner/Spinner";
 import useUiApi from "@/redux/api/useUiApi";
+import { CategoryAttributesInterface } from "@/shared/interfaces/categoryInterface";
 
-const CategoryProducts: React.FC<{ categoryId: string, parameters: any }> = ({ categoryId, parameters }) => {
+const CategoryProducts: React.FC<{ categoryAttributes: Array<CategoryAttributesInterface>, categoryId: string, parameters: any }> = ({ categoryAttributes, categoryId, parameters }) => {
   const initCount = 30;
 
   const [priceMin, setPriceMin] = useState<number | null>(null);
@@ -26,6 +27,7 @@ const CategoryProducts: React.FC<{ categoryId: string, parameters: any }> = ({ c
     count: 0,
     rows: [],
   });
+
 
   const [offset, setOffset] = useState(0);
   const [hasMore, setHasMore] = useState(true);
@@ -147,6 +149,7 @@ const CategoryProducts: React.FC<{ categoryId: string, parameters: any }> = ({ c
       /> */}
 
       <FiltersSidebar
+        categoryAttributes={categoryAttributes}
         priceMin={priceMin}
         priceMax={priceMax}
         setPriceMax={setPriceMax}

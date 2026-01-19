@@ -6,8 +6,10 @@ import Price from "./price/Price";
 import Sorter from "./sorter/Sorter";
 import Categories from "./categories/Categories";
 import useUiApi from "@/redux/api/useUiApi";
+import { CategoryAttributesInterface } from "@/shared/interfaces/categoryInterface";
 
 const FiltersSidebar: React.FC<{
+    categoryAttributes?: Array<CategoryAttributesInterface>;
     priceMin: number | null;
     setPriceMin: (x: number | null) => void;
     priceMax: number | null;
@@ -31,6 +33,7 @@ const FiltersSidebar: React.FC<{
     filterByProductAttributes,
     setFilterByProductAttributes,
     isLoading,
+    categoryAttributes
 }) => {
         const { isFilteringSidebarVisible, toggleFilteringSidebar } = useUiApi();
         const sidebarRef = useRef<HTMLDivElement>(null);
@@ -173,12 +176,13 @@ const FiltersSidebar: React.FC<{
                                 />
 
                                 {/* TODO: Make more filters that are required, need to see how will filters work  */}
-                                {/* <div className="h-px bg-neutral-700"></div> */}
+                                <div className="h-px bg-neutral-700"></div>
 
-                                {/* <Categories
+                                {categoryAttributes && <Categories
+                                    categoryAttributes={categoryAttributes}
                                     filterByProductAttributes={pendingFilterByProductAttributes}
                                     setFilterByProductAttributes={setPendingFilterByProductAttributes}
-                                /> */}
+                                />}
                             </div>
                         </div>
 

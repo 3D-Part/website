@@ -40,6 +40,8 @@ const getAllProducts = async ({
 }): Promise<ProductPaginatedInterface> => {
   const payload: any = {};
 
+  console.log("filterByProductAttributes:", filterByProductAttributes);
+
   if (slug !== undefined) {
     payload["filters[category.slug][is]"] = slug;
   }
@@ -68,7 +70,7 @@ const getAllProducts = async ({
     payload["filters[category.name][like]"] = "%" + categoryNameLike + "%";
   }
 
-  // handle complex product attribute filters passed as an object or JSON string
+  // handle complex product attribute filters passed as an array or JSON string
   if (filterByProductAttributes) {
     let attrs: any = filterByProductAttributes;
 
@@ -81,21 +83,28 @@ const getAllProducts = async ({
       }
     }
 
-    if (attrs && typeof attrs === "object") {
-      Object.keys(attrs).forEach((key) => {
-        const value = attrs[key];
-        if (value === null || value === undefined) return;
+    // If attrs is an array, convert each attribute filter to separate query parameters
+    if (Array.isArray(attrs) && attrs.length > 0) {
+      attrs.forEach((attr: any) => {
+        if (attr.attributeId) {
+          payload["filters[attributes][attributeId]"] = attr.attributeId;
 
-        // if value is an object with operators (is, like, gt, lt, etc.)
-        if (typeof value === "object" && !Array.isArray(value)) {
-          Object.keys(value).forEach((op) => {
-            const opVal = value[op];
-            if (opVal === null || opVal === undefined) return;
-            payload[`filters[${key}][${op}]`] = typeof opVal === "string" ? opVal : String(opVal);
-          });
-        } else {
-          // scalar -> treat as "is"
-          payload[`filters[${key}][is]`] = typeof value === "string" ? value : String(value);
+          // Add the appropriate operator parameter
+          if (attr.value !== undefined) {
+            payload["filters[attributes][value]"] = attr.value;
+          }
+          if (attr.like !== undefined) {
+            payload["filters[attributes][like]"] = attr.like;
+          }
+          if (attr.gt !== undefined) {
+            payload["filters[attributes][gt]"] = attr.gt;
+          }
+          if (attr.lt !== undefined) {
+            payload["filters[attributes][lt]"] = attr.lt;
+          }
+          if (attr.is !== undefined) {
+            payload["filters[attributes][is]"] = attr.is;
+          }
         }
       });
     }
