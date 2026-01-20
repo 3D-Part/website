@@ -122,8 +122,14 @@ const SaleProducts = ({ queryParams }: { queryParams: any }) => {
     useEffect(() => {
         setOffset(0);
         setHasMore(true);
-        fetchProducts(false);
     }, [priceMin, priceMax, field, order, manufacturerId, params.slug, filterByProductAttributes]);
+
+    // Fetch products when offset is 0 (initial load or after filter change)
+    useEffect(() => {
+        if (offset === 0) {
+            fetchProducts(false);
+        }
+    }, [offset, fetchProducts]);
 
     // Infinite scroll listener
     useEffect(() => {

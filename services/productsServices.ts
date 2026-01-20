@@ -69,6 +69,8 @@ const getAllProducts = async ({
   }
 
   // handle complex product attribute filters passed as an array or JSON string
+  console.log('filterByProductAttributes:', filterByProductAttributes);
+  let parsedAttrs: any[] = [];
   if (filterByProductAttributes) {
     let attrs: any = filterByProductAttributes;
 
@@ -81,30 +83,8 @@ const getAllProducts = async ({
       }
     }
 
-    // If attrs is an array, convert each attribute filter to separate query parameters
     if (Array.isArray(attrs) && attrs.length > 0) {
-      attrs.forEach((attr: any) => {
-        if (attr.attributeId) {
-          payload["filters[attributes][attributeId]"] = attr.attributeId;
-
-          // Add the appropriate operator parameter
-          if (attr.value !== undefined) {
-            payload["filters[attributes][value]"] = attr.value;
-          }
-          if (attr.like !== undefined) {
-            payload["filters[attributes][like]"] = attr.like;
-          }
-          if (attr.gt !== undefined) {
-            payload["filters[attributes][gt]"] = attr.gt;
-          }
-          if (attr.lt !== undefined) {
-            payload["filters[attributes][lt]"] = attr.lt;
-          }
-          if (attr.is !== undefined) {
-            payload["filters[attributes][is]"] = attr.is;
-          }
-        }
-      });
+      parsedAttrs = attrs;
     }
   }
 
@@ -132,11 +112,37 @@ const getAllProducts = async ({
     payload["limit"] = limit;
   }
 
-  const params = new URLSearchParams({ ...payload }).toString();
+  const params = new URLSearchParams({ ...payload });
+
+  // Add attribute filters separately to handle multiple values
+  parsedAttrs.forEach((attr: any) => {
+    if (attr.attributeId) {
+      params.append("filters[attributes][attributeId]", attr.attributeId);
+
+      // Add the appropriate operator parameter
+      if (attr.value !== undefined) {
+        params.append("filters[attributes][value]", attr.value);
+      }
+      if (attr.like !== undefined) {
+        params.append("filters[attributes][like]", attr.like);
+      }
+      if (attr.gt !== undefined) {
+        params.append("filters[attributes][gt]", attr.gt.toString());
+      }
+      if (attr.lt !== undefined) {
+        params.append("filters[attributes][lt]", attr.lt.toString());
+      }
+      if (attr.is !== undefined) {
+        params.append("filters[attributes][is]", attr.is);
+      }
+    }
+  });
+
+  const paramsString = params.toString();
   /////////
 
   try {
-    const res = await fetch(`${defaultRoute}?${params}`, {
+    const res = await fetch(`${defaultRoute}?${paramsString}`, {
       method: "GET",
       cache: "no-store",
     });
