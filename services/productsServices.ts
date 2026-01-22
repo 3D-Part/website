@@ -40,6 +40,8 @@ const getAllProducts = async ({
 }): Promise<ProductPaginatedInterface> => {
   const payload: any = {};
 
+  console.log(nameLike, search);
+
   if (slug !== undefined) {
     payload["filters[category.slug][is]"] = slug;
   }
@@ -56,7 +58,7 @@ const getAllProducts = async ({
   }
 
   if (nameLike) {
-    payload["filters[name][like]"] = "%" + nameLike + "%";
+    payload["key"] = nameLike;
   }
 
   if (search) {
