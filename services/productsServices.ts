@@ -40,8 +40,6 @@ const getAllProducts = async ({
 }): Promise<ProductPaginatedInterface> => {
   const payload: any = {};
 
-  console.log(nameLike, search);
-
   if (slug !== undefined) {
     payload["filters[category.slug][is]"] = slug;
   }
@@ -62,7 +60,7 @@ const getAllProducts = async ({
   }
 
   if (search) {
-    payload["filters[name][like]"] = "%" + search + "%";
+    payload["key"] = search;
   }
 
   // support category name filter (partial match)
@@ -71,7 +69,6 @@ const getAllProducts = async ({
   }
 
   // handle complex product attribute filters passed as an array or JSON string
-  console.log('filterByProductAttributes:', filterByProductAttributes);
   let parsedAttrs: any[] = [];
   if (filterByProductAttributes) {
     let attrs: any = filterByProductAttributes;
