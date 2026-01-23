@@ -72,7 +72,7 @@ const ProductsSale = () => {
             <div className="flex flex-col w-full px-4 lg:px-0">
               <div className="flex items-center justify-between w-full">
                 <Heading2 className="hover:text-white/70 transition-colors text-xl sm:text-2xl">
-                  Proizvodi na akciji {sale.name && `- ${sale.name}`} <span className="text-primary-500">({sale.products.length})</span>
+                  {/*Proizvodi na akciji */}{sale.name} {/*&& `- ${sale.name}`*/} <span className="text-primary-500">({sale.products.length})</span>
                 </Heading2>
                 {
                   // <Link href={`/shop/all?sale=${sale.id}`} prefetch>

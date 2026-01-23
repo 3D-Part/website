@@ -261,7 +261,7 @@ const Cart = () => {
                                   name: p.name,
                                   salePrice: p.salePrice || null,
                                 },
-                                shouldNotify: true,
+                                shouldNotify: false,
                               })
                             );
                           }}
