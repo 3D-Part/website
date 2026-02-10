@@ -18,6 +18,11 @@ export interface ISettings {
             delivery: {
                 cost: number,
                 freeDeliveryLimit: number
+            },
+            socialMedia?: {
+                instagram?: string;
+                facebook?: string;
+                olx?: string;
             }
         },
         createdAt: string,
