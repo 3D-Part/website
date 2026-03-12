@@ -47,15 +47,15 @@ const calculateShippingPrice = (weight: number): number => {
 
   switch (true) {
     case weight <= 10:
-      return 10;
+      return 11;
     case weight <= 20:
-      return 12;
+      return 13;
     case weight <= 30:
-      return 15;
+      return 16;
     case weight <= 40:
-      return 23;
+      return 24;
     case weight <= 50:
-      return 33;
+      return 34;
     default:
       const weightLeft = weight - 50;
       const price: number = 33 + (weightLeft / 5) * 2;
@@ -80,7 +80,7 @@ const calculatePriceAndPost = (cart: CartProductsType[], freeShippingBoundary: n
     weight += parseFloat(x.productData.weight) * x.amount;
   });
 
-  post = calculateShippingPrice(weight);
+  post = calculateShippingPrice(1);
 
   if (price >= freeShippingBoundary) {
     post = 0;
