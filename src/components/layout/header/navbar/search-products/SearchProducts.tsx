@@ -1,6 +1,7 @@
 "use client";
 
 import Search from "@/components/common/search/Search";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import SearchResults from "./search-results/SearchResults";
 import { ProductInterface } from "@/shared/interfaces/productsInterface";
@@ -49,7 +50,13 @@ const SearchProducts = () => {
   }, [text]);
 
   return (
-    <>
+    <div className="flex items-center gap-2">
+      <Link
+        href="/shop/sale"
+        className="h-10 px-3 rounded-lg bg-primary-500 hover:bg-primary-600 transition-colors text-white text-sm font-exo2 font-semibold flex items-center whitespace-nowrap"
+      >
+        Akcija
+      </Link>
       <Search
         searchIcon={true}
         clearIcon
@@ -63,7 +70,7 @@ const SearchProducts = () => {
         text={text}
         loading={loading}
       />
-    </>
+    </div>
   );
 };
 

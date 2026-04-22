@@ -1,12 +1,19 @@
-import Paragraph from "@/components/common/text/paragraph/Paragraph";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { cartLengthSelector } from "@/redux/slices/cart/cartSelectors";
 import { changeCartModalVisible } from "@/redux/slices/cart/cartSlice";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const CartIcon: React.FC<{ className: string }> = ({ className }) => {
   const cartLength = useAppSelector(cartLengthSelector);
   const dispatch = useAppDispatch();
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  const displayedCartLength = isMounted ? cartLength : 0;
+
   return (
     <div
       className={`${className} relative cursor-pointer p-1`}
@@ -16,11 +23,11 @@ const CartIcon: React.FC<{ className: string }> = ({ className }) => {
     >
       <CartSvg />
       <div
-        className={`text-white ${
-          cartLength > 0 ? "bg-primary-500" : "bg-neutral-500"
-        } w-4 h-4 rounded-full flex items-center justify-center text-[10px] font-exo2 font-normal absolute top-[-6px] right-[-6px]`}
+        className={`text-white ${displayedCartLength > 0 ? "bg-primary-500" : "bg-neutral-500"
+          } w-4 h-4 rounded-full flex items-center justify-center text-[10px] font-exo2 font-normal absolute top-[-6px] right-[-6px]`}
+        suppressHydrationWarning
       >
-        {cartLength}
+        {displayedCartLength}
       </div>
     </div>
   );

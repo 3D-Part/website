@@ -5,11 +5,9 @@ export const blogThunk = createAsyncThunk(
     'blogThunk', async (_, thunkAPI) => {
         try {
             const response = await blogService.fetchBlog();
-
-
-            return response as any;
+            return response?.data ?? [];
         } catch (e) {
-            thunkAPI.rejectWithValue(e);
+            return thunkAPI.rejectWithValue(e);
         }
     }
 ) 

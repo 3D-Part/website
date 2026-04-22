@@ -78,6 +78,8 @@ const Navbar = () => {
               src={"/assets/img/logo.svg"}
               width={138}
               height={44}
+              priority
+              style={{ height: "auto" }}
             />
           </Link>
 

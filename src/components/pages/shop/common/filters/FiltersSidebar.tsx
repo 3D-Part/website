@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import type { Dispatch, SetStateAction } from "react";
 import Price from "./price/Price";
 import Sorter from "./sorter/Sorter";
 import Categories from "./categories/Categories";
@@ -9,6 +8,7 @@ import useUiApi from "@/redux/api/useUiApi";
 import { CategoryAttributesInterface } from "@/shared/interfaces/categoryInterface";
 
 const FiltersSidebar: React.FC<{
+    hidePriceFilter?: boolean;
     categoryAttributes?: Array<CategoryAttributesInterface>;
     priceMin: number | null;
     setPriceMin: (x: number | null) => void;
@@ -22,6 +22,7 @@ const FiltersSidebar: React.FC<{
     setField: (x: "name" | "price" | null) => void;
     isLoading?: boolean;
 }> = ({
+    hidePriceFilter,
     priceMax,
     priceMin,
     setPriceMax,
@@ -49,17 +50,17 @@ const FiltersSidebar: React.FC<{
         // Sync pending states when sidebar opens
         useEffect(() => {
             if (isFilteringSidebarVisible) {
-                setPendingPriceMin(priceMin);
-                setPendingPriceMax(priceMax);
+                setPendingPriceMin(hidePriceFilter ? null : priceMin);
+                setPendingPriceMax(hidePriceFilter ? null : priceMax);
                 setPendingField(field);
                 setPendingOrder(order);
                 setPendingFilterByProductAttributes(filterByProductAttributes);
             }
-        }, [isFilteringSidebarVisible, priceMin, priceMax, field, order, filterByProductAttributes]);
+        }, [isFilteringSidebarVisible, hidePriceFilter, priceMin, priceMax, field, order, filterByProductAttributes]);
 
         const applyFilters = () => {
-            setPriceMin(pendingPriceMin);
-            setPriceMax(pendingPriceMax);
+            setPriceMin(hidePriceFilter ? null : pendingPriceMin);
+            setPriceMax(hidePriceFilter ? null : pendingPriceMax);
             setField(pendingField);
             setOrder(pendingOrder);
             setFilterByProductAttributes(pendingFilterByProductAttributes);
@@ -75,8 +76,8 @@ const FiltersSidebar: React.FC<{
 
             // Set new timer to auto-apply filters after 800ms of inactivity
             debounceTimerRef.current = setTimeout(() => {
-                setPriceMin(pendingPriceMin);
-                setPriceMax(pendingPriceMax);
+                setPriceMin(hidePriceFilter ? null : pendingPriceMin);
+                setPriceMax(hidePriceFilter ? null : pendingPriceMax);
                 setField(pendingField);
                 setOrder(pendingOrder);
                 setFilterByProductAttributes(pendingFilterByProductAttributes);
@@ -88,7 +89,7 @@ const FiltersSidebar: React.FC<{
                     clearTimeout(debounceTimerRef.current);
                 }
             };
-        }, [pendingPriceMin, pendingPriceMax, pendingField, pendingOrder, pendingFilterByProductAttributes]);
+        }, [hidePriceFilter, pendingPriceMin, pendingPriceMax, pendingField, pendingOrder, pendingFilterByProductAttributes]);
 
         const resetFilters = () => {
             setPendingPriceMin(null);
@@ -184,14 +185,18 @@ const FiltersSidebar: React.FC<{
                         {/* Content */}
                         <div className="flex-1 overflow-y-auto p-6 bg-neutral-900">
                             <div className="flex flex-col gap-8">
-                                <Price
-                                    priceMin={pendingPriceMin}
-                                    priceMax={pendingPriceMax}
-                                    setPriceMax={setPendingPriceMax}
-                                    setPriceMin={setPendingPriceMin}
-                                />
+                                {!hidePriceFilter && (
+                                    <>
+                                        <Price
+                                            priceMin={pendingPriceMin}
+                                            priceMax={pendingPriceMax}
+                                            setPriceMax={setPendingPriceMax}
+                                            setPriceMin={setPendingPriceMin}
+                                        />
 
-                                <div className="h-px bg-neutral-700"></div>
+                                        <div className="h-px bg-neutral-700"></div>
+                                    </>
+                                )}
 
                                 <Sorter
                                     field={pendingField}

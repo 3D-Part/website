@@ -20,7 +20,7 @@ const blogSlice = createSlice({
             state.isLoadingBlog = true;
         }),
             builder.addCase(blogThunk.fulfilled, (state, action) => {
-                state.blogData = action.payload.data;
+                state.blogData = action.payload;
                 state.isLoadingBlog = false;
             })
         builder.addCase(blogThunk.rejected, (state) => {
