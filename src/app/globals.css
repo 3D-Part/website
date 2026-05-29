@@ -56,8 +56,13 @@ body {
   background-color: rgba(248, 250, 252, 0.3) !important;
 }
 
+.landing_slider .swiper-pagination{
+  display: block !important;
+}
+
 @media only screen and (max-width: 1024px) {
   .landing_slider .swiper-pagination {
+    display: none !important;
     top: 238px !important;
     position: absolute !important;
     height: min-content !important;

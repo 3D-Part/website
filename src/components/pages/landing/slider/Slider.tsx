@@ -14,6 +14,8 @@ import { useAppDispatch } from "@/redux/hooks";
 import { changeIsModalAuthVisible } from "@/redux/slices/ui/uiSlice";
 import Display1 from "@/components/common/text/display/Display1";
 import { useIsMobileSlider, useIsTablet } from "@/shared/hooks/useMediaQuerry";
+import Image from "next/image";
+import Link from "next/link";
 
 const azurefilmId = "03cbbd90-3dab-11ee-bb4e-994af83111f0";
 
@@ -149,6 +151,14 @@ const Slider = () => {
             }}
             priority={true}
           />
+        </SwiperSlide>
+
+        <SwiperSlide>
+          <Link href="https://www.3dpartshop.com/shop/category/filamenti?manufacturerId=03cbbd90-3dab-11ee-bb4e-994af83111f0">
+            <Image width={0} height={0} alt="" sizes="100vw" className="h-[540px] w-full object-cover hidden lg:block" src="/assets/img/slider/BIH_NORAPLAST-1440X500.png" />
+
+            <Image width={0} height={0} alt="" sizes="100vw" className="h-[540px] w-full object-cover lg:hidden block" src="/assets/img/slider/BIH_NORAPLAST-Meta Ad-1080x1080.png" />
+          </Link>
         </SwiperSlide>
 
         {/* <SwiperSlide>
