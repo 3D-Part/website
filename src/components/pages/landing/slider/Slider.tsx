@@ -127,6 +127,14 @@ const Slider = () => {
         </SwiperSlide> */}
 
         <SwiperSlide>
+          <Link href="https://www.3dpartshop.com/shop/category/filamenti?manufacturerId=03cbbd90-3dab-11ee-bb4e-994af83111f0">
+            <Image width={0} height={0} alt="" sizes="100vw" className="h-[540px] w-full object-cover hidden lg:block" src="/assets/img/slider/BIH_NORAPLAST-1440X500.png" />
+
+            <Image width={0} height={0} alt="" sizes="100vw" className="h-[540px] w-full object-cover lg:hidden block" src="/assets/img/slider/BIH_NORAPLAST-Meta Ad-1080x1080.png" />
+          </Link>
+        </SwiperSlide>
+
+        <SwiperSlide>
           <SliderPage
             bgUrl="/assets/img/slider/background4.jpg"
             productUrl="/assets/img/slider/product4.png"
@@ -153,13 +161,6 @@ const Slider = () => {
           />
         </SwiperSlide>
 
-        <SwiperSlide>
-          <Link href="https://www.3dpartshop.com/shop/category/filamenti?manufacturerId=03cbbd90-3dab-11ee-bb4e-994af83111f0">
-            <Image width={0} height={0} alt="" sizes="100vw" className="h-[540px] w-full object-cover hidden lg:block" src="/assets/img/slider/BIH_NORAPLAST-1440X500.png" />
-
-            <Image width={0} height={0} alt="" sizes="100vw" className="h-[540px] w-full object-cover lg:hidden block" src="/assets/img/slider/BIH_NORAPLAST-Meta Ad-1080x1080.png" />
-          </Link>
-        </SwiperSlide>
 
         {/* <SwiperSlide>
           <SliderPage
