@@ -100,6 +100,30 @@ const Slider = () => {
           />
         </SwiperSlide> */}
 
+        {/* ----------------- NORAPLAST -----------------  */}
+
+        <SwiperSlide>
+          <Image
+            width={0}
+            height={0}
+            alt=""
+            sizes="100vw"
+            className="hidden w-full h-[540px] object-cover md:block"
+            src="/assets/img/slider/BIH_NORAPLAST-1440X500.png"
+            priority={true}
+          />
+
+          <Image
+            width={0}
+            height={0}
+            alt=""
+            sizes="100vw"
+            className="block w-full h-[540px] object-cover md:hidden"
+            src="/assets/img/slider/BIH_NORAPLAST-Meta Ad-1080x1080.png"
+            priority={true}
+          />
+        </SwiperSlide>
+
         {/* <SwiperSlide>
           <SliderPage
             bgUrl="/assets/img/slider/newAzurefilmCollectionBg.png"
