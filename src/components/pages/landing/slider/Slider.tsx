@@ -103,6 +103,30 @@ const Slider = () => {
         {/* ----------------- NORAPLAST -----------------  */}
 
         <SwiperSlide>
+          {/* 0 - 449px: uspravna kreativa */}
+          <div className="relative block w-full aspect-[9/14] min-[545px]:hidden">
+            <Image
+              fill={true}
+              alt=""
+              sizes="100vw"
+              className="object-cover object-center"
+              src="/assets/img/slider/NORAPLAST-back2school/BIH_NORAPLAST-1080x1920.png"
+              priority={true}
+            />
+          </div>
+
+          {/* 545px - 767px: kvadratna kreativa */}
+          <div className="relative hidden w-full aspect-square min-[545px]:block md:hidden">
+            <Image
+              fill={true}
+              alt=""
+              sizes="100vw"
+              className="object-cover object-center"
+              src="/assets/img/slider/NORAPLAST-back2school/BIH_NORAPLAST-1080x1080.png"
+              priority={true}
+            />
+          </div>
+
           <Image
             width={0}
             height={0}
@@ -110,16 +134,6 @@ const Slider = () => {
             sizes="100vw"
             className="hidden w-full h-[540px] object-cover md:block"
             src="/assets/img/slider/BIH_NORAPLAST-1440X500.png"
-            priority={true}
-          />
-
-          <Image
-            width={0}
-            height={0}
-            alt=""
-            sizes="100vw"
-            className="block w-full h-[540px] object-cover md:hidden"
-            src="/assets/img/slider/BIH_NORAPLAST-Meta Ad-1080x1080.png"
             priority={true}
           />
         </SwiperSlide>
