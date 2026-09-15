@@ -6,26 +6,14 @@ import TruckIcon from "./TruckIcon";
 import PhoneNumber from "@/components/common/social/PhoneNumber";
 import Mail from "@/components/common/social/Mail";
 import SocialApps from "@/components/common/social/SocialApps";
-import { motion } from "framer-motion";
-import useScrollThreshold from "@/shared/hooks/useScrollThreshold";
 import { useIsTablet } from "@/shared/hooks/useMediaQuerry";
 
 const HeaderInfo = () => {
-  const scrolled = useScrollThreshold(100);
   const isTablet = useIsTablet();
   return (
     <>
       {!isTablet && (
-        <motion.div
-          className="items-center justify-between hidden py-2 lg:flex px-9 min-h-11 h-11 lg:max-w-[1920px] lg:mx-auto overflow-hidden"
-          initial={{ height: "auto", paddingTop: 0, paddingBottom: 0 }}
-          animate={{
-            height: scrolled && !isTablet ? 0 : 44,
-            paddingTop: scrolled && !isTablet ? 0 : 8,
-            paddingBottom: scrolled && !isTablet ? 0 : 8,
-          }}
-          transition={{ type: "keyframes", duration: 0.2 }}
-        >
+        <div className="items-center justify-between hidden py-2 lg:flex px-9 min-h-11 h-11 lg:max-w-[1920px] lg:mx-auto overflow-hidden">
           <div className="flex items-center">
             <TruckIcon />
             <Paragraph
@@ -60,7 +48,7 @@ const HeaderInfo = () => {
             </Paragraph> */}
             {/* <MdOutlineKeyboardArrowDown className=" ml-[2px] cursor-pointer" /> */}
           </div>
-        </motion.div>
+        </div>
       )}
     </>
   );
