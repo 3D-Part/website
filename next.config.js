@@ -1,4 +1,15 @@
 /** @type {import('next').NextConfig} */
+
+// Same idea as the admin panel: keep the configured image host in sync with
+// the environment so a local image server needs no edit here.
+const imagesHostname = (() => {
+  try {
+    return new URL(process.env.NEXT_PUBLIC_AMAZON_IMAGES).hostname
+  } catch {
+    return null
+  }
+})()
+
 const nextConfig = {
   experimental: {
     appDir: true,
@@ -7,6 +18,7 @@ const nextConfig = {
     domains: [
       "bucket3dparts.s3.eu-central-1.amazonaws.com",
       "bucket3dpart.s3.eu-central-1.amazonaws.com",
+      ...(imagesHostname ? [imagesHostname] : []),
     ],
     unoptimized: true,
   },

@@ -29,7 +29,13 @@ export enum ErrorCodeEnum {
 export enum OrderStatusEnum {
   Pending = "PENDING",
   Accepted = "ACCEPTED",
-  Declined = "DECLINED",
+  ProformaSent = "PROFORMA_SENT",
   Shipping = "SHIPPING",
+  InvoiceIssued = "INVOICE_ISSUED",
+  AwaitingPayment = "AWAITING_PAYMENT",
+  Paid = "PAID",
+  InvoiceSent = "INVOICE_SENT",
   Finished = "FINISHED",
+  Returned = "RETURNED",
+  Declined = "DECLINED",
 }

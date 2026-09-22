@@ -61,6 +61,18 @@ const CategoryProducts: React.FC<{ categoryAttributes: Array<CategoryAttributesI
         limit: initCount,
       });
 
+      console.log("[CategoryProducts] cijela response:", res);
+      console.log(
+        "[CategoryProducts] productOnSale po produktu:",
+        res.rows.map((a) => ({
+          name: a.name,
+          price: a.price,
+          productOnSale: a.productOnSale,
+          naAkciji: a.productOnSale.length > 0,
+          discountedPrice: a.productOnSale[0]?.discountedPrice ?? null,
+        }))
+      );
+
       res.rows.forEach((a) => {
         if (a.productOnSale.length) {
           a.salePrice = a.productOnSale[0].discountedPrice;
