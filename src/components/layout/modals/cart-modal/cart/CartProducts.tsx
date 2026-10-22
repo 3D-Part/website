@@ -2,7 +2,6 @@
 import { useAppDispatch } from "@/redux/hooks";
 import {
   CartProductsType,
-  addProductWithAmount,
   decreaseProductWithAmount,
   removeProduct,
 } from "@/redux/slices/cart/cartSlice";
@@ -10,9 +9,11 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import Heading6 from "@/components/common/text/heading/Heading6";
 import Paragraph from "@/components/common/text/paragraph/Paragraph";
+import { useAddToCart } from "@/shared/hooks/useAddToCart";
 
 const CartProducts: React.FC<{ product: CartProductsType }> = ({ product }) => {
   const dispatch = useAppDispatch();
+  const { addToCart, modal: backorderModal } = useAddToCart();
 
   return (
     <motion.div
@@ -37,6 +38,11 @@ const CartProducts: React.FC<{ product: CartProductsType }> = ({ product }) => {
         <Heading6 className="text-base text-white lg:text-lg md:text-lg">
           {product.productData.name}
         </Heading6>
+        {product.amount > product.productData.quantity && (
+          <p className="text-xs font-normal text-warning-500">
+            Po narudžbi, duži rok isporuke
+          </p>
+        )}
         <p className="text-xs font-normal text-neutral-200">
           Težina:{" "}
           <span className="text-white ">
@@ -78,14 +84,12 @@ const CartProducts: React.FC<{ product: CartProductsType }> = ({ product }) => {
               className="lg:w-6 lg:h-6 w-4 h-4 rounded-[4px] flex items-center justify-center bg-neutral-900 cursor-pointer"
               whileTap="tap"
               onClick={() => {
-                dispatch(
-                  addProductWithAmount({
-                    productId: product.idProduct,
-                    productData: product.productData,
-                    shouldNotify: false,
-                    amount: 1,
-                  })
-                );
+                addToCart({
+                  productId: product.idProduct,
+                  productData: product.productData,
+                  shouldNotify: false,
+                  amount: 1,
+                });
               }}
             >
               <motion.svg
@@ -113,6 +117,7 @@ const CartProducts: React.FC<{ product: CartProductsType }> = ({ product }) => {
           ).toFixed(2)} KM`}</p>
         </div>
       </div>
+      {backorderModal}
     </motion.div>
   );
 };

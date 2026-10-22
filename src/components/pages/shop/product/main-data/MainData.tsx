@@ -9,12 +9,10 @@ import { motion } from "framer-motion";
 import SimilarProducts from "./similar-products/SimilarProducts";
 import Button from "@/components/common/button/Button";
 import { CartIcon } from "@/components/common/product/Product";
-import { useAppDispatch } from "@/redux/hooks";
-import { addProductWithAmount } from "@/redux/slices/cart/cartSlice";
+import { useAddToCart } from "@/shared/hooks/useAddToCart";
 import { getMainImage } from "@/shared/helper/getMainImage";
 import { useIsTablet } from "@/shared/hooks/useMediaQuerry";
 import Heading1 from "@/components/common/text/heading/Heading1";
-import { notify } from "@/components/common/toast/Toastify";
 
 const MainData: React.FC<{
   productData: ProductInterface;
@@ -63,12 +61,12 @@ const MainData: React.FC<{
     : null;
 
   const [amount, setAmount] = useState(1);
-  const dispatch = useAppDispatch();
+  const { addToCart, modal: backorderModal } = useAddToCart();
 
   const isTablet = useIsTablet();
 
   const amountHandler = (newAmount: number) => {
-    if (newAmount >= 1 && newAmount <= productData.quantity) {
+    if (newAmount >= 1) {
       setAmount(newAmount);
     }
   };
@@ -156,22 +154,9 @@ const MainData: React.FC<{
             {amount}
           </Paragraph>
           <motion.button
-            className={
-              "w-10 h-10 rounded-[4px] flex items-center justify-center bg-neutral-900 " +
-              ` ${amount === productData.quantity
-                ? "cursor-not-allowed"
-                : "cursor-pointer"
-              }`
-            }
+            className="w-10 h-10 rounded-[4px] flex items-center justify-center bg-neutral-900 cursor-pointer"
             whileTap="tap"
             onClick={() => {
-              if (amount === productData.quantity) {
-                notify(`Nema dovoljno proizvoda u zalihi`, {
-                  type: "warning",
-                  toastId: 2,
-                });
-                return;
-              }
               amountHandler(amount + 1);
             }}
           >
@@ -193,34 +178,32 @@ const MainData: React.FC<{
         {isTablet && <Stock stock={productData.quantity} />}
         <Button
           onClick={() => {
-            dispatch(
-              addProductWithAmount({
-                productId: productData.id,
-                amount,
-                productData: {
-                  image: getMainImage(images),
-                  weight,
-                  price,
-                  quantity,
-                  name,
-                  salePrice,
-                },
-                shouldNotify: false,
-              })
-            );
+            addToCart({
+              productId: productData.id,
+              amount,
+              productData: {
+                image: getMainImage(images),
+                weight,
+                price,
+                quantity,
+                name,
+                salePrice,
+              },
+              shouldNotify: false,
+            });
           }}
           size="L"
           type="primary"
           className="flex  w-full lg:w-[186px] h-12"
-          disabled={productData.quantity < 1}
         >
           <div className="flex items-center gap-2">
             Dodaj u korpu
             <CartIcon
-              color={productData.quantity < 1 ? "#7a7a7a" : "#ffffff"}
+              color={"#ffffff"}
             />
           </div>
         </Button>
+        {backorderModal}
       </motion.div>
     </motion.div>
   );

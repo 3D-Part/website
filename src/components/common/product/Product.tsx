@@ -9,10 +9,8 @@ import Link from "next/link";
 import { getMainImage } from "@/shared/helper/getMainImage";
 import Button from "../button/Button";
 import { useAppDispatch } from "@/redux/hooks";
-import {
-  addProductWithAmount,
-  changeCartModalVisible,
-} from "@/redux/slices/cart/cartSlice";
+import { changeCartModalVisible } from "@/redux/slices/cart/cartSlice";
+import { useAddToCart } from "@/shared/hooks/useAddToCart";
 import { useSession } from "next-auth/react";
 import FavoriteButton from "@/components/common/product/FavoriteButton";
 import Ribbon from "../ribbon/ribbon";
@@ -35,6 +33,7 @@ const Product: React.FC<ProductInterfaceComponent> = ({
 }) => {
   const dispatch = useAppDispatch();
   const [checkCartVisible, setCheckCartVisible] = useState(false);
+  const { addToCart, modal: backorderModal } = useAddToCart();
 
   const { data: session } = useSession();
 
@@ -136,10 +135,9 @@ const Product: React.FC<ProductInterfaceComponent> = ({
             type="primary"
             size="L"
             text=""
-            disabled={quantity < 1}
             onClick={() => {
-              dispatch(
-                addProductWithAmount({
+              addToCart(
+                {
                   amount: 1,
                   productId: id,
                   productData: {
@@ -151,19 +149,20 @@ const Product: React.FC<ProductInterfaceComponent> = ({
                     salePrice,
                   },
                   shouldNotify: false,
-                })
+                },
+                () => setCheckCartVisible(true)
               );
-              setCheckCartVisible(true);
             }}
             className="h-8 w-[200px] mt-2 max-w-full "
           >
             <div className="flex gap-2 ">
               <div className="items-center hidden xsm:flex">
-                <CartIcon color={quantity < 1 ? "#7a7a7a" : "#ffffff"} />
+                <CartIcon color={"#ffffff"} />
               </div>
               Dodaj u korpu
             </div>
           </Button>
+          {backorderModal}
         </div>
       </div>
     </Link>

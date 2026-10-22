@@ -68,19 +68,10 @@ export const cart = createSlice({
         (product) => product.idProduct === productId
       );
 
+      // amounts above the stock level are allowed (backorder), the user
+      // confirms that in useAddToCart before this runs
       if (productIndex !== -1) {
-        const newValue = state.cartProducts[productIndex].amount + amount;
-        if (newValue > productData.quantity) {
-          state.cartProducts[productIndex].amount = productData.quantity;
-          notify(`Nema dovoljno proizvoda na zalihi `, {
-            type: "warning",
-            toastId: 2,
-          });
-
-          return;
-        } else {
-          state.cartProducts[productIndex].amount = newValue;
-        }
+        state.cartProducts[productIndex].amount += amount;
       } else {
         state.cartProducts.push({
           idProduct: productId,
