@@ -2,24 +2,27 @@
 
 import Search from "@/components/common/search/Search";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import React, { Suspense, useEffect, useState } from "react";
 import SearchResults from "./search-results/SearchResults";
 import { ProductInterface } from "@/shared/interfaces/productsInterface";
 import { productsServices } from "../../../../../../services/productsServices";
 
+// The input follows the URL, so it empties when a page without ?search= opens.
+// A separate component: useSearchParams needs its own Suspense boundary here, or
+// the header would turn every static page into a client-rendered one.
+const SearchParamSync = ({ onChange }: { onChange: (value: string) => void }) => {
+  const search = useSearchParams().get("search") || "";
+
+  useEffect(() => {
+    onChange(search);
+  }, [search, onChange]);
+
+  return null;
+};
+
 const SearchProducts = () => {
   const [text, setText] = useState("");
-  // read initial search param on client only
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    try {
-      const queryParams = new URLSearchParams(window.location.search);
-      const searchParam = queryParams.get("search") || "";
-      setText(searchParam);
-    } catch (e) {
-      setText("");
-    }
-  }, []);
   const [products, setProducts] = useState<ProductInterface[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -51,6 +54,9 @@ const SearchProducts = () => {
 
   return (
     <div className="flex items-center gap-2">
+      <Suspense fallback={null}>
+        <SearchParamSync onChange={setText} />
+      </Suspense>
       <Link
         href="/shop/sale"
         className="h-10 px-3 rounded-lg bg-primary-500 hover:bg-primary-600 transition-colors text-white text-sm font-exo2 font-semibold flex items-center whitespace-nowrap"
