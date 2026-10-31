@@ -11,6 +11,7 @@ import Toastify from "@/components/common/toast/Toastify";
 import { NextAuthProvider } from "@/app/providers";
 import GoogleAnalytics from "./GoogleAnalytics";
 import Script from "next/script";
+import TidioChat from "@/components/helper/TidioChat";
 import NonRendableComponent from "@/components/helper/NonRendableComponent";
 
 const exo2 = Exo_2({
@@ -19,6 +20,7 @@ const exo2 = Exo_2({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.3dpartshop.com"),
   title: {
     default:
       "3D Part: 3D printeri, širok spektar filamenata i kvalitetne dijelove po najpovoljnijim cijenama",
@@ -27,15 +29,30 @@ export const metadata: Metadata = {
   description:
     "Pružamo najveci izbor 3D printera, širok spektar filamenata i kvalitetne dijelove po najpovoljnijim cijenama. Olakšajte svoje 3D printanje s našim proizvodima i uslugama.",
   keywords: [
-    "3d printer, 3d printeri, 3d filamenti, 3d filament, pla filamenti, filamenti za 3d printer, dijelovi za 3d printere, creality, creality printeri, creality filamenti, creality pla, pla filament, petg filament, abs filament, carbon filamenti, asa filamenti, 3d stampa, 3d dijelovi od plastike, 3d stampanje, grijaci, extruderi, ventilatori, sve kategorije sa sajta se mogu uzeti, prusa, prusa printeri, mk4s printer, prusa mk4 kit, flashforge, profesionalni 3d printeri, resin printer, resini, smole , uv smola za 3d printer",
+    "3d printer",
+    "3d printeri",
+    "3d štampa",
+    "3d štampanje",
+    "3d filament",
+    "filamenti za 3d printer",
+    "pla filament",
+    "petg filament",
+    "abs filament",
+    "asa filament",
+    "dijelovi za 3d printere",
+    "resin printer",
+    "uv smola za 3d printer",
+    "creality",
+    "prusa",
+    "flashforge",
+    "elegoo",
+    "3d printeri bih",
+    "filamenti bih",
+    "3d printer banja luka",
   ],
-  verification: {
-    google: "google-site-verification: google12063707349698d2.html",
-  },
-
   openGraph: {
     type: "website",
-    url: "https://3dpartshop.com",
+    locale: "bs_BA",
     title: "3D Part",
     description:
       "Pružamo najnovije modele 3D printera, širok spektar filamenata i kvalitetne dijelove po najpovoljnijim cijenama. Olakšajte svoje 3D printanje s našim proizvodima i uslugama.",
@@ -55,13 +72,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="bs">
       <body
         className={`${exo2.variable} font-exo2 overflow-x-hidden relative min-w-[368px]`}
       >
         <NextAuthProvider>
           <Providers>
             <NonRendableComponent />
+            <TidioChat />
             <Header />
             <Lights />
             <GoogleAnalytics />

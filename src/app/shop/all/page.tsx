@@ -2,6 +2,7 @@ import Container from "@/components/common/container/Container";
 import Description from "@/components/pages/shop/common/description/Description";
 import CategoryProducts from "@/components/pages/shop/category/CategoryProducts";
 import { Metadata } from "next";
+import PageBanner from "@/components/common/page-banner/PageBanner";
 import AllProducts from "@/components/pages/shop/sale/SaleProducts";
 import SaleProducts from "@/components/pages/shop/sale/SaleProducts";
 
@@ -11,6 +12,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
     // Hardcoded metadata for the "All products" page
     return {
         title: "Svi proizvodi — 3D Parts",
+        alternates: { canonical: "/shop/all" },
         description: "Pregled svih 3D proizvoda i pribora — filament, rezervni dijelovi i oprema. Pregledajte ponudu, sortirajte i filtrirajte proizvode.",
         colorScheme: "dark",
         openGraph: {
@@ -38,6 +40,7 @@ export default async function All() {
     return (
         <div className="w-full">
             <Container className="min-h-screen p-4 lg:px-8">
+                <PageBanner page="all" />
                 <AllProducts />
             </Container>
         </div>

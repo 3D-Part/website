@@ -44,6 +44,7 @@ export interface UserType {
   createdAt: Date;
   discount: number;
   availablePoints: number;
+  tier?: string | null;
 }
 
 type updateProfilePayload = {

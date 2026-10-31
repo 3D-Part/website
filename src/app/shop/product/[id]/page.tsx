@@ -14,6 +14,16 @@ import { Product, WithContext } from "schema-dts";
 import FavoriteButton from "@/components/common/product/FavoriteButton";
 import Ribbon from "@/components/common/ribbon/ribbon";
 
+const BASE_URL = "https://www.3dpartshop.com";
+
+const absoluteUrl = (url: string) =>
+  url.startsWith("http") ? url : `${BASE_URL}${url}`;
+
+const shortText = (text: string, length = 160) => {
+  const plain = text.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+  return plain.length > length ? `${plain.slice(0, length - 1).trim()}…` : plain;
+};
+
 interface ProductParams {
   params: {
     id: string;
@@ -29,17 +39,32 @@ export const generateMetadata = async ({
   try {
     const data = await productsServices.getSingleProduct(params.id);
 
-    return {
-      title: `${data.name}`,
-      keywords: ` ${data.description} ${data.name}`,
+    const image = absoluteUrl(
+      data.images.length > 0
+        ? getMainImage(data.images)
+        : "/assets/img/logo_social.png"
+    );
+    const description = shortText(
+      data.description ||
+        `${data.name} po povoljnoj cijeni uz brzu dostavu u BiH. Naručite na 3D Part.`
+    );
 
-      description: `${data.description}`,
+    return {
+      title: data.name,
+      description,
+      keywords: [
+        data.name,
+        data.manufacturer?.name,
+        data.category?.name,
+        ...(data.keywords || []),
+      ].filter(Boolean) as string[],
       colorScheme: "dark",
+      alternates: { canonical: `/shop/product/${params.id}` },
       openGraph: {
-        images:
-          data.images.length > 0
-            ? [getMainImage(data.images)]
-            : ["/assets/img/logo_social.png"],
+        title: data.name,
+        description,
+        url: `/shop/product/${params.id}`,
+        images: [image],
       },
     };
   } catch (error) {
@@ -54,12 +79,30 @@ export default async function ProductPage({ params }: ProductParams) {
   try {
     const data = await productsServices.getSingleProduct(params.id);
 
+    const saleOffer = data.productOnSale?.[0]?.discountedPrice;
     const jsonLd: WithContext<Product> = {
       "@context": "https://schema.org",
       "@type": "Product",
       name: data.name,
-      image: getMainImage(data.images),
-      description: data.description,
+      image: absoluteUrl(getMainImage(data.images)),
+      description: shortText(data.description || data.name, 5000),
+      sku: data.sku,
+      ...(data.manufacturer?.name
+        ? { brand: { "@type": "Brand", name: data.manufacturer.name } }
+        : {}),
+      ...(data.category?.name ? { category: data.category.name } : {}),
+      offers: {
+        "@type": "Offer",
+        url: `${BASE_URL}/shop/product/${data.id}`,
+        priceCurrency: "BAM",
+        price: Number(saleOffer ?? data.price).toFixed(2),
+        itemCondition: "https://schema.org/NewCondition",
+        availability: data.isBackorder
+          ? "https://schema.org/PreOrder"
+          : data.quantity > 0
+          ? "https://schema.org/InStock"
+          : "https://schema.org/OutOfStock",
+      },
     };
 
     const similarProductsData = await productsServices.getAllProducts({

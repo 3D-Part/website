@@ -14,6 +14,7 @@ import { useAppDispatch } from "@/redux/hooks";
 import { changeIsModalAuthVisible } from "@/redux/slices/ui/uiSlice";
 import Display1 from "@/components/common/text/display/Display1";
 import { useIsMobileSlider, useIsTablet } from "@/shared/hooks/useMediaQuerry";
+import { PageBannerImage, usePageImages } from "@/components/common/page-banner/PageBanner";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -27,10 +28,13 @@ const Slider = () => {
 
   const isTablet = useIsTablet();
   const isMobileSlider = useIsMobileSlider();
+  const pageImages = usePageImages("home");
 
   return (
     <Container className="w-full px-4 py-6 lg:px-9 lg:py-8 landing_slider">
       <Swiper
+        // slides have different heights, and a tall one must not stretch the others
+        autoHeight={true}
         pagination={{
           dynamicBullets: true,
         }}
@@ -126,15 +130,21 @@ const Slider = () => {
           />
         </SwiperSlide> */}
 
+        {pageImages.map((image) => (
+          <SwiperSlide key={image.id}>
+            <PageBannerImage image={image} />
+          </SwiperSlide>
+        ))}
+
         {/* ----------------- Halloween -----------------  */}
         <SwiperSlide>
           <picture>
             <source media="(max-width: 544px)" srcSet="/assets/img/slider/halloween-2026/halloween-2026-mobile.webp" />
-            <source media="(max-width: 767px)" srcSet="/assets/img/slider/halloween-2026/halloween-2026-tablet.webp" />
+            <source media="(max-width: 700px)" srcSet="/assets/img/slider/halloween-2026/halloween-2026-tablet.webp" />
             <img
               src="/assets/img/slider/halloween-2026/halloween-2026-desktop.webp"
               alt="Halloween popust do 30% na printere i filamente"
-              className="block w-full aspect-[9/14] min-[545px]:aspect-square md:aspect-auto md:h-[540px] object-cover"
+              className="block w-full aspect-[9/14] min-[545px]:aspect-square min-[701px]:aspect-[8/3] object-cover"
             />
           </picture>
         </SwiperSlide>

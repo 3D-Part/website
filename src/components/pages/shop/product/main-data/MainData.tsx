@@ -4,6 +4,7 @@ import Heading6 from "@/components/common/text/heading/Heading6";
 import Paragraph from "@/components/common/text/paragraph/Paragraph";
 import { ProductInterface } from "@/shared/interfaces/productsInterface";
 import React, { useState } from "react";
+import ProductIcons from "@/components/common/product/ProductIcons";
 import Stock from "../stock/Stock";
 import { motion } from "framer-motion";
 import SimilarProducts from "./similar-products/SimilarProducts";
@@ -120,7 +121,8 @@ const MainData: React.FC<{
             {parseFloat(salePrice ? salePrice : price).toFixed(2)} KM
           </span>
         </Display2>
-        {!isTablet && <Stock stock={productData.quantity} />}
+        {!isTablet && <Stock stock={productData.quantity} byOrder={productData.isBackorder} />}
+        <ProductIcons icons={productData.icons} withLabels />
       </motion.div>
 
       <motion.div
@@ -175,7 +177,7 @@ const MainData: React.FC<{
             </motion.svg>
           </motion.button>
         </div>
-        {isTablet && <Stock stock={productData.quantity} />}
+        {isTablet && <Stock stock={productData.quantity} byOrder={productData.isBackorder} />}
         <Button
           onClick={() => {
             addToCart({

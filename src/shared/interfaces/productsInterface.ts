@@ -19,6 +19,9 @@ export interface ProductInterface {
   weight: string;
   quantity: number;
   salePrice?: string;
+  isBackorder?: boolean;
+  icons?: string[];
+  keywords?: string[];
   productOnSale: { discountedPrice: string }[];
   // stock: number;
   // imgUrls: string[];

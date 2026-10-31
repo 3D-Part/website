@@ -13,6 +13,7 @@ import { changeCartModalVisible } from "@/redux/slices/cart/cartSlice";
 import { useAddToCart } from "@/shared/hooks/useAddToCart";
 import { useSession } from "next-auth/react";
 import FavoriteButton from "@/components/common/product/FavoriteButton";
+import ProductIcons from "@/components/common/product/ProductIcons";
 import Ribbon from "../ribbon/ribbon";
 
 interface ProductInterfaceComponent extends ProductInterface {
@@ -30,6 +31,8 @@ const Product: React.FC<ProductInterfaceComponent> = ({
   className = "",
   imageWidth = "200px",
   salePrice,
+  isBackorder,
+  icons,
 }) => {
   const dispatch = useAppDispatch();
   const [checkCartVisible, setCheckCartVisible] = useState(false);
@@ -103,7 +106,7 @@ const Product: React.FC<ProductInterfaceComponent> = ({
             {name.length > 45 ? "..." : ""}
           </Paragraph>
           <div className="flex items-center gap-2 mt-2">
-            <Image
+            {!isBackorder && <Image
               alt={name}
               src={
                 quantity > 0
@@ -112,11 +115,12 @@ const Product: React.FC<ProductInterfaceComponent> = ({
               }
               width={15}
               height={15}
-            />
+            />}
             <Paragraph size="XS" weight="Regular">
-              {quantity > 0 ? "Na stanju" : "Nema na stanju"}
+              {isBackorder ? "Po narudžbi" : quantity > 0 ? "Na stanju" : "Nema na stanju"}
             </Paragraph>
           </div>
+          <ProductIcons icons={icons} />
           <div className="flex items-center gap-2 mt-2">
             {salePrice && (
               <Paragraph

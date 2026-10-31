@@ -63,7 +63,7 @@ const calculateShippingPrice = (weight: number): number => {
   }
 };
 
-const calculatePriceAndPost = (cart: CartProductsType[], freeShippingBoundary: number) => {
+const calculatePriceAndPost = (cart: CartProductsType[], freeShippingBoundary: number, tierDiscount = 0) => {
   let price = 0,
     post = 0,
     weight = 0;
@@ -72,10 +72,10 @@ const calculatePriceAndPost = (cart: CartProductsType[], freeShippingBoundary: n
     price =
       price +
       x.amount *
-      Number(
-        x.productData.salePrice
-          ? x.productData.salePrice
-          : x.productData.price
+      // same rule as the API: the better of the sale price and the tier price
+      Math.min(
+        Number(x.productData.salePrice || x.productData.price),
+        Number(x.productData.price) * (1 - tierDiscount / 100)
       );
     weight += parseFloat(x.productData.weight) * x.amount;
   });
@@ -95,6 +95,7 @@ const Cart = () => {
   const cartLength = useAppSelector(cartLengthSelector);
   const cart = useAppSelector(cartProductsSelector);
   const promoCode = useAppSelector(promoCodeSelectorAmount);
+  const limitedPromoCode = ((promoCode as any)?.categoryIds?.length ?? 0) > 0;
   const discount = useAppSelector(discountSelector);
   const dispatch = useAppDispatch();
   const pathname = usePathname();
@@ -106,7 +107,11 @@ const Cart = () => {
 
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const { price, post } = calculatePriceAndPost(cart, settings.settings.delivery.freeDeliveryLimit);
+  const { price, post } = calculatePriceAndPost(
+    cart,
+    settings.settings.delivery.freeDeliveryLimit,
+    Number((settings.settings as any).tiers?.[userData?.tier?.toLowerCase() ?? ""]) || 0
+  );
   const { status } = useSession();
 
   const fetchCouponsAndAddDiscount = async (code: string) => {
@@ -361,7 +366,10 @@ const Cart = () => {
               }`}
           >{`${price.toFixed(2)} KM 
           `}</p>
-          {promoCode && (
+          {limitedPromoCode && (
+            <p className="text-xs text-neutral-300">Kod važi za odabrane kategorije, konačna cijena je na potvrdi narudžbe.</p>
+          )}
+          {promoCode && !limitedPromoCode && (
             <p className=" text-[18px] font-exo2 font-semibold text-success-500">{`${(
               price -
               price * (Number(promoCode.discountPercentage) / 100)

@@ -5,7 +5,16 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
+      disallow: [
+        "/api/",
+        "/profile-details",
+        "/favorites",
+        "/shop/checkout",
+        "/login",
+        "/verify",
+        "/reset-password",
+      ],
     },
-    sitemap: "https://3dpartshop.com/sitemap.xml",
+    sitemap: "https://www.3dpartshop.com/sitemap.xml",
   };
 }

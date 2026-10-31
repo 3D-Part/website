@@ -2,7 +2,20 @@ import Paragraph from "@/components/common/text/paragraph/Paragraph";
 import Image from "next/image";
 import React from "react";
 
-const Stock: React.FC<{ stock: number }> = ({ stock }) => {
+const Stock: React.FC<{ stock: number; byOrder?: boolean }> = ({
+  stock,
+  byOrder = false,
+}) => {
+  if (byOrder) {
+    return (
+      <div className="flex items-center gap-2 px-8 py-4 rounded-lg w-fit bg-[rgba(234,179,8,0.2)]">
+        <Paragraph size="M" weight="Regular">
+          Po narudžbi
+        </Paragraph>
+      </div>
+    );
+  }
+
   return (
     <div
       className={`flex items-center gap-2 px-8 py-4 rounded-lg w-fit ${
