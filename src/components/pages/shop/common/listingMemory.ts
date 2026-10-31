@@ -28,22 +28,22 @@ const snapshots = new Map<string, ListingSnapshot>();
 let poppedUrl: string | null = null;
 
 if (typeof window !== "undefined") {
-  // Capture phase, to run before Next's own listener: it renders the page
-  // synchronously, and this chunk may well load after that listener is added.
-  window.addEventListener(
-    "popstate",
-    () => {
-      poppedUrl = currentUrl();
-    },
-    true
-  );
+  window.addEventListener("popstate", () => {
+    poppedUrl = currentUrl();
+  });
 }
+
+// Next renders synchronously inside its own popstate listener, which may run
+// before the one above depending on which script loaded first. window.event
+// covers that case, the flag covers a render that happens after the event.
+const isBackOrForward = () =>
+  window.event?.type === "popstate" || poppedUrl === currentUrl();
 
 /** The listing to bring back, only when arriving through browser back/forward. */
 export const useRestoredListing = () => {
   const [restored] = useState(() =>
-    typeof window !== "undefined" && poppedUrl === currentUrl()
-      ? snapshots.get(poppedUrl) ?? null
+    typeof window !== "undefined" && isBackOrForward()
+      ? snapshots.get(currentUrl()) ?? null
       : null
   );
 
@@ -85,6 +85,8 @@ export const useListingMemory = (
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      // The popstate listener can run after the mount effect below cleared it
+      poppedUrl = null;
       snapshots.set(urlRef.current, {
         ...latestRef.current,
         scrollY: scrollYRef.current,
