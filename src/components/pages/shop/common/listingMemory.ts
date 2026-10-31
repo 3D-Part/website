@@ -28,9 +28,15 @@ const snapshots = new Map<string, ListingSnapshot>();
 let poppedUrl: string | null = null;
 
 if (typeof window !== "undefined") {
-  window.addEventListener("popstate", () => {
-    poppedUrl = currentUrl();
-  });
+  // Capture phase, to run before Next's own listener: it renders the page
+  // synchronously, and this chunk may well load after that listener is added.
+  window.addEventListener(
+    "popstate",
+    () => {
+      poppedUrl = currentUrl();
+    },
+    true
+  );
 }
 
 /** The listing to bring back, only when arriving through browser back/forward. */
