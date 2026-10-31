@@ -3,7 +3,7 @@ import "./globals.css";
 import { Exo_2 } from "next/font/google";
 import Footer from "@/components/layout/footer/Footer";
 import Lights from "@/components/layout/header/lights/Lights";
-import { Metadata } from "next";
+import { Metadata, Viewport } from "next";
 import { Providers } from "@/redux/provider";
 import Modals from "@/components/layout/modals/Modals";
 import "react-toastify/dist/ReactToastify.css";
@@ -18,6 +18,10 @@ const exo2 = Exo_2({
   variable: "--font-exo2",
   subsets: ["latin"],
 });
+
+export const viewport: Viewport = {
+  colorScheme: "dark",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.3dpartshop.com"),

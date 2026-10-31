@@ -10,17 +10,16 @@ import PageBanner from "@/components/common/page-banner/PageBanner";
 import { notFound } from "next/navigation";
 
 interface CategoryParams {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 // Rendered on first visit, then served from cache.
 export const generateStaticParams = async () => [];
 
-export const generateMetadata = async ({
-  params,
-}: CategoryParams): Promise<Metadata> => {
+export const generateMetadata = async (props: CategoryParams): Promise<Metadata> => {
+  const params = await props.params;
   try {
     const data = await categoriesServices.getSingleCategoryWithSlug(
       params.slug
@@ -34,7 +33,6 @@ export const generateMetadata = async ({
       title: data.name,
       description,
       keywords: [data.name, `${data.name} bih`, "3d printer", "filamenti"],
-      colorScheme: "dark",
       alternates: { canonical: `/shop/category/${params.slug}` },
       openGraph: {
         title: data.name,
@@ -51,7 +49,8 @@ export const generateMetadata = async ({
   }
 };
 
-export default async function Category({ params }: CategoryParams) {
+export default async function Category(props: CategoryParams) {
+  const params = await props.params;
   const categoryData = await categoriesServices
     .getSingleCategoryWithSlug(params.slug)
     .catch((error: Error) => {

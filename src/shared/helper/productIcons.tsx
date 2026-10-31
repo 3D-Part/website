@@ -17,3 +17,6 @@ export const PRODUCT_ICONS: Record<string, { icon: IconType; label: string }> = 
   premium: { icon: RiAwardLine, label: "Premium kvalitet" },
   warranty: { icon: RiShieldCheckLine, label: "Garancija" },
 };
+
+// An uploaded icon is stored as this prefix plus its image key
+export const CUSTOM_ICON = "image:";

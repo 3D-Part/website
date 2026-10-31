@@ -11,15 +11,12 @@ const imagesHostname = (() => {
 })()
 
 const nextConfig = {
-  experimental: {
-    appDir: true,
-  },
   images: {
-    domains: [
+    remotePatterns: [
       "bucket3dparts.s3.eu-central-1.amazonaws.com",
       "bucket3dpart.s3.eu-central-1.amazonaws.com",
       ...(imagesHostname ? [imagesHostname] : []),
-    ],
+    ].map((hostname) => ({ hostname })),
     unoptimized: true,
   },
 };

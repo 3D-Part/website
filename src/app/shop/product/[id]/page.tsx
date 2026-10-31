@@ -25,17 +25,16 @@ const shortText = (text: string, length = 160) => {
 };
 
 interface ProductParams {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 // Rendered on first visit, then served from cache.
 export const generateStaticParams = async () => [];
 
-export const generateMetadata = async ({
-  params,
-}: ProductParams): Promise<Metadata> => {
+export const generateMetadata = async (props: ProductParams): Promise<Metadata> => {
+  const params = await props.params;
   try {
     const data = await productsServices.getSingleProduct(params.id);
 
@@ -58,7 +57,6 @@ export const generateMetadata = async ({
         data.category?.name,
         ...(data.keywords || []),
       ].filter(Boolean) as string[],
-      colorScheme: "dark",
       alternates: { canonical: `/shop/product/${params.id}` },
       openGraph: {
         title: data.name,
@@ -75,7 +73,8 @@ export const generateMetadata = async ({
   }
 };
 
-export default async function ProductPage({ params }: ProductParams) {
+export default async function ProductPage(props: ProductParams) {
+  const params = await props.params;
   try {
     const data = await productsServices.getSingleProduct(params.id);
 

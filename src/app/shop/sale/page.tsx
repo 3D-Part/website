@@ -8,7 +8,6 @@ export const generateMetadata = async (): Promise<Metadata> => {
     return {
         title: "Proizvodi na akciji — 3D Parts",
         description: "Pregled proizvoda na akciji. Sortirajte, filtrirajte i otkrijte popuste.",
-        colorScheme: "dark",
         openGraph: {
             title: "Proizvodi na akciji — 3D Parts",
             description: "Pregled proizvoda na akciji. Sortirajte, filtrirajte i otkrijte popuste.",

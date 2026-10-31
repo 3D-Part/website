@@ -14,7 +14,6 @@ export const generateMetadata = async (): Promise<Metadata> => {
         title: "Svi proizvodi — 3D Parts",
         alternates: { canonical: "/shop/all" },
         description: "Pregled svih 3D proizvoda i pribora — filament, rezervni dijelovi i oprema. Pregledajte ponudu, sortirajte i filtrirajte proizvode.",
-        colorScheme: "dark",
         openGraph: {
             title: "Svi proizvodi — 3D Parts",
             description: "Pregled svih 3D proizvoda i pribora — filament, rezervni dijelovi i oprema.",

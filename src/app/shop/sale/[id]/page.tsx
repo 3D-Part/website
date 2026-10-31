@@ -3,13 +3,14 @@ import SaleProducts from "@/components/pages/shop/sale/SaleProducts";
 import { Metadata } from "next";
 
 type PageProps = {
-    params: { id: string };
+    params: Promise<{ id: string }>;
 };
 
 // Rendered on first visit, then served from cache.
 export const generateStaticParams = async () => [];
 
-export const generateMetadata = async ({ params }: PageProps): Promise<Metadata> => {
+export const generateMetadata = async (props: PageProps): Promise<Metadata> => {
+    const params = await props.params;
     const id = params?.id;
     return {
         title: `Akcija ${id ? `#${id} ` : ""}— 3D Parts`,
