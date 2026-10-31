@@ -1,6 +1,6 @@
 'use client'
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import InfoCard from "./info-card/InfoCard";
 import Container from "@/components/common/container/Container";
 import useSettingsApi from "@/redux/api/useSettingsApi";
@@ -8,13 +8,19 @@ import useSettingsApi from "@/redux/api/useSettingsApi";
 const InfoCards = () => {
   const { settings } = useSettingsApi();
 
+  // Settings can arrive before this hydrates, while the server HTML always has
+  // the default limit, so the real one has to wait until after hydration.
+  const [isHydrated, setIsHydrated] = useState(false);
+  useEffect(() => setIsHydrated(true), []);
+  const freeDeliveryLimit = isHydrated ? settings.settings.delivery.freeDeliveryLimit : 100;
+
   return (
     <Container className="px-4 py-[60px] w-full flex flex-col gap-5 items-center lg:flex-row lg:px-9 lg:pt-[84px] lg:pb-[104px]">
       <InfoCard
         borderColor="rgba(34, 197, 94, 1)"
         circleColor="rgba(34, 197, 94, 0.2)"
         title="Besplatna dostava"
-        subtitle={`Za narudžbe iznad ${settings.settings.delivery.freeDeliveryLimit}KM`}
+        subtitle={`Za narudžbe iznad ${freeDeliveryLimit}KM`}
         icon={0}
       />
       <InfoCard
