@@ -1,6 +1,7 @@
 import Container from "@/components/common/container/Container";
 import { Metadata } from "next";
 import SaleBulkProducts from "@/components/pages/shop/sale/SaleBulkProducts";
+import PageBanner from "@/components/common/page-banner/PageBanner";
 
 
 
@@ -33,6 +34,7 @@ export default async function All() {
     return (
         <div className="w-full">
             <Container className="min-h-screen p-4 lg:px-8">
+                <PageBanner page="sale" />
                 <SaleBulkProducts />
             </Container>
         </div>

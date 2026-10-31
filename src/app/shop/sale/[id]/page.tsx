@@ -1,5 +1,6 @@
 import Container from "@/components/common/container/Container";
 import SaleProducts from "@/components/pages/shop/sale/SaleProducts";
+import PageBanner from "@/components/common/page-banner/PageBanner";
 import { Metadata } from "next";
 
 type PageProps = {
@@ -43,6 +44,7 @@ export default async function SaleByIdPage() {
     return (
         <div className="w-full">
             <Container className="min-h-screen p-4 lg:px-8">
+                <PageBanner page="sale" />
                 <SaleProducts />
             </Container>
         </div>

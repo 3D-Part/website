@@ -42,7 +42,7 @@ const AdditionalData: React.FC<{
         )}
       </div>
       {activeSection === 0 && (
-        <p
+        <div
           dangerouslySetInnerHTML={{ __html: detailedDescription }}
           className="mt-6 mb-12 text-lg font-normal lg:text-start text-neutral-300"
         />

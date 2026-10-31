@@ -40,7 +40,12 @@ export type PageImage = {
 export const usePageImages = (page: string): PageImage[] => {
   const { settings } = useSettingsApi();
   const images: PageImage[] = (settings?.settings as any)?.pageImages || [];
-  return images.filter((image) => image.active && image.page === page && image.desktop);
+  return images.filter(
+    (image) =>
+      image.active &&
+      image.desktop &&
+      (image.page === page || (image.page === "shop" && page !== "home"))
+  );
 };
 
 const PageBanner: React.FC<{ page: string }> = ({ page }) => {
