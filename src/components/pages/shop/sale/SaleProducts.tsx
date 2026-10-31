@@ -11,29 +11,38 @@ import { saleService } from "@/shared/services/saleService";
 import FiltersSidebar from "../common/filters/FiltersSidebar";
 import ProductGrid from "../common/product-grid/ProductGrid";
 import useUiApi from "@/redux/api/useUiApi";
+import { useListingMemory, useRestoredListing } from "../common/listingMemory";
 import Filters from "../common/filters/Filters";
 
-const SaleProducts = ({ queryParams }: { queryParams: any }) => {
+const SaleProducts = () => {
     const initCount = 30;
+    const searchParams = useSearchParams();
 
-    const [priceMin, setPriceMin] = useState<number | null>(null);
-    const [priceMax, setPriceMax] = useState<number | null>(null);
-    const [field, setField] = useState<"name" | "price" | null>(null);
-    const [order, setOrder] = useState<"ASC" | "DESC" | null>(null);
-    const [filterByProductAttributes, setFilterByProductAttributes] = useState<string | undefined>(undefined);
-    const [search, setSearch] = useState<string | null>(queryParams.search || null);
+    const restored = useRestoredListing();
+
+    const [priceMin, setPriceMin] = useState<number | null>(restored?.priceMin ?? null);
+    const [priceMax, setPriceMax] = useState<number | null>(restored?.priceMax ?? null);
+    const [field, setField] = useState<"name" | "price" | null>(restored?.field ?? null);
+    const [order, setOrder] = useState<"ASC" | "DESC" | null>(restored?.order ?? null);
+    const [filterByProductAttributes, setFilterByProductAttributes] = useState<string | undefined>(restored?.filterByProductAttributes);
+    const [search, setSearch] = useState<string | null>(searchParams.get("search"));
 
     const [isLoading, setIsLoading] = useState(false);
-    const [data, setData] = useState<ProductPaginatedInterface>({
+    const [data, setData] = useState<ProductPaginatedInterface>(restored?.data ?? {
         count: 0,
         rows: [],
     });
 
-    const [offset, setOffset] = useState(0);
-    const [hasMore, setHasMore] = useState(true);
+    const [offset, setOffset] = useState(restored?.offset ?? 0);
+    const [hasMore, setHasMore] = useState(restored?.hasMore ?? true);
+
+    const isRestoredView = useListingMemory(
+        restored,
+        { priceMin, priceMax, field, order, filterByProductAttributes, data, offset, hasMore },
+        isLoading
+    );
 
     const params = useParams();
-    const searchParams = useSearchParams();
     const manufacturerId = searchParams.get("manufacturerId");
     const saleQuery = searchParams.get("sale");
     const { toggleFilteringSidebar } = useUiApi();
@@ -120,13 +129,15 @@ const SaleProducts = ({ queryParams }: { queryParams: any }) => {
 
     // Initial + filters/sorting load
     useEffect(() => {
+        if (isRestoredView) return;
+
         setOffset(0);
         setHasMore(true);
     }, [priceMin, priceMax, field, order, manufacturerId, params.slug, filterByProductAttributes]);
 
     // Fetch products when offset is 0 (initial load or after filter change)
     useEffect(() => {
-        if (offset === 0) {
+        if (offset === 0 && !isRestoredView) {
             fetchProducts(false);
         }
     }, [offset, fetchProducts]);
@@ -160,7 +171,7 @@ const SaleProducts = ({ queryParams }: { queryParams: any }) => {
 
     // Fetch more when offset changes
     useEffect(() => {
-        if (offset !== 0) {
+        if (offset !== 0 && !isRestoredView) {
             fetchProducts(true);
         }
     }, [offset]);

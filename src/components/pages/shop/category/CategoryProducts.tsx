@@ -12,25 +12,34 @@ import { useParams, useSearchParams } from "next/navigation";
 import Spinner from "@/components/common/spinner/Spinner";
 import useUiApi from "@/redux/api/useUiApi";
 import { CategoryAttributesInterface } from "@/shared/interfaces/categoryInterface";
+import { useListingMemory, useRestoredListing } from "../common/listingMemory";
 
 const CategoryProducts: React.FC<{ categoryAttributes: Array<CategoryAttributesInterface>, categoryId: string, parameters: any }> = ({ categoryAttributes, categoryId, parameters }) => {
   const initCount = 30;
 
-  const [priceMin, setPriceMin] = useState<number | null>(null);
-  const [priceMax, setPriceMax] = useState<number | null>(null);
-  const [field, setField] = useState<"name" | "price" | null>(null);
-  const [order, setOrder] = useState<"ASC" | "DESC" | null>(null);
-  const [filterByProductAttributes, setFilterByProductAttributes] = useState<string | undefined>(undefined);
+  const restored = useRestoredListing();
+
+  const [priceMin, setPriceMin] = useState<number | null>(restored?.priceMin ?? null);
+  const [priceMax, setPriceMax] = useState<number | null>(restored?.priceMax ?? null);
+  const [field, setField] = useState<"name" | "price" | null>(restored?.field ?? null);
+  const [order, setOrder] = useState<"ASC" | "DESC" | null>(restored?.order ?? null);
+  const [filterByProductAttributes, setFilterByProductAttributes] = useState<string | undefined>(restored?.filterByProductAttributes);
 
   const [isLoading, setIsLoading] = useState(false);
-  const [data, setData] = useState<ProductPaginatedInterface>({
+  const [data, setData] = useState<ProductPaginatedInterface>(restored?.data ?? {
     count: 0,
     rows: [],
   });
 
 
-  const [offset, setOffset] = useState(0);
-  const [hasMore, setHasMore] = useState(true);
+  const [offset, setOffset] = useState(restored?.offset ?? 0);
+  const [hasMore, setHasMore] = useState(restored?.hasMore ?? true);
+
+  const isRestoredView = useListingMemory(
+    restored,
+    { priceMin, priceMax, field, order, filterByProductAttributes, data, offset, hasMore },
+    isLoading
+  );
 
   const params = useParams();
   const searchParams = useSearchParams();
@@ -92,13 +101,15 @@ const CategoryProducts: React.FC<{ categoryAttributes: Array<CategoryAttributesI
 
   // Initial + filters/sorting load
   useEffect(() => {
+    if (isRestoredView) return;
+
     setOffset(0);
     setHasMore(true);
   }, [priceMin, priceMax, field, order, categoryId, manufacturerId, params.slug, filterByProductAttributes]);
 
   // Fetch products when offset is 0 (initial load or after filter change)
   useEffect(() => {
-    if (offset === 0) {
+    if (offset === 0 && !isRestoredView) {
       fetchProducts(false);
     }
   }, [offset, fetchProducts]);
@@ -132,7 +143,7 @@ const CategoryProducts: React.FC<{ categoryAttributes: Array<CategoryAttributesI
 
   // Fetch more when offset changes
   useEffect(() => {
-    if (offset !== 0) {
+    if (offset !== 0 && !isRestoredView) {
       fetchProducts(true);
     }
   }, [offset]);

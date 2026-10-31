@@ -1,6 +1,9 @@
+import { revalidateTime } from "./setup";
 import { ProductInterface } from "@/shared/interfaces/productsInterface";
 
 const defaultRoute = process.env.NEXT_PUBLIC_BACKEND_URL + "shop/products";
+
+export const PRODUCT_NOT_FOUND = "PRODUCT_NOT_FOUND";
 
 export interface ProductPaginatedInterface {
   count: number;
@@ -143,7 +146,7 @@ const getAllProducts = async ({
   try {
     const res = await fetch(`${defaultRoute}?${paramsString}`, {
       method: "GET",
-      cache: "no-store",
+      next: { revalidate: revalidateTime },
     });
     const data = await res.json();
 
@@ -158,10 +161,17 @@ const getSingleProduct = async (id: string): Promise<ProductInterface> => {
   try {
     const res = await fetch(`${defaultRoute}/${id}`, {
       method: "GET",
-      cache: "no-store",
+      next: { revalidate: revalidateTime },
     });
 
-    const data = await res.json();
+    // The API answers a missing product with 404, or with an empty 200 for a
+    // well-formed id that matches nothing.
+    const body = await res.text();
+    if (res.status === 404 || (res.ok && !body)) {
+      throw new Error(PRODUCT_NOT_FOUND);
+    }
+
+    const data = JSON.parse(body);
 
     if ("key" in data && "message" in data) {
       // Error response
@@ -207,7 +217,7 @@ const getMostSold = async (): Promise<ProductPaginatedInterface> => {
   try {
     const res = await fetch(`${defaultRoute}?${params}`, {
       method: "GET",
-      cache: "no-store",
+      next: { revalidate: revalidateTime },
     });
     const data = await res.json();
     if ("key" in data && "message" in data) {

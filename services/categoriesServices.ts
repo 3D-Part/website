@@ -1,3 +1,4 @@
+import { revalidateTime } from "./setup";
 import { CategoryInterface } from "@/shared/interfaces/categoryInterface";
 import { IProductAttribute } from "@/shared/types";
 import { get } from "http";
@@ -17,6 +18,8 @@ export interface CategoriesPaginatedInterface {
   rows: CategoryInterface[];
 }
 
+export const CATEGORY_NOT_FOUND = "CATEGORY_NOT_FOUND";
+
 export interface ProductAttributePaginatedInterface {
   count: number;
   rows: IProductAttribute[];
@@ -26,7 +29,7 @@ const getAllCategories = async (): Promise<CategoriesPaginatedInterface> => {
   try {
     const res = await fetch(`${defaultRoute}`, {
       method: "GET",
-      cache: "no-store",
+      next: { revalidate: revalidateTime },
     });
 
     const data = await res.json();
@@ -81,8 +84,13 @@ const getSingleCategoryWithSlug = async (
   try {
     const res = await fetch(`${defaultRoute}/slug/${slug}`, {
       method: "GET",
-      cache: "no-store",
+      next: { revalidate: revalidateTime },
     });
+
+    if (res.status === 404) {
+      throw new Error(CATEGORY_NOT_FOUND);
+    }
+
     const data = await res.json();
 
     if ("key" in data && "message" in data) {

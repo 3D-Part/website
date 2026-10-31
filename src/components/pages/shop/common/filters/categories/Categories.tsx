@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Paragraph from '@/components/common/text/paragraph/Paragraph';
 import { usePathname } from 'next/navigation';
 import { CategoryAttributesInterface } from '@/shared/interfaces/categoryInterface';
@@ -10,6 +10,34 @@ interface FilterValue {
     boolean?: boolean;
 }
 
+// Rebuilds the inputs from an already applied filter, when a listing is restored
+const parseFilterValues = (
+    filterByProductAttributes: string | undefined,
+    categoryAttributes: Array<CategoryAttributesInterface>
+) => {
+    const values: Record<string, FilterValue> = {};
+    if (!filterByProductAttributes) return values;
+
+    JSON.parse(filterByProductAttributes).forEach((filter: any) => {
+        const item = categoryAttributes.find((x) => x.attributeId === filter.attributeId);
+        if (!item) return;
+
+        if (filter.gt !== undefined || filter.lt !== undefined) {
+            values[filter.attributeId] = {
+                range: { min: String(filter.gt ?? ''), max: String(filter.lt ?? '') }
+            };
+        } else if (typeof filter.value === 'boolean') {
+            values[filter.attributeId] = { boolean: filter.value };
+        } else if ((item as any).attribute.type === 'select') {
+            values[filter.attributeId] = { select: filter.value };
+        } else {
+            values[filter.attributeId] = { text: filter.value };
+        }
+    });
+
+    return values;
+};
+
 const Categories = ({
     filterByProductAttributes,
     setFilterByProductAttributes,
@@ -19,11 +47,17 @@ const Categories = ({
     setFilterByProductAttributes: (x: string | undefined) => void;
     categoryAttributes: Array<CategoryAttributesInterface>;
 }) => {
-    const [filterValues, setFilterValues] = useState<Record<string, FilterValue>>({});
+    const [filterValues, setFilterValues] = useState<Record<string, FilterValue>>(() =>
+        parseFilterValues(filterByProductAttributes, categoryAttributes)
+    );
     const pathname = usePathname();
+    const previousPathnameRef = useRef(pathname);
 
     // Reset filters if path changes
     useEffect(() => {
+        if (previousPathnameRef.current === pathname) return;
+
+        previousPathnameRef.current = pathname;
         setFilterValues({});
     }, [pathname]);
 

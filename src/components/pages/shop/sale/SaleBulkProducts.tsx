@@ -10,29 +10,38 @@ import FiltersSidebar from "../common/filters/FiltersSidebar";
 import ProductGrid from "../common/product-grid/ProductGrid";
 import { useAppDispatch } from "@/redux/hooks";
 import { changeIsFilteringSidebarVisible } from "@/redux/slices/ui/uiSlice";
+import { useListingMemory, useRestoredListing } from "../common/listingMemory";
 
-const SaleBulkProducts = ({ queryParams }: { queryParams: any }) => {
+const SaleBulkProducts = () => {
     const initCount = 30;
 
-    const [priceMin, setPriceMin] = useState<number | null>(null);
-    const [priceMax, setPriceMax] = useState<number | null>(null);
-    const [field, setField] = useState<"name" | "price" | null>(null);
-    const [order, setOrder] = useState<"ASC" | "DESC" | null>(null);
-    const [filterByProductAttributes, setFilterByProductAttributes] = useState<string | undefined>(undefined);
+    const restored = useRestoredListing();
+
+    const [priceMin, setPriceMin] = useState<number | null>(restored?.priceMin ?? null);
+    const [priceMax, setPriceMax] = useState<number | null>(restored?.priceMax ?? null);
+    const [field, setField] = useState<"name" | "price" | null>(restored?.field ?? null);
+    const [order, setOrder] = useState<"ASC" | "DESC" | null>(restored?.order ?? null);
+    const [filterByProductAttributes, setFilterByProductAttributes] = useState<string | undefined>(restored?.filterByProductAttributes);
 
     const [isLoading, setIsLoading] = useState(false);
-    const [data, setData] = useState<ProductPaginatedInterface>({
+    const [data, setData] = useState<ProductPaginatedInterface>(restored?.data ?? {
         count: 0,
         rows: [],
     });
 
-    const [offset, setOffset] = useState(0);
-    const [hasMore, setHasMore] = useState(true);
+    const [offset, setOffset] = useState(restored?.offset ?? 0);
+    const [hasMore, setHasMore] = useState(restored?.hasMore ?? true);
+
+    const isRestoredView = useListingMemory(
+        restored,
+        { priceMin, priceMax, field, order, filterByProductAttributes, data, offset, hasMore },
+        isLoading
+    );
 
     const params = useParams();
     const pathname = usePathname();
     const searchParams = useSearchParams();
-    const saleId = searchParams.get("sale") || queryParams?.sale;
+    const saleId = searchParams.get("sale");
     const dispatch = useAppDispatch();
     const hidePriceFilter = pathname === "/shop/sale";
 
@@ -78,12 +87,14 @@ const SaleBulkProducts = ({ queryParams }: { queryParams: any }) => {
     );
 
     useEffect(() => {
+        if (isRestoredView) return;
+
         setOffset(0);
         setHasMore(true);
     }, [priceMin, priceMax, field, order, params.slug, filterByProductAttributes, saleId]);
 
     useEffect(() => {
-        if (offset === 0) {
+        if (offset === 0 && !isRestoredView) {
             fetchProducts(false);
         }
     }, [offset, fetchProducts]);
@@ -115,7 +126,7 @@ const SaleBulkProducts = ({ queryParams }: { queryParams: any }) => {
     }, [isLoading, hasMore]);
 
     useEffect(() => {
-        if (offset !== 0) {
+        if (offset !== 0 && !isRestoredView) {
             fetchProducts(true);
         }
     }, [offset, fetchProducts]);

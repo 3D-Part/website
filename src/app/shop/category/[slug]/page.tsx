@@ -1,17 +1,21 @@
 import Container from "@/components/common/container/Container";
-import { categoriesServices } from "../../../../../services/categoriesServices";
+import {
+  CATEGORY_NOT_FOUND,
+  categoriesServices,
+} from "../../../../../services/categoriesServices";
 import Description from "@/components/pages/shop/common/description/Description";
 import CategoryProducts from "@/components/pages/shop/category/CategoryProducts";
 import { Metadata } from "next";
+import { notFound } from "next/navigation";
 
 interface CategoryParams {
   params: {
     slug: string;
   };
-  searchParams: {
-    [key: string]: string;
-  };
 }
+
+// Rendered on first visit, then served from cache.
+export const generateStaticParams = async () => [];
 
 export const generateMetadata = async ({
   params,
@@ -43,9 +47,13 @@ export const generateMetadata = async ({
 };
 
 export default async function Category({ params }: CategoryParams) {
-  const categoryData = await categoriesServices.getSingleCategoryWithSlug(
-    params.slug
-  );
+  const categoryData = await categoriesServices
+    .getSingleCategoryWithSlug(params.slug)
+    .catch((error: Error) => {
+      // Any other failure must throw, so a cached page survives an API outage
+      if (error.message === CATEGORY_NOT_FOUND) notFound();
+      throw error;
+    });
 
   return (
     <div className="w-full">

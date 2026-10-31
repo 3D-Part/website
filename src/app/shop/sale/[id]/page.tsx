@@ -4,8 +4,10 @@ import { Metadata } from "next";
 
 type PageProps = {
     params: { id: string };
-    searchParams: Record<string, string | string[] | undefined>;
 };
+
+// Rendered on first visit, then served from cache.
+export const generateStaticParams = async () => [];
 
 export const generateMetadata = async ({ params }: PageProps): Promise<Metadata> => {
     const id = params?.id;
@@ -36,12 +38,11 @@ export const generateMetadata = async ({ params }: PageProps): Promise<Metadata>
     };
 };
 
-export default async function SaleByIdPage({ params }: PageProps) {
-    const saleId = params.id;
+export default async function SaleByIdPage() {
     return (
         <div className="w-full">
             <Container className="min-h-screen p-4 lg:px-8">
-                <SaleProducts queryParams={{ sale: saleId }} />
+                <SaleProducts />
             </Container>
         </div>
     );

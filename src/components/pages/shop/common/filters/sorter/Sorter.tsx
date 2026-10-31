@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import Paragraph from "@/components/common/text/paragraph/Paragraph";
-import React, { useState } from "react";
+import React from "react";
 
 const Sorter: React.FC<{
   order: "ASC" | "DESC" | null;
@@ -8,7 +8,16 @@ const Sorter: React.FC<{
   field: "name" | "price" | null;
   setField: (x: "name" | "price" | null) => void;
 }> = ({ field, order, setField, setOrder }) => {
-  const [selected, setSelected] = useState("0");
+  const selected =
+    field === "price" && order === "DESC"
+      ? "1"
+      : field === "price" && order === "ASC"
+      ? "2"
+      : field === "name" && order === "DESC"
+      ? "3"
+      : field === "name" && order === "ASC"
+      ? "4"
+      : "0";
 
   return (
     <div>
@@ -19,8 +28,6 @@ const Sorter: React.FC<{
       <select
         onChange={(event) => {
           const x = event.target.value;
-
-          setSelected(x);
 
           if (x === "0") {
             setOrder(null);

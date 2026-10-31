@@ -3,7 +3,10 @@ import AdditionalData from "@/components/pages/shop/product/additional-data/Addi
 import MainData from "@/components/pages/shop/product/main-data/MainData";
 import RelatedProducts from "@/components/pages/shop/product/related-products/RelatedProducts";
 import Slider from "@/components/pages/shop/product/slider/Slider";
-import { productsServices } from "../../../../../services/productsServices";
+import {
+  PRODUCT_NOT_FOUND,
+  productsServices,
+} from "../../../../../services/productsServices";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import { getMainImage } from "@/shared/helper/getMainImage";
@@ -16,6 +19,9 @@ interface ProductParams {
     id: string;
   };
 }
+
+// Rendered on first visit, then served from cache.
+export const generateStaticParams = async () => [];
 
 export const generateMetadata = async ({
   params,
@@ -103,6 +109,9 @@ export default async function ProductPage({ params }: ProductParams) {
       </div>
     );
   } catch (error) {
-    notFound();
+    // A cached 404 would hide the product until the next revalidation, so only
+    // a missing product becomes one. Throwing keeps the last good page.
+    if ((error as Error).message === PRODUCT_NOT_FOUND) notFound();
+    throw error;
   }
 }
