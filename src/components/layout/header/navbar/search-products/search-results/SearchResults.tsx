@@ -6,13 +6,15 @@ import SearchResult from "./SearchResult";
 import OutsideAlerter from "@/shared/hooks/useOutsideAlerter";
 import Spinner from "@/components/common/spinner/Spinner";
 import SeeMoreButton from "./SeeMoreButton";
+import { useAddToCart } from "@/shared/hooks/useAddToCart";
 
 const SearchResults: React.FC<{
   products: ProductInterface[];
   loading: boolean;
   search: string;
   closeDropdown: () => void;
-}> = ({ products, loading, search, closeDropdown }) => {
+  addToCart: ReturnType<typeof useAddToCart>["addToCart"];
+}> = ({ products, loading, search, closeDropdown, addToCart }) => {
 
 
   return (
@@ -36,6 +38,7 @@ const SearchResults: React.FC<{
                   product={product}
                   key={product.id}
                   closeDropdown={closeDropdown}
+                  addToCart={addToCart}
                 />
               );
             })}

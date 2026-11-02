@@ -4,6 +4,22 @@ import React, { useEffect, useState } from "react";
 import { OrderType, userService } from "@/shared/services/userService";
 import Spinner from "@/components/common/spinner/Spinner";
 
+const STATUS_LABELS: Record<string, string> = {
+    PENDING: "Nova",
+    ACCEPTED: "Prihvaćena",
+    PROFORMA_SENT: "Ponuda",
+    PREPARING: "U pripremi",
+    SHIPPING: "U dostavi",
+    READY_FOR_PICKUP: "Spremna za preuzimanje",
+    INVOICE_ISSUED: "Završena",
+    AWAITING_PAYMENT: "Završena",
+    PAID: "Završena",
+    INVOICE_SENT: "Završena",
+    FINISHED: "Završena",
+    RETURNED: "Vraćena",
+    DECLINED: "Odbijena",
+};
+
 const HistoryTable: React.FC = () => {
     const [orders, setOrders] = useState<OrderType[] | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
@@ -82,7 +98,7 @@ const HistoryTable: React.FC = () => {
                                         o.status === "COMPLETED" ? "bg-green-600 text-white" :
                                             "bg-yellow-600 text-white"
                                         }`}>
-                                        {o.status}
+                                        {STATUS_LABELS[o.status] ?? o.status}
                                     </span>
                                 </td>
                                 <td className="px-4 py-3 text-sm text-neutral-300">{o.products?.length ?? 0}</td>

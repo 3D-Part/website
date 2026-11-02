@@ -4,11 +4,15 @@ import { ProductInterface } from "@/shared/interfaces/productsInterface";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { useAddToCart } from "@/shared/hooks/useAddToCart";
 
 const SearchResult: React.FC<{
   product: ProductInterface;
   closeDropdown: () => void;
-}> = ({ product, closeDropdown }) => {
+  addToCart: ReturnType<typeof useAddToCart>["addToCart"];
+}> = ({ product, closeDropdown, addToCart }) => {
+  const canOrder = product.quantity > 0 || product.isBackorder;
+
   return (
     <Link
       href={`/shop/product/${product.id}`}
@@ -40,6 +44,34 @@ const SearchResult: React.FC<{
             ).toFixed(2)}{" "}
             KM
           </Paragraph>
+          {canOrder ? (
+            <button
+              type="button"
+              className="px-3 py-1 text-sm font-semibold text-white rounded-lg w-fit bg-primary-500 hover:bg-primary-600"
+              onClick={(event) => {
+                // the whole row is a link to the product
+                event.preventDefault();
+                event.stopPropagation();
+                addToCart({
+                  amount: 1,
+                  productId: product.id,
+                  productData: {
+                    image: getMainImage(product.images),
+                    weight: product.weight,
+                    price: product.price,
+                    quantity: product.quantity,
+                    name: product.name,
+                    salePrice: product.salePrice,
+                  },
+                  shouldNotify: true,
+                });
+              }}
+            >
+              Dodaj u korpu
+            </button>
+          ) : (
+            <span className="text-sm text-neutral-300">Nema na stanju</span>
+          )}
         </div>
       </div>
     </Link>

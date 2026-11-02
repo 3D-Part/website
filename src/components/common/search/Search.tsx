@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ProductInterface } from "@/shared/interfaces/productsInterface";
 import SearchResults from "@/components/layout/header/navbar/search-products/search-results/SearchResults";
 import { useState } from "react";
+import { useAddToCart } from "@/shared/hooks/useAddToCart";
 
 interface SearchProps {
   searchIcon?: boolean;
@@ -16,6 +17,7 @@ interface SearchProps {
   text: string;
   products: ProductInterface[];
   loading: boolean;
+  addToCart: ReturnType<typeof useAddToCart>["addToCart"];
 }
 
 const Search: React.FC<SearchProps> = ({
@@ -28,6 +30,7 @@ const Search: React.FC<SearchProps> = ({
   products,
   text,
   loading,
+  addToCart,
 }) => {
   const [searchOpen, setSearchOpen] = useState(false);
 
@@ -82,6 +85,7 @@ const Search: React.FC<SearchProps> = ({
         <SearchResults
           products={products}
           loading={loading}
+          addToCart={addToCart}
           search={value}
           closeDropdown={() => {
             setSearchOpen(false);

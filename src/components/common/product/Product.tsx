@@ -43,7 +43,7 @@ const Product: React.FC<ProductInterfaceComponent> = ({
   return (
     <Link href={"/shop/product/" + id} prefetch>
       <div
-        className={`cursor-pointer bg-neutral-800 p-[10px] rounded-xl max-w-[220px] max-h-[435px] ${className}`}
+        className={`cursor-pointer bg-neutral-800 p-[10px] rounded-xl max-w-[220px] max-h-[460px] ${className}`}
       >
         <div
           className={`overflow-hidden aspect-square rounded-xl w-[${imageWidth}]`}
@@ -120,7 +120,7 @@ const Product: React.FC<ProductInterfaceComponent> = ({
               {isBackorder ? "Po narudžbi" : quantity > 0 ? "Na stanju" : "Nema na stanju"}
             </Paragraph>
           </div>
-          <ProductIcons icons={icons} />
+          <ProductIcons icons={icons} limit={1} />
           <div className="flex items-center gap-2 mt-2">
             {salePrice && (
               <Paragraph

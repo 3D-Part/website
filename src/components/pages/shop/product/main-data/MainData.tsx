@@ -121,7 +121,7 @@ const MainData: React.FC<{
           </span>
         </Display2>
         {!isTablet && <Stock stock={productData.quantity} byOrder={productData.isBackorder} />}
-        <ProductIcons icons={productData.icons} withLabels />
+        <ProductIcons icons={productData.icons} />
       </motion.div>
 
       <motion.div

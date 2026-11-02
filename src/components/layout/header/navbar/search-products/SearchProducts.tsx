@@ -7,6 +7,7 @@ import React, { Suspense, useEffect, useState } from "react";
 import SearchResults from "./search-results/SearchResults";
 import { ProductInterface } from "@/shared/interfaces/productsInterface";
 import { productsServices } from "../../../../../../services/productsServices";
+import { useAddToCart } from "@/shared/hooks/useAddToCart";
 
 // The input follows the URL, so it empties when a page without ?search= opens.
 // A separate component: useSearchParams needs its own Suspense boundary here, or
@@ -25,6 +26,9 @@ const SearchProducts = () => {
   const [text, setText] = useState("");
   const [products, setProducts] = useState<ProductInterface[]>([]);
   const [loading, setLoading] = useState(false);
+  // lives here because the results close on a click outside, and the backorder
+  // question is outside of them
+  const { addToCart, modal: backorderModal } = useAddToCart();
 
   useEffect(() => {
     setLoading(true);
@@ -75,7 +79,9 @@ const SearchProducts = () => {
         products={products}
         text={text}
         loading={loading}
+        addToCart={addToCart}
       />
+      {backorderModal}
     </div>
   );
 };
