@@ -136,19 +136,6 @@ const Slider = () => {
           </SwiperSlide>
         ))}
 
-        {/* ----------------- Halloween -----------------  */}
-        <SwiperSlide>
-          <picture>
-            <source media="(max-width: 544px)" srcSet="/assets/img/slider/halloween-2026/halloween-2026-mobile.webp" />
-            <source media="(max-width: 700px)" srcSet="/assets/img/slider/halloween-2026/halloween-2026-tablet.webp" />
-            <img
-              src="/assets/img/slider/halloween-2026/halloween-2026-desktop.webp"
-              alt="Halloween popust do 30% na printere i filamente"
-              className="block w-full aspect-[9/14] min-[545px]:aspect-square min-[701px]:aspect-[8/3] object-cover"
-            />
-          </picture>
-        </SwiperSlide>
-
         <SwiperSlide>
           <SliderPage
             bgUrl="/assets/img/slider/background4.jpg"
