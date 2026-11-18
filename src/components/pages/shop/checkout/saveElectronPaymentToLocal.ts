@@ -8,7 +8,7 @@ export const saveElectronPaymentToLocal = (data: any) => {
   try {
     const {
       companyName,
-      companyPdv,
+      fullName,
       email,
       phone,
       street,
@@ -20,7 +20,7 @@ export const saveElectronPaymentToLocal = (data: any) => {
 
     const electronPaymentData: ElectronPaymentData = {
       companyName,
-      companyPdv,
+      fullName,
       email,
       phone,
       street,

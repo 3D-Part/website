@@ -15,6 +15,7 @@ import { useSession } from "next-auth/react";
 import FavoriteButton from "@/components/common/product/FavoriteButton";
 import ProductIcons from "@/components/common/product/ProductIcons";
 import Ribbon from "../ribbon/ribbon";
+import { getSalePrice } from "@/shared/helper/getSalePrice";
 
 interface ProductInterfaceComponent extends ProductInterface {
   className?: string;
@@ -30,10 +31,12 @@ const Product: React.FC<ProductInterfaceComponent> = ({
   weight,
   className = "",
   imageWidth = "200px",
-  salePrice,
+  salePrice: givenSalePrice,
+  productOnSale,
   isBackorder,
   icons,
 }) => {
+  const salePrice = getSalePrice({ salePrice: givenSalePrice, productOnSale }) ?? undefined;
   const dispatch = useAppDispatch();
   const [checkCartVisible, setCheckCartVisible] = useState(false);
   const { addToCart, modal: backorderModal } = useAddToCart();
@@ -84,6 +87,9 @@ const Product: React.FC<ProductInterfaceComponent> = ({
               </div>
             )}
 
+            {/* the product's badge (Novo, Najprodavanije...) sits on the picture, not in the card's flow */}
+            <ProductIcons icons={icons} limit={1} variant="ribbon" />
+
             {session?.user && session && <FavoriteButton productId={id} />}
           </div>
         </div>
@@ -106,21 +112,22 @@ const Product: React.FC<ProductInterfaceComponent> = ({
             {name.length > 45 ? "..." : ""}
           </Paragraph>
           <div className="flex items-center gap-2 mt-2">
-            {!isBackorder && <Image
+            <Image
               alt={name}
               src={
                 quantity > 0
                   ? "/assets/img/stock/green.svg"
+                  : isBackorder
+                  ? "/assets/img/stock/orange.svg"
                   : "/assets/img/stock/red.svg"
               }
               width={15}
               height={15}
-            />}
+            />
             <Paragraph size="XS" weight="Regular">
-              {isBackorder ? "Po narudžbi" : quantity > 0 ? "Na stanju" : "Nema na stanju"}
+              {quantity > 0 ? "Na stanju" : isBackorder ? "Po narudžbi" : "Nema na stanju"}
             </Paragraph>
           </div>
-          <ProductIcons icons={icons} limit={1} />
           <div className="flex items-center gap-2 mt-2">
             {salePrice && (
               <Paragraph
@@ -151,6 +158,7 @@ const Product: React.FC<ProductInterfaceComponent> = ({
                     quantity,
                     name,
                     salePrice,
+                    isBackorder,
                   },
                   shouldNotify: false,
                 },

@@ -3,6 +3,7 @@ import { ManufacturerInterface } from "./manufacturerInterface";
 import { ProductsAttributesInterface } from "./productAttributesInterface";
 
 export interface ProductInterface {
+  isPublished?: boolean;
   id: string;
   name: string;
   description?: string;

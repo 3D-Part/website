@@ -36,37 +36,17 @@ import Heading4 from "@/components/common/text/heading/Heading4";
 import { addProductWithAmount } from "@/redux/slices/cart/cartSlice";
 import Heading6 from "@/components/common/text/heading/Heading6";
 import { CartIcon } from "@/components/common/product/Product";
+import { getSalePrice } from "@/shared/helper/getSalePrice";
 
-// const freeShippingBoundary = 100;
-
-const calculateShippingPrice = (weight: number): number => {
-  if (weight === 0) {
-    return 0;
-  }
-  weight = weight / 1000;
-
-  switch (true) {
-    case weight <= 10:
-      return 11;
-    case weight <= 20:
-      return 13;
-    case weight <= 30:
-      return 16;
-    case weight <= 40:
-      return 24;
-    case weight <= 50:
-      return 34;
-    default:
-      const weightLeft = weight - 50;
-      const price: number = 33 + (weightLeft / 5) * 2;
-      return Math.round(price * 1e2) / 1e2;
-  }
-};
-
-const calculatePriceAndPost = (cart: CartProductsType[], freeShippingBoundary: number, tierDiscount = 0) => {
-  let price = 0,
-    post = 0,
-    weight = 0;
+// Same rule as the API: the products price after sale and tier prices, and the
+// delivery price from Settings -> Delivery unless the products reach the limit
+// for free delivery. Discounts never apply to the delivery.
+const calculatePriceAndPost = (
+  cart: CartProductsType[],
+  delivery: { cost: number; freeDeliveryLimit: number },
+  tierDiscount = 0
+) => {
+  let price = 0;
 
   cart.forEach((x) => {
     price =
@@ -77,14 +57,12 @@ const calculatePriceAndPost = (cart: CartProductsType[], freeShippingBoundary: n
         Number(x.productData.salePrice || x.productData.price),
         Number(x.productData.price) * (1 - tierDiscount / 100)
       );
-    weight += parseFloat(x.productData.weight) * x.amount;
   });
 
-  post = calculateShippingPrice(1);
-
-  if (price >= freeShippingBoundary) {
-    post = 0;
-  }
+  const post =
+    cart.length > 0 && price < Number(delivery.freeDeliveryLimit)
+      ? Number(delivery.cost) || 0
+      : 0;
 
   return { price, post };
 };
@@ -109,9 +87,15 @@ const Cart = () => {
 
   const { price, post } = calculatePriceAndPost(
     cart,
-    settings.settings.delivery.freeDeliveryLimit,
-    Number((settings.settings as any).tiers?.[userData?.tier?.toLowerCase() ?? ""]) || 0
+    settings.settings.delivery,
+    // the discount of the customer's tier, as the API worked it out
+    Number(userData?.tierInfo?.discount) || 0
   );
+  // Same as the API: promo code and customer discount come off the products
+  // together, and the delivery is added after them.
+  const promoPercent = promoCode ? Number(promoCode.discountPercentage) || 0 : 0;
+  const total =
+    price * (1 - (promoPercent + (Number(discount) || 0)) / 100) + post;
   const { status } = useSession();
 
   const fetchCouponsAndAddDiscount = async (code: string) => {
@@ -193,11 +177,7 @@ const Cart = () => {
     if (points >= userData!.availablePoints) return;
 
 
-    if ((price -
-      (promoCode
-        ? price * (Number(promoCode.discountPercentage) / 100)
-        : 0) +
-      post) * ((100 - discount) / 100) - (points + 1 * 10) <= 0) return;
+    if (total - (points + 1 * 10) <= 0) return;
 
     dispatch(changePointsInCart(points + 1));
   };
@@ -246,7 +226,7 @@ const Cart = () => {
                         <div className="product-card-gradient">
                           <div className="product-card-footer">
                             <div className="product-card-name truncate w-[100px]">{p.name}</div>
-                            <div className="product-card-price">{p.price} KM</div>
+                            <div className="product-card-price">{Number(getSalePrice(p) ?? p.price).toFixed(2)} KM</div>
                           </div>
                         </div>
                       </div>
@@ -262,9 +242,10 @@ const Cart = () => {
                                   image: p.images && p.images[0] ? `https://bucket3dpart.s3.eu-central-1.amazonaws.com/${p.images[0].imageId}` : "/assets/img/no-image.svg",
                                   weight: p.weight || "0",
                                   price: p.price,
-                                  quantity: p.quantity || 1,
+                                  quantity: Number(p.quantity) || 0,
                                   name: p.name,
-                                  salePrice: p.salePrice || null,
+                                  salePrice: getSalePrice(p),
+                                  isBackorder: p.isBackorder,
                                 },
                                 shouldNotify: false,
                               })
@@ -400,13 +381,7 @@ const Cart = () => {
 
       <div className="flex items-center justify-between my-2">
         <p className="text-white text-[20px] font-semibold">UKUPNO </p>
-        <p className="text-success-500 text-[28px] font-exo2 font-semibold">{`${(
-          (price -
-            (promoCode
-              ? price * (Number(promoCode.discountPercentage) / 100)
-              : 0) +
-            post) * ((100 - discount) / 100) - (points)
-        ).toFixed(2)} KM`}</p>
+        <p className="text-success-500 text-[28px] font-exo2 font-semibold">{`${(total - points).toFixed(2)} KM`}</p>
       </div>
 
       <div className="flex items-center gap-3   bg-neutral-800">

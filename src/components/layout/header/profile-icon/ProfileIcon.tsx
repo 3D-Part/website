@@ -1,9 +1,12 @@
 import { useAppDispatch } from "@/redux/hooks";
 import { changeIsModalAuthVisible } from "@/redux/slices/ui/uiSlice";
 import React from "react";
+import { useTierInfo } from "@/shared/hooks/useTierInfo";
+import TierBadge from "@/components/common/tier-badge/TierBadge";
 
 const ProfileIcon = () => {
   const isLogged = false;
+  const tier = useTierInfo();
 
   const dispatch = useAppDispatch();
 
@@ -15,8 +18,14 @@ const ProfileIcon = () => {
   };
 
   return (
-    <div className="cursor-pointer" onClick={handleClick}>
+    <div className="relative cursor-pointer" onClick={handleClick}>
       <ProfileSvg />
+      {tier?.name && (
+        // subtle: just the tier's small picture on the corner of the icon
+        <span className="absolute z-10 -top-1 -right-2">
+          <TierBadge name={tier.name} color={tier.color} badge={tier.badge} discount={tier.discount} compact />
+        </span>
+      )}
     </div>
   );
 };

@@ -1,3 +1,4 @@
+import { TierInfo } from "@/shared/tiers";
 import API from "../helper/api";
 
 export interface OrderType {
@@ -45,6 +46,7 @@ export interface UserType {
   discount: number;
   availablePoints: number;
   tier?: string | null;
+  tierInfo?: TierInfo;
 }
 
 type updateProfilePayload = {
@@ -94,4 +96,9 @@ const fetchUserProfile = async () => {
   }
 };
 
-export const userService = { getUserProfile, updateProfile, fetchUserProfile };
+// picks one of the shop's avatars ("avatar:NN"), or removes it with null
+const updateAvatar = async (image: string | null) => {
+  return API.put<{ image: string | null }, unknown>("users/update-avatar/", { image });
+};
+
+export const userService = { getUserProfile, updateProfile, fetchUserProfile, updateAvatar };

@@ -8,7 +8,9 @@ const FilterHeader: React.FC<{
     count?: number;
     className?: string;
     showFilters?: boolean;
-}> = ({ title, count, className, showFilters = true }) => {
+    // how many filters are on, shown on the button
+    activeCount?: number;
+}> = ({ title, count, className, showFilters = true, activeCount = 0 }) => {
     const { toggleFilteringSidebar } = useUiApi();
 
     return (
@@ -40,6 +42,11 @@ const FilterHeader: React.FC<{
                         />
                     </svg>
                     Filteri
+                    {activeCount > 0 && (
+                        <span className="flex items-center justify-center min-w-[1.25rem] h-5 px-1 text-xs font-bold bg-white rounded-full text-primary-600">
+                            {activeCount}
+                        </span>
+                    )}
                 </button>)}
         </div>
     );

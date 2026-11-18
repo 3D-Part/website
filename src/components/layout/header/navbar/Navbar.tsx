@@ -16,9 +16,11 @@ import axios from "axios";
 import { MenuItem } from "@/shared/types";
 import { menuService } from "@/shared/services/menuService";
 
-const Navbar = () => {
+const Navbar = ({ initialMenu = null }: { initialMenu?: MenuItem[] | null }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [menuLinks, setMenuLinks] = useState<MenuItem[]>([]);
+  // the server already sent the menu, so there is nothing to wait for
+  const [menuLinks, setMenuLinks] = useState<MenuItem[]>(initialMenu ?? []);
+  const [menuLoading, setMenuLoading] = useState(!initialMenu);
   const dispatch = useAppDispatch();
   const { data: session } = useSession();
 
@@ -60,14 +62,16 @@ const Navbar = () => {
         const response = await axios.get('/menu-structure.json');
 
         setMenuLinks(response.data);
+      } finally {
+        setMenuLoading(false);
       }
     };
 
-    fetchLinks();
-  }, [])
+    if (!initialMenu) fetchLinks();
+  }, [initialMenu])
 
   return (
-    <div className="md:bg-[rgba(17,17,17,0.55)] md:backdrop-blur-[30px] md:border-t border-b border-[rgba(242,242,242,0.3)] border-solid z-50">
+    <div className="md:border-t border-b border-[rgba(242,242,242,0.3)] border-solid z-50">
       <div className="px-4 py-2 lg:px-9 lg:flex md:justify-between lg:max-w-[1920px] lg:mx-auto">
         <div
           className={`flex items-center justify-between w-full py-2 md:w-auto md:px-0 transition-all`}
@@ -89,8 +93,8 @@ const Navbar = () => {
             <ProfileIcon />
           </div>
         </div>
-        <div className="flex items-center h-[69px] gap-4 py-[10.5px] md:px-2 w-full md:w-auto lg:w-full md:flex-grow-1 ">
-          <NavLinks links={menuLinks} />
+        <div className="flex items-center h-[69px] gap-4 py-[10.5px] md:px-2 w-full md:flex-grow-1 ">
+          <NavLinks links={menuLinks} loading={menuLoading} />
           <SearchProducts />
 
           <div className="items-center hidden gap-3 lg:flex">

@@ -15,6 +15,11 @@ import {
 import JWT from "@/shared/helper/jwtToken";
 import AuthAPI from "@/shared/services/auth";
 import { userService } from "@/shared/services/userService";
+import TierSummary from "@/components/common/tier-badge/TierSummary";
+import TierFrame from "@/components/common/tier-badge/TierFrame";
+import AvatarPicker from "@/components/common/tier-badge/AvatarPicker";
+import { avatarSrc } from "@/shared/avatars";
+import { TierInfo } from "@/shared/tiers";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import { FC, useEffect, useState } from "react";
@@ -29,10 +34,12 @@ const ProfilePage: FC = () => {
     // state: "",
     city: "",
     postCode: "",
-    image: "/assets/img/logo.svg",
+    // what the profile keeps: "avatar:NN", an address from a social login, or empty
+    image: "",
     discount: 0
   });
 
+  const [tierInfo, setTierInfo] = useState<TierInfo | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const isVerified = useAppSelector(isUserVerifiedSelector);
 
@@ -55,9 +62,10 @@ const ProfilePage: FC = () => {
         // state: data.state || "",
         city: data.city || "",
         postCode: data.postCode || "",
-        image: data.image || "/assets/img/logo.svg",
+        image: data.image || "",
         discount: data.discount || 0
       });
+      setTierInfo(data.tierInfo ?? null);
     }
 
     try {
@@ -149,13 +157,23 @@ const ProfilePage: FC = () => {
             <div className="lg:flex-1">
               <div className="flex flex-col items-center gap-9 lg:items-start">
                 <Heading2 className="">Uredi profil</Heading2>
-                <Image
-                  width={151}
-                  height={151}
-                  alt="profile photo"
-                  src={userData.image}
-                  className="border border-white rounded-full w-[155px] h-[155px] p-1"
-                />
+                <div className="flex flex-col items-center gap-2 lg:items-start">
+                  <TierFrame photo={avatarSrc(userData.image)} info={tierInfo} />
+                  <TierSummary info={tierInfo} />
+                  <AvatarPicker
+                    value={userData.image}
+                    onPick={async (image) => {
+                      try {
+                        await userService.updateAvatar(image);
+                        setUserData((current) => ({ ...current, image: image ?? "" }));
+                        notify("Slika je promijenjena", { type: "success" });
+                      } catch (error: any) {
+                        notify("Slika nije promijenjena", { type: "error" });
+                        throw error;
+                      }
+                    }}
+                  />
+                </div>
                 {userData.discount > 0 && <div className="lg:text-[28px] font-semibold lg:leading-9 text-2xl leading-8">Discount: <span className="text-primary-400">{userData.discount}%</span></div>}
               </div>
               <div className="lg:flex-row flex flex-col lg:gap-[78px] gap-6">

@@ -1,4 +1,5 @@
 import Paragraph from "@/components/common/text/paragraph/Paragraph";
+import { getSalePrice } from "@/shared/helper/getSalePrice";
 import { getMainImage } from "@/shared/helper/getMainImage";
 import { ProductInterface } from "@/shared/interfaces/productsInterface";
 import Image from "next/image";
@@ -11,8 +12,6 @@ const SearchResult: React.FC<{
   closeDropdown: () => void;
   addToCart: ReturnType<typeof useAddToCart>["addToCart"];
 }> = ({ product, closeDropdown, addToCart }) => {
-  const canOrder = product.quantity > 0 || product.isBackorder;
-
   return (
     <Link
       href={`/shop/product/${product.id}`}
@@ -39,13 +38,13 @@ const SearchResult: React.FC<{
             {product.name}
           </Paragraph>
           <Paragraph weight="Semibold" size="S" className="text-lg md:text-sm">
-            {parseFloat(
-              product.salePrice ? product.salePrice : product.price
-            ).toFixed(2)}{" "}
+            {parseFloat(getSalePrice(product) ?? product.price).toFixed(2)}{" "}
             KM
+            <span className="ml-2 text-xs font-normal text-neutral-300">
+              {product.quantity > 0 ? "Na stanju" : product.isBackorder ? "Po narudžbi" : "Nema na stanju"}
+            </span>
           </Paragraph>
-          {canOrder ? (
-            <button
+          <button
               type="button"
               className="px-3 py-1 text-sm font-semibold text-white rounded-lg w-fit bg-primary-500 hover:bg-primary-600"
               onClick={(event) => {
@@ -61,7 +60,8 @@ const SearchResult: React.FC<{
                     price: product.price,
                     quantity: product.quantity,
                     name: product.name,
-                    salePrice: product.salePrice,
+                    salePrice: getSalePrice(product) ?? undefined,
+                    isBackorder: product.isBackorder,
                   },
                   shouldNotify: true,
                 });
@@ -69,9 +69,6 @@ const SearchResult: React.FC<{
             >
               Dodaj u korpu
             </button>
-          ) : (
-            <span className="text-sm text-neutral-300">Nema na stanju</span>
-          )}
         </div>
       </div>
     </Link>

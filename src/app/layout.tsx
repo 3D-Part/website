@@ -11,7 +11,8 @@ import Toastify from "@/components/common/toast/Toastify";
 import { NextAuthProvider } from "@/app/providers";
 import GoogleAnalytics from "./GoogleAnalytics";
 import Script from "next/script";
-import TidioChat from "@/components/helper/TidioChat";
+import ShopAssistant from "@/components/helper/ShopAssistant";
+import SiteTracker from "@/components/helper/SiteTracker";
 import NonRendableComponent from "@/components/helper/NonRendableComponent";
 
 const exo2 = Exo_2({
@@ -83,7 +84,8 @@ export default function RootLayout({
         <NextAuthProvider>
           <Providers>
             <NonRendableComponent />
-            <TidioChat />
+            <ShopAssistant />
+            <SiteTracker />
             <Header />
             <Lights />
             <GoogleAnalytics />

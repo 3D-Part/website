@@ -4,7 +4,7 @@ import Script from "next/script";
 import * as gtag from "../shared/lib/gtag";
 
 const GoogleAnalytics = () => {
-  //You can show in the console the GA_TRACKING_ID to confirm
+  // page views of later pages come from GA4's enhanced measurement (browser history)
 
   return (
     <>
@@ -20,9 +20,7 @@ const GoogleAnalytics = () => {
                       window.dataLayer = window.dataLayer || [];
                       function gtag(){dataLayer.push(arguments);}
                       gtag('js', new Date());
-                      gtag('config', '${gtag.GA_TRACKING_ID}', {
-                      page_path: window.location.pathname,
-                      });
+                      gtag('config', '${gtag.GA_TRACKING_ID}');
                     `,
         }}
       />

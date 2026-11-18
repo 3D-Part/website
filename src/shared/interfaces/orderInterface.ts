@@ -17,7 +17,8 @@ interface OrderBodyInterfacePerson {
 
 export interface OrderBodyInterfaceCompany {
   companyName: string;
-  companyPdv: string;
+  // who at the company placed the order
+  fullName: string;
   phone: string;
   city: string;
   postCode: string;
@@ -34,7 +35,7 @@ export interface OrderBodyInterfaceCompany {
 
 export interface ElectronPaymentData {
   companyName: string;
-  companyPdv: string;
+  fullName?: string;
   phone: string;
   city: string;
   postCode: string;

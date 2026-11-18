@@ -10,7 +10,6 @@ if (!RAW_BASE) {
 // Trim trailing slashes, then add exactly one.
 const API_BASE = RAW_BASE.replace(/\/+$/, "");
 const defaultRoute = `${API_BASE}/shop/categories`;
-const attributesRoute = `${API_BASE}/shop/category-attributes`;
 
 
 export interface CategoriesPaginatedInterface {
@@ -40,27 +39,6 @@ const getAllCategories = async (): Promise<CategoriesPaginatedInterface> => {
     } else {
       // Success response
       return data as CategoriesPaginatedInterface;
-    }
-  } catch (err) {
-    throw err;
-  }
-};
-
-const getAllProductAttributes = async (): Promise<ProductAttributePaginatedInterface> => {
-  try {
-    const res = await fetch(`${attributesRoute}`, {
-      method: "GET",
-      cache: "no-store",
-    });
-
-    const data = await res.json();
-
-    if ("key" in data && "message" in data) {
-      // Error response
-      throw new Error(data.message);
-    } else {
-      // Success response
-      return data as ProductAttributePaginatedInterface;
     }
   } catch (err) {
     throw err;
@@ -109,6 +87,5 @@ const getSingleCategoryWithSlug = async (
 export const categoriesServices = {
   getAllCategories,
   getSingleCategory,
-  getAllProductAttributes,
   getSingleCategoryWithSlug,
 };

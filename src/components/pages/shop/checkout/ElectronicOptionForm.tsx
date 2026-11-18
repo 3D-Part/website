@@ -20,10 +20,10 @@ const ElectronicOptionForm = () => {
           value={userData ? userData.companyName : ""}
         />
         <Input
-          placeholder="Pdv broj firme"
+          placeholder="Ime i prezime naručioca"
           required
-          id={"companyPdv"}
-          value={userData ? userData.companyPdv : ""}
+          id={"fullName"}
+          value={userData ? userData.fullName ?? "" : ""}
         />
       </div>
       <Input

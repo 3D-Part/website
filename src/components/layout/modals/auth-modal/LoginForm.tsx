@@ -7,10 +7,9 @@ import {
 import JWT from "@/shared/helper/jwtToken";
 import AuthAPI from "@/shared/services/auth";
 import { signIn, useSession } from "next-auth/react";
-import Link from "next/link";
 import React, { FC, useState } from "react";
 
-const LoginForm = () => {
+const LoginForm: FC<{ onForgotPassword?: () => void }> = ({ onForgotPassword }) => {
   const [passType, setPassType] = useState("password");
 
   const dispatch = useAppDispatch();
@@ -77,14 +76,10 @@ const LoginForm = () => {
       </div>
 
       <div className="mt-4">
-        <Link
-          href={"/reset-password/request"}
-          onClick={() => {
-            dispatch(changeIsModalAuthVisible(false));
-          }}
-        >
+        {/* the code is asked for right here, in this window */}
+        <button type="button" className="hover:underline" onClick={onForgotPassword}>
           Zaboravili ste lozinku?
-        </Link>
+        </button>
       </div>
 
       {/* -------------------------- */}
@@ -138,7 +133,7 @@ const LoginForm = () => {
   );
 };
 
-const EmailIcon = () => {
+export const EmailIcon = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

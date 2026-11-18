@@ -3,6 +3,8 @@ import React, { useEffect, useState, useCallback, useRef } from "react";
 // import Filters from "../common/filters/Filters";
 import FiltersSidebar from "../common/filters/FiltersSidebar";
 import FilterHeader from "../common/FilterHeader";
+import ActiveFilters from "../common/ActiveFilters";
+import { parseFilters } from "@/shared/helper/attributeFilters";
 import ProductGrid from "../common/product-grid/ProductGrid";
 import {
   ProductPaginatedInterface,
@@ -53,12 +55,15 @@ const CategoryProducts: React.FC<{ categoryAttributes: Array<CategoryAttributesI
 
   // Cooldown flag between scroll fetches
   const canLoadRef = useRef(true);
+  // Only the newest request may change the list, an older answer arriving late is dropped
+  const requestRef = useRef(0);
 
   const fetchProducts = useCallback(
     async (append = false) => {
       if (append && !hasMore) return;
 
       setIsLoading(true);
+      const requestId = ++requestRef.current;
       const res = await productsServices.getAllProducts({
         categoryId,
         filterByProductAttributes,
@@ -70,17 +75,7 @@ const CategoryProducts: React.FC<{ categoryAttributes: Array<CategoryAttributesI
         limit: initCount,
       });
 
-      console.log("[CategoryProducts] cijela response:", res);
-      console.log(
-        "[CategoryProducts] productOnSale po produktu:",
-        res.rows.map((a) => ({
-          name: a.name,
-          price: a.price,
-          productOnSale: a.productOnSale,
-          naAkciji: a.productOnSale.length > 0,
-          discountedPrice: a.productOnSale[0]?.discountedPrice ?? null,
-        }))
-      );
+      if (requestId !== requestRef.current) return;
 
       res.rows.forEach((a) => {
         if (a.productOnSale.length) {
@@ -93,7 +88,7 @@ const CategoryProducts: React.FC<{ categoryAttributes: Array<CategoryAttributesI
         rows: append ? [...prev.rows, ...res.rows] : res.rows,
       }));
 
-      setHasMore(offset < res.count);
+      setHasMore(offset + res.rows.length < res.count);
       setIsLoading(false);
     },
     [categoryId, priceMin, priceMax, field, order, manufacturerId, offset, hasMore, filterByProductAttributes]
@@ -189,9 +184,26 @@ const CategoryProducts: React.FC<{ categoryAttributes: Array<CategoryAttributesI
         setFilterByProductAttributes={setFilterByProductAttributes}
         setField={setField}
         setOrder={setOrder}
+        categoryId={categoryId}
+        manufacturerId={manufacturerId}
+        resultCount={data.count}
       />
 
-      <FilterHeader title="Proizvodi" count={data.count} />
+      <FilterHeader
+        title="Proizvodi"
+        count={data.count}
+        activeCount={parseFilters(filterByProductAttributes).length + (priceMin !== null || priceMax !== null ? 1 : 0)}
+      />
+
+      <ActiveFilters
+        categoryAttributes={categoryAttributes}
+        filterByProductAttributes={filterByProductAttributes}
+        setFilterByProductAttributes={setFilterByProductAttributes}
+        priceMin={priceMin}
+        priceMax={priceMax}
+        setPriceMin={setPriceMin}
+        setPriceMax={setPriceMax}
+      />
 
       <ProductGrid productList={data.rows} />
       {isLoading && <Spinner />}

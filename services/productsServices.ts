@@ -116,28 +116,16 @@ const getAllProducts = async ({
 
   const params = new URLSearchParams({ ...payload });
 
-  // Add attribute filters separately to handle multiple values
-  parsedAttrs.forEach((attr: any) => {
-    if (attr.attributeId) {
-      params.append("filters[attributes][attributeId]", attr.attributeId);
-
-      // Add the appropriate operator parameter
-      if (attr.value !== undefined) {
-        params.append("filters[attributes][value]", attr.value);
-      }
-      if (attr.like !== undefined) {
-        params.append("filters[attributes][like]", attr.like);
-      }
-      if (attr.gt !== undefined) {
-        params.append("filters[attributes][gt]", attr.gt.toString());
-      }
-      if (attr.lt !== undefined) {
-        params.append("filters[attributes][lt]", attr.lt.toString());
-      }
-      if (attr.is !== undefined) {
-        params.append("filters[attributes][is]", attr.is);
-      }
-    }
+  // Every filter is an entry of its own, numbered, so a value, a range and a
+  // text never get mixed up; entries of one attribute are alternatives.
+  parsedAttrs.forEach((attr: any, i: number) => {
+    if (!attr.attributeId) return;
+    const key = (field: string) => `filters[attributes][${i}][${field}]`;
+    params.append(key("attributeId"), attr.attributeId);
+    if (attr.value !== undefined) params.append(key("value"), String(attr.value));
+    if (attr.like !== undefined) params.append(key("like"), attr.like);
+    if (attr.gt !== undefined) params.append(key("gt"), attr.gt.toString());
+    if (attr.lt !== undefined) params.append(key("lt"), attr.lt.toString());
   });
 
   const paramsString = params.toString();
@@ -155,6 +143,46 @@ const getAllProducts = async ({
   } catch (err) {
     throw err;
   }
+};
+
+export interface FacetsInterface {
+  total: number;
+  attributes: {
+    attributeId: string;
+    name: string;
+    type: string;
+    values: { value: string; count: number }[];
+  }[];
+}
+
+/** What the filters of a category can offer: the values its products have, and how many of each. */
+const getFacets = async ({
+  categoryId,
+  manufacturerId,
+  priceMin,
+  priceMax,
+  filterByProductAttributes,
+  signal,
+}: {
+  categoryId: string;
+  manufacturerId?: string | null;
+  priceMin?: number | null;
+  priceMax?: number | null;
+  filterByProductAttributes?: string;
+  signal?: AbortSignal;
+}): Promise<FacetsInterface> => {
+  const params = new URLSearchParams({ categoryId });
+  if (manufacturerId) params.set("manufacturerId", manufacturerId);
+  if (priceMin !== null && priceMin !== undefined) params.set("priceMin", String(priceMin));
+  if (priceMax !== null && priceMax !== undefined) params.set("priceMax", String(priceMax));
+  if (filterByProductAttributes) params.set("attributes", filterByProductAttributes);
+
+  const res = await fetch(`${defaultRoute}/facets?${params.toString()}`, {
+    cache: "no-store",
+    signal,
+  });
+  if (!res.ok) throw new Error("facets");
+  return (await res.json()) as FacetsInterface;
 };
 
 const getSingleProduct = async (id: string): Promise<ProductInterface> => {
@@ -234,6 +262,7 @@ const getMostSold = async (): Promise<ProductPaginatedInterface> => {
 
 export const productsServices = {
   getAllProducts,
+  getFacets,
   getSingleProduct,
   getRecommended,
   getMostSold,

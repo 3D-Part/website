@@ -3,7 +3,9 @@ import Display2 from "@/components/common/text/display/Display2";
 import Heading6 from "@/components/common/text/heading/Heading6";
 import Paragraph from "@/components/common/text/paragraph/Paragraph";
 import { ProductInterface } from "@/shared/interfaces/productsInterface";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { track } from "@/shared/helper/track";
+import { gaItem, gaViewItem } from "@/shared/lib/gtag";
 import ProductIcons from "@/components/common/product/ProductIcons";
 import Stock from "../stock/Stock";
 import { motion } from "framer-motion";
@@ -63,6 +65,22 @@ const MainData: React.FC<{
 
   const [amount, setAmount] = useState(1);
   const { addToCart, modal: backorderModal } = useAddToCart();
+
+  // one view each time the product page is opened
+  useEffect(() => {
+    if (!productData.id) return;
+    track({ kind: "view", productId: productData.id });
+    gaViewItem(
+      gaItem({
+        id: productData.id,
+        name: productData.name,
+        price: salePrice ?? productData.price,
+        category: (productData as any).category?.name,
+        brand: (productData as any).manufacturer?.name,
+      })
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [productData.id]);
 
   const isTablet = useIsTablet();
 
@@ -189,6 +207,7 @@ const MainData: React.FC<{
                 quantity,
                 name,
                 salePrice,
+                isBackorder: productData.isBackorder,
               },
               shouldNotify: false,
             });
@@ -199,9 +218,7 @@ const MainData: React.FC<{
         >
           <div className="flex items-center gap-2">
             Dodaj u korpu
-            <CartIcon
-              color={"#ffffff"}
-            />
+            <CartIcon color={"#ffffff"} />
           </div>
         </Button>
         {backorderModal}

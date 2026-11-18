@@ -1,11 +1,24 @@
 import FacebookButton from "@/components/layout/modals/auth-modal/FacebookButton";
 import GoogleButton from "@/components/layout/modals/auth-modal/GoogleButton";
 import LoginForm from "@/components/layout/modals/auth-modal/LoginForm";
-import React, { FC } from "react";
+import PasswordResetFlow from "@/components/layout/modals/auth-modal/PasswordResetFlow";
+import React, { FC, useState } from "react";
 
 const Login: FC<{ setActiveModal: (x: number) => void }> = ({
   setActiveModal,
 }) => {
+  // the login, or the change of a forgotten password inside the same window
+  const [view, setView] = useState<"login" | "reset">("login");
+
+  if (view === "reset") {
+    return (
+      <div className="flex flex-col justify-center w-full">
+        <h2 className="mb-4 text-xl font-semibold">Zaboravili ste lozinku?</h2>
+        <PasswordResetFlow onDone={() => setView("login")} onBack={() => setView("login")} />
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col justify-center w-full">
       {/* <GoogleButton /> */}
@@ -31,7 +44,7 @@ const Login: FC<{ setActiveModal: (x: number) => void }> = ({
       </div> */}
 
       {/* ----------------------------------------------------- */}
-      <LoginForm />
+      <LoginForm onForgotPassword={() => setView("reset")} />
       {/* ----------------------------------------------------- */}
       <p className="w-full text-center">
         Nemate kreiran račun?{" "}

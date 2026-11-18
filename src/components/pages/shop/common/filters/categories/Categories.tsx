@@ -1,280 +1,275 @@
-import React, { useEffect, useRef, useState } from 'react';
-import Paragraph from '@/components/common/text/paragraph/Paragraph';
-import { usePathname } from 'next/navigation';
-import { CategoryAttributesInterface } from '@/shared/interfaces/categoryInterface';
+"use client";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
+import { CategoryAttributesInterface } from "@/shared/interfaces/categoryInterface";
+import { FacetsInterface, productsServices } from "../../../../../../../services/productsServices";
+import {
+  hasSwitch,
+  parseFilters,
+  rangeOf,
+  selectedValues,
+  setRange,
+  setSwitch,
+  setText,
+  stringifyFilters,
+  textOf,
+  toggleValue,
+} from "@/shared/helper/attributeFilters";
 
-interface FilterValue {
-    text?: string;
-    select?: string;
-    range?: { min: string; max: string };
-    boolean?: boolean;
-}
+const VISIBLE_VALUES = 8;
+const SEARCH_FROM = 10;
 
-// Rebuilds the inputs from an already applied filter, when a listing is restored
-const parseFilterValues = (
-    filterByProductAttributes: string | undefined,
-    categoryAttributes: Array<CategoryAttributesInterface>
-) => {
-    const values: Record<string, FilterValue> = {};
-    if (!filterByProductAttributes) return values;
+const inputClass =
+  "bg-neutral-800 border border-neutral-700 h-10 w-full rounded-lg px-3 text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-primary-400";
 
-    JSON.parse(filterByProductAttributes).forEach((filter: any) => {
-        const item = categoryAttributes.find((x) => x.attributeId === filter.attributeId);
-        if (!item) return;
+const Check: React.FC<{
+  checked: boolean;
+  disabled?: boolean;
+  label: string;
+  count?: number;
+  onChange: () => void;
+}> = ({ checked, disabled, label, count, onChange }) => (
+  <label
+    className={`flex items-center justify-between gap-3 py-1.5 text-sm ${
+      disabled ? "opacity-40 cursor-not-allowed" : "cursor-pointer hover:text-white"
+    } text-neutral-200`}
+  >
+    <span className="flex items-center min-w-0 gap-3">
+      <input type="checkbox" className="sr-only peer" checked={checked} disabled={disabled} onChange={onChange} />
+      <span
+        className="flex items-center justify-center w-5 h-5 border rounded shrink-0 border-neutral-500 peer-checked:bg-primary-500 peer-checked:border-primary-500 peer-focus-visible:ring-2 peer-focus-visible:ring-primary-400 [&>svg]:opacity-0 peer-checked:[&>svg]:opacity-100"
+        aria-hidden
+      >
+        <svg width="12" height="12" viewBox="0 0 20 20" fill="none" stroke="white" strokeWidth="3">
+          <path d="M4 10.5l4 4 8-9" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </span>
+      <span className="truncate">{label}</span>
+    </span>
+    {count !== undefined && <span className="text-xs text-neutral-500 shrink-0">{count}</span>}
+  </label>
+);
 
-        if (filter.gt !== undefined || filter.lt !== undefined) {
-            values[filter.attributeId] = {
-                range: { min: String(filter.gt ?? ''), max: String(filter.lt ?? '') }
-            };
-        } else if (typeof filter.value === 'boolean') {
-            values[filter.attributeId] = { boolean: filter.value };
-        } else if ((item as any).attribute.type === 'select') {
-            values[filter.attributeId] = { select: filter.value };
-        } else {
-            values[filter.attributeId] = { text: filter.value };
-        }
-    });
+/** One attribute with a list of values to tick, a switch, a text or a range. */
+const Group: React.FC<{
+  title: string;
+  type: string;
+  attributeId: string;
+  values: { value: string; count: number }[] | null;
+  filters: ReturnType<typeof parseFilters>;
+  update: (next: ReturnType<typeof parseFilters>) => void;
+}> = ({ title, type, attributeId, values, filters, update }) => {
+  const ticked = selectedValues(filters, attributeId);
+  const [open, setOpen] = useState(true);
+  const [showAll, setShowAll] = useState(false);
+  const [search, setSearch] = useState("");
 
-    return values;
-};
+  const body = () => {
+    if (type === "bool") {
+      return (
+        <Check
+          checked={hasSwitch(filters, attributeId)}
+          label="Da"
+          onChange={() => update(setSwitch(filters, attributeId, !hasSwitch(filters, attributeId)))}
+        />
+      );
+    }
+    if (type === "range") {
+      const { min, max } = rangeOf(filters, attributeId);
+      return (
+        <div className="flex gap-2">
+          <input
+            type="number"
+            inputMode="decimal"
+            placeholder="Od"
+            value={min}
+            onChange={(e) => update(setRange(filters, attributeId, e.target.value, max))}
+            className={inputClass}
+          />
+          <input
+            type="number"
+            inputMode="decimal"
+            placeholder="Do"
+            value={max}
+            onChange={(e) => update(setRange(filters, attributeId, min, e.target.value))}
+            className={inputClass}
+          />
+        </div>
+      );
+    }
+    if (type === "input") {
+      return (
+        <input
+          type="text"
+          placeholder={`${title}...`}
+          value={textOf(filters, attributeId)}
+          onChange={(e) => update(setText(filters, attributeId, e.target.value))}
+          className={inputClass}
+        />
+      );
+    }
 
-const Categories = ({
-    filterByProductAttributes,
-    setFilterByProductAttributes,
-    categoryAttributes
-}: {
-    filterByProductAttributes: string | undefined;
-    setFilterByProductAttributes: (x: string | undefined) => void;
-    categoryAttributes: Array<CategoryAttributesInterface>;
-}) => {
-    const [filterValues, setFilterValues] = useState<Record<string, FilterValue>>(() =>
-        parseFilterValues(filterByProductAttributes, categoryAttributes)
-    );
-    const pathname = usePathname();
-    const previousPathnameRef = useRef(pathname);
+    // a list of values: the ones that exist in the category, with how many products each has
+    if (values === null) {
+      return (
+        <div className="flex flex-col gap-2" aria-hidden>
+          {[70, 55, 80].map((w) => (
+            <span key={w} className="h-5 rounded bg-neutral-700/60 animate-pulse" style={{ width: `${w}%` }} />
+          ))}
+        </div>
+      );
+    }
 
-    // Reset filters if path changes
-    useEffect(() => {
-        if (previousPathnameRef.current === pathname) return;
-
-        previousPathnameRef.current = pathname;
-        setFilterValues({});
-    }, [pathname]);
-
-    // Reset local state when parent clears filters
-    useEffect(() => {
-        if (filterByProductAttributes === undefined) {
-            setFilterValues({});
-        }
-    }, [filterByProductAttributes]);
-
-    // Update parent whenever local input changes
-    useEffect(() => {
-        const activeFilters: any[] = [];
-
-        Object.entries(filterValues).forEach(([attributeId, filterValue]) => {
-            if (filterValue.text && filterValue.text.trim()) {
-                activeFilters.push({
-                    attributeId,
-                    value: filterValue.text
-                });
-            } else if (filterValue.select && filterValue.select.trim()) {
-                activeFilters.push({
-                    attributeId,
-                    value: filterValue.select
-                });
-            } else if (filterValue.range) {
-                const { min, max } = filterValue.range;
-                const filterObj: any = { attributeId };
-
-                if (min && min.trim()) {
-                    filterObj.gt = parseFloat(min);
-                }
-                if (max && max.trim()) {
-                    filterObj.lt = parseFloat(max);
-                }
-
-                if (filterObj.gt !== undefined || filterObj.lt !== undefined) {
-                    activeFilters.push(filterObj);
-                }
-            } else if (filterValue.boolean !== undefined) {
-                activeFilters.push({
-                    attributeId,
-                    value: filterValue.boolean
-                });
-            }
-        });
-
-        if (activeFilters.length > 0) {
-            setFilterByProductAttributes(JSON.stringify(activeFilters));
-        } else {
-            setFilterByProductAttributes(undefined);
-        }
-    }, [filterValues, setFilterByProductAttributes]);
-
-    const handleTextChange = (attributeId: string, value: string) => {
-        setFilterValues(prev => ({
-            ...prev,
-            [attributeId]: { text: value }
-        }));
-    };
-
-    const handleSelectChange = (attributeId: string, value: string) => {
-        setFilterValues(prev => ({
-            ...prev,
-            [attributeId]: { select: value }
-        }));
-    };
-
-    const handleRangeChange = (attributeId: string, type: 'min' | 'max', value: string) => {
-        setFilterValues(prev => {
-            const current = prev[attributeId]?.range || { min: '', max: '' };
-            return {
-                ...prev,
-                [attributeId]: {
-                    range: {
-                        ...current,
-                        [type]: value
-                    }
-                }
-            };
-        });
-    };
-
-    const handleBooleanChange = (attributeId: string, value: boolean) => {
-        setFilterValues(prev => ({
-            ...prev,
-            [attributeId]: { boolean: value }
-        }));
-    };
-
-    const renderFilter = (item: CategoryAttributesInterface) => {
-        const attributeId = item.attributeId;
-        let type = (item as any).attribute.type || 'input'; // Default to input if no type specified
-
-
-        switch (type) {
-            case 'input':
-                return (
-                    <input
-                        id={attributeId}
-                        type="text"
-                        placeholder={`Filter by ${item.attribute.name}...`}
-                        value={filterValues[attributeId]?.text || ''}
-                        onChange={(e) => handleTextChange(attributeId, e.target.value)}
-                        className="bg-neutral-700 h-8 w-full rounded-lg px-3 
-                                   focus:ring-primary-600 focus:border-primary-400 block 
-                                   dark:bg-black dark:border-neutral-800 dark:text-white 
-                                   dark:focus:ring-primary-400 dark:focus:border-primary-400 
-                                   placeholder-neutral-400 text-sm"
-                    />
-                );
-
-            case 'select':
-                const options = ((item as any).attribute.productAttributes || [])
-                    .filter((attr: any, i: number, arr: any[]) =>
-                        arr.findIndex(a => a.value === attr.value) === i
-                    );
-
-                return (
-                    <select
-                        id={attributeId}
-                        value={filterValues[attributeId]?.select || ''}
-                        onChange={(e) => handleSelectChange(attributeId, e.target.value)}
-                        className="bg-neutral-700 h-8 w-full rounded-lg px-3 
-                                   focus:ring-primary-600 focus:border-primary-400 block 
-                                   dark:bg-black dark:border-neutral-800 dark:text-white 
-                                   dark:focus:ring-primary-400 dark:focus:border-primary-400 
-                                   text-sm"
-                    >
-                        <option value="">Select...</option>
-                        {options.map((option: { value: string }) => (
-                            <option key={option.value} value={option.value}>
-                                {option.value}
-                            </option>
-                        ))}
-                    </select>
-                );
-
-            case 'range':
-                const min = filterValues[attributeId]?.range?.min || '';
-                const max = filterValues[attributeId]?.range?.max || '';
-                return (
-                    <div className="flex gap-2">
-                        <input
-                            type="number"
-                            placeholder="Min"
-                            value={min}
-                            onChange={(e) => handleRangeChange(attributeId, 'min', e.target.value)}
-                            className="bg-neutral-700 h-8 w-full rounded-lg px-3 
-                                       focus:ring-primary-600 focus:border-primary-400 block 
-                                       dark:bg-black dark:border-neutral-800 dark:text-white 
-                                       dark:focus:ring-primary-400 dark:focus:border-primary-400 
-                                       placeholder-neutral-400 text-sm"
-                        />
-                        <input
-                            type="number"
-                            placeholder="Max"
-                            value={max}
-                            onChange={(e) => handleRangeChange(attributeId, 'max', e.target.value)}
-                            className="bg-neutral-700 h-8 w-full rounded-lg px-3 
-                                       focus:ring-primary-600 focus:border-primary-400 block 
-                                       dark:bg-black dark:border-neutral-800 dark:text-white 
-                                       dark:focus:ring-primary-400 dark:focus:border-primary-400 
-                                       placeholder-neutral-400 text-sm"
-                        />
-                    </div>
-                );
-
-            case 'bool':
-                const isChecked = filterValues[attributeId]?.boolean || false;
-                return (
-                    <label className="flex items-center cursor-pointer">
-                        <div className="relative">
-                            <input
-                                type="checkbox"
-                                checked={isChecked}
-                                onChange={(e) => handleBooleanChange(attributeId, e.target.checked)}
-                                className="sr-only"
-                            />
-                            <div className={`block w-10 h-6 rounded-full transition ${isChecked ? 'bg-primary-500' : 'bg-neutral-600'
-                                }`}></div>
-                            <div className={`absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform ${isChecked ? 'transform translate-x-4' : ''
-                                }`}></div>
-                        </div>
-                        <span className="ml-3 text-sm text-neutral-300">
-                            {isChecked ? 'Yes' : 'No'}
-                        </span>
-                    </label>
-                );
-
-            default:
-                return null;
-        }
-    };
-
-    if (categoryAttributes.length === 0 || pathname === '/shop/all' /*|| !categoryAttributes.some(attr => attr.attribute.type) */) return null;
+    // a ticked value stays on the list even if the other choices left it with no products
+    const all = [
+      ...values,
+      ...ticked.filter((value) => !values.some((item) => item.value === value)).map((value) => ({ value, count: 0 })),
+    ];
+    const matching = search.trim()
+      ? all.filter((item) => item.value.toLowerCase().includes(search.trim().toLowerCase()))
+      : all;
+    const shown = showAll || search.trim() ? matching : matching.slice(0, VISIBLE_VALUES);
 
     return (
-        <div className="flex flex-col gap-4">
-            <Paragraph size="L" weight="Bold" className="mb-1">
-                Atributi
-            </Paragraph>
-
-            {categoryAttributes/*.filter(attr => attr.attribute.type)*/.map((item) => (
-                <div key={item.id} className="flex flex-col gap-1">
-                    <label
-                        htmlFor={item.attributeId}
-                        className="text-sm font-medium text-white dark:text-neutral-300"
-                    >
-                        {item.attribute.name}
-                    </label>
-
-                    {renderFilter(item)}
-                </div>
-            ))}
-        </div>
+      <div>
+        {all.length >= SEARCH_FROM && (
+          <input
+            type="search"
+            placeholder="Traži..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className={`${inputClass} mb-2`}
+          />
+        )}
+        {shown.map((item) => (
+          <Check
+            key={item.value}
+            label={item.value}
+            count={item.count}
+            checked={ticked.includes(item.value)}
+            disabled={item.count === 0 && !ticked.includes(item.value)}
+            onChange={() => update(toggleValue(filters, attributeId, item.value))}
+          />
+        ))}
+        {matching.length === 0 && <p className="py-1 text-sm text-neutral-500">Nema rezultata</p>}
+        {!search.trim() && matching.length > VISIBLE_VALUES && (
+          <button
+            type="button"
+            onClick={() => setShowAll((value) => !value)}
+            className="mt-1 text-sm text-primary-400 hover:underline"
+          >
+            {showAll ? "Prikaži manje" : `Prikaži sve (${matching.length})`}
+          </button>
+        )}
+      </div>
     );
-}
+  };
+
+  return (
+    <div className="pb-4 border-b border-neutral-800 last:border-b-0">
+      <button
+        type="button"
+        onClick={() => setOpen((value) => !value)}
+        className="flex items-center justify-between w-full py-1 mb-2 text-left"
+        aria-expanded={open}
+      >
+        <span className="font-semibold text-white">
+          {title}
+          {ticked.length > 0 && <span className="ml-2 text-sm text-primary-400">({ticked.length})</span>}
+        </span>
+        <svg
+          className={`w-4 h-4 text-neutral-400 transition-transform ${open ? "rotate-180" : ""}`}
+          viewBox="0 0 20 20"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+        >
+          <path d="M5 8l5 5 5-5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </button>
+      {open && body()}
+    </div>
+  );
+};
+
+/**
+ * The filters of a category by its attributes. Values are ticked, several of
+ * one attribute at once (black or blue), and every list shows only what the
+ * products of the category really have, with the number of products of each,
+ * counted with the other choices taken into account.
+ */
+const Categories = ({
+  filterByProductAttributes,
+  setFilterByProductAttributes,
+  categoryAttributes,
+  categoryId,
+  manufacturerId,
+  priceMin,
+  priceMax,
+}: {
+  filterByProductAttributes: string | undefined;
+  setFilterByProductAttributes: (x: string | undefined) => void;
+  categoryAttributes: Array<CategoryAttributesInterface>;
+  categoryId?: string;
+  manufacturerId?: string | null;
+  priceMin?: number | null;
+  priceMax?: number | null;
+}) => {
+  const pathname = usePathname();
+  const filters = useMemo(() => parseFilters(filterByProductAttributes), [filterByProductAttributes]);
+  const [facets, setFacets] = useState<FacetsInterface | null>(null);
+  const requestRef = useRef(0);
+
+  // What the lists can offer, asked again whenever a choice changes
+  useEffect(() => {
+    if (!categoryId) return;
+    const id = ++requestRef.current;
+    const controller = new AbortController();
+    const timer = setTimeout(async () => {
+      try {
+        const result = await productsServices.getFacets({
+          categoryId,
+          manufacturerId,
+          priceMin,
+          priceMax,
+          filterByProductAttributes,
+          signal: controller.signal,
+        });
+        if (id === requestRef.current) setFacets(result);
+      } catch {
+        // the lists stay as they were
+      }
+    }, 150);
+    return () => {
+      clearTimeout(timer);
+      controller.abort();
+    };
+  }, [categoryId, manufacturerId, priceMin, priceMax, filterByProductAttributes]);
+
+  if (!categoryId || categoryAttributes.length === 0 || pathname === "/shop/all") return null;
+
+  const update = (next: ReturnType<typeof parseFilters>) => setFilterByProductAttributes(stringifyFilters(next));
+
+  return (
+    <div className="flex flex-col gap-4">
+      <p className="text-lg font-bold text-white">Filtriraj po</p>
+      {categoryAttributes.map((item) => {
+        const type = (item as any).attribute?.type || "input";
+        const facet = facets?.attributes.find((entry) => entry.attributeId === item.attributeId);
+        return (
+          <Group
+            key={item.id}
+            title={item.attribute.name}
+            type={type}
+            attributeId={item.attributeId}
+            values={facet ? facet.values : facets ? [] : null}
+            filters={filters}
+            update={update}
+          />
+        );
+      })}
+    </div>
+  );
+};
 
 export default Categories;

@@ -6,9 +6,16 @@ const Stock: React.FC<{ stock: number; byOrder?: boolean }> = ({
   stock,
   byOrder = false,
 }) => {
-  if (byOrder) {
+  // made to order matters only once the stock runs out
+  if (byOrder && !(stock > 0)) {
     return (
-      <div className="flex items-center gap-2 px-8 py-4 rounded-lg w-fit bg-[rgba(234,179,8,0.2)]">
+      <div className="flex items-center gap-2 px-8 py-4 rounded-lg w-fit bg-[rgba(245,158,11,0.2)]">
+        <Image
+          alt={"Stock icon"}
+          src="/assets/img/stock/orange.svg"
+          width={24}
+          height={24}
+        />
         <Paragraph size="M" weight="Regular">
           Po narudžbi
         </Paragraph>

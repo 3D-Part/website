@@ -7,7 +7,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const allCategories = await categoriesServices.getAllCategories();
   const allProducts = await productsServices.getAllProducts({});
 
-  const data: MetadataRoute.Sitemap = ["", "/shop/all", "/shop/sale"].map(
+  const data: MetadataRoute.Sitemap = ["", "/shop/all", "/shop/sale", "/shop/super-ponuda"].map(
     (path) => ({ url: baseUrl + path, lastModified: new Date() })
   );
   allCategories.rows.map((category) => {

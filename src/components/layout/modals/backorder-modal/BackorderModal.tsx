@@ -11,6 +11,8 @@ type BackorderModalProps = {
   productName: string;
   stock: number;
   requested: number;
+  // made to order: procured from the supplier; otherwise the goods are on their way
+  byOrder?: boolean;
   onConfirm: () => void;
   onClose: () => void;
 };
@@ -20,6 +22,7 @@ const BackorderModal: React.FC<BackorderModalProps> = ({
   productName,
   stock,
   requested,
+  byOrder = false,
   onConfirm,
   onClose,
 }) => {
@@ -62,13 +65,21 @@ const BackorderModal: React.FC<BackorderModalProps> = ({
           >
             <Heading6>
               {stock > 0
-                ? "Nema dovoljno proizvoda na stanju"
+                ? byOrder
+                  ? "Dio količine je po narudžbi"
+                  : "Nema dovoljno proizvoda na stanju"
+                : byOrder
+                ? "Po narudžbi"
                 : "Proizvod trenutno nije na stanju"}
             </Heading6>
             <Paragraph size="M" weight="Regular" className="text-neutral-200">
               {stock > 0
-                ? `Od proizvoda „${productName}" na stanju je ${stock} kom. Preostalih ${missing} kom možete naručiti, ali ćemo ih morati nabaviti od dobavljača, pa će isporuka trajati duže.`
-                : `Proizvod „${productName}" možete naručiti, ali ćemo ga morati nabaviti od dobavljača, pa će isporuka trajati duže.`}
+                ? byOrder
+                  ? `Od proizvoda „${productName}" na stanju je ${stock} kom. Preostalih ${missing} kom nabavićemo od dobavljača, pa će isporuka trajati duže.`
+                  : `Od proizvoda „${productName}" na stanju je ${stock} kom. Preostalih ${missing} kom možete naručiti, a poslaćemo ih čim roba stigne.`
+                : byOrder
+                ? `Proizvod „${productName}" je po narudžbi: nabavićemo ga od dobavljača, pa će isporuka trajati duže.`
+                : `Proizvod „${productName}" trenutno nemamo na stanju. Možete ga naručiti, a poslaćemo ga čim roba stigne.`}
             </Paragraph>
             <div className="flex flex-wrap gap-3 mt-2">
               <Button

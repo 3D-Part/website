@@ -21,6 +21,11 @@ const FiltersSidebar: React.FC<{
     field: "name" | "price" | null;
     setField: (x: "name" | "price" | null) => void;
     isLoading?: boolean;
+    // for the lists of values of the category's attributes
+    categoryId?: string;
+    manufacturerId?: string | null;
+    // how many products the listing shows now, for the button
+    resultCount?: number;
 }> = ({
     hidePriceFilter,
     priceMax,
@@ -34,7 +39,10 @@ const FiltersSidebar: React.FC<{
     filterByProductAttributes,
     setFilterByProductAttributes,
     isLoading,
-    categoryAttributes
+    categoryAttributes,
+    categoryId,
+    manufacturerId,
+    resultCount
 }) => {
         const { isFilteringSidebarVisible, toggleFilteringSidebar } = useUiApi();
         const sidebarRef = useRef<HTMLDivElement>(null);
@@ -74,14 +82,14 @@ const FiltersSidebar: React.FC<{
                 clearTimeout(debounceTimerRef.current);
             }
 
-            // Set new timer to auto-apply filters after 800ms of inactivity
+            // Apply a moment after the last change, no button needed
             debounceTimerRef.current = setTimeout(() => {
                 setPriceMin(hidePriceFilter ? null : pendingPriceMin);
                 setPriceMax(hidePriceFilter ? null : pendingPriceMax);
                 setField(pendingField);
                 setOrder(pendingOrder);
                 setFilterByProductAttributes(pendingFilterByProductAttributes);
-            }, 800);
+            }, 400);
 
             // Cleanup timer on unmount
             return () => {
@@ -205,13 +213,16 @@ const FiltersSidebar: React.FC<{
                                     setOrder={setPendingOrder}
                                 />
 
-                                {/* TODO: Make more filters that are required, need to see how will filters work  */}
                                 <div className="h-px bg-neutral-700"></div>
 
                                 {categoryAttributes && <Categories
                                     categoryAttributes={categoryAttributes}
                                     filterByProductAttributes={pendingFilterByProductAttributes}
                                     setFilterByProductAttributes={setPendingFilterByProductAttributes}
+                                    categoryId={categoryId}
+                                    manufacturerId={manufacturerId}
+                                    priceMin={hidePriceFilter ? null : pendingPriceMin}
+                                    priceMax={hidePriceFilter ? null : pendingPriceMax}
                                 />}
                             </div>
                         </div>
@@ -223,7 +234,7 @@ const FiltersSidebar: React.FC<{
                                     onClick={applyFilters}
                                     className="flex-1 px-4 py-3 bg-primary-500 hover:bg-primary-600 active:bg-primary-700 text-white font-semibold rounded-lg transition-all"
                                 >
-                                    Zatvori
+                                    {typeof resultCount === "number" ? `Prikaži ${resultCount} ${resultCount === 1 ? "proizvod" : "proizvoda"}` : "Zatvori"}
                                 </button>
                                 <button
                                     onClick={resetFilters}

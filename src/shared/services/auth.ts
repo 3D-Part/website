@@ -100,8 +100,9 @@ const verifyAccount = async (body: { code: string }): Promise<any> => {
 };
 
 const resetPassword = async (body: {
+  email: string;
   code: string;
-  password: "";
+  password: string;
 }): Promise<any> => {
   try {
     return await API.post(`${API_BASE_URL}auth/reset-password/`, body);

@@ -6,9 +6,12 @@ import Heading2 from "@/components/common/text/heading/Heading2";
 import Container from "@/components/common/container/Container";
 import { ProductPaginatedInterface } from "../../../../../services/productsServices";
 import { useEffect, useState } from "react";
+import Button from "@/components/common/button/Button";
+import { useRouter } from "next/navigation";
 
 const ProductsRecommended = () => {
   const [data, setData] = useState<any>();
+  const navigate = useRouter();
 
   const getRecommended = async (): Promise<ProductPaginatedInterface> => {
     const payload: any = {};
@@ -49,7 +52,8 @@ const ProductsRecommended = () => {
       {data && data.rows.length !== 0 && (
         <Products
           products={data.rows}
-          className="mt-3 "
+          className="mt-3 w-full"
+          firstChildClass="w-full"
           animationVariants={{
             initial: { opacity: 0, scale: 0.7, x: -30 },
             animate: { opacity: 1, scale: 1, x: 0 },
@@ -57,7 +61,12 @@ const ProductsRecommended = () => {
           reverseDirection={true}
         >
           <div className="flex flex-col w-full px-4 lg:px-0">
-            <Heading2> Super ponuda </Heading2>
+            <div className="flex items-center justify-between w-full">
+              <Heading2 className="text-xl sm:text-2xl">
+                Super ponuda <span className="text-primary-500">({data.rows.length})</span>
+              </Heading2>
+              <Button text="Pogledaj sve" size="M" type="secondary" onClick={() => navigate.push("/shop/super-ponuda")} />
+            </div>
           </div>
         </Products>
       )}

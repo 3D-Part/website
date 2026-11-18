@@ -5,7 +5,8 @@ import Heading2 from "@/components/common/text/heading/Heading2";
 import { orderServices } from "../../../../../services/orderServices";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { notify } from "@/components/common/toast/Toastify";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { gaBeginCheckout, gaItem, gaPurchase } from "@/shared/lib/gtag";
 import { changeIsGlobalLoading } from "@/redux/slices/ui/uiSlice";
 import { useRouter } from "next/navigation";
 import {
@@ -36,6 +37,22 @@ const CheckoutForm = () => {
 
   const isButtonDisabled = buttonDisabled || products.length === 0;
 
+  const gaItems = () =>
+    products.map((product) =>
+      gaItem({
+        id: product.idProduct,
+        name: product.productData.name,
+        price: product.productData.salePrice || product.productData.price,
+        quantity: product.amount,
+      })
+    );
+
+  // once, when the checkout opens with something in the cart
+  useEffect(() => {
+    if (products.length) gaBeginCheckout(gaItems());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     setBUttonDisabled(true);
@@ -58,7 +75,7 @@ const CheckoutForm = () => {
         }
         : {
           companyName: event.target.companyName.value,
-          companyPdv: event.target.companyPdv.value,
+          fullName: event.target.fullName.value,
           email: event.target.email.value,
           phone: event.target.phone.value,
           // country: event.target.country.value,
@@ -78,7 +95,13 @@ const CheckoutForm = () => {
     }
 
     try {
+      const items = gaItems();
       const data = await orderServices.createOrder(payload);
+      gaPurchase(items, {
+        transactionId: data?.orderNumber ?? data?.id,
+        value: data?.total,
+        shipping: data?.shippingPrice,
+      });
       notify("Narudžba kreirana", { type: "success" });
       dispatch(resetCart());
       dispatch(changeSuccessfulOrder(data));

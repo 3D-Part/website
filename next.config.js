@@ -19,6 +19,23 @@ const nextConfig = {
     ].map((hostname) => ({ hostname })),
     unoptimized: true,
   },
+  // a broken link to "/&" was found by Google; it leads home
+  async redirects() {
+    return [{ source: "/&", destination: "/", permanent: true }];
+  },
+  async headers() {
+    return [
+      {
+        // the ready-made profile avatars never change under the same address
+        // (the address carries a version, see src/shared/avatars.ts), so the
+        // browser and any CDN in front can keep them for a year
+        source: "/assets/avatars/:path*",
+        headers: [
+          { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
+        ],
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;

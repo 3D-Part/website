@@ -15,6 +15,8 @@ export type ProductDataType = {
   quantity: number;
   name: string;
   salePrice?: string | null;
+  // made to order: can be ordered above the stock level
+  isBackorder?: boolean;
 };
 
 export type CartProductsType = {

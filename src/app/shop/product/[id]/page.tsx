@@ -38,6 +38,7 @@ export const generateMetadata = async (props: ProductParams): Promise<Metadata> 
   const params = await props.params;
   try {
     const data = await productsServices.getSingleProduct(params.id);
+    if (data.isPublished === false) notFound();
 
     const image = absoluteUrl(
       data.images.length > 0
@@ -78,6 +79,9 @@ export default async function ProductPage(props: ProductParams) {
   const params = await props.params;
   try {
     const data = await productsServices.getSingleProduct(params.id);
+    // a product taken off the site is not shown by its link either, so search
+    // engines drop it instead of indexing a hidden product
+    if (data.isPublished === false) notFound();
 
     const saleOffer = data.productOnSale?.[0]?.discountedPrice;
     const jsonLd: WithContext<Product> = {
@@ -97,10 +101,11 @@ export default async function ProductPage(props: ProductParams) {
         priceCurrency: "BAM",
         price: Number(saleOffer ?? data.price).toFixed(2),
         itemCondition: "https://schema.org/NewCondition",
-        availability: data.isBackorder
-          ? "https://schema.org/PreOrder"
-          : data.quantity > 0
+        // in stock first; made to order counts only once the stock runs out
+        availability: data.quantity > 0
           ? "https://schema.org/InStock"
+          : data.isBackorder
+          ? "https://schema.org/BackOrder"
           : "https://schema.org/OutOfStock",
       },
     };

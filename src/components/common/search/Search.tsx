@@ -17,6 +17,10 @@ interface SearchProps {
   text: string;
   products: ProductInterface[];
   loading: boolean;
+  loadingMore?: boolean;
+  hasMore?: boolean;
+  onLoadMore?: () => void;
+  minLength?: number;
   addToCart: ReturnType<typeof useAddToCart>["addToCart"];
 }
 
@@ -30,6 +34,10 @@ const Search: React.FC<SearchProps> = ({
   products,
   text,
   loading,
+  loadingMore = false,
+  hasMore = false,
+  onLoadMore,
+  minLength = 3,
   addToCart,
 }) => {
   const [searchOpen, setSearchOpen] = useState(false);
@@ -81,10 +89,13 @@ const Search: React.FC<SearchProps> = ({
         )}
       </AnimatePresence>
 
-      {text.length >= 3 && searchOpen ? (
+      {text.trim().length >= minLength && searchOpen ? (
         <SearchResults
           products={products}
           loading={loading}
+          loadingMore={loadingMore}
+          hasMore={hasMore}
+          onLoadMore={onLoadMore}
           addToCart={addToCart}
           search={value}
           closeDropdown={() => {
