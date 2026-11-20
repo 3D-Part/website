@@ -53,6 +53,25 @@ export const cart = createSlice({
       state.points = action.payload
     },
     resetCart: () => initialState,
+    // the prices, sale prices and stock as the shop has them now; a cart can be
+    // days old and must never show a price that no longer (or not yet) applies
+    refreshCartProducts: (
+      state,
+      action: { payload: Record<string, Partial<ProductDataType>> }
+    ) => {
+      let changed = false;
+      state.cartProducts.forEach((item) => {
+        const fresh = action.payload[item.idProduct];
+        if (!fresh) return;
+        (Object.keys(fresh) as (keyof ProductDataType)[]).forEach((key) => {
+          if (fresh[key] !== undefined && item.productData[key] !== fresh[key]) {
+            (item.productData as any)[key] = fresh[key];
+            changed = true;
+          }
+        });
+      });
+      if (changed) saveCartProducts(state.cartProducts);
+    },
     addProductWithAmount: (
       state,
       action: {
@@ -152,6 +171,7 @@ export const {
   decreaseProductWithAmount,
   changeSuccessfulOrder,
   changePromoCodeInCart,
-  changeDiscount
+  changeDiscount,
+  refreshCartProducts,
 } = cart.actions;
 export default cart.reducer;

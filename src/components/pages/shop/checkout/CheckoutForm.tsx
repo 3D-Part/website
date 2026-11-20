@@ -23,9 +23,13 @@ import PickupOptionForm from "./PickupOptionForm";
 import ElectronicOptionForm from "./ElectronicOptionForm";
 import { saveElectronPaymentToLocal } from "@/components/pages/shop/checkout/saveElectronPaymentToLocal";
 import { clearCartProducts } from "@/shared/helper/cartProducts";
+import { useFreshCartPrices } from "@/shared/hooks/useFreshCartPrices";
 
 const CheckoutForm = () => {
   const products = useAppSelector(cartProductsSelector);
+  // the checkout shows and sends today's prices, never the ones from when the
+  // products were put in the cart
+  useFreshCartPrices();
   const promoCode = useAppSelector(promoCodeSelectorAmount);
   const points = useAppSelector(pointsSelector);
 

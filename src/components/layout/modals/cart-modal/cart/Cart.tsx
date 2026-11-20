@@ -37,6 +37,8 @@ import { addProductWithAmount } from "@/redux/slices/cart/cartSlice";
 import Heading6 from "@/components/common/text/heading/Heading6";
 import { CartIcon } from "@/components/common/product/Product";
 import { getSalePrice } from "@/shared/helper/getSalePrice";
+import { useFreshCartPrices } from "@/shared/hooks/useFreshCartPrices";
+import { cartModalVisibleSelector } from "@/redux/slices/cart/cartSelectors";
 
 // Same rule as the API: the products price after sale and tier prices, and the
 // delivery price from Settings -> Delivery unless the products reach the limit
@@ -75,6 +77,9 @@ const Cart = () => {
   const promoCode = useAppSelector(promoCodeSelectorAmount);
   const limitedPromoCode = ((promoCode as any)?.categoryIds?.length ?? 0) > 0;
   const discount = useAppSelector(discountSelector);
+  // today's prices and sales for what is in the cart, each time it opens
+  const cartOpen = useAppSelector(cartModalVisibleSelector);
+  useFreshCartPrices(cartOpen);
   const dispatch = useAppDispatch();
   const pathname = usePathname();
 
