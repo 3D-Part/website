@@ -21,18 +21,7 @@ const YellowStripe = () => {
         }
     }, [text]);
 
-    // sticks right under the header on every screen: the header's height
-    // changes with the screen (search row on mobile), so it is measured
-    const [headerHeight, setHeaderHeight] = useState(0);
-    useEffect(() => {
-        const header = document.querySelector('header');
-        if (!header) return;
-        const measure = () => setHeaderHeight(header.getBoundingClientRect().height);
-        measure();
-        const observer = new ResizeObserver(measure);
-        observer.observe(header);
-        return () => observer.disconnect();
-    }, []);
+    // not sticky: it scrolls away under the (sticky) header
 
     // adjust scroll speed based on text length
     useEffect(() => {
@@ -46,8 +35,7 @@ const YellowStripe = () => {
 
     return (
         <div
-            className="h-10 lg:h-14 bg-secondary-500 text-black w-full overflow-hidden sticky z-40 flex items-center"
-            style={{ top: headerHeight }}
+            className="h-10 lg:h-14 bg-secondary-500 text-black w-full overflow-hidden relative flex items-center"
         >
             <div
                 className="flex whitespace-nowrap text-xl w-full font-bold animate-marquee"

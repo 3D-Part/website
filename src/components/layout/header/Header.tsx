@@ -1,6 +1,7 @@
 import React from "react";
 import HeaderInfo from "./header-info/HeaderInfo";
 import Navbar from "./navbar/Navbar";
+import HeaderShell from "./HeaderShell";
 import { MenuItem } from "@/shared/types";
 
 /**
@@ -25,12 +26,12 @@ const getMenu = async (): Promise<MenuItem[] | null> => {
 const Header = async () => {
   const menu = await getMenu();
   return (
-    <header className="relative z-50 bg-[rgba(17,17,17,0.72)] backdrop-blur-[14px] lg:sticky lg:top-0">
+    <HeaderShell>
       <div className="relative z-20">
         <HeaderInfo />
         <Navbar initialMenu={menu} />
       </div>
-    </header>
+    </HeaderShell>
   );
 };
 
