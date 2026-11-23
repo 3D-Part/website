@@ -28,7 +28,7 @@ const MobileMenu: React.FC<{ links: MenuItem[]; onClick: () => void }> = ({
   }, []);
 
   return (
-    <motion.div className="fixed top-0 left-0 z-[200] w-screen h-screen bg-[rgba(10,10,10,0.97)] py-4 backdrop-blur-xl">
+    <motion.div className="fixed top-0 left-0 z-[200] w-screen h-screen bg-neutral-900 py-4">
       <div className="flex items-center justify-center pb-6 border-b border-solid border-neutral-600">
         <Link
           href={"/"}
