@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { AVATARS, avatarSrc } from "@/shared/avatars";
+import { avatarPicture, useAvatars } from "@/shared/avatars";
 
 type Props = {
   // what the profile keeps in `image`: "avatar:NN", an old address, or empty
@@ -12,6 +12,8 @@ type Props = {
 const AvatarPicker: React.FC<Props> = ({ value, onPick }) => {
   const [open, setOpen] = useState(false);
   const [busy, setBusy] = useState(false);
+  // the ones the admin offers
+  const avatars = useAvatars().filter((avatar) => !avatar.hidden);
 
   const pick = async (image: string | null) => {
     setBusy(true);
@@ -36,7 +38,7 @@ const AvatarPicker: React.FC<Props> = ({ value, onPick }) => {
       {open && (
         <div className="p-4 border rounded-xl border-neutral-700 bg-neutral-800">
           <div className="grid grid-cols-5 gap-3">
-            {AVATARS.map((avatar) => (
+            {avatars.map((avatar) => (
               <button
                 key={avatar.id}
                 type="button"
@@ -50,12 +52,12 @@ const AvatarPicker: React.FC<Props> = ({ value, onPick }) => {
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={avatarSrc(avatar.id)}
+                  src={avatarPicture(avatar)}
                   alt={avatar.name}
                   width={56}
                   height={56}
                   loading="lazy"
-                  className="w-14 h-14 rounded-full"
+                  className="object-cover w-14 h-14 rounded-full"
                 />
               </button>
             ))}

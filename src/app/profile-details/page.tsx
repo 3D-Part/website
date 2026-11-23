@@ -18,7 +18,7 @@ import { userService } from "@/shared/services/userService";
 import TierSummary from "@/components/common/tier-badge/TierSummary";
 import TierFrame from "@/components/common/tier-badge/TierFrame";
 import AvatarPicker from "@/components/common/tier-badge/AvatarPicker";
-import { avatarSrc } from "@/shared/avatars";
+import { avatarSrc, useAvatars } from "@/shared/avatars";
 import { TierInfo } from "@/shared/tiers";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
@@ -41,6 +41,7 @@ const ProfilePage: FC = () => {
 
   const [tierInfo, setTierInfo] = useState<TierInfo | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const avatars = useAvatars();
   const isVerified = useAppSelector(isUserVerifiedSelector);
 
   const dispatch = useAppDispatch();
@@ -158,7 +159,7 @@ const ProfilePage: FC = () => {
               <div className="flex flex-col items-center gap-9 lg:items-start">
                 <Heading2 className="">Uredi profil</Heading2>
                 <div className="flex flex-col items-center gap-2 lg:items-start">
-                  <TierFrame photo={avatarSrc(userData.image)} info={tierInfo} />
+                  <TierFrame photo={avatarSrc(userData.image, avatars)} info={tierInfo} />
                   <TierSummary info={tierInfo} />
                   <AvatarPicker
                     value={userData.image}
