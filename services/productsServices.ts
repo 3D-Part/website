@@ -243,9 +243,10 @@ const getMostSold = async (): Promise<ProductPaginatedInterface> => {
   const params = new URLSearchParams({ ...payload }).toString();
 
   try {
+    // a short cache, so taking products out of the group in the admin shows soon
     const res = await fetch(`${defaultRoute}?${params}`, {
       method: "GET",
-      next: { revalidate: revalidateTime },
+      next: { revalidate: 60 },
     });
     const data = await res.json();
     if ("key" in data && "message" in data) {

@@ -156,7 +156,7 @@ const Cart = () => {
     const fetchRecommended = async () => {
       try {
         const res = await fetch(
-          "https://api.3dpartshop.com/shop/products/shopping-cart-recommended",
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}shop/products/shopping-cart-recommended`,
           { method: "GET", headers: { accept: "application/json" } }
         );
         if (!res.ok) return;

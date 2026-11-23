@@ -4,10 +4,12 @@ import Container from "@/components/common/container/Container";
 import { productsServices } from "../../../../../services/productsServices";
 
 const ProductsBestSelling = async () => {
-  const data = await productsServices.getMostSold();
+  // the section is left out when the "Most sold" group is empty or cannot be loaded
+  const data = await productsServices.getMostSold().catch(() => null);
+  if (!data?.rows?.length) return null;
 
   const list = data.rows.map((x) => {
-    return { ...x, salePrice: x.productOnSale[0]?.discountedPrice };
+    return { ...x, salePrice: x.productOnSale?.[0]?.discountedPrice };
   });
 
   return (

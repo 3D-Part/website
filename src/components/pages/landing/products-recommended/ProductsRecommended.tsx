@@ -37,15 +37,18 @@ const ProductsRecommended = () => {
   };
 
   const fetchData = async () => {
-    const resData = await getRecommended();
-
-    setData(resData)
+    try {
+      setData(await getRecommended());
+    } catch {
+      setData(null);
+    }
   }
   useEffect(() => {
     fetchData();
   }, [])
 
-  if (!data) return null;
+  // no empty section (and no empty gap) when the "Super offer" group is empty
+  if (!data?.rows?.length) return null;
 
   return (
     <Container className="w-full mb-[60px] lg:mb-24 lg:px-9">
