@@ -98,7 +98,11 @@ const Cart = () => {
   );
   // Same as the API: promo code and customer discount come off the products
   // together, and the delivery is added after them.
-  const promoPercent = promoCode ? Number(promoCode.discountPercentage) || 0 : 0;
+  // A code for some categories only is worked out by the API on the order
+  // (only those products get it), so the cart does not take it off the
+  // whole total; the note under the sum says so.
+  const promoPercent =
+    promoCode && !limitedPromoCode ? Number(promoCode.discountPercentage) || 0 : 0;
   const total =
     price * (1 - (promoPercent + (Number(discount) || 0)) / 100) + post;
   const { status } = useSession();
@@ -112,7 +116,9 @@ const Cart = () => {
       const res = await couponsService.fetchCoupons();
       let found = false;
       res.rows.forEach((row) => {
-        if (row.code === code && !row.userPromotionCode[0].isRedeemed) {
+        // a code that has not started yet is refused at checkout as well
+        const started = !row.startsAt || new Date(row.startsAt) <= new Date();
+        if (row.code === code && started && !row.userPromotionCode?.[0]?.isRedeemed) {
           dispatch(changePromoCodeInCart(row));
           found = true;
         } else {
