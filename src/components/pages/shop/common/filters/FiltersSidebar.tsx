@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import Price from "./price/Price";
-import Sorter from "./sorter/Sorter";
 import Categories from "./categories/Categories";
 import useUiApi from "@/redux/api/useUiApi";
 import { CategoryAttributesInterface } from "@/shared/interfaces/categoryInterface";
@@ -14,12 +13,13 @@ const FiltersSidebar: React.FC<{
     setPriceMin: (x: number | null) => void;
     priceMax: number | null;
     setPriceMax: (x: number | null) => void;
-    order: "ASC" | "DESC" | null;
-    setOrder: (x: "ASC" | "DESC" | null) => void;
+    // the sorting sits next to the Filteri button (FilterHeader), not here
+    order?: "ASC" | "DESC" | null;
+    setOrder?: (x: "ASC" | "DESC" | null) => void;
     filterByProductAttributes: string | undefined;
     setFilterByProductAttributes: (x: string | undefined) => void;
-    field: "name" | "price" | null;
-    setField: (x: "name" | "price" | null) => void;
+    field?: "name" | "price" | null;
+    setField?: (x: "name" | "price" | null) => void;
     isLoading?: boolean;
     // for the lists of values of the category's attributes
     categoryId?: string;
@@ -32,17 +32,12 @@ const FiltersSidebar: React.FC<{
     priceMin,
     setPriceMax,
     setPriceMin,
-    field,
-    order,
-    setField,
-    setOrder,
     filterByProductAttributes,
     setFilterByProductAttributes,
     isLoading,
     categoryAttributes,
     categoryId,
     manufacturerId,
-    resultCount
 }) => {
         const { isFilteringSidebarVisible, toggleFilteringSidebar } = useUiApi();
         const sidebarRef = useRef<HTMLDivElement>(null);
@@ -51,8 +46,6 @@ const FiltersSidebar: React.FC<{
         // Staged/pending filter states
         const [pendingPriceMin, setPendingPriceMin] = useState<number | null>(priceMin);
         const [pendingPriceMax, setPendingPriceMax] = useState<number | null>(priceMax);
-        const [pendingField, setPendingField] = useState<"name" | "price" | null>(field);
-        const [pendingOrder, setPendingOrder] = useState<"ASC" | "DESC" | null>(order);
         const [pendingFilterByProductAttributes, setPendingFilterByProductAttributes] = useState<string | undefined>(filterByProductAttributes);
 
         // Sync pending states when sidebar opens
@@ -60,17 +53,13 @@ const FiltersSidebar: React.FC<{
             if (isFilteringSidebarVisible) {
                 setPendingPriceMin(hidePriceFilter ? null : priceMin);
                 setPendingPriceMax(hidePriceFilter ? null : priceMax);
-                setPendingField(field);
-                setPendingOrder(order);
                 setPendingFilterByProductAttributes(filterByProductAttributes);
             }
-        }, [isFilteringSidebarVisible, hidePriceFilter, priceMin, priceMax, field, order, filterByProductAttributes]);
+        }, [isFilteringSidebarVisible, hidePriceFilter, priceMin, priceMax, filterByProductAttributes]);
 
         const applyFilters = () => {
             setPriceMin(hidePriceFilter ? null : pendingPriceMin);
             setPriceMax(hidePriceFilter ? null : pendingPriceMax);
-            setField(pendingField);
-            setOrder(pendingOrder);
             setFilterByProductAttributes(pendingFilterByProductAttributes);
             toggleFilteringSidebar(false);
         };
@@ -86,8 +75,6 @@ const FiltersSidebar: React.FC<{
             debounceTimerRef.current = setTimeout(() => {
                 setPriceMin(hidePriceFilter ? null : pendingPriceMin);
                 setPriceMax(hidePriceFilter ? null : pendingPriceMax);
-                setField(pendingField);
-                setOrder(pendingOrder);
                 setFilterByProductAttributes(pendingFilterByProductAttributes);
             }, 400);
 
@@ -97,18 +84,14 @@ const FiltersSidebar: React.FC<{
                     clearTimeout(debounceTimerRef.current);
                 }
             };
-        }, [hidePriceFilter, pendingPriceMin, pendingPriceMax, pendingField, pendingOrder, pendingFilterByProductAttributes]);
+        }, [hidePriceFilter, pendingPriceMin, pendingPriceMax, pendingFilterByProductAttributes]);
 
         const resetFilters = () => {
             setPendingPriceMin(null);
             setPendingPriceMax(null);
-            setPendingField(null);
-            setPendingOrder(null);
             setPendingFilterByProductAttributes(undefined);
             setPriceMin(null);
             setPriceMax(null);
-            setField(null);
-            setOrder(null);
             setFilterByProductAttributes(undefined);
         };
 
@@ -147,7 +130,7 @@ const FiltersSidebar: React.FC<{
                 {/* Sidebar */}
                 <div
                     ref={sidebarRef}
-                    className={`fixed top-0 left-0 h-full w-80 md:w-96 bg-neutral-900 z-50 shadow-2xl transform transition-transform duration-300 ease-in-out border-r border-neutral-700 ${isFilteringSidebarVisible ? "translate-x-0" : "-translate-x-full"
+                    className={`fixed top-0 left-0 h-full w-full sm:w-96 bg-neutral-900 z-50 shadow-2xl transform transition-transform duration-300 ease-in-out border-r border-neutral-700 ${isFilteringSidebarVisible ? "translate-x-0" : "-translate-x-full"
                         }`}
                 >
                     <div className="flex flex-col h-full">
@@ -206,15 +189,6 @@ const FiltersSidebar: React.FC<{
                                     </>
                                 )}
 
-                                <Sorter
-                                    field={pendingField}
-                                    order={pendingOrder}
-                                    setField={setPendingField}
-                                    setOrder={setPendingOrder}
-                                />
-
-                                <div className="h-px bg-neutral-700"></div>
-
                                 {categoryAttributes && <Categories
                                     categoryAttributes={categoryAttributes}
                                     filterByProductAttributes={pendingFilterByProductAttributes}
@@ -234,7 +208,7 @@ const FiltersSidebar: React.FC<{
                                     onClick={applyFilters}
                                     className="flex-1 px-4 py-3 bg-primary-500 hover:bg-primary-600 active:bg-primary-700 text-white font-semibold rounded-lg transition-all"
                                 >
-                                    {typeof resultCount === "number" ? `Prikaži ${resultCount} ${resultCount === 1 ? "proizvod" : "proizvoda"}` : "Zatvori"}
+                                    Primijeni
                                 </button>
                                 <button
                                     onClick={resetFilters}

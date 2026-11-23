@@ -19,15 +19,16 @@ const MobileMenu: React.FC<{ links: MenuItem[]; onClick: () => void }> = ({
   const router = useRouter();
 
   useEffect(() => {
-    document.body.style.overflow = "hidden";
+    // the page under the menu does not scroll (globals.css: body.overflow-hidden)
+    document.body.classList.add("overflow-hidden");
 
     return () => {
-      document.body.style.overflow = "auto";
+      document.body.classList.remove("overflow-hidden");
     };
   }, []);
 
   return (
-    <motion.div className="fixed top-0 left-0 z-[200] w-screen h-screen bg-[rgba(0,0,0,0.8)] py-4 backdrop-blur">
+    <motion.div className="fixed top-0 left-0 z-[200] w-screen h-screen bg-neutral-950/95 py-4 backdrop-blur-xl">
       <div className="flex items-center justify-center pb-6 border-b border-solid border-neutral-600">
         <Link
           href={"/"}

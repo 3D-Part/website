@@ -189,7 +189,7 @@ const CategoryProducts: React.FC<{ categoryAttributes: Array<CategoryAttributesI
         resultCount={data.count}
       />
 
-      <FilterHeader
+      <FilterHeader sort={{ field, order, setField, setOrder }}
         title="Proizvodi"
         count={data.count}
         activeCount={parseFilters(filterByProductAttributes).length + (priceMin !== null || priceMax !== null ? 1 : 0)}

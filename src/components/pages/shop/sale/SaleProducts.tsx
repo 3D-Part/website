@@ -218,7 +218,7 @@ const SaleProducts = () => {
                 setOrder={setOrder}
             />
 
-            <FilterHeader title={saleQuery ? "Proizvodi na akciji" : "Proizvodi"} count={data.count} />
+            <FilterHeader sort={{ field, order, setField, setOrder }} title={saleQuery ? "Proizvodi na akciji" : "Proizvodi"} count={data.count} />
 
             <ProductGrid productList={data.rows} />
             {isLoading && <Spinner />}

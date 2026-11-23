@@ -341,3 +341,11 @@ input[type="number"]::-webkit-outer-spin-button {
 .product-card-price {
   font-weight: 700;
 }
+/* An open menu, cart or filters: the page under it does not scroll. On phones
+   the page scrolls on <html>, so it is locked too, and a scroll that reaches
+   the end of the panel does not carry on to the page. */
+html:has(> body.overflow-hidden),
+body.overflow-hidden {
+  overflow: hidden;
+  overscroll-behavior: none;
+}

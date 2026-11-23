@@ -7,7 +7,9 @@ const Sorter: React.FC<{
   setOrder: (x: "ASC" | "DESC" | null) => void;
   field: "name" | "price" | null;
   setField: (x: "name" | "price" | null) => void;
-}> = ({ field, order, setField, setOrder }) => {
+  // without the "Sortiraj po" label, as wide as its place (next to Filteri)
+  compact?: boolean;
+}> = ({ field, order, setField, setOrder, compact }) => {
   const selected =
     field === "price" && order === "DESC"
       ? "1"
@@ -21,9 +23,11 @@ const Sorter: React.FC<{
 
   return (
     <div>
-      <Paragraph size="L" weight="Bold" className="mb-1">
-        Sortiraj po
-      </Paragraph>
+      {!compact && (
+        <Paragraph size="L" weight="Bold" className="mb-1">
+          Sortiraj po
+        </Paragraph>
+      )}
 
       <select
         onChange={(event) => {
@@ -46,7 +50,8 @@ const Sorter: React.FC<{
             setField("name");
           }
         }}
-        className="bg-neutral-700 h-8 w-[174px] rounded-lg px-3 focus:ring-primary-600 focus:border-primary-400 block dark:bg-black dark:border-black dark:placeholder-bg-success-400 dark:text-white dark:focus:ring-error-400 dark:focus:border-success-100 select"
+        aria-label="Sortiraj po"
+        className={`${compact ? "h-10 w-full md:w-[190px]" : "h-8 w-[174px]"} bg-neutral-700 rounded-lg px-3 focus:ring-primary-600 focus:border-primary-400 block dark:bg-black dark:border-black dark:placeholder-bg-success-400 dark:text-white dark:focus:ring-error-400 dark:focus:border-success-100 select`}
         value={selected}
       >
         <option value={"0"}>Najpopularnije</option>

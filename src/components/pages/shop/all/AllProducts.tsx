@@ -206,7 +206,7 @@ const AllProducts = ({ queryParams }: { queryParams: any }) => {
                 setField={setField}
                 setOrder={setOrder}
             />
-            <FilterHeader title="Proizvodi" count={data.count} />
+            <FilterHeader sort={{ field, order, setField, setOrder }} title="Proizvodi" count={data.count} />
 
             <ProductGrid productList={data.rows} />
             {isLoading && <Spinner />}

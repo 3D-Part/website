@@ -2,6 +2,14 @@
 
 import Heading2 from "@/components/common/text/heading/Heading2";
 import useUiApi from "@/redux/api/useUiApi";
+import Sorter from "./filters/sorter/Sorter";
+
+type Sort = {
+    field: "name" | "price" | null;
+    order: "ASC" | "DESC" | null;
+    setField: (x: "name" | "price" | null) => void;
+    setOrder: (x: "ASC" | "DESC" | null) => void;
+};
 
 const FilterHeader: React.FC<{
     title: string;
@@ -10,23 +18,30 @@ const FilterHeader: React.FC<{
     showFilters?: boolean;
     // how many filters are on, shown on the button
     activeCount?: number;
-}> = ({ title, count, className, showFilters = true, activeCount = 0 }) => {
+    // the sorting, next to the Filteri button; on phones it takes the title's place
+    sort?: Sort;
+}> = ({ title, count, className, showFilters = true, activeCount = 0, sort }) => {
     const { toggleFilteringSidebar } = useUiApi();
 
     return (
-        <div className={`flex items-center justify-between my-8 w-full flex-nowrap ${className || ""}`}>
-            <div className="flex-1 min-w-0">
+        <div className={`flex items-center justify-between gap-3 my-8 w-full flex-nowrap ${className || ""}`}>
+            <div className={`flex-1 min-w-0 ${sort ? "hidden md:block" : ""}`}>
                 <Heading2 className="my-0 truncate">
                     {title} {typeof count === "number" && (
                         <span className="text-primary-500">({count})</span>
                     )}
                 </Heading2>
             </div>
+            {sort && (
+                <div className="flex-1 min-w-0 md:flex-none">
+                    <Sorter {...sort} compact />
+                </div>
+            )}
             {showFilters && (
                 <button
                     type="button"
                     onClick={() => toggleFilteringSidebar(true)}
-                    className="flex items-center gap-2 px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-colors whitespace-nowrap shrink-0 ml-4"
+                    className="flex items-center gap-2 px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-colors whitespace-nowrap shrink-0"
                 >
                     <svg
                         className="w-5 h-5"

@@ -25,7 +25,7 @@ const getMenu = async (): Promise<MenuItem[] | null> => {
 const Header = async () => {
   const menu = await getMenu();
   return (
-    <header className="sticky top-0 z-50 bg-[rgba(17,17,17,0.72)] backdrop-blur-[14px]">
+    <header className="relative z-50 bg-[rgba(17,17,17,0.72)] backdrop-blur-[14px] lg:sticky lg:top-0">
       <div className="relative z-20">
         <HeaderInfo />
         <Navbar initialMenu={menu} />
