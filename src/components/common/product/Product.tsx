@@ -16,6 +16,7 @@ import FavoriteButton from "@/components/common/product/FavoriteButton";
 import ProductIcons from "@/components/common/product/ProductIcons";
 import Ribbon from "../ribbon/ribbon";
 import { getSalePrice } from "@/shared/helper/getSalePrice";
+import { highlightFrame } from "@/shared/helper/highlightFrame";
 
 interface ProductInterfaceComponent extends ProductInterface {
   className?: string;
@@ -35,6 +36,7 @@ const Product: React.FC<ProductInterfaceComponent> = ({
   productOnSale,
   isBackorder,
   icons,
+  highlightColor,
 }) => {
   const salePrice = getSalePrice({ salePrice: givenSalePrice, productOnSale }) ?? undefined;
   const dispatch = useAppDispatch();
@@ -47,6 +49,7 @@ const Product: React.FC<ProductInterfaceComponent> = ({
     <Link href={"/shop/product/" + id} prefetch>
       <div
         className={`cursor-pointer bg-neutral-800 p-[10px] rounded-xl max-w-[220px] max-h-[460px] ${className}`}
+        style={highlightFrame(highlightColor)}
       >
         <div
           className={`overflow-hidden aspect-square rounded-xl w-[${imageWidth}]`}

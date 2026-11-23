@@ -22,6 +22,8 @@ export interface ProductInterface {
   salePrice?: string;
   isBackorder?: boolean;
   icons?: string[];
+  // the frame color of the product's card (#rrggbb), set in the admin
+  highlightColor?: string | null;
   keywords?: string[];
   productOnSale: { discountedPrice: string }[];
   // stock: number;

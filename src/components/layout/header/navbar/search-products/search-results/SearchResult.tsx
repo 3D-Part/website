@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { useAddToCart } from "@/shared/hooks/useAddToCart";
+import { highlightFrame } from "@/shared/helper/highlightFrame";
 
 const SearchResult: React.FC<{
   product: ProductInterface;
@@ -20,7 +21,14 @@ const SearchResult: React.FC<{
       }}
       prefetch
     >
-      <div className="flex gap-4 p-2 border-[1px] border-solid border-primary-500 rounded-lg cursor-pointer items-center bg-ne">
+      <div
+        className="flex gap-4 p-2 border-[1px] border-solid border-primary-500 rounded-lg cursor-pointer items-center bg-ne"
+        style={
+          product.highlightColor
+            ? { ...highlightFrame(product.highlightColor), borderColor: product.highlightColor }
+            : undefined
+        }
+      >
         <div className="relative overflow-hidden rounded-lg w-28 h-28 md:w-16 md:h-16 ">
           <Image
             alt={product.name}
