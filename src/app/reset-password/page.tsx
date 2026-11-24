@@ -6,16 +6,25 @@ import PasswordResetFlow from "@/components/layout/modals/auth-modal/PasswordRes
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 
 /**
  * Change of the password: the code goes to the customer's e-mail and is typed
  * here. A logged in customer does not type the e-mail; anyone else does.
  * (Links with a token from old e-mails land here too and just start over.)
+ * The e-mail the staff send has a link with the address and code=sent: the
+ * page then opens where the code from that e-mail is typed.
  */
 const PasswordPage: FC = () => {
   const { data: session, status } = useSession();
   const [done, setDone] = useState(false);
+  const [fromMail, setFromMail] = useState<{ email?: string; codeSent: boolean }>({ codeSent: false });
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const email = params.get("email")?.trim();
+    setFromMail({ email: email || undefined, codeSent: !!email && params.get("code") === "sent" });
+  }, []);
 
   if (status === "loading") {
     return (
@@ -56,7 +65,8 @@ const PasswordPage: FC = () => {
             </div>
           ) : (
             <PasswordResetFlow
-              email={loggedIn ? session?.user?.email ?? undefined : undefined}
+              email={loggedIn ? session?.user?.email ?? undefined : fromMail.email}
+              codeSent={fromMail.codeSent}
               onDone={() => setDone(true)}
             />
           )}

@@ -14,6 +14,9 @@ type Props = {
   onDone: () => void;
   // "back": to the login, when this is inside the login window
   onBack?: () => void;
+  // the code is already in the customer's mail (sent by the shop's staff):
+  // start where it is typed
+  codeSent?: boolean;
 };
 
 const field =
@@ -39,7 +42,7 @@ const messageOf = (error: any, fallback: string) => {
  * 6 digit code is sent to it, and the code is typed here together with the
  * new password. Used in the login window and in the profile settings.
  */
-const PasswordResetFlow: FC<Props> = ({ email: knownEmail, onDone, onBack }) => {
+const PasswordResetFlow: FC<Props> = ({ email: knownEmail, onDone, onBack, codeSent }) => {
   const [step, setStep] = useState<"email" | "code">("email");
   const [email, setEmail] = useState(knownEmail ?? "");
   const [code, setCode] = useState("");
@@ -51,7 +54,8 @@ const PasswordResetFlow: FC<Props> = ({ email: knownEmail, onDone, onBack }) => 
 
   useEffect(() => {
     if (knownEmail) setEmail(knownEmail);
-  }, [knownEmail]);
+    if (knownEmail && codeSent) setStep("code");
+  }, [knownEmail, codeSent]);
 
   // the seconds until a new code can be asked for
   useEffect(() => {
