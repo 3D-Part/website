@@ -17,6 +17,7 @@ import { useIsMobileSlider, useIsTablet } from "@/shared/hooks/useMediaQuerry";
 import { PageBannerImage, usePageImages } from "@/components/common/page-banner/PageBanner";
 import Image from "next/image";
 import Link from "next/link";
+import ContentBannerSlide, { useContentBanners } from "./ContentBannerSlide";
 
 const azurefilmId = "03cbbd90-3dab-11ee-bb4e-994af83111f0";
 
@@ -29,6 +30,7 @@ const Slider = () => {
   const isTablet = useIsTablet();
   const isMobileSlider = useIsMobileSlider();
   const pageImages = usePageImages("home");
+  const contentBanners = useContentBanners();
 
   return (
     <Container className="w-full px-4 py-6 lg:px-9 lg:py-8 landing_slider">
@@ -133,6 +135,12 @@ const Slider = () => {
         {pageImages.map((image) => (
           <SwiperSlide key={image.id}>
             <PageBannerImage image={image} />
+          </SwiperSlide>
+        ))}
+
+        {contentBanners.map((banner) => (
+          <SwiperSlide key={banner.id}>
+            <ContentBannerSlide banner={banner} />
           </SwiperSlide>
         ))}
 
