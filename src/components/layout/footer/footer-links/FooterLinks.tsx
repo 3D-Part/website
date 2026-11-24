@@ -7,7 +7,9 @@ import useSettingsApi from "@/redux/api/useSettingsApi";
 import Link from "next/link";
 import React from "react";
 
-const FooterLinks = () => {
+type FooterInfoPage = { title: string; slug: string };
+
+const FooterLinks: React.FC<{ infoPages?: FooterInfoPage[] }> = ({ infoPages = [] }) => {
   const { settings } = useSettingsApi();
 
 
@@ -43,15 +45,28 @@ const FooterLinks = () => {
       </div>
       <div className="flex flex-col gap:4 lg:flex lg:mx-auto">
         <Heading5 className="mb-2">Podrška</Heading5>
-        <Paragraph size="M" weight="Regular" className="py-1 text-neutral-200">
-          Česta pitanja
-        </Paragraph>
-        <Paragraph size="M" weight="Regular" className="py-1 text-neutral-200">
-          Metode plaćanja
-        </Paragraph>
-        <Paragraph size="M" weight="Regular" className="py-1 text-neutral-200">
-          Uslovi korišćenja
-        </Paragraph>
+        {/* the info pages of the admin; the old placeholders until there are any */}
+        {infoPages.length > 0 ? (
+          infoPages.map((page) => (
+            <Paragraph key={page.slug} size="M" weight="Regular" className="py-1 text-neutral-200">
+              <Link href={`/info/${page.slug}`} className="hover:text-white">
+                {page.title}
+              </Link>
+            </Paragraph>
+          ))
+        ) : (
+          <>
+            <Paragraph size="M" weight="Regular" className="py-1 text-neutral-200">
+              Česta pitanja
+            </Paragraph>
+            <Paragraph size="M" weight="Regular" className="py-1 text-neutral-200">
+              Metode plaćanja
+            </Paragraph>
+            <Paragraph size="M" weight="Regular" className="py-1 text-neutral-200">
+              Uslovi korišćenja
+            </Paragraph>
+          </>
+        )}
       </div>
       <div className="flex flex-col col-span-2 gap-4 lg:flex lg:mx-auto lg:col-span-1">
         <Heading5 className="mb-2">Kontakt</Heading5>

@@ -361,3 +361,20 @@ body.overflow-hidden {
     transform: translateY(0);
   }
 }
+
+/* Info pages (/info/...): the HTML of the admin's editor (Quill) */
+.info-page h2 { font-size: 1.75rem; line-height: 2.25rem; font-weight: 700; color: #fff; margin: 2rem 0 0.75rem; }
+.info-page h3 { font-size: 1.35rem; line-height: 1.85rem; font-weight: 600; color: #fff; margin: 1.5rem 0 0.5rem; }
+.info-page p { margin: 0 0 1rem; line-height: 1.7; }
+.info-page ul, .info-page ol { margin: 0 0 1rem 1.5rem; line-height: 1.7; }
+.info-page ul, .info-page ol li[data-list="bullet"] { list-style: disc; }
+.info-page ol, .info-page ol li[data-list="ordered"] { list-style: decimal; }
+.info-page li { padding-left: 0.25rem; }
+.info-page a { color: #60a5fa; text-decoration: underline; }
+.info-page strong { color: #fff; }
+.info-page .ql-align-center { text-align: center; }
+.info-page .ql-align-right { text-align: right; }
+.info-page .ql-size-small { font-size: 0.85em; }
+.info-page .ql-size-large { font-size: 1.4em; }
+.info-page .ql-size-huge { font-size: 2em; }
+.info-page .ql-ui { display: none; }

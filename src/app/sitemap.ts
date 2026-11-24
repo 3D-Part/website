@@ -1,6 +1,7 @@
 import { MetadataRoute } from "next";
 import { categoriesServices } from "../../services/categoriesServices";
 import { productsServices } from "../../services/productsServices";
+import { getInfoPages } from "@/shared/services/infoPages";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://www.3dpartshop.com";
@@ -20,6 +21,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     data.push({
       url: baseUrl + "/shop/product/" + product.id,
       lastModified: new Date(product.updatedAt),
+    });
+  });
+
+  (await getInfoPages()).forEach((page) => {
+    data.push({
+      url: baseUrl + "/info/" + page.slug,
+      lastModified: new Date(page.updatedAt),
     });
   });
 
