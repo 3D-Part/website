@@ -1,4 +1,8 @@
 // The customer tier as the API sends it with the profile (GET users/profile)
+
+/** A category the tier gives its discount on, with its own percent. */
+export type TierCategory = { categoryId: string; name: string; discount: number };
+
 export type TierLevel = {
   id: string;
   name: string;
@@ -7,6 +11,8 @@ export type TierLevel = {
   color: string;
   // the SVG of the tier's badge, null for none
   badge?: string | null;
+  // empty: the discount is on every product
+  categories?: TierCategory[];
 };
 
 export type TierInfo = {
@@ -17,6 +23,10 @@ export type TierInfo = {
   badge?: string | null;
   spend: number;
   period: "all" | "12m";
+  // the day the spending is counted from, null for since the beginning
+  since?: string | null;
+  // empty: the discount is on every product; else only on these categories
+  categories?: TierCategory[];
   next: { name: string; discount: number; threshold: number; remaining: number } | null;
   tiers: TierLevel[];
 };

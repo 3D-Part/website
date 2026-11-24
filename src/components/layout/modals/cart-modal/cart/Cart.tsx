@@ -39,6 +39,7 @@ import { CartIcon } from "@/components/common/product/Product";
 import { getSalePrice } from "@/shared/helper/getSalePrice";
 import { useFreshCartPrices } from "@/shared/hooks/useFreshCartPrices";
 import { cartModalVisibleSelector } from "@/redux/slices/cart/cartSelectors";
+import { tierLinePrice, useTierDiscounts } from "@/shared/hooks/useTierDiscounts";
 
 // Same rule as the API: the products price after sale and tier prices, and the
 // delivery price from Settings -> Delivery unless the products reach the limit
@@ -46,7 +47,8 @@ import { cartModalVisibleSelector } from "@/redux/slices/cart/cartSelectors";
 const calculatePriceAndPost = (
   cart: CartProductsType[],
   delivery: { cost: number; freeDeliveryLimit: number },
-  tierDiscount = 0
+  // the tier percent of each product, by id
+  tierDiscounts: Record<string, number> = {}
 ) => {
   let price = 0;
 
@@ -55,9 +57,10 @@ const calculatePriceAndPost = (
       price +
       x.amount *
       // same rule as the API: the better of the sale price and the tier price
-      Math.min(
-        Number(x.productData.salePrice || x.productData.price),
-        Number(x.productData.price) * (1 - tierDiscount / 100)
+      tierLinePrice(
+        Number(x.productData.price),
+        x.productData.salePrice ? Number(x.productData.salePrice) : null,
+        tierDiscounts[x.idProduct] ?? 0
       );
   });
 
@@ -90,11 +93,16 @@ const Cart = () => {
 
   const inputRef = useRef<HTMLInputElement>(null);
 
+  // the discount of the customer's tier on each product, as the API works it
+  // out: a tier limited to some categories gives only on those
+  const tierDiscounts = useTierDiscounts(
+    userData?.tierInfo,
+    cart.map((item) => item.idProduct)
+  );
   const { price, post } = calculatePriceAndPost(
     cart,
     settings.settings.delivery,
-    // the discount of the customer's tier, as the API worked it out
-    Number(userData?.tierInfo?.discount) || 0
+    tierDiscounts
   );
   // Same as the API: promo code and customer discount come off the products
   // together, and the delivery is added after them.
@@ -212,7 +220,12 @@ const Cart = () => {
       <div className="flex-1 my-2 overflow-x-hidden overflow-y-auto  lg:my-4">
         <AnimatePresence>
           {cart.map((product) => {
-            return <CartProducts product={product} key={product.idProduct} />;
+            return <CartProducts
+                product={product}
+                key={product.idProduct}
+                tierDiscount={tierDiscounts[product.idProduct] ?? 0}
+                tierName={userData?.tierInfo?.name ?? null}
+              />;
           })}
           {recommended && recommended.length > 0 && (
             <div className="mt-3">

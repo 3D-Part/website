@@ -17,6 +17,11 @@ export type SuccessfulOrderType = {
     name: string;
     quantity: number;
     price: number;
+    total?: number;
+    // set when the customer's tier made the line cheaper: the price without it
+    regularPrice?: number;
+    // the tier percent the line got
+    tierDiscount?: number;
   }[];
   price: number;
   shippingPrice: number;

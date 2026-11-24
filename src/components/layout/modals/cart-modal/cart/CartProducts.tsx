@@ -10,10 +10,21 @@ import { motion } from "framer-motion";
 import Heading6 from "@/components/common/text/heading/Heading6";
 import Paragraph from "@/components/common/text/paragraph/Paragraph";
 import { useAddToCart } from "@/shared/hooks/useAddToCart";
+import { tierLinePrice } from "@/shared/hooks/useTierDiscounts";
 
-const CartProducts: React.FC<{ product: CartProductsType }> = ({ product }) => {
+const CartProducts: React.FC<{
+  product: CartProductsType;
+  // the customer's tier percent on this product, 0 for none
+  tierDiscount?: number;
+  tierName?: string | null;
+}> = ({ product, tierDiscount = 0, tierName = null }) => {
   const dispatch = useAppDispatch();
   const { addToCart, modal: backorderModal } = useAddToCart();
+  const regular = Number(product.productData.price);
+  const sale = product.productData.salePrice ? Number(product.productData.salePrice) : null;
+  const unitPrice = tierLinePrice(regular, sale, tierDiscount);
+  // the tier made this product cheaper than its sale or regular price
+  const byTier = tierDiscount > 0 && unitPrice < (sale ?? regular);
 
   return (
     <motion.div
@@ -107,14 +118,21 @@ const CartProducts: React.FC<{ product: CartProductsType }> = ({ product }) => {
               </motion.svg>
             </motion.button>
           </div>
-          <p className="text-white  text-[16px] lg:text-[20px] font-exo2 font-semibold">{`${(
-            product.amount *
-            Number(
-              product.productData.salePrice
-                ? product.productData.salePrice
-                : product.productData.price
-            )
-          ).toFixed(2)} KM`}</p>
+          <div className="text-right">
+            {byTier && (
+              <p className="text-xs text-neutral-400 line-through font-exo2">
+                {`${(product.amount * (sale ?? regular)).toFixed(2)} KM`}
+              </p>
+            )}
+            <p className={`text-[16px] lg:text-[20px] font-exo2 font-semibold ${byTier ? "text-success-500" : "text-white"}`}>
+              {`${(product.amount * unitPrice).toFixed(2)} KM`}
+            </p>
+            {byTier && (
+              <p className="text-[11px] text-success-500">
+                {tierName ? `${tierName} ` : ""}-{tierDiscount}%
+              </p>
+            )}
+          </div>
         </div>
       </div>
       {backorderModal}

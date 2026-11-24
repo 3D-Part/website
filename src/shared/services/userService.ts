@@ -101,4 +101,17 @@ const updateAvatar = async (image: string | null) => {
   return API.put<{ image: string | null }, unknown>("users/update-avatar/", { image });
 };
 
-export const userService = { getUserProfile, updateProfile, fetchUserProfile, updateAvatar };
+// the customer's tier percent of each product, by id: a tier limited to some
+// categories gives only on those, each with its own percent
+const getTierDiscounts = async (productIds: string[]) =>
+  API.get<Record<string, number>>("users/profile/tier-discounts", {
+    productIds: productIds.join(","),
+  });
+
+export const userService = {
+  getUserProfile,
+  updateProfile,
+  fetchUserProfile,
+  updateAvatar,
+  getTierDiscounts,
+};

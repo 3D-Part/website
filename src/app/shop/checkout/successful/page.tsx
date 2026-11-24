@@ -8,7 +8,7 @@ import { successfulOrderSelector } from "@/redux/slices/cart/cartSelectors";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 
 const Successful = () => {
   const router = useRouter();
@@ -67,6 +67,29 @@ const Successful = () => {
               </span>
             )}
           </div>
+
+          {/* each product with the price it was ordered at; a tier price shows
+              the price it had without the tier */}
+          {data?.products.map((line) => (
+            <React.Fragment key={line.id}>
+              <div className="flex text-base font-normal text-neutral-200 bg-neutral-800 px-4 py-3">
+                {line.name} × {line.quantity}
+              </div>
+              <div className="flex flex-col text-base font-normal text-white bg-neutral-800 px-4 py-3">
+                {line.regularPrice ? (
+                  <span className="text-xs text-neutral-400 line-through">
+                    {(Number(line.regularPrice) * line.quantity).toFixed(2)} KM
+                  </span>
+                ) : null}
+                <span className={line.tierDiscount ? "text-success-500" : ""}>
+                  {(Number(line.price) * line.quantity).toFixed(2)} KM
+                  {line.tierDiscount ? (
+                    <span className="ml-2 text-xs">vaš popust -{line.tierDiscount}%</span>
+                  ) : null}
+                </span>
+              </div>
+            </React.Fragment>
+          ))}
 
           <div className="flex text-lg font-normal text-white bg-neutral-700 px-4 py-[21px]">
             Dostava
