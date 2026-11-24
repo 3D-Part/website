@@ -12,6 +12,7 @@ import { NextAuthProvider } from "@/app/providers";
 import GoogleAnalytics from "./GoogleAnalytics";
 import Script from "next/script";
 import ShopAssistant from "@/components/helper/ShopAssistant";
+import NewsletterPopup from "@/components/helper/NewsletterPopup";
 import SiteTracker from "@/components/helper/SiteTracker";
 import NonRendableComponent from "@/components/helper/NonRendableComponent";
 
@@ -85,6 +86,7 @@ export default function RootLayout({
           <Providers>
             <NonRendableComponent />
             <ShopAssistant />
+            <NewsletterPopup />
             <SiteTracker />
             <Header />
             <Lights />

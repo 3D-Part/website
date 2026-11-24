@@ -5,6 +5,7 @@ import { useAppDispatch } from "@/redux/hooks";
 import { changeIsGlobalLoading } from "@/redux/slices/ui/uiSlice";
 import { newsletterService } from "@/shared/services/newsletterService";
 import React, { useState } from "react";
+import { markNewsletterSubscribed } from "@/shared/helper/newsletterPopup";
 
 const Newsletter = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -23,6 +24,8 @@ const Newsletter = () => {
       // ---
       await newsletterService.subscribeToNewsletter(`${e.target.email.value}`);
       notify("Uspješna prijava na newsletter ", { type: "success" });
+      // signed up here: the newsletter popup does not come any more
+      markNewsletterSubscribed();
     } catch (error) {}
 
     dispatch(changeIsGlobalLoading(false));
