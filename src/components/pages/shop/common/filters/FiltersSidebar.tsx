@@ -5,6 +5,7 @@ import Price from "./price/Price";
 import Categories from "./categories/Categories";
 import useUiApi from "@/redux/api/useUiApi";
 import { CategoryAttributesInterface } from "@/shared/interfaces/categoryInterface";
+import Sorter from "./sorter/Sorter";
 
 const FiltersSidebar: React.FC<{
     hidePriceFilter?: boolean;
@@ -13,7 +14,8 @@ const FiltersSidebar: React.FC<{
     setPriceMin: (x: number | null) => void;
     priceMax: number | null;
     setPriceMax: (x: number | null) => void;
-    // the sorting sits next to the Filteri button (FilterHeader), not here
+    // the sorting sits next to the Filteri button (FilterHeader) on phones and
+    // tablets; on a desktop it is at the top of the docked panel
     order?: "ASC" | "DESC" | null;
     setOrder?: (x: "ASC" | "DESC" | null) => void;
     filterByProductAttributes: string | undefined;
@@ -26,6 +28,9 @@ const FiltersSidebar: React.FC<{
     manufacturerId?: string | null;
     // how many products the listing shows now, for the button
     resultCount?: number;
+    // on a desktop (lg) the panel stays on the left of the list and sticks
+    // under the header while the products scroll; below lg it is the drawer
+    docked?: boolean;
 }> = ({
     hidePriceFilter,
     priceMax,
@@ -38,6 +43,11 @@ const FiltersSidebar: React.FC<{
     categoryAttributes,
     categoryId,
     manufacturerId,
+    docked,
+    field,
+    order,
+    setField,
+    setOrder,
 }) => {
         const { isFilteringSidebarVisible, toggleFilteringSidebar } = useUiApi();
         const sidebarRef = useRef<HTMLDivElement>(null);
@@ -48,14 +58,15 @@ const FiltersSidebar: React.FC<{
         const [pendingPriceMax, setPendingPriceMax] = useState<number | null>(priceMax);
         const [pendingFilterByProductAttributes, setPendingFilterByProductAttributes] = useState<string | undefined>(filterByProductAttributes);
 
-        // Sync pending states when sidebar opens
+        // Sync pending states when sidebar opens; the docked panel is always
+        // open, so it follows every change (e.g. a chip removed above the list)
         useEffect(() => {
-            if (isFilteringSidebarVisible) {
+            if (isFilteringSidebarVisible || docked) {
                 setPendingPriceMin(hidePriceFilter ? null : priceMin);
                 setPendingPriceMax(hidePriceFilter ? null : priceMax);
                 setPendingFilterByProductAttributes(filterByProductAttributes);
             }
-        }, [isFilteringSidebarVisible, hidePriceFilter, priceMin, priceMax, filterByProductAttributes]);
+        }, [isFilteringSidebarVisible, docked, hidePriceFilter, priceMin, priceMax, filterByProductAttributes]);
 
         const applyFilters = () => {
             setPriceMin(hidePriceFilter ? null : pendingPriceMin);
@@ -124,18 +135,18 @@ const FiltersSidebar: React.FC<{
             <>
                 {/* Overlay */}
                 {isFilteringSidebarVisible && (
-                    <div className="fixed inset-0 bg-black bg-opacity-70 z-40 transition-opacity backdrop-blur-sm" />
+                    <div className={`fixed inset-0 bg-black bg-opacity-70 z-40 transition-opacity backdrop-blur-sm ${docked ? "lg:hidden" : ""}`} />
                 )}
 
                 {/* Sidebar */}
                 <div
                     ref={sidebarRef}
                     className={`fixed top-0 left-0 h-full w-full sm:w-96 bg-neutral-900 z-50 shadow-2xl transform transition-transform duration-300 ease-in-out border-r border-neutral-700 ${isFilteringSidebarVisible ? "translate-x-0" : "-translate-x-full"
-                        }`}
+                        } ${docked ? DOCKED : ""}`}
                 >
-                    <div className="flex flex-col h-full">
+                    <div className={`flex flex-col h-full ${docked ? "lg:h-auto lg:max-h-[calc(100vh-var(--header-h,0px)-2rem)]" : ""}`}>
                         {/* Header */}
-                        <div className="flex items-center justify-between p-6 border-b border-neutral-700 bg-neutral-800">
+                        <div className={`flex items-center justify-between p-6 border-b border-neutral-700 bg-neutral-800 ${docked ? "lg:px-5 lg:py-4" : ""}`}>
                             <h2 className="text-2xl font-bold text-white flex items-center gap-2">
                                 <svg
                                     className="w-6 h-6 text-primary-500"
@@ -154,7 +165,7 @@ const FiltersSidebar: React.FC<{
                             </h2>
                             <button
                                 onClick={() => toggleFilteringSidebar(false)}
-                                className="p-2 hover:bg-neutral-700 rounded-lg transition-all text-neutral-400 hover:text-white"
+                                className={`p-2 hover:bg-neutral-700 rounded-lg transition-all text-neutral-400 hover:text-white ${docked ? "lg:hidden" : ""}`}
                                 aria-label="Close filters"
                             >
                                 <svg
@@ -174,8 +185,19 @@ const FiltersSidebar: React.FC<{
                         </div>
 
                         {/* Content */}
-                        <div className="flex-1 overflow-y-auto p-6 bg-neutral-900">
+                        <div className={`flex-1 min-h-0 overflow-y-auto p-6 bg-neutral-900 ${docked ? "lg:p-5" : ""}`}>
                             <div className="flex flex-col gap-8">
+                                {docked && setField && setOrder && (
+                                    <div className="hidden lg:flex flex-col gap-8">
+                                        <Sorter
+                                            field={field ?? null}
+                                            order={order ?? null}
+                                            setField={setField}
+                                            setOrder={setOrder}
+                                        />
+                                        <div className="h-px bg-neutral-700"></div>
+                                    </div>
+                                )}
                                 {!hidePriceFilter && (
                                     <>
                                         <Price
@@ -204,15 +226,16 @@ const FiltersSidebar: React.FC<{
                         {/* Footer with Apply/Reset buttons */}
                         <div className="p-4 border-t border-neutral-700 bg-neutral-800">
                             <div className="flex gap-3">
+                                {/* on the docked panel the choices apply by themselves */}
                                 <button
                                     onClick={applyFilters}
-                                    className="flex-1 px-4 py-3 bg-primary-500 hover:bg-primary-600 active:bg-primary-700 text-white font-semibold rounded-lg transition-all"
+                                    className={`${docked ? "lg:hidden" : ""} flex-1 px-4 py-3 bg-primary-500 hover:bg-primary-600 active:bg-primary-700 text-white font-semibold rounded-lg transition-all`}
                                 >
                                     Primijeni
                                 </button>
                                 <button
                                     onClick={resetFilters}
-                                    className="px-4 py-3 bg-neutral-700 hover:bg-neutral-600 active:bg-neutral-500 text-white font-semibold rounded-lg transition-all"
+                                    className={`${docked ? "lg:flex-1" : ""} px-4 py-3 bg-neutral-700 hover:bg-neutral-600 active:bg-neutral-500 text-white font-semibold rounded-lg transition-all`}
                                 >
                                     Resetuj
                                 </button>
@@ -223,5 +246,10 @@ const FiltersSidebar: React.FC<{
             </>
         );
     };
+
+// The drawer's classes undone from lg up: a panel in the page's flow, on the
+// left of the list, that sticks under the header
+const DOCKED =
+    "lg:sticky lg:top-[calc(var(--header-h,0px)+1rem)] lg:z-20 lg:h-auto lg:w-60 xl:w-72 lg:shrink-0 lg:translate-x-0 lg:transition-none lg:shadow-none lg:rounded-xl lg:overflow-hidden lg:border lg:mt-8";
 
 export default FiltersSidebar;

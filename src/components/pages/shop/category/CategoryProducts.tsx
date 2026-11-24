@@ -172,41 +172,47 @@ const CategoryProducts: React.FC<{ categoryAttributes: Array<CategoryAttributesI
         isLoading={isLoading}
       /> */}
 
-      <FiltersSidebar
-        categoryAttributes={categoryAttributes}
-        priceMin={priceMin}
-        priceMax={priceMax}
-        setPriceMax={setPriceMax}
-        setPriceMin={setPriceMin}
-        field={field}
-        order={order}
-        filterByProductAttributes={filterByProductAttributes}
-        setFilterByProductAttributes={setFilterByProductAttributes}
-        setField={setField}
-        setOrder={setOrder}
-        categoryId={categoryId}
-        manufacturerId={manufacturerId}
-        resultCount={data.count}
-      />
+      {/* from lg the filters and sorting stay docked on the left while the list scrolls */}
+      <div className="lg:flex lg:items-start lg:gap-6 xl:gap-8">
+        <FiltersSidebar
+          docked
+          categoryAttributes={categoryAttributes}
+          priceMin={priceMin}
+          priceMax={priceMax}
+          setPriceMax={setPriceMax}
+          setPriceMin={setPriceMin}
+          field={field}
+          order={order}
+          filterByProductAttributes={filterByProductAttributes}
+          setFilterByProductAttributes={setFilterByProductAttributes}
+          setField={setField}
+          setOrder={setOrder}
+          categoryId={categoryId}
+          manufacturerId={manufacturerId}
+          resultCount={data.count}
+        />
 
-      <FilterHeader sort={{ field, order, setField, setOrder }}
-        title="Proizvodi"
-        count={data.count}
-        activeCount={parseFilters(filterByProductAttributes).length + (priceMin !== null || priceMax !== null ? 1 : 0)}
-      />
+        <div className="flex-1 min-w-0">
+          <FilterHeader docked sort={{ field, order, setField, setOrder }}
+            title="Proizvodi"
+            count={data.count}
+            activeCount={parseFilters(filterByProductAttributes).length + (priceMin !== null || priceMax !== null ? 1 : 0)}
+          />
 
-      <ActiveFilters
-        categoryAttributes={categoryAttributes}
-        filterByProductAttributes={filterByProductAttributes}
-        setFilterByProductAttributes={setFilterByProductAttributes}
-        priceMin={priceMin}
-        priceMax={priceMax}
-        setPriceMin={setPriceMin}
-        setPriceMax={setPriceMax}
-      />
+          <ActiveFilters
+            categoryAttributes={categoryAttributes}
+            filterByProductAttributes={filterByProductAttributes}
+            setFilterByProductAttributes={setFilterByProductAttributes}
+            priceMin={priceMin}
+            priceMax={priceMax}
+            setPriceMin={setPriceMin}
+            setPriceMax={setPriceMax}
+          />
 
-      <ProductGrid productList={data.rows} />
-      {isLoading && <Spinner />}
+          <ProductGrid productList={data.rows} />
+          {isLoading && <Spinner />}
+        </div>
+      </div>
     </>
   );
 };

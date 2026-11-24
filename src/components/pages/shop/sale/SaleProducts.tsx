@@ -205,23 +205,29 @@ const SaleProducts = () => {
                 isLoading={isLoading}
             /> */}
 
-            <FiltersSidebar
-                priceMin={priceMin}
-                priceMax={priceMax}
-                setPriceMax={setPriceMax}
-                setPriceMin={setPriceMin}
-                field={field}
-                order={order}
-                filterByProductAttributes={filterByProductAttributes}
-                setFilterByProductAttributes={setFilterByProductAttributes}
-                setField={setField}
-                setOrder={setOrder}
-            />
+            {/* from lg the filters and sorting stay docked on the left while the list scrolls */}
+            <div className="lg:flex lg:items-start lg:gap-6 xl:gap-8">
+                <FiltersSidebar
+                    docked
+                    priceMin={priceMin}
+                    priceMax={priceMax}
+                    setPriceMax={setPriceMax}
+                    setPriceMin={setPriceMin}
+                    field={field}
+                    order={order}
+                    filterByProductAttributes={filterByProductAttributes}
+                    setFilterByProductAttributes={setFilterByProductAttributes}
+                    setField={setField}
+                    setOrder={setOrder}
+                />
 
-            <FilterHeader sort={{ field, order, setField, setOrder }} title={saleQuery ? "Proizvodi na akciji" : "Proizvodi"} count={data.count} />
+                <div className="flex-1 min-w-0">
+                    <FilterHeader docked sort={{ field, order, setField, setOrder }} title={saleQuery ? "Proizvodi na akciji" : "Proizvodi"} count={data.count} />
 
-            <ProductGrid productList={data.rows} />
-            {isLoading && <Spinner />}
+                    <ProductGrid productList={data.rows} />
+                    {isLoading && <Spinner />}
+                </div>
+            </div>
         </>
     );
 };

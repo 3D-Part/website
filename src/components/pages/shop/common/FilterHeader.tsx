@@ -20,12 +20,23 @@ const FilterHeader: React.FC<{
     activeCount?: number;
     // the sorting, next to the Filteri button; on phones it takes the title's place
     sort?: Sort;
-}> = ({ title, count, className, showFilters = true, activeCount = 0, sort }) => {
+    // the filters panel is docked on the left from lg up (FiltersSidebar
+    // docked): the sorting and the Filteri button are there, so here only the
+    // title; below lg this bar sticks under the header to stay at hand
+    docked?: boolean;
+}> = ({ title, count, className, showFilters = true, activeCount = 0, sort, docked }) => {
     const { toggleFilteringSidebar } = useUiApi();
+    const sticky = docked && (sort || showFilters);
 
     return (
-        <div className={`flex items-center justify-between gap-3 my-8 w-full flex-nowrap ${className || ""}`}>
-            <div className={`flex-1 min-w-0 ${sort ? "hidden md:block" : ""}`}>
+        <div
+            className={`flex items-center justify-between gap-3 flex-nowrap ${
+                sticky
+                    ? "sticky top-[var(--header-h,0px)] z-30 -mx-4 px-4 py-3 my-4 bg-[rgba(10,10,10,0.94)] backdrop-blur-[14px] lg:static lg:mx-0 lg:px-0 lg:py-0 lg:my-8 lg:bg-transparent lg:backdrop-blur-none"
+                    : "my-8 w-full"
+            } ${className || ""}`}
+        >
+            <div className={`flex-1 min-w-0 ${sort ? `hidden md:block` : ""}`}>
                 <Heading2 className="my-0 truncate">
                     {title} {typeof count === "number" && (
                         <span className="text-primary-500">({count})</span>
@@ -33,7 +44,7 @@ const FilterHeader: React.FC<{
                 </Heading2>
             </div>
             {sort && (
-                <div className="flex-1 min-w-0 md:flex-none">
+                <div className={`flex-1 min-w-0 md:flex-none ${docked ? "lg:hidden" : ""}`}>
                     <Sorter {...sort} compact />
                 </div>
             )}
@@ -41,7 +52,7 @@ const FilterHeader: React.FC<{
                 <button
                     type="button"
                     onClick={() => toggleFilteringSidebar(true)}
-                    className="flex items-center gap-2 px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-colors whitespace-nowrap shrink-0"
+                    className={`flex items-center gap-2 px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-colors whitespace-nowrap shrink-0 ${docked ? "lg:hidden" : ""}`}
                 >
                     <svg
                         className="w-5 h-5"
