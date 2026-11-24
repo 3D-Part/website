@@ -1,12 +1,28 @@
 import React from 'react'
 import ProductItem from './ProductItem'
+import { HomeTile, getHomeTiles } from './homeTiles'
 
-const ProductOffer = () => {
+const BACKGROUNDS = ['primary-50', 'lightBlue']
+const DEFAULT_PICTURES: Record<string, string> = {
+    filaments: '/assets/img/product/filament.png',
+    printers: '/assets/img/product/printer.png',
+}
+
+const ProductOffer = async () => {
+    const tiles: HomeTile[] = await getHomeTiles()
     return (
         <div className='w-full max-w-[1440px] px-8 pb-24 pt-16 flex flex-col gap-8 items-center lg:flex-row 2xl:px-0 lg:items-stretch lg:justify-between'>
-            <ProductItem image='/assets/img/product/filament.png' heading='3D filamenti' content='Pronađite savršeni filament za vaše 3D projekte! Bilo da radite sa PLA, ABS ili TPU, kvalitetan materijal je ključ za vrhunske rezultate. Eksperimentišite i kreirajte bez ograničenja!' link='/shop/category/filamenti' background='primary-50' />
-
-            <ProductItem image='/assets/img/product/printer.png' heading='3D printeri' content='Otključajte svijet mogućnosti uz vrhunske 3D štampače! Preciznost, pouzdanost i lakoća korišćenja za svaki vaš projekat. Kreirajte budućnost već danas!' link='/shop/category/3d-printeri' background='lightBlue' />
+            {tiles.map((tile, index) => (
+                <ProductItem
+                    key={tile.id}
+                    image={tile.image ? `${process.env.NEXT_PUBLIC_AMAZON_IMAGES}/${tile.image}` : DEFAULT_PICTURES[tile.id] ?? DEFAULT_PICTURES.filaments}
+                    heading={tile.title}
+                    content={tile.text}
+                    buttonLabel={tile.buttonLabel || 'Pogledaj ponudu'}
+                    link={tile.link}
+                    background={BACKGROUNDS[index % BACKGROUNDS.length]}
+                />
+            ))}
         </div>
     )
 }
