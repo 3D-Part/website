@@ -19,6 +19,7 @@ import TierSummary from "@/components/common/tier-badge/TierSummary";
 import TierFrame from "@/components/common/tier-badge/TierFrame";
 import AvatarPicker from "@/components/common/tier-badge/AvatarPicker";
 import { avatarSrc, useAvatars } from "@/shared/avatars";
+import { refreshProfile } from "@/shared/hooks/useTierInfo";
 import { TierInfo } from "@/shared/tiers";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
@@ -102,6 +103,7 @@ const ProfilePage: FC = () => {
 
     try {
       await userService.updateProfile(payload);
+      refreshProfile();
       notify("Profil uređen", { type: "success" });
     } catch (error: any) {
       notify(error?.response?.data?.errors[0]?.message, { type: "error" });
@@ -166,6 +168,7 @@ const ProfilePage: FC = () => {
                     onPick={async (image) => {
                       try {
                         await userService.updateAvatar(image);
+                        refreshProfile();
                         setUserData((current) => ({ ...current, image: image ?? "" }));
                         notify("Slika je promijenjena", { type: "success" });
                       } catch (error: any) {

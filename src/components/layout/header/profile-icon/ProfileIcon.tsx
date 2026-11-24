@@ -1,12 +1,60 @@
 import { useAppDispatch } from "@/redux/hooks";
 import { changeIsModalAuthVisible } from "@/redux/slices/ui/uiSlice";
-import React from "react";
-import { useTierInfo } from "@/shared/hooks/useTierInfo";
+import React, { useState } from "react";
+import { useProfile } from "@/shared/hooks/useTierInfo";
 import TierBadge from "@/components/common/tier-badge/TierBadge";
+import { avatarSrc, useAvatars } from "@/shared/avatars";
+
+/** First letters of the first and the last name, e.g. "MP". */
+const initialsOf = (name?: string | null) =>
+  (name ?? "")
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean)
+    .filter((_, i, parts) => i === 0 || i === parts.length - 1)
+    .map((part) => part[0]!.toUpperCase())
+    .join("");
+
+/**
+ * A logged in customer sees their avatar here (or their initials when they
+ * have none); everyone else the plain icon.
+ */
+const ProfilePicture: React.FC<{ image?: string | null; name?: string | null }> = ({ image, name }) => {
+  const avatars = useAvatars();
+  const [broken, setBroken] = useState<string | null>(null);
+  const src = image ? avatarSrc(image, avatars) : null;
+  // an avatar the admin removed falls back to the logo: initials look better
+  const usable = src && !src.endsWith("/logo.svg") && broken !== src;
+  const initials = initialsOf(name);
+
+  if (usable) {
+    return (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        src={src}
+        alt={name || "Profil"}
+        onError={() => setBroken(src)}
+        className="shrink-0 max-w-none w-9 h-9 rounded-full object-cover bg-neutral-800 ring-2 ring-[#387BE8]"
+      />
+    );
+  }
+  if (initials) {
+    return (
+      <span
+        aria-label={name || "Profil"}
+        className="flex shrink-0 items-center justify-center w-9 h-9 rounded-full bg-[#2463EB] text-white text-sm font-bold font-exo2 ring-2 ring-[#387BE8]/40"
+      >
+        {initials}
+      </span>
+    );
+  }
+  return <ProfileSvg />;
+};
 
 const ProfileIcon = () => {
   const isLogged = false;
-  const tier = useTierInfo();
+  const profile = useProfile();
+  const tier = profile?.tierInfo ?? null;
 
   const dispatch = useAppDispatch();
 
@@ -18,8 +66,8 @@ const ProfileIcon = () => {
   };
 
   return (
-    <div className="relative cursor-pointer" onClick={handleClick}>
-      <ProfileSvg />
+    <div className="relative shrink-0 cursor-pointer" onClick={handleClick}>
+      {profile ? <ProfilePicture image={profile.image} name={profile.fullName} /> : <ProfileSvg />}
       {tier?.name && (
         // subtle: just the tier's small picture on the corner of the icon
         <span className="absolute z-10 -top-1 -right-2">
