@@ -6,7 +6,6 @@ import { ProductInterface } from "@/shared/interfaces/productsInterface";
 import React, { useEffect, useState } from "react";
 import { track } from "@/shared/helper/track";
 import { gaItem, gaViewItem } from "@/shared/lib/gtag";
-import ProductIcons from "@/components/common/product/ProductIcons";
 import Stock from "../stock/Stock";
 import { motion } from "framer-motion";
 import SimilarProducts from "./similar-products/SimilarProducts";
@@ -142,7 +141,6 @@ const MainData: React.FC<{
           </span>
         </Display2>
         {!isTablet && <Stock stock={productData.quantity} byOrder={productData.isBackorder} />}
-        <ProductIcons icons={productData.icons} />
       </motion.div>
 
       <motion.div

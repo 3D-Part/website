@@ -26,15 +26,20 @@ const RibbonIcon: React.FC<{ ribbon: ProductRibbon; className: string }> = ({ ri
 };
 
 /**
- * The ribbons of a product (Novo, Najprodavanije...), with the name, color and
- * icon the admin gave them, in the order of the admin's list.
+ * The ribbons of a product (Novo, Brza dostava...), with the name, color and
+ * icon the admin gave them, in the order of the admin's list. They sit as
+ * small labels in the top left corner of the product's picture, the same on
+ * the card and on the product page, under the SALE label when the product is
+ * on sale. Absolutely placed, so the card is as tall with them as without.
  */
 const ProductIcons: React.FC<{
   icons?: string[] | null;
   limit?: number;
-  // "ribbon": on the corner of the product picture, out of the flow of the card
-  variant?: "pills" | "ribbon";
-}> = ({ icons, limit, variant = "pills" }) => {
+  // the red SALE label on top of the ribbons
+  sale?: boolean;
+  // "lg" on the product page's big picture (larger from the lg breakpoint)
+  size?: "sm" | "lg";
+}> = ({ icons, limit, sale, size = "sm" }) => {
   const settings = useAppSelector(settingsDataSelector)?.settings as
     | { productRibbons?: ProductRibbon[] }
     | undefined;
@@ -42,49 +47,24 @@ const ProductIcons: React.FC<{
   const own = new Set(icons || []);
   const shown = ribbons.filter((ribbon) => own.has(ribbon.id)).slice(0, limit);
   // pictures put on a product before there were ribbons
-  const pictures = (icons || []).filter((id) => id.startsWith(CUSTOM_ICON));
-  if (shown.length === 0 && pictures.length === 0) return null;
+  const pictures = shown.length === 0 ? (icons || []).filter((id) => id.startsWith(CUSTOM_ICON)).slice(0, limit) : [];
+  if (!sale && shown.length === 0 && pictures.length === 0) return null;
 
-  if (variant === "ribbon") {
-    // Absolutely placed at the left edge of the picture, so the card is as tall
-    // with it as without it and nothing else in the card moves.
-    return (
-      <div className="absolute left-0 z-10 flex flex-col items-start gap-1 pointer-events-none bottom-3">
-        {shown.map((ribbon) => (
-          <span
-            key={ribbon.id}
-            title={ribbon.label}
-            style={{ backgroundColor: ribbon.color }}
-            className="flex items-center gap-1 py-1 pl-2 pr-3 text-xs font-bold text-white rounded-r-lg shadow"
-          >
-            <RibbonIcon ribbon={ribbon} className="w-3.5 h-3.5 shrink-0" />
-            {ribbon.label}
-          </span>
-        ))}
-        {shown.length === 0 &&
-          pictures.slice(0, limit).map((id) => (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              key={id}
-              alt=""
-              className="object-contain w-7 h-7 p-1 bg-white rounded-r-lg shadow"
-              src={imageToAmazonURl(id.slice(CUSTOM_ICON.length))}
-            />
-          ))}
-      </div>
-    );
-  }
+  const large = size === "lg";
+  const label = `flex items-center gap-1.5 font-bold text-white rounded-r-lg shadow-md ${
+    large ? "py-1 pl-2 pr-2.5 text-xs lg:py-1.5 lg:pl-3 lg:pr-4 lg:text-sm" : "py-1 pl-2 pr-2.5 text-xs"
+  }`;
 
   return (
-    <div className="flex flex-wrap items-center gap-1.5 mt-2">
+    <div
+      className={`absolute left-0 z-10 flex flex-col items-start gap-1 pointer-events-none ${
+        large ? "top-3" : "top-2"
+      }`}
+    >
+      {sale && <span className={`${label} bg-error-500 tracking-wide`}>SALE</span>}
       {shown.map((ribbon) => (
-        <span
-          key={ribbon.id}
-          title={ribbon.label}
-          style={{ backgroundColor: ribbon.color }}
-          className="flex items-center gap-1 px-2.5 py-0.5 text-xs font-semibold text-white rounded-full"
-        >
-          <RibbonIcon ribbon={ribbon} className="w-4 h-4 shrink-0" />
+        <span key={ribbon.id} title={ribbon.label} style={{ backgroundColor: ribbon.color }} className={label}>
+          <RibbonIcon ribbon={ribbon} className={`${large ? "w-3.5 h-3.5 lg:w-4 lg:h-4" : "w-3.5 h-3.5"} shrink-0`} />
           {ribbon.label}
         </span>
       ))}
@@ -93,7 +73,7 @@ const ProductIcons: React.FC<{
         <img
           key={id}
           alt=""
-          className="w-5 h-5 object-contain"
+          className={`object-contain p-1 bg-white rounded-r-lg shadow ${large ? "w-9 h-9" : "w-7 h-7"}`}
           src={imageToAmazonURl(id.slice(CUSTOM_ICON.length))}
         />
       ))}

@@ -14,7 +14,6 @@ import { useAddToCart } from "@/shared/hooks/useAddToCart";
 import { useSession } from "next-auth/react";
 import FavoriteButton from "@/components/common/product/FavoriteButton";
 import ProductIcons from "@/components/common/product/ProductIcons";
-import Ribbon from "../ribbon/ribbon";
 import { getSalePrice } from "@/shared/helper/getSalePrice";
 import { highlightFrame } from "@/shared/helper/highlightFrame";
 
@@ -55,7 +54,6 @@ const Product: React.FC<ProductInterfaceComponent> = ({
           className={`overflow-hidden aspect-square rounded-xl w-[${imageWidth}]`}
           style={{ width: imageWidth }}
         >
-          {salePrice && <Ribbon text="SALE" background="bg-error-500" textSize="sm" />}
           <div className="relative aspect-square bg-neutral-700 rounded-xl">
             <Image
               alt={name}
@@ -90,8 +88,8 @@ const Product: React.FC<ProductInterfaceComponent> = ({
               </div>
             )}
 
-            {/* the product's badge (Novo, Najprodavanije...) sits on the picture, not in the card's flow */}
-            <ProductIcons icons={icons} limit={1} variant="ribbon" />
+            {/* SALE and the product's first ribbon (Novo, Brza dostava...) on the picture's corner */}
+            <ProductIcons icons={icons} limit={1} sale={!!salePrice} />
 
             {session?.user && session && <FavoriteButton productId={id} />}
           </div>
