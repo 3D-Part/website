@@ -6,6 +6,7 @@ import PasswordResetFlow from "@/components/layout/modals/auth-modal/PasswordRes
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { FC, useEffect, useState } from "react";
 
 /**
@@ -19,12 +20,22 @@ const PasswordPage: FC = () => {
   const { data: session, status } = useSession();
   const [done, setDone] = useState(false);
   const [fromMail, setFromMail] = useState<{ email?: string; codeSent: boolean }>({ codeSent: false });
+  const router = useRouter();
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const email = params.get("email")?.trim();
     setFromMail({ email: email || undefined, codeSent: !!email && params.get("code") === "sent" });
   }, []);
+
+  // a logged in customer changes the password in the profile, next to its menu;
+  // the link from the staff's e-mail (with the address) still opens here
+  const plainVisit = status === "authenticated" && !!session?.user?.email && !fromMail.email;
+  useEffect(() => {
+    if (plainVisit && !new URLSearchParams(window.location.search).get("email")) {
+      router.replace("/profile-details/security");
+    }
+  }, [plainVisit, router]);
 
   if (status === "loading") {
     return (
