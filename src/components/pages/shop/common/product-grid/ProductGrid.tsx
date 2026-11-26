@@ -42,7 +42,7 @@ const ProductGrid: React.FC<ProductGridInterface> = ({ productList }) => {
   }
 
   return (
-    <div className="grid  justify-items-center w-full grid-cols-2 sm:grid-cols-[repeat(auto-fill,220px)] justify-between gap-2 sm:gap-4 gap-y-6 lg:gap-y-10">
+    <div className="grid w-full grid-cols-2 sm:grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-3 sm:gap-5 xl:gap-6">
       {productList.map((product, i) => {
         return (
           <div
@@ -58,9 +58,9 @@ const ProductGrid: React.FC<ProductGridInterface> = ({ productList }) => {
             //   initial: { scale: 0.75, opacity: 0, x: -20 },
             //   animate: { scale: 1, opacity: 1, x: 0 },
             // }}
-            className="w-full max-w-[220px]"
+            className="w-full min-w-0"
           >
-            <Product {...product} imageWidth="auto" className="w-full " />
+            <Product {...product} imageWidth="100%" className="w-full !max-w-none !max-h-none" />
           </div>
         );
       })}

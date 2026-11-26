@@ -166,7 +166,7 @@ const Product: React.FC<ProductInterfaceComponent> = ({
                 () => setCheckCartVisible(true)
               );
             }}
-            className="h-8 w-[200px] mt-2 max-w-full "
+            className="h-8 w-full mt-2"
           >
             <div className="flex gap-2 ">
               <div className="items-center hidden xsm:flex">
