@@ -100,69 +100,82 @@ const NewsletterPopup = () => {
     <div
       role="dialog"
       aria-label="Prijava na newsletter"
-      className={`fixed z-40 left-3 right-3 sm:left-auto sm:right-5 sm:w-[340px] ${
+      className={`fixed z-40 left-3 right-3 sm:left-auto sm:right-5 sm:w-[360px] ${
         assistant ? "bottom-[84px]" : "bottom-3 sm:bottom-5"
-      } rounded-2xl border border-neutral-700 bg-neutral-900/95 backdrop-blur-[14px] shadow-2xl p-3 sm:p-5 animate-[newsletterIn_.35s_ease-out]`}
+      } overflow-hidden rounded-2xl border border-white/10 bg-[#0f1220]/95 backdrop-blur-[14px] shadow-[0_18px_50px_-12px_rgba(0,0,0,0.8)] animate-[newsletterIn_.35s_ease-out]`}
     >
+      {/* the blue glow and line of the site's buttons */}
+      <div aria-hidden className="absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r from-primary-500 via-[#7c5cff] to-primary-400" />
+      <div aria-hidden className="pointer-events-none absolute -top-16 -right-12 h-40 w-40 rounded-full bg-primary-500/25 blur-3xl" />
+
       <button
         type="button"
         onClick={close}
         aria-label="Zatvori"
-        className="absolute flex items-center justify-center w-8 h-8 rounded-full top-1.5 right-1.5 text-neutral-400 hover:text-white hover:bg-neutral-700"
+        className="absolute z-10 flex items-center justify-center w-8 h-8 rounded-full top-2.5 right-2.5 text-neutral-400 hover:text-white hover:bg-white/10"
       >
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden>
           <path d="M6 6l12 12M18 6L6 18" strokeLinecap="round" />
         </svg>
       </button>
 
-      {state === "done" ? (
-        <p className="pr-8 text-sm font-semibold text-white sm:text-base">
-          Hvala! Prijavljeni ste, javljamo vam prvi za akcije i novitete.
-        </p>
-      ) : (
-        <>
-          <div className="flex items-start gap-2.5 pr-8">
-            <span className="items-center justify-center hidden w-9 h-9 rounded-full sm:flex shrink-0 bg-primary-500/20 text-primary-400">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
-                <rect x="3" y="5" width="18" height="14" rx="2" />
-                <path d="M3 7l9 6 9-6" strokeLinejoin="round" />
+      <div className="relative p-4 sm:p-5">
+        {state === "done" ? (
+          <div className="flex items-center gap-3 pr-8">
+            <span className="flex items-center justify-center w-10 h-10 rounded-full shrink-0 bg-success-500/20 text-success-400">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" aria-hidden>
+                <path d="M5 12.5l4.5 4.5L19 7.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </span>
-            <div className="min-w-0">
-              <p className="text-sm font-bold leading-snug text-white sm:text-base">
-                Budite prvi koji saznaju za akcije i novitete
-              </p>
-              <p className="hidden mt-1 text-xs sm:block text-neutral-400">
-                Prijavite se na naš newsletter. Bez spama, odjava jednim klikom.
-              </p>
-            </div>
+            <p className="text-sm font-semibold text-white sm:text-base">
+              Hvala! Prijavljeni ste, javljamo vam prvi za akcije i novitete.
+            </p>
           </div>
-          <form onSubmit={submit} className="flex gap-2 mt-2.5 sm:mt-4">
-            <input
-              type="email"
-              required
-              value={email}
-              onChange={(event) => {
-                setEmail(event.target.value);
-                if (state === "error") setState("idle");
-              }}
-              placeholder="Vaš e-mail"
-              aria-label="E-mail"
-              className="flex-1 min-w-0 h-10 px-3 text-sm text-white border rounded-lg bg-neutral-800 border-neutral-600 placeholder:text-neutral-500 focus:outline-none focus:ring-0 focus:border-primary-500"
-            />
-            <button
-              type="submit"
-              disabled={state === "sending"}
-              className="h-10 px-4 text-sm font-semibold text-white rounded-lg shrink-0 bg-primary-500 hover:bg-primary-600 disabled:opacity-60"
-            >
-              Prijavi se
-            </button>
-          </form>
-          {state === "error" && (
-            <p className="mt-2 text-xs text-error-400">Prijava nije uspjela. Provjerite adresu i pokušajte ponovo.</p>
-          )}
-        </>
-      )}
+        ) : (
+          <>
+            <div className="flex items-start gap-3 pr-8">
+              <span className="flex items-center justify-center w-10 h-10 rounded-xl shrink-0 bg-gradient-to-br from-primary-500 to-[#7c5cff] text-white shadow-lg shadow-primary-500/30">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+                  <rect x="3" y="5" width="18" height="14" rx="2" />
+                  <path d="M3 7l9 6 9-6" strokeLinejoin="round" />
+                </svg>
+              </span>
+              <div className="min-w-0">
+                <p className="text-[15px] font-bold leading-snug text-white sm:text-base">
+                  Budite prvi koji saznaju za akcije i novitete
+                </p>
+                <p className="mt-1 text-xs leading-relaxed text-neutral-400">
+                  Popusti i novi artikli stižu vam prvi na mejl. Bez spama, odjava jednim klikom.
+                </p>
+              </div>
+            </div>
+            <form onSubmit={submit} className="flex flex-col gap-2 mt-3.5 sm:flex-row sm:mt-4">
+              <input
+                type="email"
+                required
+                value={email}
+                onChange={(event) => {
+                  setEmail(event.target.value);
+                  if (state === "error") setState("idle");
+                }}
+                placeholder="Vaš e-mail"
+                aria-label="E-mail"
+                className="w-full sm:flex-1 min-w-0 h-11 shrink-0 px-3.5 text-sm text-white border rounded-xl bg-white/5 border-white/15 placeholder:text-neutral-500 focus:outline-none focus:ring-0 focus:border-primary-500"
+              />
+              <button
+                type="submit"
+                disabled={state === "sending"}
+                className="h-11 px-5 text-sm font-semibold text-white rounded-xl shrink-0 bg-primary-500 hover:bg-primary-600 disabled:opacity-60 shadow-lg shadow-primary-500/25"
+              >
+                {state === "sending" ? "Šaljem..." : "Prijavi se"}
+              </button>
+            </form>
+            {state === "error" && (
+              <p className="mt-2 text-xs text-error-400">Prijava nije uspjela. Provjerite adresu i pokušajte ponovo.</p>
+            )}
+          </>
+        )}
+      </div>
     </div>
   );
 };
