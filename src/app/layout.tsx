@@ -78,7 +78,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="bs">
+    <html lang="bs" suppressHydrationWarning>
+      <head>
+        {/* the filters panel the visitor hid on a desktop stays hidden from the
+            first paint (see shop/common/dockedFilters) */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{if(localStorage.getItem('shop.filtersHidden')==='1')document.documentElement.dataset.filtersHidden='1'}catch(e){}",
+          }}
+        />
+      </head>
       <body
         className={`${exo2.variable} font-exo2 overflow-x-hidden relative min-w-[368px]`}
       >

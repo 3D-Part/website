@@ -53,8 +53,13 @@ const FiltersSidebar: React.FC<{
         const { isFilteringSidebarVisible, toggleFilteringSidebar } = useUiApi();
         // on a desktop the docked panel can be hidden for more products in a row
         const { hidden: dockedHidden, setHidden: setDockedHidden } = useDockedFiltersHidden();
-        // the panel slides in only when the tab opens it, not on every page load
-        const [slideIn, setSlideIn] = useState(false);
+        // the panel slides open and shut only when the visitor hides or opens it,
+        // not when a page loads with the panel already hidden
+        const [animate, setAnimate] = useState(false);
+        const showDocked = (show: boolean) => {
+            setAnimate(true);
+            setDockedHidden(!show);
+        };
         const sidebarRef = useRef<HTMLDivElement>(null);
         const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -143,10 +148,7 @@ const FiltersSidebar: React.FC<{
                 {docked && dockedHidden && (
                     <button
                         type="button"
-                        onClick={() => {
-                            setSlideIn(true);
-                            setDockedHidden(false);
-                        }}
+                        onClick={() => showDocked(true)}
                         aria-label="Prikaži filtere"
                         className="filters-tab group hidden lg:flex fixed left-0 top-[calc(var(--header-h,0px)+1.5rem)] z-30 w-8 hover:w-10 flex-col items-center gap-2 py-4 bg-primary-500 hover:bg-primary-600 text-white font-semibold rounded-r-lg shadow-lg shadow-black/40 transition-[width,background-color] duration-200"
                     >
@@ -167,9 +169,9 @@ const FiltersSidebar: React.FC<{
                 <div
                     ref={sidebarRef}
                     className={`fixed top-0 left-0 h-full w-full sm:w-96 bg-neutral-900 z-50 shadow-2xl transform transition-transform duration-300 ease-in-out border-r border-neutral-700 ${isFilteringSidebarVisible ? "translate-x-0" : "-translate-x-full"
-                        } ${docked ? DOCKED : ""} ${docked && dockedHidden ? "lg:hidden" : ""} ${docked && slideIn ? "filters-panel-in" : ""}`}
+                        } ${docked ? DOCKED : ""} ${docked ? "docked-filters" : ""} ${docked && animate ? "docked-slide" : ""}`}
                 >
-                    <div className={`flex flex-col h-full ${docked ? "lg:h-auto lg:max-h-[calc(100vh-var(--header-h,0px)-2rem)]" : ""}`}>
+                    <div className={`flex flex-col h-full ${docked ? "lg:h-auto lg:max-h-[calc(100vh-var(--header-h,0px)-2rem)] lg:w-60 xl:w-72" : ""}`}>
                         {/* Header */}
                         <div className={`flex items-center justify-between p-6 border-b border-neutral-700 bg-neutral-800 ${docked ? "lg:px-5 lg:py-4" : ""}`}>
                             <h2 className="text-2xl font-bold text-white flex items-center gap-2">
@@ -191,7 +193,7 @@ const FiltersSidebar: React.FC<{
                             {docked && (
                                 <button
                                     type="button"
-                                    onClick={() => setDockedHidden(true)}
+                                    onClick={() => showDocked(false)}
                                     className="hidden lg:flex items-center gap-1 p-2 -mr-2 hover:bg-neutral-700 rounded-lg transition-all text-neutral-400 hover:text-white text-sm"
                                     aria-label="Sakrij filtere"
                                     title="Sakrij filtere"
@@ -289,6 +291,7 @@ const FiltersSidebar: React.FC<{
 // The drawer's classes undone from lg up: a panel in the page's flow, on the
 // left of the list, that sticks under the header
 const DOCKED =
-    "lg:sticky lg:top-[calc(var(--header-h,0px)+1rem)] lg:z-20 lg:h-auto lg:w-60 xl:w-72 lg:shrink-0 lg:translate-x-0 lg:transition-none lg:shadow-none lg:rounded-xl lg:overflow-hidden lg:border lg:mt-8";
+    "lg:sticky lg:top-[calc(var(--header-h,0px)+1rem)] lg:z-20 lg:h-auto lg:shrink-0 lg:translate-x-0 lg:transition-none lg:shadow-none lg:rounded-xl lg:overflow-hidden lg:border lg:mt-8";
+// its width, open or shut, and the slide are in globals.css (.docked-filters)
 
 export default FiltersSidebar;

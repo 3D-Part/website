@@ -379,27 +379,50 @@ body.overflow-hidden {
 .info-page .ql-size-huge { font-size: 2em; }
 .info-page .ql-ui { display: none; }
 
-/* the Filteri tab slides out of the left edge; the docked filters panel slides
-   back in when the tab opens it */
+/* the Filteri tab slides out of the left edge once the filters panel has shut */
 @keyframes filtersTabIn {
   from { transform: translateX(-100%); }
   to { transform: translateX(0); }
 }
-@keyframes filtersPanelIn {
-  from { opacity: 0; transform: translateX(-24px); }
-  to { opacity: 1; transform: translateX(0); }
-}
 .filters-tab {
-  animation: filtersTabIn 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: filtersTabIn 0.3s cubic-bezier(0.22, 1, 0.36, 1) 0.25s both;
 }
+@media (prefers-reduced-motion: reduce) {
+  .filters-tab {
+    animation: none;
+  }
+}
+
+/* The docked filters panel of the product lists (desktop): open, or shut to
+   nothing with the gap to the list taken back. Shut when the visitor hid it
+   (html[data-filters-hidden], set before the first paint). The content keeps
+   its width, so the panel uncovers it instead of squeezing it. */
 @media (min-width: 1024px) {
-  .filters-panel-in {
-    animation: filtersPanelIn 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+  html .docked-filters {
+    width: 15rem;
+  }
+  html[data-filters-hidden="1"] .docked-filters {
+    width: 0;
+    margin-right: -1.5rem;
+    opacity: 0;
+    visibility: hidden;
+    border-width: 0;
+  }
+  .docked-filters.docked-slide {
+    transition: width 0.32s cubic-bezier(0.22, 1, 0.36, 1), margin 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.25s ease, visibility 0.32s, border-width 0.32s;
+  }
+}
+@media (min-width: 1280px) {
+  html .docked-filters {
+    width: 18rem;
+  }
+  html[data-filters-hidden="1"] .docked-filters {
+    margin-right: -2rem;
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .filters-tab,
-  .filters-panel-in {
-    animation: none;
+  .docked-filters.docked-slide {
+    transition: none;
   }
 }

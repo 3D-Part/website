@@ -29,6 +29,10 @@ export const useDockedFiltersHidden = () => {
   const hidden = useSyncExternalStore(subscribe, read, () => false);
   const setHidden = useCallback((value: boolean) => {
     chosen = value;
+    // the panel's width follows this attribute (globals.css), set before the
+    // first paint by the script in the layout
+    if (value) document.documentElement.dataset.filtersHidden = "1";
+    else delete document.documentElement.dataset.filtersHidden;
     try {
       window.localStorage.setItem(KEY, value ? "1" : "0");
     } catch {
