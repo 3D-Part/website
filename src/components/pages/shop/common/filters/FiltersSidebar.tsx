@@ -53,6 +53,8 @@ const FiltersSidebar: React.FC<{
         const { isFilteringSidebarVisible, toggleFilteringSidebar } = useUiApi();
         // on a desktop the docked panel can be hidden for more products in a row
         const { hidden: dockedHidden, setHidden: setDockedHidden } = useDockedFiltersHidden();
+        // the panel slides in only when the tab opens it, not on every page load
+        const [slideIn, setSlideIn] = useState(false);
         const sidebarRef = useRef<HTMLDivElement>(null);
         const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -141,16 +143,17 @@ const FiltersSidebar: React.FC<{
                 {docked && dockedHidden && (
                     <button
                         type="button"
-                        onClick={() => setDockedHidden(false)}
+                        onClick={() => {
+                            setSlideIn(true);
+                            setDockedHidden(false);
+                        }}
                         aria-label="Prikaži filtere"
-                        className="hidden lg:flex fixed left-0 top-[calc(var(--header-h,0px)+1.5rem)] z-30 w-8 flex-col items-center gap-2 py-4 bg-primary-500 hover:bg-primary-600 text-white font-semibold rounded-r-lg shadow-lg shadow-black/40 transition-colors"
+                        className="filters-tab group hidden lg:flex fixed left-0 top-[calc(var(--header-h,0px)+1.5rem)] z-30 w-8 hover:w-10 flex-col items-center gap-2 py-4 bg-primary-500 hover:bg-primary-600 text-white font-semibold rounded-r-lg shadow-lg shadow-black/40 transition-[width,background-color] duration-200"
                     >
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
-                        </svg>
                         <span className="[writing-mode:vertical-rl] rotate-180 text-sm tracking-wide">Filteri</span>
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+                        {/* the funnel turned the way the text reads */}
+                        <svg className="w-4 h-4 -rotate-90 transition-transform duration-200 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
                         </svg>
                     </button>
                 )}
@@ -164,7 +167,7 @@ const FiltersSidebar: React.FC<{
                 <div
                     ref={sidebarRef}
                     className={`fixed top-0 left-0 h-full w-full sm:w-96 bg-neutral-900 z-50 shadow-2xl transform transition-transform duration-300 ease-in-out border-r border-neutral-700 ${isFilteringSidebarVisible ? "translate-x-0" : "-translate-x-full"
-                        } ${docked ? DOCKED : ""} ${docked && dockedHidden ? "lg:hidden" : ""}`}
+                        } ${docked ? DOCKED : ""} ${docked && dockedHidden ? "lg:hidden" : ""} ${docked && slideIn ? "filters-panel-in" : ""}`}
                 >
                     <div className={`flex flex-col h-full ${docked ? "lg:h-auto lg:max-h-[calc(100vh-var(--header-h,0px)-2rem)]" : ""}`}>
                         {/* Header */}
