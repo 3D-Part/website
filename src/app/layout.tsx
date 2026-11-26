@@ -80,12 +80,12 @@ export default function RootLayout({
   return (
     <html lang="bs" suppressHydrationWarning>
       <head>
-        {/* the filters panel the visitor hid on a desktop stays hidden from the
-            first paint (see shop/common/dockedFilters) */}
+        {/* the filters panel of the product lists starts shut on a desktop unless
+            the visitor opened it, from the first paint (see shop/common/dockedFilters) */}
         <script
           dangerouslySetInnerHTML={{
             __html:
-              "try{if(localStorage.getItem('shop.filtersHidden')==='1')document.documentElement.dataset.filtersHidden='1'}catch(e){}",
+              "var v;try{v=localStorage.getItem('shop.filtersHidden')}catch(e){}if(v!=='0')document.documentElement.dataset.filtersHidden='1'",
           }}
         />
       </head>
