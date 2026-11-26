@@ -151,7 +151,8 @@ const ShopAssistant = () => {
           type="button"
           onClick={() => setOpen(true)}
           aria-label="Otvori chat asistenta"
-          className="fixed z-[60] flex items-center gap-2 px-4 py-3 font-semibold text-white rounded-full shadow-lg bottom-5 right-5 bg-primary-500 hover:bg-primary-600"
+          // under the cart, the filters and the menu (z-50 and up), over the newsletter card (z-40)
+          className="fixed z-[45] flex items-center gap-2 px-4 py-3 font-semibold text-white rounded-full shadow-lg bottom-5 right-5 bg-primary-500 hover:bg-primary-600"
         >
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
             <path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z" strokeLinejoin="round" />
@@ -161,7 +162,8 @@ const ShopAssistant = () => {
       )}
 
       {open && (
-        <div className="fixed z-[60] inset-0 sm:inset-auto sm:bottom-5 sm:right-5 sm:w-[380px] sm:h-[560px] flex flex-col bg-neutral-900 sm:rounded-2xl border border-neutral-700 shadow-2xl overflow-hidden">
+        // full screen over everything on a phone; on a desktop under the cart and the filters
+        <div className="fixed z-[60] sm:z-[45] inset-0 sm:inset-auto sm:bottom-5 sm:right-5 sm:w-[380px] sm:h-[560px] flex flex-col bg-neutral-900 sm:rounded-2xl border border-neutral-700 shadow-2xl overflow-hidden">
           <div className="flex items-center justify-between px-4 py-3 border-b border-neutral-700 bg-neutral-800">
             <div>
               <p className="font-bold text-white">3DPart asistent</p>
