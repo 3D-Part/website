@@ -3,6 +3,7 @@
 import Heading2 from "@/components/common/text/heading/Heading2";
 import useUiApi from "@/redux/api/useUiApi";
 import Sorter from "./filters/sorter/Sorter";
+import { useDockedFiltersHidden } from "./dockedFilters";
 
 type Sort = {
     field: "name" | "price" | null;
@@ -26,7 +27,11 @@ const FilterHeader: React.FC<{
     docked?: boolean;
 }> = ({ title, count, className, showFilters = true, activeCount = 0, sort, docked }) => {
     const { toggleFilteringSidebar } = useUiApi();
+    const { hidden: dockedHidden } = useDockedFiltersHidden();
     const sticky = docked && (sort || showFilters);
+    // with the docked panel hidden the sorting stays here on a desktop too; the
+    // panel opens again from the tab on the left edge (FiltersSidebar)
+    const onDesktop = docked && !dockedHidden ? "lg:hidden" : "";
 
     return (
         <div
@@ -44,7 +49,7 @@ const FilterHeader: React.FC<{
                 </Heading2>
             </div>
             {sort && (
-                <div className={`flex-1 min-w-0 md:flex-none ${docked ? "lg:hidden" : ""}`}>
+                <div className={`flex-1 min-w-0 md:flex-none ${onDesktop}`}>
                     <Sorter {...sort} compact />
                 </div>
             )}

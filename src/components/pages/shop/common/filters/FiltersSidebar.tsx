@@ -6,6 +6,7 @@ import Categories from "./categories/Categories";
 import useUiApi from "@/redux/api/useUiApi";
 import { CategoryAttributesInterface } from "@/shared/interfaces/categoryInterface";
 import Sorter from "./sorter/Sorter";
+import { useDockedFiltersHidden } from "../dockedFilters";
 
 const FiltersSidebar: React.FC<{
     hidePriceFilter?: boolean;
@@ -50,6 +51,8 @@ const FiltersSidebar: React.FC<{
     setOrder,
 }) => {
         const { isFilteringSidebarVisible, toggleFilteringSidebar } = useUiApi();
+        // on a desktop the docked panel can be hidden for more products in a row
+        const { hidden: dockedHidden, setHidden: setDockedHidden } = useDockedFiltersHidden();
         const sidebarRef = useRef<HTMLDivElement>(null);
         const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -133,6 +136,25 @@ const FiltersSidebar: React.FC<{
 
         return (
             <>
+                {/* on a desktop, with the docked panel hidden: a narrow upright tab on the
+                    left edge opens it again; it fits the page's margin, over no card */}
+                {docked && dockedHidden && (
+                    <button
+                        type="button"
+                        onClick={() => setDockedHidden(false)}
+                        aria-label="Prikaži filtere"
+                        className="hidden lg:flex fixed left-0 top-[calc(var(--header-h,0px)+1.5rem)] z-30 w-8 flex-col items-center gap-2 py-4 bg-primary-500 hover:bg-primary-600 text-white font-semibold rounded-r-lg shadow-lg shadow-black/40 transition-colors"
+                    >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+                        </svg>
+                        <span className="[writing-mode:vertical-rl] rotate-180 text-sm tracking-wide">Filteri</span>
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                )}
+
                 {/* Overlay */}
                 {isFilteringSidebarVisible && (
                     <div className={`fixed inset-0 bg-black bg-opacity-70 z-40 transition-opacity backdrop-blur-sm ${docked ? "lg:hidden" : ""}`} />
@@ -142,7 +164,7 @@ const FiltersSidebar: React.FC<{
                 <div
                     ref={sidebarRef}
                     className={`fixed top-0 left-0 h-full w-full sm:w-96 bg-neutral-900 z-50 shadow-2xl transform transition-transform duration-300 ease-in-out border-r border-neutral-700 ${isFilteringSidebarVisible ? "translate-x-0" : "-translate-x-full"
-                        } ${docked ? DOCKED : ""}`}
+                        } ${docked ? DOCKED : ""} ${docked && dockedHidden ? "lg:hidden" : ""}`}
                 >
                     <div className={`flex flex-col h-full ${docked ? "lg:h-auto lg:max-h-[calc(100vh-var(--header-h,0px)-2rem)]" : ""}`}>
                         {/* Header */}
@@ -163,6 +185,20 @@ const FiltersSidebar: React.FC<{
                                 </svg>
                                 Filteri
                             </h2>
+                            {docked && (
+                                <button
+                                    type="button"
+                                    onClick={() => setDockedHidden(true)}
+                                    className="hidden lg:flex items-center gap-1 p-2 -mr-2 hover:bg-neutral-700 rounded-lg transition-all text-neutral-400 hover:text-white text-sm"
+                                    aria-label="Sakrij filtere"
+                                    title="Sakrij filtere"
+                                >
+                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
+                                    </svg>
+                                    Sakrij
+                                </button>
+                            )}
                             <button
                                 onClick={() => toggleFilteringSidebar(false)}
                                 className={`p-2 hover:bg-neutral-700 rounded-lg transition-all text-neutral-400 hover:text-white ${docked ? "lg:hidden" : ""}`}
