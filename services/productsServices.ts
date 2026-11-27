@@ -1,4 +1,4 @@
-import { revalidateTime } from "./setup";
+import { cached } from "./setup";
 import { ProductInterface } from "@/shared/interfaces/productsInterface";
 
 const defaultRoute = process.env.NEXT_PUBLIC_BACKEND_URL + "shop/products";
@@ -134,7 +134,7 @@ const getAllProducts = async ({
   try {
     const res = await fetch(`${defaultRoute}?${paramsString}`, {
       method: "GET",
-      next: { revalidate: revalidateTime },
+      next: cached,
     });
     const data = await res.json();
 
@@ -189,7 +189,7 @@ const getSingleProduct = async (id: string): Promise<ProductInterface> => {
   try {
     const res = await fetch(`${defaultRoute}/${id}`, {
       method: "GET",
-      next: { revalidate: revalidateTime },
+      next: cached,
     });
 
     // The API answers a missing product with 404, or with an empty 200 for a
@@ -246,7 +246,7 @@ const getMostSold = async (): Promise<ProductPaginatedInterface> => {
     // a short cache, so taking products out of the group in the admin shows soon
     const res = await fetch(`${defaultRoute}?${params}`, {
       method: "GET",
-      next: { revalidate: 60 },
+      next: cached,
     });
     const data = await res.json();
     if ("key" in data && "message" in data) {

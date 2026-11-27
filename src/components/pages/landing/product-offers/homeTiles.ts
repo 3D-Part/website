@@ -1,3 +1,4 @@
+import { cached } from "../../../../../services/setup";
 /**
  * The two tiles under the home slider, as the admin set them in the settings
  * (`homeTiles`). Read on the server so they are in the first HTML; kept for a
@@ -37,7 +38,7 @@ export const getHomeTiles = async (): Promise<HomeTile[]> => {
   const base = process.env.NEXT_PUBLIC_BACKEND_URL;
   if (!base) return DEFAULT_HOME_TILES;
   try {
-    const response = await fetch(`${base}shop/settings`, { next: { revalidate: 60 } });
+    const response = await fetch(`${base}shop/settings`, { next: cached });
     if (!response.ok) return DEFAULT_HOME_TILES;
     const data = await response.json();
     const tiles = data?.settings?.homeTiles;

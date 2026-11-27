@@ -1,3 +1,4 @@
+import { cached } from "../../../services/setup";
 /**
  * The info pages the staff write in the admin (/info/<slug>). Read on the
  * server and kept for a minute, so a change in the admin reaches the site
@@ -17,14 +18,13 @@ export type InfoPage = InfoPageLink & {
   seoDescription: string | null;
 };
 
-const REVALIDATE = 60;
 
 /** Published pages, in the footer's order; [] when the API cannot be reached. */
 export const getInfoPages = async (): Promise<InfoPageLink[]> => {
   const base = process.env.NEXT_PUBLIC_BACKEND_URL;
   if (!base) return [];
   try {
-    const response = await fetch(`${base}shop/info-pages`, { next: { revalidate: REVALIDATE } });
+    const response = await fetch(`${base}shop/info-pages`, { next: cached });
     if (!response.ok) return [];
     const data = await response.json();
     return Array.isArray(data?.rows) ? data.rows : [];
@@ -42,7 +42,7 @@ export const INFO_PAGE_MISSING = "INFO_PAGE_MISSING";
 export const getInfoPage = async (slug: string): Promise<InfoPage | null> => {
   const base = process.env.NEXT_PUBLIC_BACKEND_URL;
   if (!/^[a-z0-9-]{1,80}$/.test(slug)) return null;
-  const response = await fetch(`${base}shop/info-pages/${slug}`, { next: { revalidate: REVALIDATE } });
+  const response = await fetch(`${base}shop/info-pages/${slug}`, { next: cached });
   if (response.status === 404) return null;
   if (!response.ok) throw new Error(`info page ${slug}: ${response.status}`);
   return response.json();

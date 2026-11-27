@@ -1,7 +1,7 @@
 import { productsServices } from "../../../services/productsServices";
 import { getMainImage } from "@/shared/helper/getMainImage";
 
-export const revalidate = 3600;
+export const revalidate = 86400;
 
 const BASE_URL = "https://www.3dpartshop.com";
 

@@ -1,3 +1,4 @@
+import { cached } from "../../../../services/setup";
 import React from "react";
 import HeaderInfo from "./header-info/HeaderInfo";
 import Navbar from "./navbar/Navbar";
@@ -14,7 +15,7 @@ const getMenu = async (): Promise<MenuItem[] | null> => {
   const base = process.env.NEXT_PUBLIC_BACKEND_URL;
   if (!base) return null;
   try {
-    const response = await fetch(`${base}shop/menu`, { next: { revalidate: 60 } });
+    const response = await fetch(`${base}shop/menu`, { next: cached });
     if (!response.ok) return null;
     const data = await response.json();
     return Array.isArray(data?.menu?.items) ? data.menu.items : null;

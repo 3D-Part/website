@@ -9,7 +9,7 @@ interface InfoParams {
 }
 
 // pages are rendered on the first visit and kept for a minute (see infoPages.ts)
-export const revalidate = 60;
+export const revalidate = 86400;
 export const generateStaticParams = async () => [];
 
 // metadata and the page ask once

@@ -1,4 +1,4 @@
-import { revalidateTime } from "./setup";
+import { cached } from "./setup";
 import { CategoryInterface } from "@/shared/interfaces/categoryInterface";
 import { IProductAttribute } from "@/shared/types";
 import { get } from "http";
@@ -28,7 +28,7 @@ const getAllCategories = async (): Promise<CategoriesPaginatedInterface> => {
   try {
     const res = await fetch(`${defaultRoute}`, {
       method: "GET",
-      next: { revalidate: revalidateTime },
+      next: cached,
     });
 
     const data = await res.json();
@@ -62,7 +62,7 @@ const getSingleCategoryWithSlug = async (
   try {
     const res = await fetch(`${defaultRoute}/slug/${slug}`, {
       method: "GET",
-      next: { revalidate: revalidateTime },
+      next: cached,
     });
 
     if (res.status === 404) {
